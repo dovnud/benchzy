@@ -13,6 +13,14 @@ interface Props {
 }
 const { title, description, lang = 'en', alternates = [] } = Astro.props;
 
+// Canonical + social cards (milestone 5). The canonical is this page's
+// own public URL on the production host; every page is self-referencing.
+// OG/Twitter values come from the same title and description props the
+// page already passes, so the cards can never drift from the page.
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://benchzy.com').href;
+const ogImage = new URL('/og.png', Astro.site ?? 'https://benchzy.com').href;
+const ogLocale = { en: 'en_US', es: 'es_ES', 'pt-BR': 'pt_BR' }[lang] || 'en_US';
+
 // Page chrome (nav + footer) per locale. en is the source of truth and
 // renders exactly what this layout always rendered. The es / pt-BR
 // chrome serves the localised background-removal pages; the tools it
@@ -93,6 +101,21 @@ const c = CHROME[lang] || CHROME.en;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Benchzy" />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Benchzy, the file workshop: free file tools that run in your browser" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <title>{title}</title>
     {alternates.map((a) => (
       <link rel="alternate" hreflang={a.hreflang} href={a.href} />

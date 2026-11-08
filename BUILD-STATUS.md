@@ -609,3 +609,158 @@ before anything loads, in the local decimal format.
   milestone's pages: the native-speaker review of the ES and PT-BR
   strings (TRANSLATIONS.md), and the self-hosted font files noted in
   milestone 1.
+
+---
+
+# Milestone 5 (2026-11-08): the SEO/GEO technical pass
+
+The launch-readiness pass over the finished 26 pages. A dist/ check at
+the start of the milestone confirmed the gaps exactly: no sitemap.xml,
+no robots.txt, no canonical tags, no HowTo schema, no llms.txt, no OG
+cards (FAQ schema and meta descriptions already shipped). All of it is
+fixed below. The final production build in dist/ is the verified one:
+**92 files, 104,603,035 bytes** (the bulk is the engine assets and the
+11 model pieces, as in every milestone).
+
+## What was added
+
+- **Sitemap** — `src/pages/sitemap.xml.js`, an endpoint that derives
+  its route list from the page files in src/pages at build time (never
+  typed, so pages enter and leave on their own), lastmod = build date,
+  and hreflang alternates for the two background-removal language
+  clusters (tool cluster and full-size cluster, x-default = the
+  English page, matching the clusters the pages declare). Generated
+  sitemap: **26 URLs, 24 hreflang links**, and the audit proves the
+  URL set equals the built page set exactly.
+- **robots.txt** — `public/robots.txt`: wildcard allow for everyone,
+  then the AI crawlers welcomed BY NAME (GPTBot, ChatGPT-User,
+  OAI-SearchBot, ClaudeBot, Claude-User, Claude-SearchBot,
+  PerplexityBot, Perplexity-User, Google-Extended, CCBot,
+  Applebot-Extended, Meta-ExternalAgent, plus Amazonbot and
+  Bytespider), each with its own Allow group, and the sitemap line.
+  Nothing is disallowed anywhere; the audit fails if any Disallow
+  appears. Being cited is the strategy, so the door is open by name,
+  per MARKETING.md section 4.1.
+- **Canonical + social cards, in the base layout** — `astro.config.mjs`
+  gained `site: 'https://benchzy.com'`; `Base.astro` now emits one
+  self-referencing canonical per page (`https://benchzy.com` + the
+  page's own path) and Open Graph + Twitter card tags drawn from the
+  same title/description props each page already passes (og:type,
+  site_name, locale per page language, title, description, url,
+  image). One shared card image: `public/og.png`, 1200x630, generated
+  by `tools/make-og-image.mjs` (a screenshot of an HTML card in the
+  site's ticket language: paper #faf5ea, ink frame, serif wordmark,
+  mono lines, the stamp; no gradients, no glow, no stock art). The
+  first two renders had the stamp overlapping card text; the final
+  render, read before shipping, is clean.
+- **HowTo schema on all 14 tool pages** — each tool page gained a
+  HowTo JSON-LD block beside its FAQ block (3–4 steps per page;
+  localised pages carry `inLanguage` and their own language's steps).
+  Every step is transcribed from that page's own intro, ticket labels
+  (tray text, run button, download button) and "How it works" text;
+  no step describes anything the page does not itself describe. This
+  closes the HowTo debt carried since milestone 1.
+- **llms.txt** — `public/llms.txt`: a plain factual index of the 10
+  tool pages, the 4 hubs, the shutdown set, the localised set and the
+  standing pages, one line each with its benchzy.com URL. Recorded
+  here as HYGIENE, per the calibration in MARKETING.md section 4.1:
+  our own research found no measured ranking effect for this file
+  across ~300K domains; it costs nothing and signals intent. It is
+  not a growth claim.
+- **The promise line, with a computed score** — `/what-free-means/`
+  gained a "One workshop, every job" section stating the aim in the
+  owner's words ("Our promise: every file job in one place. We are
+  growing Benchzy into the biggest toolkit on the web, tool by tool,
+  and the count below is the score."), followed by a score the build
+  computes from the page sources themselves: **7 working tools, 14
+  tool pages, 26 pages in all**. Definitions are printed on the page:
+  a tool is a distinct working engine; preset pages and translations
+  count as pages, never as new tools. One build lesson recorded: a
+  glob never returns the importing file itself, so the page adds
+  itself back (+1), verified against the audit's independent recount
+  from src/ (same numbers). "Biggest" as a claim about Benchzy appears
+  ONLY in this section, as an aim; the audit (below) enforces it.
+
+## Title and description audit (against SEO-DEMAND target terms)
+
+Every page's title was checked against its target term in
+notes/SEO-DEMAND.md (head terms section 2.1, size family 2.3, AI jobs
+2.5, ranked matrix section 3) and every description for specificity.
+Three titles missed their exact head term and were fixed:
+
+| Page | Before | After | Term |
+|---|---|---|---|
+| /merge-pdf/ | Merge PDFs into one file, free, in your browser | Merge PDF: put PDFs into one file, free, in your browser | merge pdf (HEAD, §3 #23) |
+| /split-pdf/ | Split a PDF by pages, free, in your browser | Split PDF by pages, free, in your browser | split pdf (HEAD, §3 #25) |
+| /ocr-pdf/ | Read a scanned PDF (OCR), free, in your browser | OCR PDF: read a scanned PDF, free, in your browser | ocr pdf (§3 #41) |
+
+Checked and left as they stand (title carries its term): remove
+background / background remover (both BG pages, the hub, both ES and
+both PT-BR pages, in their own languages), compress PDF and compress
+PDF to 200 KB, compress image and compress image to 50 KB, file size
+checker, the three hubs, the whole shutdown set (remove.bg terms),
+the proof and commitments pages, credits, and the homepage (brand
+page). Descriptions: all 26 are specific to their page (job, target,
+method, limit); none was generic and none was changed.
+
+## Internal-link audit (crawl of the built site, verify/seo-audit.mjs)
+
+- **Orphan pages: 0.** Every page has at least one inbound internal
+  link (footer and nav links counted, as a crawler sees them).
+- **Click depth from home:** depth 0: 1 page (home); depth 1: 14
+  (nav tools, both preset pages, proof, commitments, credits);
+  depth 2: 8 (the BG hub, the PDF and image hubs, the vs page, all
+  four localised pages); depth 3: 3 (/remove-bg-alternatives/,
+  /remove-bg-december-1/, /remove-bg-api/, all reached through the
+  BG hub, where the plan puts them). **Nothing is deeper than 3
+  clicks, so no link fixes were needed**; the audit now fails the
+  build if a page ever becomes an orphan or sinks past depth 3.
+
+## Schema spot-checks
+
+The audit parses EVERY JSON-LD block on every page (all parse; the
+full per-page type table is in verify/seo-audit.json). Three named
+spot-checks: /merge-pdf/ → [FAQPage, HowTo]; /remove-background/ →
+[FAQPage, HowTo]; /es/quitar-fondo-de-imagen-gratis/ → [FAQPage,
+HowTo] with inLanguage on both. All 14 tool pages carry FAQPage +
+HowTo; no other page claims a HowTo.
+
+## "Biggest" guard
+
+The audit strips the reviewed rival references ("the biggest
+converter", "the biggest PDF site", "the biggest site" — the measured
+incumbents of NUMBERS.md — and "the biggest one", the biggest photo
+inside a PDF in the compress pages' own text) and then fails if
+"biggest" or "most tools" appears anywhere outside
+/what-free-means/. It passes: as a claim about Benchzy, the word
+exists only as the stated aim on the commitments page.
+
+## Verified
+
+- `astro build` clean: 26 pages + /sitemap.xml.
+- `verify/seo-audit.mjs`: **ALL CHECKS PASSED** — sitemap parses and
+  its 26 URLs equal the dist page set; exactly one canonical per
+  page, self-referencing; OG/Twitter complete on all 26; robots
+  names every AI crawler and disallows nothing; llms.txt present;
+  all JSON-LD parses; HowTo on all 14 tool pages; 0 orphans; max
+  depth 3; the promise page's printed score (7 / 14 / 26) equals the
+  audit's independent recount; the "biggest" guard passes.
+- `verify/verify.mjs` full regression on this dist: **all 26 pages
+  load with zero console errors and zero failed requests**; every
+  tool re-ran unchanged — compress image byte-identical to the bench
+  again (199,856 B at q40), compress PDF photo 415,377 B under the
+  500 KB target, presets 90,117 B / 50,112 B, merge 25 files, OCR key
+  strings with the known decimal flaw, size checker exact, witness 0
+  requests during the job, service worker active (47 cached entries,
+  offline reopen passing), background removal full-size 1200x900,
+  915 KB in EN (cutout 10.9 s), ES (11.3 s) and PT-BR, all 11 model
+  pieces cached after the run.
+
+## Left open after milestone 5
+
+Nothing on this milestone's list. The standing pre-launch items from
+earlier milestones are unchanged and were out of scope here: the
+ES/PT-BR human translation review (TRANSLATIONS.md), self-hosted font
+files, the workbench chain test (T7), the memory guard (T8), the
+speed budget with the design layer on (T11), the compress-PDF 200 KB
+ladder refinement, and MP4 to MP3 behind the FFmpeg licence gate.

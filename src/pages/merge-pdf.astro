@@ -24,9 +24,22 @@ const faqJson = JSON.stringify({
   '@type': 'FAQPage',
   mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
 });
+// HowTo (milestone 5): the steps are this page's own workflow, transcribed
+// from its intro, ticket labels and "How it works" text above.
+const howToJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: "How to merge PDFs into one file",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Pick your PDFs", text: "Drop PDFs on the tray, or click to pick them. They are read into this page; they are never uploaded." },
+    { '@type': 'HowToStep', position: 2, name: "Put the files in order", text: "The merged file follows the list on this page, top to bottom. Use the Up and Down buttons to arrange the pack before you merge. Inside a file, its pages keep their own order." },
+    { '@type': 'HowToStep', position: 3, name: "Merge into one PDF", text: "Press 'Merge into one PDF'. The page opens each PDF, copies its pages into a new file in list order, and saves." },
+    { '@type': 'HowToStep', position: 4, name: "Download the merged PDF", text: "Take the finished file away. Pages are copied, not rebuilt, so nothing is recompressed and nothing is lost." },
+  ],
+});
 ---
 
-<Base title="Merge PDFs into one file, free, in your browser · Benchzy" description="Combine as many PDFs as you like into one file, in your order, with the work done inside your browser. No upload, no account, no file-count cap.">
+<Base title="Merge PDF: put PDFs into one file, free, in your browser · Benchzy" description="Combine as many PDFs as you like into one file, in your order, with the work done inside your browser. No upload, no account, no file-count cap.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
       <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · PDF bench</p>
@@ -108,6 +121,7 @@ const faqJson = JSON.stringify({
     </section>
   </div>
   <script type="application/ld+json" set:html={faqJson}></script>
+  <script type="application/ld+json" set:html={howToJson}></script>
   <script>
     import '../scripts/merge-pdf.js';
   </script>

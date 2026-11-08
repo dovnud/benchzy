@@ -1,0 +1,43 @@
+# Benchzy
+
+> Benchzy is a workshop of free file tools that run inside the visitor's web browser. Files are processed on the visitor's own device and are never uploaded; there is no server that receives them. There are no accounts, no sign-up, no daily counters, no credits and no watermarks. Output is produced at the file's full size. The site is paid for by ads on the pages; an ad can see which page a visitor is on and can never see their file.
+
+## Tools
+
+- [Remove background](https://benchzy.com/remove-background/): Remove the background from a photo at full size, free, in the browser. The first visit downloads the removal program (44.3 MB, in 11 hash-checked pieces); the photo itself is never sent anywhere.
+- [Free background remover, full resolution](https://benchzy.com/remove-background-full-resolution/): The same remover, on the page that states the full-size promise and the dated facts about the alternative that closes 1 December 2026.
+- [Compress PDF to an exact size](https://benchzy.com/compress-pdf/): Shrink a PDF to a target the visitor picks (200 KB, 500 KB, 2 MB or a custom size), in the browser, with the exact final size shown before download.
+- [Compress PDF to 200 KB](https://benchzy.com/compress-pdf-to-200kb/): The compress-PDF tool with the 200 KB target preset, for form portals with a hard 200 KB limit.
+- [Compress image to an exact KB](https://benchzy.com/compress-image/): Shrink a photo to an exact target size in KB, searched by quality and dimensions, in the browser; the achieved size and its distance from the target are shown.
+- [Compress image to 50 KB](https://benchzy.com/compress-image-to-50kb/): The compress-image tool with the 50 KB target preset, for forms and listings.
+- [Merge PDF](https://benchzy.com/merge-pdf/): Combine as many PDFs as the device can hold into one file, in the visitor's order. Pages are copied, not recompressed.
+- [Split PDF](https://benchzy.com/split-pdf/): Pull a page range out of a PDF as its own file, or take every page as a separate PDF.
+- [Read a scanned PDF (OCR)](https://benchzy.com/ocr-pdf/): Turn a scanned PDF into checkable, editable text plus a searchable PDF. Pages are rendered at 300 DPI and read in the browser.
+- [File size checker](https://benchzy.com/size-checker/): Read any file's exact size in bytes, its real format (from its bytes, not its name), dimensions, page count or duration, and whether it fits common portal limits.
+
+## Tool hubs
+
+- [All tools](https://benchzy.com/tools/): Every Benchzy tool on one page.
+- [PDF tools](https://benchzy.com/pdf-tools/): The PDF bench: compress to an exact size, merge, split, read scans.
+- [Image tools](https://benchzy.com/image-tools/): The image bench: compress to an exact KB, size checker, background removal.
+- [Background removal](https://benchzy.com/background-removal/): The background-removal workshop: the remover, the full-resolution page, and the shutdown pages below.
+
+## The remove.bg shutdown, in English
+
+- [Benchzy vs remove.bg](https://benchzy.com/vs-remove-bg/): A facts-only comparison, checked 8 November 2026: free download size, credits, accounts, commercial use, where the photo is processed, and what happens on 1 December 2026.
+- [remove.bg alternatives](https://benchzy.com/remove-bg-alternatives/): The alternatives list for after 1 December 2026 (Canva, Pixlr, Photoroom, Removal.ai, Pixelcut, Benchzy), each with its free wall stated and dated.
+- [What happens to remove.bg on 1 December 2026](https://benchzy.com/remove-bg-december-1/): What closes, what happens to unused credits, where the API goes, and what to do before the date.
+- [For remove.bg API users](https://benchzy.com/remove-bg-api/): A short factual note: the remove.bg API ends 1 December 2026, its official new home is Leonardo.Ai, and Benchzy offers no API.
+
+## Background removal in other languages
+
+- [Quitar fondo de imagen gratis (Español)](https://benchzy.com/es/quitar-fondo-de-imagen-gratis/): The background remover in Spanish, full size, in the browser.
+- [Quitar fondo a resolución completa (Español)](https://benchzy.com/es/quitar-fondo-resolucion-completa/): The full-resolution remover page in Spanish.
+- [Remover fundo de imagem grátis (Português)](https://benchzy.com/pt-br/remover-fundo-de-imagem-gratis/): The background remover in Brazilian Portuguese, full size, in the browser.
+- [Alternativa grátis ao remove.bg (Português)](https://benchzy.com/pt-br/alternativa-gratis-ao-remove-bg/): The free remove.bg alternative page in Brazilian Portuguese.
+
+## Standing pages
+
+- [What free means here](https://benchzy.com/what-free-means/): The written commitment: no accounts, no counters, no credits, no watermarks, no download held for payment, no smaller free size, no upload — and the one real limit, the visitor's device.
+- [Check it yourself](https://benchzy.com/check-it-yourself/): The no-upload proof. Run a job while the page lists every request it makes, live, or follow the steps to check in the browser's own network panel.
+- [Credits and licences](https://benchzy.com/credits/): Every engine, model and library Benchzy runs, with its licence.

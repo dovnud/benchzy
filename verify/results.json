@@ -203,7 +203,7 @@
       "failedRequests": []
     },
     "compressImage": {
-      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 7.5 seconds.",
+      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 7.7 seconds.",
       "blobSize": 199856,
       "targetBytes": 204800,
       "within5pct": true,
@@ -223,7 +223,7 @@
       "failedRequests": []
     },
     "ocr": {
-      "note": "Read 1 page, 177 characters, in 1.4 seconds. Check the text in the box before you use it, especially numbers: this engine has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and the .txt download uses your corrected text.",
+      "note": "Read 1 page, 177 characters, in 1.5 seconds. Check the text in the box before you use it, especially numbers: this engine has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and the .txt download uses your corrected text.",
       "checks": {
         "hasInvoice": true,
         "hasNumber": true,
@@ -280,7 +280,7 @@
     },
     "removeBackground": {
       "ran": true,
-      "times": "Program start: 2.7 s. Cutout: 11.2 s. Full size result: 1200 x 900, 915 KB.",
+      "times": "Program start: 2.6 s. Cutout: 10.9 s. Full size result: 1200 x 900, 915 KB.",
       "status": "Done.",
       "dlName": "test-bg-hard-no-background.png",
       "noSubjectShown": false,
@@ -296,7 +296,7 @@
     },
     "removeBackgroundEs": {
       "ran": true,
-      "times": "Inicio del programa: 2,3 s. Recorte: 11,8 s. Resultado a tamaño completo: 1200 x 900, 915 KB.",
+      "times": "Inicio del programa: 2,2 s. Recorte: 11,3 s. Resultado a tamaño completo: 1200 x 900, 915 KB.",
       "status": "Listo.",
       "dlName": "test-bg-hard-sin-fondo.png",
       "noSubjectShown": false,
@@ -312,7 +312,7 @@
     },
     "removeBackgroundPtBr": {
       "ran": true,
-      "times": "Início do programa: 2,2 s. Recorte: 11,1 s. Resultado em tamanho real: 1200 x 900, 915 KB.",
+      "times": "Início do programa: 2,0 s. Recorte: 11,1 s. Resultado em tamanho real: 1200 x 900, 915 KB.",
       "status": "Pronto.",
       "dlName": "test-bg-hard-sem-fundo.png",
       "noSubjectShown": false,
