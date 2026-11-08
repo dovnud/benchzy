@@ -1,0 +1,109 @@
+---
+import Base from '../layouts/Base.astro';
+
+const families = [
+  {
+    name: 'Background removal',
+    tools: [
+      { name: 'Remove background', href: '/remove-background/', live: true, note: 'Full size cutouts. The program runs in your browser; the first run downloads it (44.3 MB, printed before it loads).' },
+    ],
+  },
+  {
+    name: 'PDF jobs',
+    tools: [
+      { name: 'Compress PDF to a size', href: '/compress-pdf/', live: true, note: 'Pick a target, 200 KB, 500 KB, 2 MB or your own number, and the page works to land under it.' },
+      { name: 'Compress PDF to 200 KB', href: '/compress-pdf-to-200kb/', live: true, note: 'The tight-portal preset: the same bench, with the 200 KB target already set.' },
+      { name: 'Merge PDF', href: '/merge-pdf/', live: true, note: 'As many files as your device can hold, in your order. On the bench, merging 25 files took 71 milliseconds.' },
+      { name: 'Split PDF', href: '/split-pdf/', live: true, note: 'Pull out a page range as one file, or take every page as its own PDF.' },
+      { name: 'Read a scan (OCR)', href: '/ocr-pdf/', live: true, note: 'Scanned pages read at 300 DPI: checkable text plus a searchable PDF. 96% character accuracy on the test invoice.' },
+    ],
+  },
+  {
+    name: 'Image jobs',
+    tools: [
+      { name: 'Compress image to exact KB', href: '/compress-image/', live: true, note: 'The tool the big sites do not offer: a photo at the exact size a form or shop asks for.' },
+      { name: 'Compress image to 50 KB', href: '/compress-image-to-50kb/', live: true, note: 'The form and seller preset: the same bench, with the 50 KB target already set.' },
+      { name: 'Convert and resize', href: null, live: false, note: 'Measured and in the build plan. WebP output beat the biggest converter on the same photo.' },
+    ],
+  },
+  {
+    name: 'Check a file',
+    tools: [
+      { name: 'Size checker', href: '/size-checker/', live: true, note: 'Exact bytes, real format, dimensions, pages or duration, lined up against the doors portals set.' },
+    ],
+  },
+];
+---
+
+<Base title="Benchzy: file jobs, done on your device" description="Free file tools that run inside your browser. Remove a background, compress a PDF to an exact size, shrink a photo to an exact KB. No uploads, no accounts.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="ticket mt-8 p-6 sm:p-10">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket no. 001 · the whole workshop</p>
+      <h1 class="font-display text-4xl sm:text-5xl font-black leading-tight mt-3">File jobs, done on your device.</h1>
+      <p class="mt-4 text-lg leading-relaxed max-w-2xl">
+        Benchzy is a workshop of file tools that run inside your web browser. Your files are processed
+        on your own device and are never uploaded. There are no accounts, no daily counters and no
+        watermarks. Nine tools are on the bench and working today; the rest of the workshop is
+        measured, planned, and listed below for what it is.
+      </p>
+      <dl class="mt-6 max-w-md">
+        <div class="spec-row"><dt>files sent to a server</dt><dd>0, by design</dd></div>
+        <div class="spec-row"><dt>sign-up</dt><dd>none</dd></div>
+        <div class="spec-row"><dt>daily limit</dt><dd>there is no counter</dd></div>
+        <div class="spec-row"><dt>price</dt><dd>free; the site carries ads</dd></div>
+      </dl>
+    </section>
+
+    {families.map((fam) => (
+      <section class="mt-10">
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">{fam.name}</h2>
+        <div class="mt-4 grid gap-4">
+          {fam.tools.map((t) => (
+            <article class="ticket-soft p-5 flex flex-wrap items-baseline gap-3">
+              <h3 class="font-display text-xl font-bold">{t.name}</h3>
+              {t.live
+                ? <span class="stamp">On the bench</span>
+                : <span class="font-mono text-xs uppercase tracking-widest text-ink-soft border border-line px-2 py-1">In the plan</span>}
+              <p class="w-full text-ink-soft leading-relaxed">{t.note}</p>
+              {t.live && <a class="btn-primary no-underline mt-1" href={t.href}>Open the tool</a>}
+            </article>
+          ))}
+        </div>
+      </section>
+    ))}
+
+    <section class="ticket mt-12 p-6 sm:p-8" id="workbench">
+      <div class="flex items-baseline flex-wrap gap-3">
+        <h2 class="font-display text-2xl font-bold">Your workbench</h2>
+        <span class="font-mono text-xs uppercase tracking-widest text-ink-soft">saved in your browser, nowhere else</span>
+      </div>
+      <p class="mt-3 text-ink-soft leading-relaxed max-w-2xl">
+        Jobs you finish and settings you choose are noted here, in this browser's own storage.
+        The notes hold names and sizes only; your files themselves are never stored, so download
+        your result before you close the page. Nothing here is sent to us or anyone else.
+      </p>
+      <p id="wb-empty" class="font-mono text-sm mt-4 text-ink-soft">No jobs yet. The tray is empty.</p>
+      <ul id="wb-jobs" class="mt-2"></ul>
+      <button id="wb-clear" class="chip mt-4" type="button">Clear the tray</button>
+    </section>
+
+    <section class="mt-12 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How a job runs</h2>
+      <ol class="mt-4 grid gap-4 sm:grid-cols-3 font-mono text-sm leading-relaxed">
+        <li class="ticket-soft p-4"><span class="text-accent-deep font-bold">01 · Pick a file.</span><br />It is read into this page's memory, nowhere else.</li>
+        <li class="ticket-soft p-4"><span class="text-accent-deep font-bold">02 · The bench works.</span><br />An open-source program, loaded from this site, does the job on your device.</li>
+        <li class="ticket-soft p-4"><span class="text-accent-deep font-bold">03 · Take it away.</span><br />Download the result. Close the page and the file is gone from memory.</li>
+      </ol>
+      <p class="mt-4 font-mono text-xs text-ink-soft">Network witness: during a job, this page sends 0 files to any server. You can check that yourself in your browser's network panel while a job runs.</p>
+    </section>
+  </div>
+
+  <script>
+    import { renderJobs, clearJobs } from '../scripts/workbench.js';
+    renderJobs(document.getElementById('wb-jobs'), document.getElementById('wb-empty'));
+    document.getElementById('wb-clear').addEventListener('click', () => {
+      clearJobs();
+      renderJobs(document.getElementById('wb-jobs'), document.getElementById('wb-empty'));
+    });
+  </script>
+</Base>

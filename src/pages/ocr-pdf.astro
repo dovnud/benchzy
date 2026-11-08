@@ -1,0 +1,122 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faq = [
+  {
+    q: 'How does reading a scan work here?',
+    a: 'The page draws each page of your PDF as a picture at 300 DPI, the sharpness the reading engine needs, and the engine reads the words off the picture. On our test invoice, a clean one-page scan, it read 96.1% of the characters correctly.',
+  },
+  {
+    q: 'Can I trust the numbers it reads?',
+    a: 'Check them. On our clean test invoice this engine read the total 124.50 as 12450, dropping the decimal point. That is why the text is shown in an editable box: read it, fix anything, then download. Never send on numbers you have not eyeballed.',
+  },
+  {
+    q: 'What do I get at the end?',
+    a: 'The text in the box (downloadable as a .txt, with your fixes included) and a searchable PDF: your pages as pictures with the recognised words laid invisibly over them, so the file can be searched and copied. The searchable PDF carries the text exactly as read, before your fixes.',
+  },
+  {
+    q: 'Where does my scan go?',
+    a: 'Nowhere. Scans hold some of the most private paper people own, and this page was built for that: the file is read into this page and processed in your browser. Watch the network panel while it works if you want to check.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Base title="Read a scanned PDF (OCR), free, in your browser · Benchzy" description="Turn a scanned PDF into text you can check, fix and download, plus a searchable PDF. The reading runs inside your browser at 300 DPI. No upload, no account.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · PDF bench</p>
+      <h1 class="font-display text-4xl font-black mt-2">Read a scan (OCR)</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        A scanned PDF is a photograph of paper: you can look at it, but you cannot search it or copy
+        from it. This page reads the words off the pages, shows you the text to check, and hands it
+        back as text and as a searchable PDF. Everything runs in your browser; the file is never uploaded.
+      </p>
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="oc-tool">
+      <div id="oc-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
+        <p class="font-display text-xl font-bold">Drop a scanned PDF on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">PDF · it stays on this device</p>
+        <input id="oc-file" type="file" accept="application/pdf,.pdf" class="hidden" />
+      </div>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">How the reading goes</h2>
+          <p class="text-ink-soft text-sm leading-relaxed mt-3 max-w-md">
+            Each page is drawn at 300 DPI and read. One page takes a second or two once the engine
+            is loaded; the first run loads it (about 10 MB, once). The text lands in an editable
+            box below: it is yours to check and fix before anything is downloaded.
+          </p>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="oc-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <button id="oc-run" class="btn-primary w-full mt-5" type="button" disabled>Read the text</button>
+          <p id="oc-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a PDF to begin.</p>
+        </div>
+      </div>
+
+      <div id="oc-result" class="hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Result</h2>
+          <span class="stamp" id="oc-stamp">Done on your device</span>
+        </div>
+        <p id="oc-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
+        <label class="font-mono text-xs uppercase tracking-widest text-ink-soft block mt-5" for="oc-text">The text, for checking</label>
+        <textarea id="oc-text" rows="12" class="mt-2 w-full border border-ink bg-ticket px-3 py-2 font-mono text-sm leading-relaxed"></textarea>
+        <div class="flex gap-3 mt-4 flex-wrap">
+          <button id="oc-download-txt" class="btn-primary" type="button">Download the text (.txt)</button>
+          <button id="oc-download-pdf" class="btn-primary" type="button">Download searchable PDF</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The sharpness matters more than anything: on our bench the same page read at 200 DPI fell
+          apart (about 62% of characters right), while at 300 DPI it read 96.1%. So this page always
+          renders at 300 DPI before reading, even when the scan inside the PDF is smaller. The
+          recogniser also reports where each word sits, which is how the searchable PDF gets its
+          invisible text layer.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Clean, straight scans read well; skewed phone photos, shadows, handwriting and stamps over
+          text will read worse, sometimes much worse. Numbers are the weak spot: this engine dropped
+          a decimal point in a money amount on a clean test page, so check figures character by
+          character. Files up to 50 pages read in one go. English is the language loaded in this
+          version.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script is:inline src="/tesseract/tesseract.min.js"></script>
+  <script>
+    import '../scripts/ocr-pdf.js';
+  </script>
+</Base>

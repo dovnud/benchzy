@@ -1,0 +1,124 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faq = [
+  {
+    q: 'Is the result full size?',
+    a: 'Yes. The cutout is produced at the same pixel dimensions as the photo you picked. Nothing is shrunk to a preview size.',
+  },
+  {
+    q: 'Where does my photo go?',
+    a: 'Nowhere. The photo is read into this page and processed by a program running in your browser. You can watch your browser network panel during the job: the only download is the removal program itself, once.',
+  },
+  {
+    q: 'Why is the first run slower?',
+    a: 'The first time, your browser downloads the removal program (44.3 MB). After that it is saved on your device and later visits start at once. The cut itself took about 13 seconds per photo on a desktop computer in our tests; phones vary and we do not promise a phone time we have not measured.',
+  },
+  {
+    q: 'What photos does it struggle with?',
+    a: 'Hair, glass and see-through objects are good but not perfect; fine strands at the edge can be lost. If a photo has no clear subject, the tool says so instead of inventing a cutout.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Base title="Remove background from a photo, free, in your browser · Benchzy" description="Remove the background from a photo at full size, free, with the work done inside your browser. No upload, no account, no preview-size limit.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · background removal</p>
+      <h1 class="font-display text-4xl font-black mt-2">Remove background</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Pick a photo and this page cuts out the subject at full size. The work runs in your browser:
+        your photo is never uploaded. The first run downloads the removal program, 44.3 MB, once;
+        that size is printed here before anything loads, and later visits reuse the saved copy.
+      </p>
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="bg-tool">
+      <div id="bg-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a photo">
+        <p class="font-display text-xl font-bold">Drop a photo on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">JPG or PNG · it stays on this device · the program loads only when you press start</p>
+        <input id="bg-file" type="file" accept="image/*" class="hidden" />
+      </div>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <img id="bg-preview" alt="Your photo" class="hidden w-full border border-line bg-paper-deep object-contain max-h-96" />
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="bg-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <button id="bg-run" class="btn-primary w-full mt-5" type="button" disabled>Remove the background</button>
+          <p id="bg-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a photo to begin.</p>
+        </div>
+      </div>
+
+      <div id="bg-nosubject" class="hidden mt-6 border border-accent p-4 bg-paper">
+        <p class="font-bold">No clear subject found.</p>
+        <p class="text-ink-soft mt-1">The program looked and could not find a subject standing out from the background in this photo. We would rather tell you that than hand you a made-up cutout. A photo with a clearer subject will work better.</p>
+      </div>
+
+      <div id="bg-result" class="hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Your cutout</h2>
+          <span class="stamp" id="bg-stamp">Done on your device</span>
+        </div>
+        <div id="bg-compare" class="compare checker border border-line mt-4 max-w-2xl">
+          <img id="bg-after-img" alt="Photo with the background removed" />
+          <div class="absolute inset-0" id="bg-before-wrap">
+            <img id="bg-before-img" alt="Your original photo" class="w-full" />
+          </div>
+          <div class="divider" id="bg-divider" style="left:50%"></div>
+        </div>
+        <p class="font-mono text-xs text-ink-soft mt-2">Drag on the picture to compare before and after.</p>
+        <input id="bg-range" type="range" min="0" max="100" value="50" class="w-full max-w-2xl mt-2" aria-label="Comparison slider" />
+        <p id="bg-times" class="font-mono text-sm mt-4"></p>
+        <a id="bg-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the cutout (PNG)</a>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          A background-removal program (an ISNet model, open weights, listed on the
+          <a class="underline underline-offset-4" href="/credits/">credits page</a>) runs in this page
+          through your browser's own machinery. It reads the photo, works out which pixels belong to
+          the subject, and writes a new picture where the rest is transparent. Because the work happens
+          here, a photo costs this site nothing to process, and your photo is never sent anywhere.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          This tool works in your browser, so its limits are your device's limits. Very large photos
+          can run out of memory on small phones. Hair, glass and see-through edges are good but not
+          perfect. The 44.3 MB first download is real, and it is printed on this page rather than
+          sprung on you at the download button.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script>
+    import '../scripts/remove-bg.js';
+  </script>
+</Base>

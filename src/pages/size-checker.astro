@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faq = [
+  {
+    q: 'Why check a file here instead of in my file manager?',
+    a: 'Because portals count differently and file managers round. This page prints the exact byte count, the size in both KB conventions, what the file actually is (read from its first bytes, not its name), and for pictures, PDFs and recordings the dimensions, pages or duration a portal will see. Then it lines the file up against the doors portals actually set.',
+  },
+  {
+    q: 'My file was rejected as too small. Can that be real?',
+    a: 'Yes. Some portals reject files under a minimum as firmly as over a maximum (a scan that is too light looks blank to their checks). The exact byte count on this page is the number to compare against their wording.',
+  },
+  {
+    q: 'The portal says KB but my size looks different. Who is right?',
+    a: 'Both, in different units. Some systems count 1 KB as 1,000 bytes, others as 1,024. This page prints the exact bytes and the 1,000-byte KB figure side by side so you can match whichever the portal uses.',
+  },
+  {
+    q: 'Where does my file go?',
+    a: 'Nowhere. It is read into this page and measured in your browser. Watch the network panel while it works if you want to check.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Base title="File size checker: exact bytes, dimensions, pages · Benchzy" description="Drop any file and read its exact size in bytes, its real format, dimensions, page count or duration, and whether it fits the limits portals set. In your browser, no upload.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · the counter</p>
+      <h1 class="font-display text-4xl font-black mt-2">Size checker</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        A portal rejected your file and its message was three words long. Before you fix the file,
+        read it properly: exact bytes, real format, dimensions, pages or duration, and how it
+        stands against the doors portals set. The file is measured here in your browser and never uploaded.
+      </p>
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="sc-tool">
+      <div id="sc-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a file">
+        <p class="font-display text-xl font-bold">Drop any file on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">any format · it stays on this device</p>
+        <input id="sc-file" type="file" class="hidden" />
+      </div>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-2">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="sc-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <p id="sc-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a file to read its spec.</p>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">Against the common doors</h2>
+          <div id="sc-doors" class="mt-2">
+            <p class="font-mono text-sm text-ink-soft">The doors appear once a file is read.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The page reads the file's first bytes to name its real format (a file renamed to .jpg
+          that is really a PNG is called out), counts the bytes exactly, and opens the file just
+          far enough to read its dimensions, page count or duration. Nothing is converted and
+          nothing is kept: close the page and it is gone.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          This page reports the file you have; it does not change it, and it cannot know a specific
+          portal's private rules beyond the limits they print. When a file is over a door, the
+          benches next door do the shrinking: <a class="underline underline-offset-4 hover:text-accent-deep" href="/compress-pdf/">Compress PDF</a> and
+          <a class="underline underline-offset-4 hover:text-accent-deep" href="/compress-image/">Compress image</a> take an exact target and work to land under it.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script>
+    import '../scripts/size-checker.js';
+  </script>
+</Base>

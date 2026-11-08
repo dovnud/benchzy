@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #faf5ea;
+  --color-paper-deep: #f0e7d0;
+  --color-ticket: #fffdf4;
+  --color-ink: #1b2634;
+  --color-ink-soft: #51606f;
+  --color-accent: #d9551e;
+  --color-accent-deep: #b54313;
+  --color-line: #ddd2b8;
+  --color-good: #2e6b34;
+
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --font-sans: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, "DejaVu Sans Mono", monospace;
+}
+
+html {
+  background: var(--color-paper);
+}
+
+body {
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  background-color: var(--color-paper);
+  background-image: radial-gradient(var(--color-line) 0.65px, transparent 0.65px);
+  background-size: 22px 22px;
+}
+
+/* A job ticket: flat paper card, ruled edges, dashed tear lines. */
+.ticket {
+  background: var(--color-ticket);
+  border: 1.5px solid var(--color-ink);
+  box-shadow: 5px 5px 0 0 rgba(27, 38, 52, 0.9);
+}
+.ticket-soft {
+  background: var(--color-ticket);
+  border: 1px solid var(--color-line);
+}
+.tear {
+  border-top: 2px dashed var(--color-line);
+}
+
+/* The rubber stamp that lands on a finished job. */
+.stamp {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-deep);
+  border: 2px solid var(--color-accent-deep);
+  border-radius: 4px;
+  padding: 0.3rem 0.55rem;
+  transform: rotate(-4deg);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.45 0.55'/%3E%3C/filter%3E%3Crect width='120' height='40' filter='url(%23n)'/%3E%3C/svg%3E");
+  mask-size: 120px 40px;
+}
+@keyframes stamp-in {
+  0% { transform: rotate(-4deg) scale(1.7); opacity: 0; }
+  60% { transform: rotate(-4deg) scale(0.94); opacity: 1; }
+  100% { transform: rotate(-4deg) scale(1); opacity: 1; }
+}
+.stamp.land {
+  animation: stamp-in 0.28s ease-out 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .stamp.land { animation: none; }
+}
+
+/* The counter tray: where files are dropped. */
+.tray {
+  border: 2px dashed var(--color-ink-soft);
+  background: var(--color-paper);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.tray.dragging {
+  border-color: var(--color-accent);
+  background: var(--color-paper-deep);
+}
+
+/* Checkerboard behind transparent results. */
+.checker {
+  background-image:
+    repeating-conic-gradient(#d9d2c0 0% 25%, #f4efe0 0% 50%);
+  background-size: 18px 18px;
+}
+
+/* Before and after comparison. */
+.compare {
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+}
+.compare img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.compare .after-wrap {
+  position: absolute;
+  inset: 0;
+}
+.compare .divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-ink);
+  pointer-events: none;
+}
+.compare .divider::after {
+  content: "< >";
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 0.2rem 0.35rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+input[type="range"] {
+  accent-color: var(--color-ink);
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff8ee;
+  border: 1.5px solid var(--color-ink);
+  box-shadow: 3px 3px 0 0 rgba(27, 38, 52, 0.9);
+  font-weight: 600;
+  padding: 0.65rem 1.2rem;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+.btn-primary:hover:not(:disabled) {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 0 rgba(27, 38, 52, 0.9);
+}
+.btn-primary:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 rgba(27, 38, 52, 0.9);
+}
+.btn-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.chip {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  border: 1.5px solid var(--color-ink);
+  padding: 0.35rem 0.7rem;
+  background: var(--color-ticket);
+  cursor: pointer;
+}
+.chip[aria-pressed="true"] {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px dotted var(--color-line);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+.spec-row dt { color: var(--color-ink-soft); }
+.spec-row dd { text-align: right; word-break: break-all; }

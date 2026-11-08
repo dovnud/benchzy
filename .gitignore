@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.astro/
+
+# Vendored engine assets: large binaries (background-removal model, WASM
+# runtimes, OCR language data). They are restored at build/deploy time from
+# the research bench, not kept in git.
+public/models/
+public/ort/
+public/codecs/
+public/pdfjs/
+public/tesseract/
+
+# Verification byproducts
+verify/downloads/
+verify/screenshots/
+verify/out-*.pdf

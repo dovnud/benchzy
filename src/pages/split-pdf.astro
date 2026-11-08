@@ -1,0 +1,123 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faq = [
+  {
+    q: 'What are the two ways to split?',
+    a: 'Pull one range out as a single PDF (pages 5 to 8, say, when a portal wants only the signed part), or take every page as its own one-page PDF, each with its own download.',
+  },
+  {
+    q: 'Does splitting change the pages?',
+    a: 'No. Pages are copied as they are, not re-drawn or recompressed. A page that goes in as text comes out as text.',
+  },
+  {
+    q: 'How fast is it?',
+    a: 'On our bench a 10-page file split in about 21 milliseconds of engine time. The job is effectively instant; picking the range takes longer than the cut.',
+  },
+  {
+    q: 'Where does my PDF go?',
+    a: 'Nowhere. It is read into this page and cut in your browser. Watch the network panel while it works if you want to check.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Base title="Split a PDF by pages, free, in your browser · Benchzy" description="Pull a page range out of a PDF as its own file, or take every page separately. The work runs inside your browser. No upload, no account.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · PDF bench</p>
+      <h1 class="font-display text-4xl font-black mt-2">Split PDF</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        The pack arrived as one file and the portal wants one part of it. Pick the PDF, choose the
+        pages, and take the cut away. Everything runs in your browser; the file is never uploaded.
+      </p>
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="sp-tool">
+      <div id="sp-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
+        <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">PDF · it stays on this device</p>
+        <input id="sp-file" type="file" accept="application/pdf,.pdf" class="hidden" />
+      </div>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">The cut</h2>
+          <div class="mt-3 grid gap-3">
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="sp-mode" value="range" checked />
+              <span>One range as a single PDF</span>
+            </label>
+            <div class="flex items-center gap-2 ml-6 flex-wrap">
+              <label class="font-mono text-xs uppercase tracking-widest text-ink-soft" for="sp-from">From page</label>
+              <input id="sp-from" type="number" min="1" step="1" value="1" class="border border-ink bg-ticket px-3 py-2 font-mono w-24" />
+              <label class="font-mono text-xs uppercase tracking-widest text-ink-soft" for="sp-to">To page</label>
+              <input id="sp-to" type="number" min="1" step="1" value="1" class="border border-ink bg-ticket px-3 py-2 font-mono w-24" />
+            </div>
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="sp-mode" value="each" />
+              <span>Every page as its own PDF</span>
+            </label>
+          </div>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="sp-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <button id="sp-run" class="btn-primary w-full mt-5" type="button" disabled>Cut the PDF</button>
+          <p id="sp-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a PDF to begin.</p>
+        </div>
+      </div>
+
+      <div id="sp-result" class="hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Result</h2>
+          <span class="stamp" id="sp-stamp">Done on your device</span>
+        </div>
+        <div id="sp-links" class="mt-4 grid gap-2"></div>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The page opens your PDF, copies the pages you asked for into a new file, and saves it.
+          Nothing is re-drawn, so the cut is exact and the engine time is measured in milliseconds.
+          Splitting is also the smaller-job path for the other benches: a big file that strains a
+          phone can be cut here first, then worked on in parts.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Taking every page separately gives you one download per page, listed in order; on a long
+          document that is a lot of clicks, and a packed archive download is in the plan rather
+          than here today. A file this page cannot read as a PDF is refused in plain words before
+          any cutting happens.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script>
+    import '../scripts/split-pdf.js';
+  </script>
+</Base>

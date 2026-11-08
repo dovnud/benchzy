@@ -1,0 +1,123 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faq = [
+  {
+    q: 'How does shrinking a PDF to an exact size work?',
+    a: 'Most of a photo-heavy PDF is the photos inside it. This page reads those photos, recompresses them at a smaller size and quality chosen from a quick probe of your file, rebuilds the PDF, and checks the result against your target. The exact final size is shown before you download.',
+  },
+  {
+    q: 'My PDF did not get smaller. Why?',
+    a: 'A PDF that is already tightly compressed, or one made only of text, has nothing for this method to squeeze. Re-saving a text PDF can even add a few bytes. When that happens the page says so and gives you back your original file, unchanged.',
+  },
+  {
+    q: 'Will the quality suffer?',
+    a: 'The photos inside are recompressed, so at small targets they get softer, and the page shows the size and quality setting it used. Text and drawings stay exactly as they were.',
+  },
+  {
+    q: 'Where does my PDF go?',
+    a: 'Nowhere. It is read into this page and processed in your browser. Watch the network panel while it works if you want to check.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const targets = [200, 500, 2048];
+---
+
+<Base title="Compress a PDF to an exact size, free, in your browser · Benchzy" description="Shrink a PDF to 200 KB, 500 KB, 2 MB or a target you pick, with the work done inside your browser. No upload, no account. The exact final size is shown before you download.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · PDF bench</p>
+      <h1 class="font-display text-4xl font-black mt-2">Compress PDF to a size</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Forms and portals ask for a PDF under a hard limit. Pick the file, pick the limit, and this
+        page works to land under it, showing you the exact size it reached. Everything runs in your
+        browser; the file is never uploaded.
+      </p>
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="cp-tool">
+      <div id="cp-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
+        <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">PDF · it stays on this device</p>
+        <input id="cp-file" type="file" accept="application/pdf,.pdf" class="hidden" />
+      </div>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">Target size</h2>
+          <div id="cp-targets" class="flex gap-2 mt-3 flex-wrap">
+            {targets.map((kb) => (
+              <button type="button" class="chip" data-kb={kb} aria-pressed="false">{kb >= 1024 ? (kb / 1024) + ' MB' : kb + ' KB'}</button>
+            ))}
+          </div>
+          <label class="font-mono text-xs uppercase tracking-widest text-ink-soft block mt-5" for="cp-custom">Or your own target (KB)</label>
+          <input id="cp-custom" type="number" min="20" max="50000" step="10" class="mt-2 border border-ink bg-ticket px-3 py-2 font-mono w-40" />
+          <p class="text-ink-soft text-sm leading-relaxed mt-5 max-w-md">
+            Presets for the common doors: 200 KB for tight form portals, 500 KB for most uploads,
+            2 MB for email and course sites. Your last target is remembered in this browser.
+          </p>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="cp-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <button id="cp-run" class="btn-primary w-full mt-5" type="button" disabled>Compress to the target</button>
+          <p id="cp-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a PDF to begin.</p>
+        </div>
+      </div>
+
+      <div id="cp-result" class="hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Result</h2>
+          <span class="stamp" id="cp-stamp">Done on your device</span>
+        </div>
+        <p id="cp-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
+        <a id="cp-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the PDF</a>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The page opens your PDF, finds the photos stored inside it, and probes the biggest one to
+          pick a size and quality setting. It then recompresses every photo at that setting, rebuilds
+          the file, and weighs the result. If it is still over your target it steps down a rung and
+          tries again, a few times at most. On our test bench, an 11.65 MB photo PDF landed under
+          2 MB, 500 KB and 200 KB targets every time.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          We shrink PDFs by recompressing the images inside them and tidying the file. A PDF that is
+          already tightly compressed may not get much smaller. We always show you the before and
+          after size, and if we could not make it smaller, we say so and give you back your original.
+          Photos stored in formats other than JPEG are left as they are in this version, and the
+          result line tells you when that happened.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script>
+    import '../scripts/compress-pdf.js';
+  </script>
+</Base>
