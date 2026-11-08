@@ -1,0 +1,108 @@
+---
+import Base from '../../layouts/Base.astro';
+import BgTicket from '../../components/BgTicket.astro';
+import LangLinks from '../../components/LangLinks.astro';
+
+// Portuguese (BR) strings drafted in-house 2026-11-08. PENDING HUMAN
+// REVIEW before any public launch (see TRANSLATIONS.md).
+const alternates = [
+  { hreflang: 'en', href: '/remove-background-full-resolution/' },
+  { hreflang: 'es', href: '/es/quitar-fondo-resolucion-completa/' },
+  { hreflang: 'pt-BR', href: '/pt-br/alternativa-gratis-ao-remove-bg/' },
+  { hreflang: 'x-default', href: '/remove-background-full-resolution/' },
+];
+const langLinks = [
+  { label: 'English', href: '/remove-background-full-resolution/' },
+  { label: 'Español', href: '/es/quitar-fondo-resolucion-completa/' },
+  { label: 'Português (Brasil)', href: '/pt-br/alternativa-gratis-ao-remove-bg/', current: true },
+];
+
+const faq = [
+  {
+    q: 'É grátis mesmo, ou é uma amostra?',
+    a: 'É grátis. Não há nível pago escondendo o resultado em tamanho real, nem créditos, nem conta. O programa roda no seu aparelho, então um recorte não custa nada para este site; é por isso que não há o que racionar.',
+  },
+  {
+    q: 'O que acontece com o remove.bg em 1º de dezembro de 2026?',
+    a: 'O site do remove.bg fecha nessa data, junto com as contas e os créditos não usados. Os fatos datados, com as fontes, estão na nossa página em inglês sobre o fechamento.',
+  },
+  {
+    q: 'O resultado sai em tamanho real?',
+    a: 'Sim. O recorte sai com o mesmo tamanho em pixels da foto que você colocou. Uma foto de 4000 por 3000 gera um recorte de 4000 por 3000. Não existe um tamanho grátis menor nem um tamanho pago maior, porque só há um tamanho: o seu.',
+  },
+  {
+    q: 'Posso usar o recorte na minha loja ou no meu negócio?',
+    a: 'Sim. O resultado desta página não tem nenhuma restrição de licença da nossa parte, para uso pessoal ou comercial.',
+  },
+  {
+    q: 'Por que a primeira vez demora mais?',
+    a: 'Na primeira vez, o seu navegador baixa o programa de recorte, 44,3 MB, em 11 partes que ele verifica uma a uma. Isso está escrito aqui, não escondido. Depois o programa fica salvo no seu aparelho e as visitas seguintes começam na hora.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  inLanguage: 'pt-BR',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Base lang="pt-BR" title="Alternativa grátis ao remove.bg · Benchzy" description="Uma alternativa gratuita ao remove.bg: recorte em tamanho real, sem créditos, sem conta, com o trabalho feito no seu navegador. O remove.bg fecha em 1º de dezembro de 2026." alternates={alternates}>
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Ordem de serviço · alternativa ao remove.bg</p>
+      <h1 class="font-display text-4xl font-black mt-2">Alternativa grátis ao remove.bg</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        O remove.bg fecha o seu site em 1º de dezembro de 2026. Esta página é a alternativa direta:
+        escolha uma foto e receba o recorte em tamanho real, grátis, sem créditos e sem conta. O
+        trabalho é feito no seu navegador, então a sua foto nunca é enviada para um servidor. Na
+        primeira vez, o programa de recorte é baixado (44,3 MB, em 11 partes verificadas pelo
+        navegador); esse tamanho está escrito aqui, antes de qualquer download.
+      </p>
+      <LangLinks label="Esta página em:" links={langLinks} />
+    </section>
+
+    <BgTicket locale="pt-BR" />
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">O que muda em relação ao remove.bg</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Nos nossos testes ao vivo em 7 de novembro de 2026, o remove.bg grátis devolveu 577 por
+          433 pixels de uma foto de 1200 por 900, cerca de um quarto dos pixels; o tamanho real lá
+          custa um crédito por foto, e os resultados grátis são apenas para uso privado e não
+          comercial, segundo os termos do serviço lidos em novembro de 2026. Aqui, o tamanho real é
+          o único tamanho, o resultado pode ser usado na sua loja ou no seu negócio, e não existe
+          conta para criar nem crédito para acabar. Os fatos datados estão reunidos, em inglês, na
+          página <a class="underline underline-offset-4" href="/remove-bg-december-1/">o que acontece em 1º de dezembro</a>.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Limites honestos</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Não prometemos o recorte mais bonito nem o mais rápido: não fizemos um teste de qualidade
+          lado a lado com o remove.bg em fotos reais, e o tempo em celulares ainda não foi medido.
+          Cabelo, vidro e bordas transparentes ficam bons, mas não perfeitos, e fotos muito grandes
+          podem ficar sem memória em celulares pequenos. O que prometemos é o que dá para conferir:
+          tamanho real, grátis, sem conta e sem contador.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Perguntas frequentes</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script>
+    import '../../scripts/remove-bg.js';
+  </script>
+</Base>

@@ -474,3 +474,138 @@ compress-PDF preset ladder refinement (200 KB preset lands ~90 KB
 where the bench reached ~195 KB); self-hosted font files before
 launch; FilePond/dnd-kit arrive with the batch and page-grid tools in
 1B.
+
+---
+
+# Milestone 4 (2026-11-08): the localised background-removal set (wave 1A items 4–7)
+
+LOCAL ONLY again: nothing pushed, deployed, registered or bought. The
+site is now 26 pages. Wave 1A's page list is fully built except the
+FFmpeg-gated MP4 to MP3 (item 18).
+
+## Translation status, stated plainly first
+
+**The Spanish and Portuguese strings on this site were drafted in-house
+and are PENDING HUMAN REVIEW before any public launch.** No
+native-speaker reviewer has read them yet. The pages below are verified
+as software, not cleared as language. `TRANSLATIONS.md` in the project
+root carries the same statement plus the at-risk list a reviewer should
+read first: the stamp line ("Hecho en tu dispositivo" / "Feito no seu
+dispositivo"), the job-ticket kicker ("Orden de trabajo" / "Ordem de
+serviço"), ES regional terms ("ordenador de sobremesa" is Spain's;
+"computadora de escritorio" is Latin America's), "tamaño completo" vs
+"resolución completa" (ES) and "tamanho real" (PT) for full resolution,
+the tray word ("bandeja"), the hash-check wording ("verificación" /
+"verificação"), the no-subject message's tone, the error messages, the
+footer counter idiom ("Bajo el mostrador" / "Debaixo do balcão"), the
+PT nav's compressed "Ler digitalização", and the download suffixes
+(`-sin-fondo.png` / `-sem-fundo.png`).
+
+## String extraction (the refactor this milestone owed)
+
+- `src/locales/bg.js` is now the single home of the background-removal
+  strings: `ui` (the job-ticket furniture the pages render) and `msg`
+  (the island's runtime messages), in en (source of truth), es, pt-BR.
+- `src/scripts/remove-bg.js` imports the file and picks its set from
+  `data-locale` on the `#bg-tool` section. Every status line, spec
+  label, error message, the times line, the workbench job label and the
+  download file-name suffix come from the locale; decimal commas are
+  applied for es/pt-BR (44,3 MB). No English literal remains in the
+  island's user-facing paths.
+- The ticket markup itself is now one component,
+  `src/components/BgTicket.astro`, rendering the furniture from the
+  locale file. Both English BG pages were refactored onto it; their
+  rendered furniture text was diffed against the pre-refactor build and
+  is identical.
+- `src/layouts/Base.astro` gained `lang` and `alternates` props and a
+  per-locale chrome block: localised pages render `<html lang>`,
+  hreflang tags, and Spanish/Portuguese nav and footer. The English
+  chrome output is unchanged; pages without alternates get no new tags.
+
+## Pages built (BUILD-PLAN 2.2 items 4–7)
+
+4. `/es/quitar-fondo-de-imagen-gratis/` — the ES tool page: full
+   rendered content in Spanish (what it does, how, honest limits, FAQ +
+   FAQ schema with `inLanguage: 'es'`), the model size printed before
+   load (44,3 MB, 11 verified pieces).
+5. `/es/quitar-fondo-resolucion-completa/` — the ES full-resolution
+   page: the same island (full variant furniture), the full-size
+   promise, the measured dated remove.bg contrast and the
+   commercial-use line, in Spanish.
+6. `/pt-br/remover-fundo-de-imagem-gratis/` — the PT-BR tool page,
+   same pattern, `inLanguage: 'pt-BR'`.
+7. `/pt-br/alternativa-gratis-ao-remove-bg/` — the PT-BR free
+   alternative page: the tool with alternative framing, the dated
+   facts (1 December closing, the measured 577x433 free size, credits,
+   non-commercial free results), and honest limits including the
+   printed no-quality-crown / no-speed-crown lines.
+
+Cross-links: two hreflang clusters (tool: EN/ES/PT-BR; full-size:
+EN/ES/PT-BR-alternative), each page also carrying a visible
+language line linking its twins and back. Hubs updated: the
+background-removal hub gained a Spanish/Portuguese section with all
+four doors, the all-tools hub lists both localised tool pages, and the
+image-tools hub links the ES and PT-BR tool pages from its intro.
+
+Claim discipline held: no localised page claims a speed or quality
+result the English pages do not claim; phone times are explicitly
+unmeasured in every locale; the model size is printed in body text
+before anything loads, in the local decimal format.
+
+## Verified (verify/verify.mjs, extended; headless Chrome, dist/ served locally)
+
+- `astro build` clean, **26 pages**.
+- **All 26 pages load with zero console errors and zero failed
+  requests.** The harness now also records i18n wiring per cluster
+  page: html lang, island `data-locale`, the four hreflang alternates,
+  and the localised initial status line — all correct on all six
+  cluster pages.
+- Background removal run end to end from the ES tool page and the
+  PT-BR tool page on corpus `test-bg-hard.png`: both completed a
+  correct full-size cutout (1200x900, 915 KB output — byte-size
+  identical to the English runs), with localised status lines
+  ("Listo." / "Pronto."), localised times lines ("Recorte: 11,8 s.
+  Resultado a tamaño completo…" / "Recorte: 11,1 s. Resultado em
+  tamanho real…") and localised download names
+  (`test-bg-hard-sin-fondo.png` / `test-bg-hard-sem-fundo.png`).
+  The English run re-passed unchanged (program start 2.7 s, cutout
+  11.2 s, 915 KB, all 11 model pieces in the service-worker cache).
+- English regression suite re-ran unchanged: compress image to
+  200 KB **byte-identical to the bench again (199,856 B at q40)**;
+  compress PDF photo 415,377 B under 500 KB; OCR key strings present
+  with the known decimal flaw reproduced; merge 25 files at 6,673 B;
+  presets 90,117 B / 50,112 B; size checker exact; witness 0 requests
+  during the job; service worker active (47 cached entries) with the
+  offline reopen still passing.
+- One recorded drift, content-verified: the split range output is
+  3,590 B this run against 3,588 B in milestone 2. The file itself was
+  extracted and checked: exactly 5 pages carrying PAGE-01..05 and
+  nothing else. The 2 bytes sit in file metadata, not content; the
+  gate results above (byte-identical image output, exact merge size)
+  are unaffected.
+- Screenshots of the ES tool page (desktop and mobile) and the PT-BR
+  tool page (desktop) read against the anti-slop list: same paper /
+  ink / orange ticket language, localised nav and footer, flat
+  offset-shadow buttons, no gradients, no bento grids, no emoji, no
+  glow. No defects found.
+
+## Final wave-1A status
+
+- **23 of 24 wave-1A pages are built**: items 1–17 (English tools,
+  presets, OCR, Merge, the shutdown set, the proof and commitments
+  pages), items 19–24 (hubs and the size checker), and now items 4–7,
+  the localised background-removal set, with items 2–3 (full-resolution
+  page and BG hub) and 8–11 (vs, guide, explainer, API note) from
+  milestone 3.
+- **The one remaining 1A page is item 18, MP4 to MP3**, still
+  FFmpeg-gated: it builds only when the licence route is settled, and
+  per the plan it slips to wave 1B without blocking anything else.
+- 1A infrastructure is complete: chunked hash-verified model delivery
+  (T4) and the service worker shipped in milestone 3; the workbench
+  chain test (T7 acceptance), memory guard (T8), speed budget with
+  the design layer on (T11) and HowTo schema remain owed beyond 1A,
+  as listed in milestone 3.
+- Before any public launch, two human gates stand in front of this
+  milestone's pages: the native-speaker review of the ES and PT-BR
+  strings (TRANSLATIONS.md), and the self-hosted font files noted in
+  milestone 1.

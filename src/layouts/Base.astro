@@ -1,20 +1,102 @@
 ---
 import '../styles/global.css';
 
+interface Alternate {
+  hreflang: string;
+  href: string;
+}
 interface Props {
   title: string;
   description: string;
+  lang?: string;
+  alternates?: Alternate[];
 }
-const { title, description } = Astro.props;
+const { title, description, lang = 'en', alternates = [] } = Astro.props;
+
+// Page chrome (nav + footer) per locale. en is the source of truth and
+// renders exactly what this layout always rendered. The es / pt-BR
+// chrome serves the localised background-removal pages; the tools it
+// names (other than background removal) are still English pages, so
+// those links stay on the English routes. Drafted in-house 2026-11-08,
+// PENDING HUMAN REVIEW (TRANSLATIONS.md).
+const CHROME = {
+  en: {
+    tagline: 'the file workshop',
+    nav: [
+      { label: 'All tools', href: '/tools/' },
+      { label: 'Remove background', href: '/remove-background/' },
+      { label: 'Compress PDF', href: '/compress-pdf/' },
+      { label: 'Compress image', href: '/compress-image/' },
+      { label: 'Merge', href: '/merge-pdf/' },
+      { label: 'Read a scan', href: '/ocr-pdf/' },
+      { label: 'Size checker', href: '/size-checker/' },
+    ],
+    footHowH: 'How it works',
+    footHow: 'Every job runs inside your browser, on your device. Files are not uploaded. There is no server here that could receive them.',
+    footRulesH: 'The standing rules',
+    footRules: 'No accounts. No sign-up. No daily counters. No watermarks on output. If a tool cannot do a job well, the page says so before you pick a file.',
+    footFree: 'What free means here',
+    footCheck: 'Check it yourself',
+    footUnderH: 'Under the counter',
+    footUnder: 'The engines are open-source and run from this site.',
+    footCredits: 'Credits and licences',
+  },
+  es: {
+    tagline: 'el taller de archivos',
+    nav: [
+      { label: 'Todas las herramientas', href: '/tools/' },
+      { label: 'Quitar fondo', href: '/es/quitar-fondo-de-imagen-gratis/' },
+      { label: 'Comprimir PDF', href: '/compress-pdf/' },
+      { label: 'Comprimir imagen', href: '/compress-image/' },
+      { label: 'Unir', href: '/merge-pdf/' },
+      { label: 'Leer un escaneo', href: '/ocr-pdf/' },
+      { label: 'Comprobar tamaño', href: '/size-checker/' },
+    ],
+    footHowH: 'Cómo funciona',
+    footHow: 'Cada trabajo se hace dentro de tu navegador, en tu dispositivo. Los archivos no se suben. No hay ningún servidor aquí que pudiera recibirlos.',
+    footRulesH: 'Las reglas de la casa',
+    footRules: 'Sin cuentas. Sin registro. Sin contadores diarios. Sin marcas de agua en el resultado. Si una herramienta no puede hacer bien un trabajo, la página lo dice antes de que elijas un archivo.',
+    footFree: 'Qué significa gratis aquí',
+    footCheck: 'Compruébalo tú mismo',
+    footUnderH: 'Bajo el mostrador',
+    footUnder: 'Los motores son de código abierto y funcionan desde este sitio.',
+    footCredits: 'Créditos y licencias',
+  },
+  'pt-BR': {
+    tagline: 'a oficina de arquivos',
+    nav: [
+      { label: 'Todas as ferramentas', href: '/tools/' },
+      { label: 'Remover fundo', href: '/pt-br/remover-fundo-de-imagem-gratis/' },
+      { label: 'Comprimir PDF', href: '/compress-pdf/' },
+      { label: 'Comprimir imagem', href: '/compress-image/' },
+      { label: 'Juntar', href: '/merge-pdf/' },
+      { label: 'Ler digitalização', href: '/ocr-pdf/' },
+      { label: 'Verificar tamanho', href: '/size-checker/' },
+    ],
+    footHowH: 'Como funciona',
+    footHow: 'Todo trabalho é feito dentro do seu navegador, no seu aparelho. Os arquivos não são enviados. Não há nenhum servidor aqui que possa recebê-los.',
+    footRulesH: 'As regras da casa',
+    footRules: 'Sem contas. Sem cadastro. Sem contadores diários. Sem marcas d’água no resultado. Se uma ferramenta não consegue fazer bem um trabalho, a página avisa antes de você escolher um arquivo.',
+    footFree: 'O que grátis significa aqui',
+    footCheck: 'Confira você mesmo',
+    footUnderH: 'Debaixo do balcão',
+    footUnder: 'Os mecanismos são de código aberto e rodam a partir deste site.',
+    footCredits: 'Créditos e licenças',
+  },
+};
+const c = CHROME[lang] || CHROME.en;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    {alternates.map((a) => (
+      <link rel="alternate" hreflang={a.hreflang} href={a.href} />
+    ))}
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23faf5ea'/%3E%3Crect x='4' y='4' width='24' height='24' fill='none' stroke='%231b2634' stroke-width='2'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='16' font-weight='bold' text-anchor='middle' fill='%23d9551e'%3EB%3C/text%3E%3C/svg%3E" />
   </head>
   <body class="min-h-screen flex flex-col">
@@ -23,15 +105,11 @@ const { title, description } = Astro.props;
         <a href="/" class="font-display text-3xl font-black tracking-tight text-ink no-underline">
           Benchzy<span class="text-accent">.</span>
         </a>
-        <span class="font-mono text-xs uppercase tracking-widest text-ink-soft hidden sm:inline">the file workshop</span>
+        <span class="font-mono text-xs uppercase tracking-widest text-ink-soft hidden sm:inline">{c.tagline}</span>
         <nav class="ml-auto flex gap-5 font-mono text-sm">
-          <a class="hover:text-accent-deep underline-offset-4 hover:underline" href="/tools/">All tools</a>
-          <a class="hover:text-accent-deep underline-offset-4 hover:underline" href="/remove-background/">Remove background</a>
-          <a class="hover:text-accent-deep underline-offset-4 hover:underline" href="/compress-pdf/">Compress PDF</a>
-          <a class="hover:text-accent-deep underline-offset-4 hover:underline" href="/compress-image/">Compress image</a>
-          <a class="hover:text-accent-deep underline-offset-4 hover:underline" href="/merge-pdf/">Merge</a>
-          <a class="hover:text-accent-deep underline-offset-4 hover:underline" href="/ocr-pdf/">Read a scan</a>
-          <a class="hover:text-accent-deep underline-offset-4 hover:underline" href="/size-checker/">Size checker</a>
+          {c.nav.map((n) => (
+            <a class="hover:text-accent-deep underline-offset-4 hover:underline" href={n.href}>{n.label}</a>
+          ))}
         </nav>
       </div>
     </header>
@@ -43,20 +121,20 @@ const { title, description } = Astro.props;
     <footer class="border-t-2 border-ink mt-16">
       <div class="mx-auto max-w-5xl px-4 py-8 grid gap-6 sm:grid-cols-3 font-mono text-xs leading-relaxed text-ink-soft">
         <div>
-          <p class="text-ink font-bold uppercase tracking-widest mb-2">How it works</p>
-          <p>Every job runs inside your browser, on your device. Files are not uploaded. There is no server here that could receive them.</p>
+          <p class="text-ink font-bold uppercase tracking-widest mb-2">{c.footHowH}</p>
+          <p>{c.footHow}</p>
         </div>
         <div>
-          <p class="text-ink font-bold uppercase tracking-widest mb-2">The standing rules</p>
-          <p>No accounts. No sign-up. No daily counters. No watermarks on output. If a tool cannot do a job well, the page says so before you pick a file.</p>
+          <p class="text-ink font-bold uppercase tracking-widest mb-2">{c.footRulesH}</p>
+          <p>{c.footRules}</p>
           <p class="mt-2">
-            <a class="underline underline-offset-4 hover:text-accent-deep" href="/what-free-means/">What free means here</a> ·
-            <a class="underline underline-offset-4 hover:text-accent-deep" href="/check-it-yourself/">Check it yourself</a>
+            <a class="underline underline-offset-4 hover:text-accent-deep" href="/what-free-means/">{c.footFree}</a> ·
+            <a class="underline underline-offset-4 hover:text-accent-deep" href="/check-it-yourself/">{c.footCheck}</a>
           </p>
         </div>
         <div>
-          <p class="text-ink font-bold uppercase tracking-widest mb-2">Under the counter</p>
-          <p>The engines are open-source and run from this site. <a class="underline underline-offset-4 hover:text-accent-deep" href="/credits/">Credits and licences</a>.</p>
+          <p class="text-ink font-bold uppercase tracking-widest mb-2">{c.footUnderH}</p>
+          <p>{c.footUnder} <a class="underline underline-offset-4 hover:text-accent-deep" href="/credits/">{c.footCredits}</a>.</p>
         </div>
       </div>
     </footer>

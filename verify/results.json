@@ -6,7 +6,18 @@
     },
     "/remove-background/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "i18n": {
+        "htmlLang": "en",
+        "islandLocale": "en",
+        "alternates": [
+          "en=/remove-background/",
+          "es=/es/quitar-fondo-de-imagen-gratis/",
+          "pt-BR=/pt-br/remover-fundo-de-imagem-gratis/",
+          "x-default=/remove-background/"
+        ],
+        "statusText": "Pick a photo to begin."
+      }
     },
     "/compress-pdf/": {
       "consoleErrors": [],
@@ -46,7 +57,18 @@
     },
     "/remove-background-full-resolution/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "i18n": {
+        "htmlLang": "en",
+        "islandLocale": "en",
+        "alternates": [
+          "en=/remove-background-full-resolution/",
+          "es=/es/quitar-fondo-resolucion-completa/",
+          "pt-BR=/pt-br/alternativa-gratis-ao-remove-bg/",
+          "x-default=/remove-background-full-resolution/"
+        ],
+        "statusText": "Pick a photo to begin."
+      }
     },
     "/background-removal/": {
       "consoleErrors": [],
@@ -87,6 +109,66 @@
     "/image-tools/": {
       "consoleErrors": [],
       "failedRequests": []
+    },
+    "/es/quitar-fondo-de-imagen-gratis/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "i18n": {
+        "htmlLang": "es",
+        "islandLocale": "es",
+        "alternates": [
+          "en=/remove-background/",
+          "es=/es/quitar-fondo-de-imagen-gratis/",
+          "pt-BR=/pt-br/remover-fundo-de-imagem-gratis/",
+          "x-default=/remove-background/"
+        ],
+        "statusText": "Elige una foto para empezar."
+      }
+    },
+    "/es/quitar-fondo-resolucion-completa/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "i18n": {
+        "htmlLang": "es",
+        "islandLocale": "es",
+        "alternates": [
+          "en=/remove-background-full-resolution/",
+          "es=/es/quitar-fondo-resolucion-completa/",
+          "pt-BR=/pt-br/alternativa-gratis-ao-remove-bg/",
+          "x-default=/remove-background-full-resolution/"
+        ],
+        "statusText": "Elige una foto para empezar."
+      }
+    },
+    "/pt-br/remover-fundo-de-imagem-gratis/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "i18n": {
+        "htmlLang": "pt-BR",
+        "islandLocale": "pt-BR",
+        "alternates": [
+          "en=/remove-background/",
+          "es=/es/quitar-fondo-de-imagen-gratis/",
+          "pt-BR=/pt-br/remover-fundo-de-imagem-gratis/",
+          "x-default=/remove-background/"
+        ],
+        "statusText": "Escolha uma foto para começar."
+      }
+    },
+    "/pt-br/alternativa-gratis-ao-remove-bg/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "i18n": {
+        "htmlLang": "pt-BR",
+        "islandLocale": "pt-BR",
+        "alternates": [
+          "en=/remove-background-full-resolution/",
+          "es=/es/quitar-fondo-resolucion-completa/",
+          "pt-BR=/pt-br/alternativa-gratis-ao-remove-bg/",
+          "x-default=/remove-background-full-resolution/"
+        ],
+        "statusText": "Escolha uma foto para começar."
+      }
     }
   },
   "tools": {
@@ -105,10 +187,10 @@
         "keys": [
           "benchzy-v1"
         ],
-        "entries": 39,
+        "entries": 47,
         "sample": [
           "/remove-background/",
-          "/_astro/remove-background.astro_astro_type_script_index_0_lang.B-FSwSE1.js",
+          "/_astro/remove-background.astro_astro_type_script_index_0_lang.DzTLgIy4.js",
           "/compress-pdf/",
           "/_astro/compress-pdf.astro_astro_type_script_index_0_lang.Sop7ETle.js",
           "/compress-image/",
@@ -121,7 +203,7 @@
       "failedRequests": []
     },
     "compressImage": {
-      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 7.4 seconds.",
+      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 7.5 seconds.",
       "blobSize": 199856,
       "targetBytes": 204800,
       "within5pct": true,
@@ -141,7 +223,7 @@
       "failedRequests": []
     },
     "ocr": {
-      "note": "Read 1 page, 177 characters, in 1.5 seconds. Check the text in the box before you use it, especially numbers: this engine has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and the .txt download uses your corrected text.",
+      "note": "Read 1 page, 177 characters, in 1.4 seconds. Check the text in the box before you use it, especially numbers: this engine has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and the .txt download uses your corrected text.",
       "checks": {
         "hasInvoice": true,
         "hasNumber": true,
@@ -179,7 +261,7 @@
       "failedRequests": []
     },
     "presetImage50": {
-      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 6.9 seconds.",
+      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 6.8 seconds.",
       "blobSize": 50112,
       "within5pct": true,
       "consoleErrors": [],
@@ -198,12 +280,49 @@
     },
     "removeBackground": {
       "ran": true,
-      "times": "Program start: 2.8 s. Cutout: 10.7 s. Full size result: 1200 x 900, 915 KB.",
+      "times": "Program start: 2.7 s. Cutout: 11.2 s. Full size result: 1200 x 900, 915 KB.",
+      "status": "Done.",
+      "dlName": "test-bg-hard-no-background.png",
       "noSubjectShown": false,
       "modelCache": {
         "chunksCached": 11,
         "manifestCached": 1
       },
+      "fullSizeInTimes": true,
+      "doneStatusOk": true,
+      "dlSuffixOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "removeBackgroundEs": {
+      "ran": true,
+      "times": "Inicio del programa: 2,3 s. Recorte: 11,8 s. Resultado a tamaño completo: 1200 x 900, 915 KB.",
+      "status": "Listo.",
+      "dlName": "test-bg-hard-sin-fondo.png",
+      "noSubjectShown": false,
+      "modelCache": {
+        "chunksCached": 11,
+        "manifestCached": 1
+      },
+      "fullSizeInTimes": true,
+      "doneStatusOk": true,
+      "dlSuffixOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "removeBackgroundPtBr": {
+      "ran": true,
+      "times": "Início do programa: 2,2 s. Recorte: 11,1 s. Resultado em tamanho real: 1200 x 900, 915 KB.",
+      "status": "Pronto.",
+      "dlName": "test-bg-hard-sem-fundo.png",
+      "noSubjectShown": false,
+      "modelCache": {
+        "chunksCached": 11,
+        "manifestCached": 1
+      },
+      "fullSizeInTimes": true,
+      "doneStatusOk": true,
+      "dlSuffixOk": true,
       "consoleErrors": [],
       "failedRequests": []
     }

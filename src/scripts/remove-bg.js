@@ -11,6 +11,15 @@
 // A near-empty mask is reported honestly as "no clear subject found".
 import * as ort from 'onnxruntime-web/wasm';
 import { fmtBytes, recordJob, wireTray } from './workbench.js';
+import { BG_STRINGS } from '../locales/bg.js';
+
+// Every user-facing string comes from the locale file; the page picks its
+// set with data-locale on the #bg-tool section (en is the fallback and the
+// source of truth). es / pt-BR are pending human review (TRANSLATIONS.md).
+const locale = (document.getElementById('bg-tool') || { dataset: {} }).dataset.locale || 'en';
+const S = (BG_STRINGS[locale] || BG_STRINGS.en).msg;
+// Spanish and Portuguese write decimals with a comma (44,3 MB).
+const num = (x) => (locale === 'en' ? String(x) : String(x).replace('.', ','));
 
 ort.env.wasm.wasmPaths = '/ort/';
 ort.env.wasm.numThreads = 1;
@@ -46,48 +55,48 @@ wireTray(tray, input, async (f) => {
     prev.src = URL.createObjectURL(f);
     prev.classList.remove('hidden');
     setSpec([
-      ['file', f.name],
-      ['format', f.type || 'unknown'],
-      ['size', fmtBytes(f.size)],
-      ['dimensions', bitmap.width + ' x ' + bitmap.height],
-      ['model', '44.3 MB in 11 checked pieces, downloads when you press start'],
+      [S.specFile, f.name],
+      [S.specFormat, f.type || S.formatUnknown],
+      [S.specSize, num(fmtBytes(f.size))],
+      [S.specDimensions, bitmap.width + ' x ' + bitmap.height],
+      [S.specModel, S.modelValue],
     ]);
-    setStatus('Ready. Nothing has been downloaded or sent anywhere yet.');
+    setStatus(S.ready);
     runBtn.disabled = false;
   } catch (err) {
-    setStatus('That file could not be read as an image: ' + (err && err.message ? err.message : err));
+    setStatus(S.unreadablePrefix + (err && err.message ? err.message : err));
   }
 });
 
 async function loadModel() {
   if (session) return session;
   if (!modelBuf) {
-    setStatus('Fetching the removal program list…');
+    setStatus(S.fetchingList);
     const mres = await fetch(MANIFEST_URL);
-    if (!mres.ok) throw new Error('model list download failed (' + mres.status + ')');
+    if (!mres.ok) throw new Error(S.errList(mres.status));
     const manifest = await mres.json();
     const total = manifest.totalBytes || MODEL_BYTES;
     modelBuf = new Uint8Array(total);
     let off = 0, got = 0;
     for (let i = 0; i < manifest.chunks.length; i++) {
       const c = manifest.chunks[i];
-      setStatus(`Downloading the removal program: ${(got / 1048576).toFixed(1)} of ${(total / 1048576).toFixed(1)} MB (piece ${i + 1} of ${manifest.chunks.length})…`);
+      setStatus(S.downloading(num((got / 1048576).toFixed(1)), num((total / 1048576).toFixed(1)), i + 1, manifest.chunks.length));
       const res = await fetch('/models/' + c.file);
-      if (!res.ok) throw new Error('model piece ' + (i + 1) + ' download failed (' + res.status + ')');
+      if (!res.ok) throw new Error(S.errPieceDownload(i + 1, res.status));
       const buf = new Uint8Array(await res.arrayBuffer());
-      if (buf.length !== c.bytes) throw new Error('model piece ' + (i + 1) + ' arrived the wrong size; nothing was run.');
-      if ((await sha256Hex(buf)) !== c.sha256) throw new Error('model piece ' + (i + 1) + ' failed its check; nothing was run.');
+      if (buf.length !== c.bytes) throw new Error(S.errPieceSize(i + 1));
+      if ((await sha256Hex(buf)) !== c.sha256) throw new Error(S.errPieceCheck(i + 1));
       modelBuf.set(buf, off);
       off += buf.length;
       got += buf.length;
     }
     if ((await sha256Hex(modelBuf)) !== manifest.sha256) {
       modelBuf = null;
-      throw new Error('the removal program failed its final check; nothing was run.');
+      throw new Error(S.errFinalCheck);
     }
-    setStatus('Removal program downloaded and checked, piece by piece. Starting it…');
+    setStatus(S.downloadedChecked);
   }
-  setStatus('Starting the removal program…');
+  setStatus(S.starting);
   session = await ort.InferenceSession.create(modelBuf.buffer, {
     executionProviders: ['wasm'],
     graphOptimizationLevel: 'all',
@@ -106,7 +115,7 @@ runBtn.addEventListener('click', async () => {
     const sess = await loadModel();
     const loadSecs = ((performance.now() - t0) / 1000).toFixed(1);
 
-    setStatus('Reading the photo and cutting out the subject…');
+    setStatus(S.reading);
     // Preprocess at 1024x1024 with the bench's ISNet scaling.
     const pc = document.createElement('canvas');
     pc.width = 1024; pc.height = 1024;
@@ -140,7 +149,7 @@ runBtn.addEventListener('click', async () => {
     const mean = sum / n;
     if (above / n < 0.005 && mean < 4) {
       noSubject.classList.remove('hidden');
-      setStatus('Done. No clear subject found in this photo.');
+      setStatus(S.doneNoSubject);
       return;
     }
 
@@ -186,18 +195,18 @@ runBtn.addEventListener('click', async () => {
     $('bg-before-img').src = beforeUrl;
     const dl = $('bg-download');
     dl.href = resultUrl;
-    dl.download = file.name.replace(/\.[^.]+$/, '') + '-no-background.png';
-    $('bg-times').textContent = `Program start: ${loadSecs} s. Cutout: ${runSecs} s. Full size result: ${W} x ${H}, ${fmtBytes(blob.size)}.`;
+    dl.download = file.name.replace(/\.[^.]+$/, '') + S.downloadSuffix;
+    $('bg-times').textContent = S.times(num(loadSecs), num(runSecs), W, H, num(fmtBytes(blob.size)));
     result.classList.remove('hidden');
     setCompare(50);
     const stamp = $('bg-stamp');
     stamp.classList.remove('land');
     void stamp.offsetWidth;
     stamp.classList.add('land');
-    setStatus('Done.');
-    recordJob({ tool: 'Remove background', name: file.name, detail: 'cutout ' + W + 'x' + H });
+    setStatus(S.done);
+    recordJob({ tool: S.toolName, name: file.name, detail: S.detailPrefix + W + 'x' + H });
   } catch (err) {
-    setStatus('Something went wrong: ' + (err && err.message ? err.message : err));
+    setStatus(S.wentWrongPrefix + (err && err.message ? err.message : err));
   } finally {
     running = false;
     runBtn.disabled = false;

@@ -1,0 +1,107 @@
+---
+import Base from '../../layouts/Base.astro';
+import BgTicket from '../../components/BgTicket.astro';
+import LangLinks from '../../components/LangLinks.astro';
+
+// Spanish strings drafted in-house 2026-11-08. PENDING HUMAN REVIEW
+// before any public launch (see TRANSLATIONS.md).
+const alternates = [
+  { hreflang: 'en', href: '/remove-background-full-resolution/' },
+  { hreflang: 'es', href: '/es/quitar-fondo-resolucion-completa/' },
+  { hreflang: 'pt-BR', href: '/pt-br/alternativa-gratis-ao-remove-bg/' },
+  { hreflang: 'x-default', href: '/remove-background-full-resolution/' },
+];
+const langLinks = [
+  { label: 'English', href: '/remove-background-full-resolution/' },
+  { label: 'Español', href: '/es/quitar-fondo-resolucion-completa/', current: true },
+  { label: 'Português (Brasil)', href: '/pt-br/alternativa-gratis-ao-remove-bg/' },
+];
+
+const faq = [
+  {
+    q: '¿Qué significa resolución completa aquí?',
+    a: 'El recorte sale con el mismo tamaño en píxeles que la foto que pusiste. Una foto de 4000 por 3000 da un recorte de 4000 por 3000. No hay un tamaño gratis más pequeño ni un tamaño de pago más grande, porque solo hay un tamaño: el tuyo.',
+  },
+  {
+    q: '¿En qué se diferencia de remove.bg?',
+    a: 'En nuestra prueba en directo del 7 de noviembre de 2026, remove.bg gratis devolvió 577 por 433 píxeles de una foto de 1200 por 900, alrededor de una cuarta parte de los píxeles, y el tamaño completo allí cuesta un crédito por foto. Ese servicio, además, cierra el 1 de diciembre de 2026. Aquí el tamaño completo es el único tamaño, y es gratis.',
+  },
+  {
+    q: '¿Puedo usar el recorte para mi tienda o mi negocio?',
+    a: 'Sí. El resultado de esta página no lleva ninguna restricción de licencia por nuestra parte, para uso personal o comercial. A diferencia de eso, según las condiciones de remove.bg leídas en noviembre de 2026, sus resultados gratuitos son solo para uso privado y no comercial.',
+  },
+  {
+    q: '¿Hay alguna trampa la primera vez?',
+    a: 'La primera vez se descarga el programa de recorte, 44,3 MB, en 11 piezas que tu navegador verifica una a una. Está escrito aquí, no escondido. Después el programa queda guardado en tu dispositivo y las visitas siguientes empiezan al instante.',
+  },
+  {
+    q: '¿Cuánto tarda un recorte?',
+    a: 'En nuestras pruebas en un ordenador de sobremesa, unos 13 segundos por foto una vez que el programa está funcionando. No hemos medido los teléfonos, así que esta página no promete ningún tiempo de teléfono.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  inLanguage: 'es',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Base lang="es" title="Quitar fondo gratis a resolución completa · Benchzy" description="Quita el fondo de una foto a resolución completa, gratis, en tu navegador. El tamaño que subes es el tamaño que descargas. Sin créditos, sin cuenta, sin un tamaño gratis reducido." alternates={alternates}>
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Orden de trabajo · quitar el fondo, resolución completa</p>
+      <h1 class="font-display text-4xl font-black mt-2">Quitar el fondo gratis, a resolución completa</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        El tamaño completo es el único tamaño aquí. El recorte sale con las mismas dimensiones en
+        píxeles que tu foto, porque el trabajo se hace en tu navegador y a este sitio no le cuesta
+        nada por foto. No hay créditos, ni cuenta, ni un nivel de pago que esconda el resultado
+        verdadero.
+      </p>
+      <LangLinks label="Esta página en:" links={langLinks} />
+    </section>
+
+    <BgTicket locale="es" full />
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Por qué el tamaño completo puede ser gratis</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Los sitios que recortan fotos en sus propios servidores pagan por cada foto, así que
+          racionan el resultado verdadero: una vista previa pequeña gratis y el tamaño completo a
+          cambio de un pago. Esta página ejecuta el mismo tipo de programa dentro de tu navegador.
+          Tu dispositivo hace el trabajo, la foto nunca sale de él, y un recorte no le cuesta nada
+          a este sitio, así que no hay nada que racionar ni ningún tamaño que retener. La versión
+          sencilla de ese trato está en la página
+          <a class="underline underline-offset-4" href="/what-free-means/">qué significa gratis aquí</a> (en inglés).
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Límites honestos</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          El pelo, el cristal y los bordes transparentes salen bien, pero no perfectos. Las fotos
+          muy grandes pueden quedarse sin memoria en teléfonos pequeños. La primera descarga es de
+          44,3 MB y está escrita en esta página en vez de aparecer como sorpresa en el botón de
+          descarga. Nuestros datos medidos sobre la alternativa famosa, con fechas, están en la
+          página <a class="underline underline-offset-4" href="/vs-remove-bg/">Benchzy frente a remove.bg</a> (en inglés).
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Preguntas</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script>
+    import '../../scripts/remove-bg.js';
+  </script>
+</Base>

@@ -56,14 +56,30 @@ try {
   }
 
   // 1. Every page loads clean.
+  const BG_CLUSTER = ['/remove-background/', '/remove-background-full-resolution/',
+    '/es/quitar-fondo-de-imagen-gratis/', '/es/quitar-fondo-resolucion-completa/',
+    '/pt-br/remover-fundo-de-imagem-gratis/', '/pt-br/alternativa-gratis-ao-remove-bg/'];
   for (const route of ['/', '/remove-background/', '/compress-pdf/', '/compress-image/', '/credits/',
     '/ocr-pdf/', '/merge-pdf/', '/split-pdf/', '/compress-pdf-to-200kb/', '/compress-image-to-50kb/', '/size-checker/',
     '/remove-background-full-resolution/', '/background-removal/', '/vs-remove-bg/', '/remove-bg-alternatives/',
     '/remove-bg-december-1/', '/remove-bg-api/', '/check-it-yourself/', '/what-free-means/',
-    '/tools/', '/pdf-tools/', '/image-tools/']) {
+    '/tools/', '/pdf-tools/', '/image-tools/',
+    '/es/quitar-fondo-de-imagen-gratis/', '/es/quitar-fondo-resolucion-completa/',
+    '/pt-br/remover-fundo-de-imagem-gratis/', '/pt-br/alternativa-gratis-ao-remove-bg/']) {
     const { page, errors, failed } = await openPage(BASE + route);
     results.pages[route] = { consoleErrors: errors, failedRequests: failed };
     console.log('PAGE', route, 'errors:', errors.length, 'failed:', failed.length, JSON.stringify([...errors, ...failed]).slice(0, 300));
+    if (BG_CLUSTER.includes(route)) {
+      // i18n wiring: html lang, hreflang alternates, island locale.
+      const i18n = await page.evaluate(() => ({
+        htmlLang: document.documentElement.lang,
+        islandLocale: (document.getElementById('bg-tool') || { dataset: {} }).dataset.locale || null,
+        alternates: [...document.querySelectorAll('link[rel="alternate"]')].map((l) => l.hreflang + '=' + l.getAttribute('href')),
+        statusText: (document.getElementById('bg-status') || {}).textContent || null,
+      }));
+      results.pages[route].i18n = i18n;
+      console.log('I18N', route, JSON.stringify(i18n));
+    }
     if (route === '/') {
       await page.setViewport({ width: 1280, height: 900 });
       await page.screenshot({ path: path.join(SHOTS, 'home-desktop.png'), fullPage: true });
@@ -93,6 +109,15 @@ try {
       await page.setViewport({ width: 390, height: 844 });
       await page.screenshot({ path: path.join(SHOTS, 'check-it-yourself-mobile.png'), fullPage: true });
       await page.setViewport({ width: 1280, height: 900 });
+    }
+    if (route === '/es/quitar-fondo-de-imagen-gratis/') {
+      await page.screenshot({ path: path.join(SHOTS, 'es-quitar-fondo-desktop.png'), fullPage: true });
+      await page.setViewport({ width: 390, height: 844 });
+      await page.screenshot({ path: path.join(SHOTS, 'es-quitar-fondo-mobile.png'), fullPage: true });
+      await page.setViewport({ width: 1280, height: 900 });
+    }
+    if (route === '/pt-br/remover-fundo-de-imagem-gratis/') {
+      await page.screenshot({ path: path.join(SHOTS, 'pt-remover-fundo-desktop.png'), fullPage: true });
     }
     await page.close();
   }
@@ -345,10 +370,11 @@ try {
     await p2.page.close();
   }
 
-  // 4. Background tool: full run on the bench target photo (best effort with
-  // a long allowance; the load check above is the required gate).
-  {
-    const { page, errors, failed } = await openPage(BASE + '/remove-background/');
+  // 4. Background tool: full run on the bench target photo, once per
+  // locale (EN gate as before, plus one ES and one PT-BR page to prove
+  // the extracted strings drive a complete, correct job).
+  async function runBg(route, key, expect) {
+    const { page, errors, failed } = await openPage(BASE + route);
     const input = await page.$('#bg-file');
     await input.uploadFile(path.join(CORPUS, 'test-bg-hard.png'));
     await page.waitForFunction(() => !document.getElementById('bg-run').disabled, { timeout: 15000 });
@@ -360,6 +386,8 @@ try {
         return (r && !r.classList.contains('hidden')) || (n && !n.classList.contains('hidden'));
       }, { timeout: 420000 });
       const times = await page.$eval('#bg-times', (el) => el.textContent).catch(() => '');
+      const status = await page.$eval('#bg-status', (el) => el.textContent).catch(() => '');
+      const dlName = await page.$eval('#bg-download', (el) => el.download).catch(() => '');
       const noSubject = await page.$eval('#bg-nosubject', (el) => !el.classList.contains('hidden'));
       const modelCache = await page.evaluate(async () => {
         let chunks = 0, manifest = 0;
@@ -373,16 +401,25 @@ try {
         }
         return { chunksCached: chunks, manifestCached: manifest };
       }).catch(() => ({ chunksCached: -1, manifestCached: -1 }));
-      results.tools.removeBackground = { ran: true, times, noSubjectShown: noSubject, modelCache, consoleErrors: errors, failedRequests: failed };
-      console.log('TOOL remove-bg:', times, 'noSubject:', noSubject);
-      await page.screenshot({ path: path.join(SHOTS, 'remove-bg-result.png'), fullPage: true });
+      results.tools[key] = {
+        ran: true, times, status, dlName, noSubjectShown: noSubject, modelCache,
+        fullSizeInTimes: times.includes('1200 x 900'),
+        doneStatusOk: status === expect.doneStatus,
+        dlSuffixOk: dlName.endsWith(expect.dlSuffix),
+        consoleErrors: errors, failedRequests: failed,
+      };
+      console.log('TOOL', key + ':', times, '| status:', status, '| dl:', dlName, 'noSubject:', noSubject);
+      if (key === 'removeBackground') await page.screenshot({ path: path.join(SHOTS, 'remove-bg-result.png'), fullPage: true });
     } catch (e) {
       const st = await page.$eval('#bg-status', (el) => el.textContent).catch(() => '?');
-      results.tools.removeBackground = { ran: false, lastStatus: st, consoleErrors: errors, failedRequests: failed };
-      console.log('TOOL remove-bg: did not finish. status:', st);
+      results.tools[key] = { ran: false, lastStatus: st, consoleErrors: errors, failedRequests: failed };
+      console.log('TOOL', key + ': did not finish. status:', st);
     }
     await page.close();
   }
+  await runBg('/remove-background/', 'removeBackground', { doneStatus: 'Done.', dlSuffix: '-no-background.png' });
+  await runBg('/es/quitar-fondo-de-imagen-gratis/', 'removeBackgroundEs', { doneStatus: 'Listo.', dlSuffix: '-sin-fondo.png' });
+  await runBg('/pt-br/remover-fundo-de-imagem-gratis/', 'removeBackgroundPtBr', { doneStatus: 'Pronto.', dlSuffix: '-sem-fundo.png' });
 } finally {
   if (browser) await browser.close();
   server.close();

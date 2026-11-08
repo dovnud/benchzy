@@ -1,0 +1,101 @@
+---
+import Base from '../../layouts/Base.astro';
+import BgTicket from '../../components/BgTicket.astro';
+import LangLinks from '../../components/LangLinks.astro';
+
+// Portuguese (BR) strings drafted in-house 2026-11-08. PENDING HUMAN
+// REVIEW before any public launch (see TRANSLATIONS.md).
+const alternates = [
+  { hreflang: 'en', href: '/remove-background/' },
+  { hreflang: 'es', href: '/es/quitar-fondo-de-imagen-gratis/' },
+  { hreflang: 'pt-BR', href: '/pt-br/remover-fundo-de-imagem-gratis/' },
+  { hreflang: 'x-default', href: '/remove-background/' },
+];
+const langLinks = [
+  { label: 'English', href: '/remove-background/' },
+  { label: 'Español', href: '/es/quitar-fondo-de-imagen-gratis/' },
+  { label: 'Português (Brasil)', href: '/pt-br/remover-fundo-de-imagem-gratis/', current: true },
+];
+
+const faq = [
+  {
+    q: 'O resultado sai em tamanho real?',
+    a: 'Sim. O recorte é produzido com as mesmas dimensões em pixels da foto que você escolheu. Nada é reduzido a um tamanho de prévia.',
+  },
+  {
+    q: 'Para onde vai a minha foto?',
+    a: 'Para lugar nenhum. A foto é lida nesta página e processada por um programa que roda no seu navegador. Você pode acompanhar o painel de rede do navegador durante o trabalho: o único download é o próprio programa de recorte, uma única vez.',
+  },
+  {
+    q: 'Por que a primeira vez é mais lenta?',
+    a: 'Na primeira vez, o seu navegador baixa o programa de recorte (44,3 MB). Depois ele fica salvo no seu aparelho e as visitas seguintes começam na hora. O recorte em si levou cerca de 13 segundos por foto em um computador de mesa nos nossos testes; em celulares o tempo varia, e não prometemos um tempo de celular que não medimos.',
+  },
+  {
+    q: 'Com quais fotos ele tem dificuldade?',
+    a: 'Cabelo, vidro e objetos transparentes ficam bons, mas não perfeitos; fios finos na borda podem se perder. Se uma foto não tem um assunto claro, a ferramenta avisa em vez de inventar um recorte.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  inLanguage: 'pt-BR',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+---
+
+<Base lang="pt-BR" title="Remover fundo de imagem grátis, no seu navegador · Benchzy" description="Remova o fundo de uma foto em tamanho real, grátis, com o trabalho feito dentro do seu navegador. Sem enviar a foto, sem conta, sem tamanho reduzido." alternates={alternates}>
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Ordem de serviço · remoção de fundo</p>
+      <h1 class="font-display text-4xl font-black mt-2">Remover fundo de imagem grátis</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Escolha uma foto e esta página recorta o assunto em tamanho real. O trabalho é feito no seu
+        navegador: sua foto nunca é enviada para servidor nenhum. Na primeira vez, o programa de
+        recorte é baixado, 44,3 MB, uma única vez, em 11 partes que o seu navegador verifica uma a
+        uma; esse tamanho está escrito aqui antes de qualquer download, e nas visitas seguintes a
+        cópia salva é reutilizada.
+      </p>
+      <LangLinks label="Esta página em:" links={langLinks} />
+    </section>
+
+    <BgTicket locale="pt-BR" />
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Como funciona</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Um programa de remoção de fundo (um modelo ISNet, de pesos abertos, listado na
+          <a class="underline underline-offset-4" href="/credits/">página de créditos</a>) roda nesta página usando
+          os recursos do seu navegador. Ele lê a foto, descobre quais pixels pertencem ao assunto e
+          cria uma imagem nova em que o resto fica transparente. Como o trabalho acontece aqui,
+          processar uma foto não custa nada para este site, e a sua foto nunca sai do seu aparelho.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Limites honestos</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Esta ferramenta funciona no seu navegador, então os limites dela são os limites do seu
+          aparelho. Fotos muito grandes podem ficar sem memória em celulares pequenos. Cabelo, vidro
+          e bordas transparentes ficam bons, mas não perfeitos. O primeiro download, de 44,3 MB, é
+          real, e está escrito nesta página em vez de aparecer só na hora de baixar o resultado.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Perguntas frequentes</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script>
+    import '../../scripts/remove-bg.js';
+  </script>
+</Base>

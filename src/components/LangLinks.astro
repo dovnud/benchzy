@@ -1,0 +1,27 @@
+---
+// The language line on the background-removal cluster pages: each page
+// links its localised twins and is linked back (hreflang tags ride in
+// Base via the alternates prop; this is the visible twin of that).
+interface Link {
+  label: string;
+  href: string;
+  current?: boolean;
+}
+interface Props {
+  label: string;
+  links: Link[];
+}
+const { label, links } = Astro.props;
+---
+
+<p class="font-mono text-xs text-ink-soft mt-4">
+  {label}
+  {links.map((l, i) => (
+    <>
+      {i > 0 && ' · '}
+      {l.current
+        ? <span class="text-ink font-bold">{l.label}</span>
+        : <a class="underline underline-offset-4 hover:text-accent-deep" href={l.href}>{l.label}</a>}
+    </>
+  ))}
+</p>
