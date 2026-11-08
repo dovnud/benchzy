@@ -7,6 +7,7 @@ const families = [
     hub: '/background-removal/',
     tools: [
       { name: 'Remove background', href: '/remove-background/', live: true, note: 'Full-size cutouts in your browser. First run downloads the program (44.3 MB, printed before it loads).' },
+      { name: 'Batch remove background', href: '/batch-remove-background/', live: true, note: 'A whole folder of photos cut out in one run, one model download for the batch, one ZIP of full-size PNGs out.' },
       { name: 'Free background remover, full resolution', href: '/remove-background-full-resolution/', live: true, note: 'The same bench with the full-size promise in plain words, and the dated facts about the famous alternative.' },
       { name: 'Quitar fondo de imagen gratis', href: '/es/quitar-fondo-de-imagen-gratis/', live: true, note: 'La herramienta en español, con su página a resolución completa. Spanish strings drafted in-house, marked pending human review in the project notes.' },
       { name: 'Remover fundo de imagem grátis', href: '/pt-br/remover-fundo-de-imagem-gratis/', live: true, note: 'A ferramenta em português, com a página de alternativa grátis ao remove.bg. Portuguese strings drafted in-house, marked pending human review in the project notes.' },
@@ -18,10 +19,25 @@ const families = [
     tools: [
       { name: 'Compress PDF to a size', href: '/compress-pdf/', live: true, note: 'Pick a target and the page works to land under it, showing the exact final size.' },
       { name: 'Compress PDF to 200 KB', href: '/compress-pdf-to-200kb/', live: true, note: 'The tight-portal preset, target already set.' },
+      { name: 'Compress PDF, strong', href: '/compress-pdf-strong/', live: true, note: 'No target: the deep end of the shrink ladder, smallest honest result, the photo trade printed on the result.' },
       { name: 'Merge PDF', href: '/merge-pdf/', live: true, note: 'Many files, your order, pages copied not rebuilt. 25 files merged in 71 milliseconds on the bench.' },
-      { name: 'Split PDF', href: '/split-pdf/', live: true, note: 'A page range as one file, or every page as its own PDF.' },
+      { name: 'Interleave PDF', href: '/interleave-pdf/', live: true, note: 'Deal two PDFs together a page at a time, A1 B1 A2 B2: the duplex scan repair, with a back-to-front option for the second file.' },
+      { name: 'Split PDF', href: '/split-pdf/', live: true, note: 'A page range as one file, every page as its own PDF, or parts under a size you set.' },
+      { name: 'Sign PDF', href: '/sign-pdf/', live: true, note: 'Your own signature on your own document, drawn into the page. Plainly scoped: no requests to others, no certificates.' },
+      { name: 'Flatten PDF', href: '/flatten-pdf/', live: true, note: 'Bake a filled form\'s answers into the pages. Other annotations are counted and reported, never silently dropped.' },
       { name: 'Read a scan (OCR)', href: '/ocr-pdf/', live: true, note: 'Checkable text plus a searchable PDF, read at 300 DPI.' },
       { name: 'Convert to and from PDF', href: null, live: false, note: 'JPG to PDF, PDF to JPG and the rest are measured and in the build plan; the doors open as each one passes its checks.' },
+    ],
+  },
+  {
+    name: 'Batch and workflows',
+    hub: '/workflows/',
+    tools: [
+      { name: 'Batch compress PDF', href: '/batch-compress-pdf/', live: true, note: 'A folder of PDFs worked to one target size in a single run, per-file results, one ZIP out. The job the suites sell as a paid extra.' },
+      { name: 'Batch merge PDF', href: '/batch-merge-pdf/', live: true, note: 'Pick a whole folder, sort by name, merge it into one file. The batch-first merge bench.' },
+      { name: 'Batch split PDF', href: '/batch-split-pdf/', live: true, note: 'One page range cut from every file in the folder, in a single run.' },
+      { name: 'Workflows', href: '/workflows/', live: true, note: 'Chain the benches (merge, then shrink, then stamp), save the chain in your browser, and run it on the next folder.' },
+      { name: 'Preset chains', href: '/presets/', live: true, note: 'Ready-made chains for the weekly jobs: invoice pack, portal pack, paid pack, seller photos.' },
     ],
   },
   {
@@ -30,7 +46,9 @@ const families = [
     tools: [
       { name: 'Compress image to exact KB', href: '/compress-image/', live: true, note: 'A photo at the exact size a form or shop asks for, the tool the big sites do not offer.' },
       { name: 'Compress image to 50 KB', href: '/compress-image-to-50kb/', live: true, note: 'The form and seller preset, target already set.' },
-      { name: 'Convert and resize', href: null, live: false, note: 'Measured on the bench (our WebP came out smaller than the biggest converter\'s on the same photo) and in the build plan.' },
+      { name: 'Batch compress images', href: '/batch-compress-images/', live: true, note: 'A folder of photos worked to one exact KB target in a single run, one ZIP out.' },
+      { name: 'Batch convert images', href: '/batch-convert-images/', live: true, note: 'A folder converted to JPG, PNG or WebP at one quality, with an optional maximum width. Our WebP beat the biggest converter\'s on the bench photo.' },
+      { name: 'Resize one image', href: null, live: false, note: 'A single-photo resize door is in the build plan; resizing inside a batch works today on the batch convert bench (maximum width).' },
     ],
   },
   {

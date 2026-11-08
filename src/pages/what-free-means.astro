@@ -8,12 +8,19 @@ import Base from '../layouts/Base.astro';
 // is the number of distinct engines, so preset pages and translations
 // count as pages, never as new tools. Nothing below is typed by hand.
 const pageSources = import.meta.glob('./**/*.astro', { query: '?raw', eager: true, import: 'default' });
-const TOOL_ENGINES = ['remove-bg', 'compress-pdf', 'compress-image', 'merge-pdf', 'split-pdf', 'ocr-pdf', 'size-checker'];
+const TOOL_ENGINES = ['remove-bg', 'compress-pdf', 'compress-image', 'merge-pdf', 'split-pdf', 'ocr-pdf', 'size-checker', 'sign-pdf', 'flatten-pdf'];
+// Runner scripts (milestone 6): pages that work files through the
+// engines above (batch doors, interleave, workflow chains) are tool
+// pages, but they are not new tools, so they never add to the tool
+// count. The audit in verify/seo-audit.mjs holds the same two lists;
+// keep them identical.
+const PAGE_SCRIPTS = ['batch-pdf', 'batch-image', 'batch-remove-bg', 'workflows', 'interleave-pdf'];
 const enginesUsed = new Set();
 let toolPages = 0;
 for (const src of Object.values(pageSources)) {
   const found = TOOL_ENGINES.filter((e) => src.includes(`scripts/${e}.js`));
-  if (found.length) {
+  const runner = PAGE_SCRIPTS.some((e) => src.includes(`scripts/${e}.js`));
+  if (found.length || runner) {
     toolPages++;
     found.forEach((e) => enginesUsed.add(e));
   }

@@ -10,8 +10,14 @@ import jpegDecode, { init as initJpegDec } from '@jsquash/jpeg/decode.js';
 import jpegEncode, { init as initJpegEnc } from '@jsquash/jpeg/encode.js';
 import resize, { initResize } from '@jsquash/resize';
 import { fmtBytes, recordJob, savePreset, getPreset, wireTray } from './workbench.js';
+import { compressPdfStrong } from './lib/pdf-compress-core.js';
 
 const $ = (id) => document.getElementById(id);
+
+// Strong mode (milestone 6): the /compress-pdf-strong/ page sets
+// data-mode="strong" on #cp-tool. No target: the core walks the deep end
+// of the same measured ladder and keeps the smallest honest result.
+const strongMode = !!$('cp-tool') && $('cp-tool').dataset.mode === 'strong';
 const tray = $('cp-tray'), input = $('cp-file'), spec = $('cp-spec');
 const runBtn = $('cp-run'), status = $('cp-status'), result = $('cp-result');
 const customInput = $('cp-custom');
@@ -100,7 +106,7 @@ wireTray(tray, input, async (f) => {
       ['size now', fmtBytes(f.size)],
       ['pages', String(scanInfo.pageCount)],
       ['photos inside', scanInfo.images.length + ' (' + fmtBytes(scanInfo.imageBytes) + ')'],
-      ['target', targetKB + ' KB'],
+      strongMode ? ['mode', 'strong: smallest the bench can reach'] : ['target', targetKB + ' KB'],
     ]);
     if (scanInfo.images.length === 0) {
       setStatus('This PDF has no photos inside to recompress. Run it anyway: you will get your original back with an honest note.');
@@ -145,6 +151,29 @@ runBtn.addEventListener('click', async () => {
   result.classList.add('hidden');
   const target = targetKB * 1024;
   try {
+    if (strongMode) {
+      if (scanInfo.images.length === 0) {
+        showResult(new Blob([fileBytes], { type: 'application/pdf' }), file.size,
+          'We could not make this PDF smaller. It has no photos inside to recompress, and re-saving alone does not shrink a text PDF (on our bench a re-save moved a text PDF from 7,203 bytes to 7,231). Here is your original back, unchanged.');
+        recordJob({ tool: 'Compress PDF (strong)', name: file.name, detail: 'no change possible' });
+        return;
+      }
+      const r = await compressPdfStrong(fileBytes, (s, q) => {
+        setStatus('Building strong at ' + Math.round(s * 100) + '% photo size, quality ' + q + '…');
+      });
+      if (!r.changed) {
+        showResult(new Blob([fileBytes], { type: 'application/pdf' }), file.size,
+          'We could not make this PDF smaller than it already is, even at the strong end of the bench. Here is your original back, unchanged.');
+        recordJob({ tool: 'Compress PDF (strong)', name: file.name, detail: 'no change possible' });
+        return;
+      }
+      const [ss, sq] = r.setting;
+      showResult(new Blob([r.out], { type: 'application/pdf' }), r.out.length,
+        'Strong result: ' + fmtBytes(r.out.length) + ', down from ' + fmtBytes(file.size) + ' (photos at ' + Math.round(ss * 100) + '% size, quality ' + sq + ').' +
+        (r.skipped.length ? ' ' + r.skipped.length + ' photo(s) inside use a format we could not re-encode and were left as they were.' : ''));
+      recordJob({ tool: 'Compress PDF (strong)', name: file.name, detail: fmtBytes(file.size) + ' to ' + fmtBytes(r.out.length) });
+      return;
+    }
     if (file.size <= target) {
       showResult(new Blob([fileBytes], { type: 'application/pdf' }), file.size,
         `Already under your target at ${fmtBytes(file.size)}. Here is your file back, unchanged.`);

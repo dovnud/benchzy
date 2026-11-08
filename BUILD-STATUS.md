@@ -764,3 +764,160 @@ ES/PT-BR human translation review (TRANSLATIONS.md), self-hosted font
 files, the workbench chain test (T7), the memory guard (T8), the
 speed budget with the design layer on (T11), the compress-PDF 200 KB
 ladder refinement, and MP4 to MP3 behind the FFmpeg licence gate.
+
+## LAUNCHED (2026-11-08, by owner order "launch as is")
+- Deployed to Cloudflare Pages project "benchzy" via Wrangler Direct Upload from inside dist (93 files, 104,603,067 B incl. the IndexNow key file added at launch; largest single file 14.8 MB WASM, under the 25 MB limit). Deployment URL e383942a.benchzy.pages.dev; benchzy.pages.dev serves the same build.
+- Custom domains attached: benchzy.com and www.benchzy.com. The zone had ZERO DNS records, so the Pages attach created none; CNAMEs (@ and www -> benchzy.pages.dev, proxied) were added via API. Apex verified active/active/active and serving 200 with the correct title; www serves 200 (its Pages validation was still finishing at last check).
+- Live verification from the public side: all 26 sitemap URLs return 200; model manifest and a 4 MB chunk serve at full size; robots.txt, llms.txt, og.png and the IndexNow key file all serve.
+- IndexNow: bulk endpoint dropped once, then 403 from both api.indexnow.org and bing.com, singles also refused; 0 of 26 accepted. Carried for retry once the key file has aged; NOT reported as submitted. GSC domain property + Bing Webmaster sitemap submission run through the signed-in browser (in progress at launch time).
+- ES/PT-BR pages are LIVE as built (owner's "as is" order); the 12 at-risk translation strings remain flagged PENDING HUMAN REVIEW in TRANSLATIONS.md.
+- Source snapshot pushed: commit 7afe7ad4 (milestone 5 set, 57 text paths; public/og.png is binary and cannot ride the snapshot route, it lives in the repo history only as a reference in tools/make-og-image.mjs which regenerates it).
+- INDEXING COMPLETE (2026-11-08, browser run 17:59-18:03 UTC): Bing Webmaster: site added manually, verified by DNS CNAME (3414b239baf55c1d9cfbf462b767a2f0 -> verify.bing.com, added via API), sitemap submitted: "Success", 26 URLs discovered, last crawl same day, 0 errors/warnings. Google Search Console (signed in as the owner Gmail account): Domain property benchzy.com verified by DNS TXT at root (added via API); sitemap submitted with the full URL (bare "sitemap.xml" was rejected once), detail page confirms "Sitemap processed successfully", last read 11/8/26, 26 pages discovered. IndexNow remains 0/26 (403) and is carried to the next deploy's retry list.
+
+## Milestone 6: the BUILD NEXT paid-tools batch (2026-11-08, LOCAL ONLY, not deployed, not pushed)
+
+Built the seven BUILD NEXT rows from file-toolkit/PAID-TOOLS-QUEUE.md as
+12 new English pages, in the current design system exactly as-is.
+src/layouts/Base.astro, src/styles/global.css and src/pages/index.astro
+were NOT touched (reserved for the reskin pass, per owner instruction
+mid-build). Linking runs home -> /tools/ -> hub -> tool page, so depth
+stays <= 3 with zero orphans. Site counts, computed by the build on
+/what-free-means/ and re-derived independently by verify/seo-audit.mjs:
+**9 working tools, 25 tool pages, 38 pages in all** (was 7 / 14 / 26).
+The two new engines are sign-pdf and flatten-pdf; the batch doors,
+interleave and workflows are runner pages over the measured engines
+and do not inflate the tool count.
+
+### Pages added
+- /batch-compress-pdf/, /batch-merge-pdf/ (folder pick + name sort),
+  /batch-split-pdf/ — one runner (src/scripts/batch-pdf.js, data-mode),
+  engines via src/scripts/lib/pdf-compress-core.js (the compress island's
+  own ladder/probe/build budget, extracted verbatim) + pdf-lib copying.
+- /batch-compress-images/, /batch-convert-images/ — one runner
+  (batch-image.js) over lib/image-core.js (the compress-image island's
+  combined quality-and-size search verbatim; webp encode WASM vendored
+  to public/codecs/webp_enc.wasm). /batch-remove-background/ over
+  lib/bg-engine.js (the island's chunked, hash-checked model loader and
+  inference, verbatim) + the service worker as-is.
+- /workflows/ (builder + runner + saved chains in localStorage key
+  'benchzy-chains', via workbench.js chain storage) and /presets/
+  (four starter chains, saved idempotently; a content page, deliberately
+  not counted as a tool page). Shared chain definitions in
+  lib/chains.js. This closes the workbench chain test gap T7 (below).
+- /sign-pdf/ — self-sign only; scope block printed before the tray (no
+  requests to others, no certificates, no legal e-signature claim);
+  draw/type signature + initials + date, embedded as page content.
+- /compress-pdf-strong/ — the compress island with data-mode="strong";
+  lib core walks STRONG_RUNGS to the smallest honest result.
+- /interleave-pdf/ — A1 B1 A2 B2 dealing with start-side choice and a
+  back-to-front option for the second file (duplex scan repair).
+- /split-pdf/ gained a third mode, split by size (parts under a chosen
+  KB, each built and byte-checked, over-limit parts repaired by moving
+  the last page forward; a single over-limit page forms its own part
+  and its download line says so).
+- Hubs updated: /tools/ (new "Batch and workflows" family + doors),
+  /pdf-tools/, /image-tools/, /background-removal/; cross-links from
+  the single-tool pages; /credits/ gained the JSZip row (MIT);
+  public/llms.txt lists all 12. Registry entry shapes asserted in node
+  (verify/registry-shape.mjs): every entry carries exactly its sibling
+  key set. All green.
+
+### Proof numbers (verify/verify.mjs, final run 2026-11-08 20:17 UTC)
+Full suite: 38 pages, ZERO console errors and ZERO failed requests on
+every page and in every tool test; verify/seo-audit.mjs ALL CHECKS
+PASSED (38 sitemap URLs, 25 tool pages with HowTo + FAQ, depth <= 3).
+Pre-existing gates reproduce: compress-image 199,856 B byte-exact,
+merge 6,673 B, preset-200 90,117 B, witness job 0 network requests,
+service worker offline reopen ok.
+- Batch compress PDF: photo PDF x2 -> 415,377 B each at the 500 KB
+  target (byte-identical to the single-tool island's landing); text
+  PDF kept as its 7,203 B original in the ZIP.
+- Batch merge PDF: batch25 folder -> 6,673 B (bench 6,673 B; pdf-lib's
+  save-time metadata jitters the container by a byte between runs,
+  observed 6,673 / 6,674 across runs; the gate allows +-2 B).
+- Batch split PDF: pages 1-2 of two files -> ZIP of two 2-page PDFs.
+- Batch compress images: corpus photo at 200 KB -> 199,856 B,
+  byte-exact against the bench landing.
+- Batch convert images: corpus photo -> WebP q80 = 251,730 B, exactly
+  the bench number (RIFF/WEBP verified).
+- Batch remove background: hard photo -> 936,993 B cutout (the 915 KB
+  bench figure). The second corpus file (a synthetic landscape) sits
+  on the engine's no-subject threshold and flips between runs: cut in
+  one run, honestly listed "no clear subject found" in another. The
+  row is never silent either way; the gate asserts the flagship file.
+- Workflows (T7 CLOSED): the Invoice pack starter saves to
+  localStorage, loads into the builder, and runs end to end on
+  batch-01..03 + the photo PDF -> merged-smaller.pdf, 416,151 B (the
+  28-page merged file through the 500 KB step); after a page reload
+  the saved chain is still listed. Two probe runs also passed
+  (small-only -> merged.pdf 1,351 B; photo-only -> 415,377 B).
+- Sign PDF: typed signature on the corpus 10-page PDF -> 10 pages out,
+  exactly 1 image XObject placed on the last page (node-side pdf-lib).
+- Strong compression: photo PDF -> 2,066 B at the deepest rung
+  (12% size, quality 16). That number is right, not a blank-output
+  bug: the corpus photo is per-pixel noise, resizing to 12% averages
+  the noise away, and the bench's own grid records 1,045 B for the
+  same photo at 0.125/q18. A sampled-variance guard was added to the
+  shared core anyway: a decode that comes back flat is retried once,
+  then counted unreadable rather than re-encoded into a blank page.
+  Text PDF -> returned unchanged at 7,203 B with the honest note
+  (including the bench's 7,203 -> 7,231 re-save fact).
+- Interleave: 10-page A + 3-page B -> 13 pages; pdftotext marker
+  order verified exactly: PAGE-01, SECOND-01, PAGE-02, SECOND-02,
+  PAGE-03, SECOND-03, PAGE-04 ... PAGE-10.
+- Split by size: see the extraction note below. Final behaviour on
+  the shared-image fixture at a 5,000 KB limit: 3 parts of
+  11,654,172 / 11,654,176 / 11,654,182 B, 3 pages total, every part
+  flagged "over the limit: a single page is bigger than the limit" —
+  the honest outcome the page copy describes, because each page
+  carries the shared 11.65 MB image whole.
+- Flatten PDF: generated fixture (verify/make-form-fixture.mjs: text
+  field "Ada Lovelace", checked checkbox, dropdown) -> spec counts
+  3 fields before the run; output has 0 form fields left (node-side
+  pdf-lib) and pdftotext still reads "Ada Lovelace": the value is
+  baked in, not lost.
+
+### Bugs found by the gates and fixed (all reproduced first)
+- compress-pdf.js: the milestone-6 strongMode line used $ before its
+  const declaration (TDZ) — every compress page threw on load. Moved
+  below the definition; pre-existing compress gates re-verified.
+- interleave-pdf.js: called a setSpec helper that was never defined.
+- workflows.js: the merge runner was declared (items, log) but the
+  dispatcher calls every runner (items, step, log), so its log was
+  the step object and every chain died instantly ("e is not a
+  function"). Signature fixed; T7 run above is the proof.
+- flatten-pdf.js: the annotation count poked a.dict.lookup on an
+  internal object shape that lacks it and the throw failed the whole
+  inspection on any form-bearing file. The walk is defensive now.
+- Batch ZIPs were only built for 2+ outputs in the image/batch-BG
+  runners; now built for 1+ like the PDF runner, so the promised
+  single ZIP always exists.
+- EXTRACTION REWRITE (the substantive one): copyPages into a fresh
+  document silently drops images that a PDF keeps in resources
+  shared through the page tree — on the bench's 3-page photo PDF,
+  pages 2 and 3 copied out at about 1.3 KB with no picture. Split
+  extraction (Split PDF all modes, Batch split, workflow split step)
+  is now delete-based: load, remove the unwanted pages, save. Every
+  part renders whole. KNOWN LIMITATION, recorded not hidden: merge,
+  batch merge, interleave and the workflow merge step still copy
+  pages across documents (there is no delete-based cross-file merge),
+  so a source file with inherited page-tree resources can lose those
+  images in a merge. The bench corpus's merge files use per-page
+  resources and are unaffected; the fix for the merge family is a
+  resources-carrying copy, not yet built.
+
+### Owed / deferred
+- Homepage copy is stale by design freeze: it still says "Nine tools"
+  and lists the wave-1A families. The reskin pass owns
+  src/pages/index.astro and updates it.
+- Nothing deployed, nothing pushed (milestone was local-only). The
+  next deploy carries these 12 pages and should also retry the
+  IndexNow list (26 old + 12 new URLs) per the launch note above.
+- Verify helper scripts kept: verify/make-form-fixture.mjs,
+  verify/registry-shape.mjs, verify/debug-m6.mjs, verify/probe-*.mjs
+  (diagnostics from this milestone's bug hunts; harmless to keep).
+- The verify suite relaunches headless Chrome before the heavy
+  milestone-6 tests: in one long-lived browser, accumulated WASM and
+  model memory starved the batch-BG big photo and the workflow waits.
+  Each test passes in a fresh browser; the relaunch keeps the gate
+  honest about the pages rather than about the harness.

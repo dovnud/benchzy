@@ -1,0 +1,131 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faq = [
+  {
+    q: 'Does the model download once, or per photo?',
+    a: 'Once. The program (44.3 MB, in 11 pieces, each one checked against its fingerprint before it runs) downloads when you press start, runs every photo in the batch, and is saved by your browser afterwards, so a returning batch skips the download entirely.',
+  },
+  {
+    q: 'What size are the results?',
+    a: 'Full size: the size you uploaded is the size you download, as a transparent PNG. There is no smaller free output and no bigger paid one, because there are no tiers here.',
+  },
+  {
+    q: 'What if a photo has no clear subject?',
+    a: 'It is listed as "no clear subject found" and no file is made for it. The batch does not invent a cutout, and it does not hold the other photos back.',
+  },
+  {
+    q: 'Where do my photos go?',
+    a: 'Nowhere. The model runs inside this page, in your browser, and the photos are processed in its memory. Watch the network panel while it works if you want to check.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const howToJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: "How to remove the background from many photos at once",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Pick your photos", text: "Drop photos on the tray, or click to pick them. They are read into this page; they are never uploaded." },
+    { '@type': 'HowToStep', position: 2, name: "Start the batch", text: "Press 'Cut out the batch'. The program downloads once (44.3 MB, printed before it loads, each piece checked), then starts." },
+    { '@type': 'HowToStep', position: 3, name: "Each photo is cut out at full size", text: "Photos are processed one at a time, each at its own full resolution. A photo with no clear subject is listed as such." },
+    { '@type': 'HowToStep', position: 4, name: "Download the results", text: "Download cutouts one by one, or take the whole batch away as a single ZIP of transparent PNGs." },
+  ],
+});
+---
+
+<Base title="Batch remove background: cut out many photos at once, free · Benchzy" description="Remove the background from a whole folder of photos in one run, at full resolution, inside your browser. One model download for the batch. No upload, no account, no credits.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · Background bench · batch</p>
+      <h1 class="font-display text-4xl font-black mt-2">Batch remove background</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        A product folder, a team page, a whole shoot: drop the photos on the tray and every one
+        is cut out at full size in a single run. The model downloads once for the whole batch.
+        One photo at a time, with the before-and-after slider, is on the
+        <a class="underline underline-offset-4 hover:text-accent-deep" href="/remove-background/">Remove background page</a>.
+      </p>
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="bb-tool">
+      <div id="bb-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick images">
+        <p class="font-display text-xl font-bold">Drop photos on the tray, or click to pick them</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">JPEG · PNG · WebP · as many as you like · the model is 44.3 MB, once</p>
+        <input id="bb-file" type="file" accept="image/*" multiple class="hidden" />
+      </div>
+
+      <ul id="bb-list" class="mt-6"></ul>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">How the batch runs</h2>
+          <p class="text-ink-soft text-sm leading-relaxed mt-3 max-w-md">
+            Photos run one at a time, each at its own full resolution, at roughly the same
+            per-photo pace as the single-photo bench (about 13 seconds a photo on our test
+            desktop; phone times are not measured yet, and the page will not pretend they
+            are). The model is saved by your browser, so the next batch starts at once.
+          </p>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="bb-spec" class="mt-2">
+            <div class="spec-row"><dt>files on the tray</dt><dd>0</dd></div>
+          </dl>
+          <button id="bb-run" class="btn-primary w-full mt-5" type="button" disabled>Cut out the batch</button>
+          <p id="bb-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick images to begin. The model (44.3 MB) downloads once, when you press start.</p>
+        </div>
+      </div>
+
+      <div id="bb-result" class="hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Results</h2>
+          <span class="stamp" id="bb-stamp">Done on your device</span>
+        </div>
+        <div id="bb-rows" class="mt-4 grid gap-1"></div>
+        <a id="bb-zip" class="btn-primary inline-block no-underline mt-4 hidden" href="#" download>Download all as one ZIP</a>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The same program as the single-photo bench (ISNet, run through our own runtime)
+          reads each photo, works out the subject's outline, and composites the cutout at the
+          photo's own full resolution. The model arrives as 11 pieces, each checked against
+          its fingerprint, and the finished batch packs into one ZIP of transparent PNGs.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          A batch is patient work: each photo takes its seconds, and a big folder on a small
+          phone takes a while. Very fine strands (hair against a busy background) are the hard
+          case for every tool in this class, ours included; check a cutout or two before you
+          rely on the batch. We claim the freedom and the full resolution, never a quality
+          crown.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script type="application/ld+json" set:html={howToJson}></script>
+  <script>
+    import '../scripts/batch-remove-bg.js';
+  </script>
+</Base>

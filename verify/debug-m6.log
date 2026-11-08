@@ -1,0 +1,44 @@
+BG rows: ["test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 15.8 sDownload","test-photo-realistic-large.jpgno clear subject found; nothing downloaded for this one"]
+BG zip entries: [ 'test-bg-hard-no-background.png' ]
+WF t+20s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+40s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+60s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+80s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+100s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+120s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+140s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+160s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+180s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+200s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+220s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+240s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+260s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+280s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+300s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+320s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+340s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+360s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+380s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+400s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+420s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+440s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+460s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+480s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+500s: {"status":"The chain stopped: e is not a function. Your original files are unchanged.","log":"","outputs":0,"resultShown":false}
+WF t+520s: {"error":"Attempted to use detached Frame '87E9FABEE419BEB5B04E005BD3C869C4'."}
+WF t+540s: {"error":"Attempted to use detached Frame '87E9FABEE419BEB5B04E005BD3C869C4'."}
+WF t+560s: {"error":"Attempted to use detached Frame '87E9FABEE419BEB5B04E005BD3C869C4'."}
+WF t+580s: {"error":"Attempted to use detached Frame '87E9FABEE419BEB5B04E005BD3C869C4'."}
+WF t+600s: {"error":"Attempted to use detached Frame '87E9FABEE419BEB5B04E005BD3C869C4'."}
+WF done: false
+file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/Connection.js:119
+            return Promise.reject(new ConnectionClosedError('Connection closed.'));
+                                  ^
+
+ConnectionClosedError: Connection closed.
+    at Connection._rawSend (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/Connection.js:119:35)
+    at Connection.send (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/Connection.js:112:21)
+    at CdpPage.close (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/Page.js:982:34)
+    at async file:///home/hatch/workspace/benchzy-build/verify/debug-m6.mjs:81:3
+
+Node.js v24.22.1

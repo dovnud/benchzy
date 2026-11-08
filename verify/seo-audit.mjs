@@ -98,14 +98,19 @@ function srcFiles(dir, base = '') {
   }
   return files;
 }
-const TOOL_ENGINES = ['remove-bg', 'compress-pdf', 'compress-image', 'merge-pdf', 'split-pdf', 'ocr-pdf', 'size-checker'];
+const TOOL_ENGINES = ['remove-bg', 'compress-pdf', 'compress-image', 'merge-pdf', 'split-pdf', 'ocr-pdf', 'size-checker', 'sign-pdf', 'flatten-pdf'];
+// Runner scripts (milestone 6): tool pages that run the engines above
+// (batch doors, interleave, workflow chains); tool pages, not new tools.
+// Mirrors the counting in src/pages/what-free-means.astro exactly.
+const PAGE_SCRIPTS = ['batch-pdf', 'batch-image', 'batch-remove-bg', 'workflows', 'interleave-pdf'];
 const srcList = srcFiles(SRC_PAGES);
 const enginesUsed = new Set();
 const toolRoutes = [];
 for (const f of srcList) {
   const src = fs.readFileSync(path.join(SRC_PAGES, f), 'utf8');
   const found = TOOL_ENGINES.filter((e) => src.includes(`scripts/${e}.js`));
-  if (found.length) {
+  const runner = PAGE_SCRIPTS.some((e) => src.includes(`scripts/${e}.js`));
+  if (found.length || runner) {
     found.forEach((e) => enginesUsed.add(e));
     let route = '/' + f.replace(/\.astro$/, '');
     if (route.endsWith('/index')) route = route.slice(0, -'index'.length);

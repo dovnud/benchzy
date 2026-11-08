@@ -1,0 +1,207 @@
+{
+  "failures": [],
+  "warnings": [],
+  "distPages": [
+    "/",
+    "/background-removal/",
+    "/batch-compress-images/",
+    "/batch-compress-pdf/",
+    "/batch-convert-images/",
+    "/batch-merge-pdf/",
+    "/batch-remove-background/",
+    "/batch-split-pdf/",
+    "/check-it-yourself/",
+    "/compress-image-to-50kb/",
+    "/compress-image/",
+    "/compress-pdf-strong/",
+    "/compress-pdf-to-200kb/",
+    "/compress-pdf/",
+    "/credits/",
+    "/es/quitar-fondo-de-imagen-gratis/",
+    "/es/quitar-fondo-resolucion-completa/",
+    "/flatten-pdf/",
+    "/image-tools/",
+    "/interleave-pdf/",
+    "/merge-pdf/",
+    "/ocr-pdf/",
+    "/pdf-tools/",
+    "/presets/",
+    "/pt-br/alternativa-gratis-ao-remove-bg/",
+    "/pt-br/remover-fundo-de-imagem-gratis/",
+    "/remove-background-full-resolution/",
+    "/remove-background/",
+    "/remove-bg-alternatives/",
+    "/remove-bg-api/",
+    "/remove-bg-december-1/",
+    "/sign-pdf/",
+    "/size-checker/",
+    "/split-pdf/",
+    "/tools/",
+    "/vs-remove-bg/",
+    "/what-free-means/",
+    "/workflows/"
+  ],
+  "sitemapCount": 38,
+  "sitemapHreflangLinks": 24,
+  "ldTypes": {
+    "/": [],
+    "/background-removal/": [],
+    "/batch-compress-images/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/batch-compress-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/batch-convert-images/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/batch-merge-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/batch-remove-background/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/batch-split-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/check-it-yourself/": [],
+    "/compress-image-to-50kb/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/compress-image/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/compress-pdf-strong/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/compress-pdf-to-200kb/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/compress-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/credits/": [],
+    "/es/quitar-fondo-de-imagen-gratis/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/es/quitar-fondo-resolucion-completa/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/flatten-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/image-tools/": [],
+    "/interleave-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/merge-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/ocr-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/pdf-tools/": [],
+    "/presets/": [],
+    "/pt-br/alternativa-gratis-ao-remove-bg/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/pt-br/remover-fundo-de-imagem-gratis/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/remove-background-full-resolution/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/remove-background/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/remove-bg-alternatives/": [],
+    "/remove-bg-api/": [],
+    "/remove-bg-december-1/": [],
+    "/sign-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/size-checker/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/split-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/tools/": [],
+    "/vs-remove-bg/": [],
+    "/what-free-means/": [],
+    "/workflows/": [
+      "FAQPage",
+      "HowTo"
+    ]
+  },
+  "recount": {
+    "pages": 38,
+    "toolPages": 25,
+    "tools": 9
+  },
+  "orphans": [],
+  "depth": {
+    "/": 0,
+    "/tools/": 1,
+    "/remove-background/": 1,
+    "/compress-pdf/": 1,
+    "/compress-image/": 1,
+    "/merge-pdf/": 1,
+    "/ocr-pdf/": 1,
+    "/size-checker/": 1,
+    "/remove-background-full-resolution/": 1,
+    "/compress-pdf-to-200kb/": 1,
+    "/split-pdf/": 1,
+    "/compress-image-to-50kb/": 1,
+    "/check-it-yourself/": 1,
+    "/what-free-means/": 1,
+    "/credits/": 1,
+    "/background-removal/": 2,
+    "/batch-remove-background/": 2,
+    "/es/quitar-fondo-de-imagen-gratis/": 2,
+    "/pt-br/remover-fundo-de-imagem-gratis/": 2,
+    "/pdf-tools/": 2,
+    "/compress-pdf-strong/": 2,
+    "/interleave-pdf/": 2,
+    "/sign-pdf/": 2,
+    "/flatten-pdf/": 2,
+    "/workflows/": 2,
+    "/batch-compress-pdf/": 2,
+    "/batch-merge-pdf/": 2,
+    "/batch-split-pdf/": 2,
+    "/presets/": 2,
+    "/image-tools/": 2,
+    "/batch-compress-images/": 2,
+    "/batch-convert-images/": 2,
+    "/es/quitar-fondo-resolucion-completa/": 2,
+    "/pt-br/alternativa-gratis-ao-remove-bg/": 2,
+    "/vs-remove-bg/": 2,
+    "/remove-bg-alternatives/": 3,
+    "/remove-bg-december-1/": 3,
+    "/remove-bg-api/": 3
+  }
+}

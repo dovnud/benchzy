@@ -1,0 +1,138 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faq = [
+  {
+    q: 'One target for every photo?',
+    a: 'Yes. Pick the target once and every image on the tray runs the same combined quality-and-size search as the Compress image page, the search that lands within a whisker of the number. Each photo gets its own result line with the size it reached.',
+  },
+  {
+    q: 'How long does a batch take?',
+    a: 'On our bench, 25 images were converted in 22.1 seconds total, under a second a file on average. Exact-KB searches take a few tries per photo, so a batch of big photos takes a little longer; the page works through them one at a time and says where it is.',
+  },
+  {
+    q: 'What formats can go in?',
+    a: 'JPEG, PNG and WebP are read by the bench codecs; most other formats your browser can display are read through the browser itself. Everything comes out as JPEG at your target size, like the single-photo page.',
+  },
+  {
+    q: 'Where do my photos go?',
+    a: 'Nowhere. They are read into this page and processed in your browser. Watch the network panel while it works if you want to check.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const howToJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: "How to compress many images to one exact size",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Pick your images", text: "Drop images on the tray, or click to pick them. They are read into this page; they are never uploaded." },
+    { '@type': 'HowToStep', position: 2, name: "Set one target", text: "Pick the target size once: 200 KB, 100 KB, 50 KB or your own number. The same target is applied to every photo." },
+    { '@type': 'HowToStep', position: 3, name: "Run the batch", text: "Press 'Compress the batch'. Each photo runs the combined quality-and-size search until it lands at your target, and gets its own result line." },
+    { '@type': 'HowToStep', position: 4, name: "Download the results", text: "Download photos one by one, or take the whole batch away as a single ZIP." },
+  ],
+});
+---
+
+<Base title="Batch compress images: shrink many photos to one exact size, free · Benchzy" description="Compress a folder of photos to one exact KB target in a single run, inside your browser. Per-file results, one ZIP download. No upload, no account, no operation counter.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · Image bench · batch</p>
+      <h1 class="font-display text-4xl font-black mt-2">Batch compress images</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        The whole camera roll, at the size the form or the shop asked for. Set one target and
+        every photo is worked to it in a single run. The metered converters count operations
+        and minutes against you; this bench does not count anything. One photo at a time is on
+        the <a class="underline underline-offset-4 hover:text-accent-deep" href="/compress-image/">Compress image page</a>.
+      </p>
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="bi-tool" data-mode="compress">
+      <div id="bi-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick images">
+        <p class="font-display text-xl font-bold">Drop images on the tray, or click to pick them</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">JPEG · PNG · WebP · as many as you like · they stay on this device</p>
+        <input id="bi-file" type="file" accept="image/*" multiple class="hidden" />
+      </div>
+
+      <ul id="bi-list" class="mt-6"></ul>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">One target for the batch</h2>
+          <div id="bi-targets" class="flex gap-2 mt-3 flex-wrap">
+            <button class="chip" type="button" data-kb="200" aria-pressed="true">200 KB</button>
+            <button class="chip" type="button" data-kb="100">100 KB</button>
+            <button class="chip" type="button" data-kb="50">50 KB</button>
+          </div>
+          <div class="flex items-center gap-2 mt-3">
+            <label class="font-mono text-xs uppercase tracking-widest text-ink-soft" for="bi-custom">Or your own (KB)</label>
+            <input id="bi-custom" type="number" min="5" max="20000" step="10" value="200" class="border border-ink bg-ticket px-3 py-2 font-mono w-28" />
+          </div>
+          <p class="text-ink-soft text-sm leading-relaxed mt-3 max-w-md">
+            Photos are processed one at a time. A JPEG already under the target is kept as its
+            original and the result line says so.
+          </p>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="bi-spec" class="mt-2">
+            <div class="spec-row"><dt>files on the tray</dt><dd>0</dd></div>
+          </dl>
+          <button id="bi-run" class="btn-primary w-full mt-5" type="button" disabled>Compress the batch</button>
+          <p id="bi-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick images to begin.</p>
+        </div>
+      </div>
+
+      <div id="bi-result" class="hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Results</h2>
+          <span class="stamp" id="bi-stamp">Done on your device</span>
+        </div>
+        <div id="bi-rows" class="mt-4 grid gap-1"></div>
+        <a id="bi-zip" class="btn-primary inline-block no-underline mt-4 hidden" href="#" download>Download all as one ZIP</a>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Each photo runs the same search as the single-photo bench: quality first, then
+          quality and dimensions together when quality alone has no setting close enough to
+          your target. Attempts are kept, not re-encoded, and the winner is printed on the
+          result line with its quality and dimensions.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Output is JPEG, the format the exact-size search is measured on. A photo that cannot
+          land under the target even at the smallest sensible size is returned at the closest
+          size reached, and the result line says "closest reached" rather than pretending. One
+          honest absence: AVIF is not offered in batch; the bench measured it at about 50
+          seconds a photo.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script type="application/ld+json" set:html={howToJson}></script>
+  <script>
+    import '../scripts/batch-image.js';
+  </script>
+</Base>

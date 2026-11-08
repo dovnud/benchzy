@@ -14,6 +14,18 @@
 - [Split PDF](https://benchzy.com/split-pdf/): Pull a page range out of a PDF as its own file, or take every page as a separate PDF.
 - [Read a scanned PDF (OCR)](https://benchzy.com/ocr-pdf/): Turn a scanned PDF into checkable, editable text plus a searchable PDF. Pages are rendered at 300 DPI and read in the browser.
 - [File size checker](https://benchzy.com/size-checker/): Read any file's exact size in bytes, its real format (from its bytes, not its name), dimensions, page count or duration, and whether it fits common portal limits.
+- [Batch compress PDF](https://benchzy.com/batch-compress-pdf/): A folder of PDFs worked to one target size in a single run, with a result line per file and one ZIP out. The job the big suites sell as a paid extra.
+- [Batch merge PDF](https://benchzy.com/batch-merge-pdf/): Pick a whole folder at once, sort the tray by file name, and merge it into one PDF.
+- [Batch split PDF](https://benchzy.com/batch-split-pdf/): One page range cut from every file in a folder in a single run.
+- [Batch compress images](https://benchzy.com/batch-compress-images/): A folder of photos worked to one exact KB target in a single run, with a result line per file and one ZIP out.
+- [Batch convert images](https://benchzy.com/batch-convert-images/): A folder converted to JPG, PNG or WebP at one quality, with an optional maximum width.
+- [Batch remove background](https://benchzy.com/batch-remove-background/): A folder of photos cut out at full size in one run, one ZIP of transparent PNGs.
+- [Compress PDF, strong](https://benchzy.com/compress-pdf-strong/): Strong PDF compression with no target: the smallest honest result from the deep end of the ladder, with the photo trade printed on the result.
+- [Interleave PDF](https://benchzy.com/interleave-pdf/): Deal pages from two PDFs together (A1, B1, A2, B2), with the second file readable back to front. The duplex scan repair.
+- [Sign PDF](https://benchzy.com/sign-pdf/): Draw or type a signature and place it on your own PDF, drawn into the page itself. Self-signing only: no signing requests to others, no audit certificates, no legal e-signature claim.
+- [Flatten PDF](https://benchzy.com/flatten-pdf/): Bake a filled form's answers into the pages so the file displays and prints the same everywhere. Annotations that are not form fields are counted and reported, never silently dropped.
+- [Workflows](https://benchzy.com/workflows/): Chain the benches (merge, shrink, split, stamp) into named chains saved in the visitor's browser, then run a chain on dropped files.
+- [Preset chains](https://benchzy.com/presets/): Ready-made workflow chains: invoice pack, portal pack, paid pack, seller photos.
 
 ## Tool hubs
 

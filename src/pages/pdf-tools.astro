@@ -4,8 +4,16 @@ import Base from '../layouts/Base.astro';
 const live = [
   { name: 'Compress PDF to a size', href: '/compress-pdf/', note: 'The lead PDF job: pick a target, 200 KB, 500 KB, 2 MB or your own number, and the page works to land under it, printing the exact size it reached. If it cannot reach the target, it says so before you download.' },
   { name: 'Compress PDF to 200 KB', href: '/compress-pdf-to-200kb/', note: 'The flagship preset for tight government and job portals, with the 200 KB target already set.' },
+  { name: 'Compress PDF, strong', href: '/compress-pdf-strong/', note: 'The strong setting the suites keep paid: no target, the deep end of the same ladder, the smallest honest result. Strong on photo PDFs; on text PDFs it says plainly that almost nothing can shrink.' },
   { name: 'Merge PDF', href: '/merge-pdf/', note: 'As many files as your device can hold, in your order. Pages are copied, not rebuilt, so nothing is re-encoded. On the bench, 25 files merged in 71 milliseconds and came out smaller than the biggest site\'s result on the same files.' },
-  { name: 'Split PDF', href: '/split-pdf/', note: 'Pull a page range out as one PDF, or take every page as its own file.' },
+  { name: 'Interleave PDF', href: '/interleave-pdf/', note: 'Deal two PDFs together a page at a time (A1, B1, A2, B2), with the second file readable back to front: the repair for a duplex document scanned on a one-sided scanner.' },
+  { name: 'Split PDF', href: '/split-pdf/', note: 'Pull a page range out as one PDF, take every page as its own file, or cut the file into parts that each fit under a size you set, each part checked against the limit before download.' },
+  { name: 'Sign PDF', href: '/sign-pdf/', note: 'Draw or type your signature and place it on your own document, drawn into the page itself. Scope printed on the page: no signing requests to others, no audit certificates, no legal e-signature claim.' },
+  { name: 'Flatten PDF', href: '/flatten-pdf/', note: 'Bake a filled form\'s answers into the pages so the file displays and prints the same everywhere. Annotations that are not form fields are counted and reported, never silently dropped.' },
+  { name: 'Batch compress PDF', href: '/batch-compress-pdf/', note: 'The paid-extra job, free here: a whole folder of PDFs worked to one target size in a single run, with a result line per file and one ZIP out.' },
+  { name: 'Batch merge PDF', href: '/batch-merge-pdf/', note: 'Pick a whole folder at once, sort the tray by file name, and merge it into one file.' },
+  { name: 'Batch split PDF', href: '/batch-split-pdf/', note: 'One page range cut from every file in the folder in a single run.' },
+  { name: 'Workflows', href: '/workflows/', note: 'Chain these benches into one saved run: merge, then shrink, then stamp, on the next folder that lands. Saved in your browser, run end to end here.' },
   { name: 'Read a scan (OCR)', href: '/ocr-pdf/', note: 'Scanned pages are read at 300 DPI into checkable text, plus a searchable PDF. On the standard test invoice the bench read 96% of characters correctly; check money amounts, because the reader can drop a decimal point, and the page tells you so.' },
 ];
 const planned = [

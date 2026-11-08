@@ -1,0 +1,18 @@
+sg NO RESULT. status: Draw your signature on the pad first, or switch to typing it.
+cp RESULT: Strong result: 2 KB, down from 11.11 MB (photos at 12% size, quality 16).
+il RESULT: Interleaved into one PDF of 13 pages, 7.7 KB: page 1 of the first file, then alternating. The first file had more pages; its remaining pages follow at the end in their own order. Check the order on a few pages before you
+sp RESULT: (no achieved el)
+sp links: ["photo-3page-part-1.pdf","photo-3page-part-2.pdf","photo-3page-parts.zip"]
+file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/common/WaitTask.js:46
+            this.#timeoutError = new TimeoutError(`Waiting failed: ${options.timeout}ms exceeded`);
+                                 ^
+
+TimeoutError: Waiting failed: 30000ms exceeded
+    at new WaitTask (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/common/WaitTask.js:46:34)
+    at IsolatedWorld.waitForFunction (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/api/Realm.js:49:26)
+    at CdpFrame.waitForFunction (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/api/Frame.js:585:43)
+    at CdpFrame.<anonymous> (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/util/decorators.js:101:27)
+    at CdpPage.waitForFunction (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/api/Page.js:1542:37)
+    at file:///home/hatch/workspace/benchzy-build/verify/probe-m6b.mjs:96:14
+
+Node.js v24.22.1

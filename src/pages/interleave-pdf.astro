@@ -1,0 +1,145 @@
+---
+import Base from '../layouts/Base.astro';
+
+const faq = [
+  {
+    q: 'What job is this for?',
+    a: 'The classic one: a two-sided document scanned on a one-sided scanner. You scan the fronts in order (file A), flip the stack, and scan the backs (file B), which the scanner takes last-page-first. Interleave deals them back together: A1, B1, A2, B2, with B read back to front when you tick the box.',
+  },
+  {
+    q: 'What if the files have different page counts?',
+    a: 'The shorter file deals in until it runs out; the longer file\'s remaining pages follow at the end, in their own order. The result line says so, so an odd page count never hides.',
+  },
+  {
+    q: 'Does it read the pages to check the order?',
+    a: 'No. This page deals pages like cards, by number; it cannot tell a front from a back. Check the merged order on a few pages before you rely on it, especially the first pair, which tells you whether the backs ran in reverse.',
+  },
+  {
+    q: 'Where do my PDFs go?',
+    a: 'Nowhere. They are read into this page and interleaved in your browser. Watch the network panel while it works if you want to check.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const howToJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: "How to interleave two PDFs (alternate merge)",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Pick the first file (A)", text: "Drop the fronts (or the odd pages) on the first tray. The file is read into this page; it is never uploaded." },
+    { '@type': 'HowToStep', position: 2, name: "Pick the second file (B)", text: "Drop the backs (or the even pages) on the second tray." },
+    { '@type': 'HowToStep', position: 3, name: "Set the dealing order", text: "Choose which file deals first, and tick 'second file back to front' when its pages were scanned in reverse, as backs usually are." },
+    { '@type': 'HowToStep', position: 4, name: "Interleave and download", text: "Press 'Interleave the two PDFs'. Pages alternate A, B, A, B into one file; download it and check the first pairs before relying on it." },
+  ],
+});
+---
+
+<Base title="Interleave PDF: alternate pages from two files (scan repair), free · Benchzy" description="Deal pages from two PDFs together, A1 B1 A2 B2, with a back-to-front option for the second file: the duplex scan repair, inside your browser.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · PDF bench · merge variant</p>
+      <h1 class="font-display text-4xl font-black mt-2">Interleave PDF</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Two files, one document: the fronts in one, the backs in the other. Interleave deals
+        them back together a page at a time. It is the one merge variant the careful scanners
+        keep behind a meter elsewhere; here it is a tray and a button. The plain merge is on
+        the <a class="underline underline-offset-4 hover:text-accent-deep" href="/merge-pdf/">Merge PDF page</a>.
+      </p>
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="il-tool">
+      <div class="grid gap-4 md:grid-cols-2">
+        <div id="il-tray-a" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick the first PDF">
+          <p class="font-display text-xl font-bold">First file (A)</p>
+          <p class="font-mono text-xs text-ink-soft mt-2">the fronts · drop it here, or click</p>
+          <input id="il-file-a" type="file" accept="application/pdf,.pdf" class="hidden" />
+        </div>
+        <div id="il-tray-b" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick the second PDF">
+          <p class="font-display text-xl font-bold">Second file (B)</p>
+          <p class="font-mono text-xs text-ink-soft mt-2">the backs · drop it here, or click</p>
+          <input id="il-file-b" type="file" accept="application/pdf,.pdf" class="hidden" />
+        </div>
+      </div>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">The dealing order</h2>
+          <div class="grid gap-2 mt-3">
+            <div class="flex gap-4 flex-wrap">
+              <label class="flex items-baseline gap-2"><input type="radio" name="il-start" value="a" checked /><span>Deal A first</span></label>
+              <label class="flex items-baseline gap-2"><input type="radio" name="il-start" value="b" /><span>Deal B first</span></label>
+            </div>
+            <label class="flex items-baseline gap-2">
+              <input id="il-reverse-b" type="checkbox" />
+              <span>Read the second file back to front (backs scanned from a flipped stack)</span>
+            </label>
+          </div>
+          <p class="text-ink-soft text-sm leading-relaxed mt-3 max-w-md">
+            When in doubt, leave B in its own order and check page 2 of the result: if it is
+            the document's last back page instead of its first, the backs ran in reverse and
+            the box is the fix.
+          </p>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="il-spec" class="mt-2">
+            <div class="spec-row"><dt>first file (A)</dt><dd>none picked yet</dd></div>
+          </dl>
+          <button id="il-run" class="btn-primary w-full mt-5" type="button" disabled>Interleave the two PDFs</button>
+          <p id="il-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick both PDFs to begin.</p>
+        </div>
+      </div>
+
+      <div id="il-result" class="hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Result</h2>
+          <span class="stamp" id="il-stamp">Done on your device</span>
+        </div>
+        <p id="il-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
+        <a id="il-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the interleaved PDF</a>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The page copies one page from A, one from B, one from A, and so on into a new file,
+          with B's order reversed when you ask. Pages are copied, not rebuilt, so nothing is
+          recompressed; the engine is the same page-copying the merge bench measured at 71
+          milliseconds for a 25-file pack.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          A missing or doubled page in either scan throws the whole deal out from that point
+          on; the bench deals numbers, it does not proofread. Split a wrong pair out with the
+          <a class="underline underline-offset-4" href="/split-pdf/">Split PDF page</a> and deal
+          again. If one file is longer, its extra pages land at the end, and the result line
+          says so.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script type="application/ld+json" set:html={howToJson}></script>
+  <script>
+    import '../scripts/interleave-pdf.js';
+  </script>
+</Base>

@@ -169,6 +169,54 @@
         ],
         "statusText": "Escolha uma foto para começar."
       }
+    },
+    "/batch-compress-pdf/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/batch-merge-pdf/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/batch-split-pdf/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/batch-compress-images/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/batch-convert-images/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/batch-remove-background/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/workflows/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/presets/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/sign-pdf/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/flatten-pdf/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/interleave-pdf/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/compress-pdf-strong/": {
+      "consoleErrors": [],
+      "failedRequests": []
     }
   },
   "tools": {
@@ -187,14 +235,14 @@
         "keys": [
           "benchzy-v1"
         ],
-        "entries": 47,
+        "entries": 77,
         "sample": [
           "/remove-background/",
-          "/_astro/remove-background.astro_astro_type_script_index_0_lang.DzTLgIy4.js",
+          "/_astro/remove-background.astro_astro_type_script_index_0_lang.Uomc4faW.js",
           "/compress-pdf/",
-          "/_astro/compress-pdf.astro_astro_type_script_index_0_lang.Sop7ETle.js",
+          "/_astro/compress-pdf.astro_astro_type_script_index_0_lang.CuXhnXa2.js",
           "/compress-image/",
-          "/_astro/compress-image.astro_astro_type_script_index_0_lang.xf8nsA8h.js"
+          "/_astro/compress-image.astro_astro_type_script_index_0_lang.Dt5Uhl9H.js"
         ]
       },
       "offlineOk": true,
@@ -203,7 +251,7 @@
       "failedRequests": []
     },
     "compressImage": {
-      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 7.7 seconds.",
+      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 9.2 seconds.",
       "blobSize": 199856,
       "targetBytes": 204800,
       "within5pct": true,
@@ -223,7 +271,7 @@
       "failedRequests": []
     },
     "ocr": {
-      "note": "Read 1 page, 177 characters, in 1.5 seconds. Check the text in the box before you use it, especially numbers: this engine has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and the .txt download uses your corrected text.",
+      "note": "Read 1 page, 177 characters, in 2.3 seconds. Check the text in the box before you use it, especially numbers: this engine has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and the .txt download uses your corrected text.",
       "checks": {
         "hasInvoice": true,
         "hasNumber": true,
@@ -247,7 +295,7 @@
     },
     "split": {
       "rangeSavedTo": "/home/hatch/workspace/benchzy-build/verify/out-split-1-5.pdf",
-      "rangeBytes": 3590,
+      "rangeBytes": 6001,
       "eachPageLinks": 10,
       "consoleErrors": [],
       "failedRequests": []
@@ -261,7 +309,7 @@
       "failedRequests": []
     },
     "presetImage50": {
-      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 6.8 seconds.",
+      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 8.5 seconds.",
       "blobSize": 50112,
       "within5pct": true,
       "consoleErrors": [],
@@ -280,7 +328,7 @@
     },
     "removeBackground": {
       "ran": true,
-      "times": "Program start: 2.6 s. Cutout: 10.9 s. Full size result: 1200 x 900, 915 KB.",
+      "times": "Program start: 3.9 s. Cutout: 13.5 s. Full size result: 1200 x 900, 915 KB.",
       "status": "Done.",
       "dlName": "test-bg-hard-no-background.png",
       "noSubjectShown": false,
@@ -296,7 +344,7 @@
     },
     "removeBackgroundEs": {
       "ran": true,
-      "times": "Inicio del programa: 2,2 s. Recorte: 11,3 s. Resultado a tamaño completo: 1200 x 900, 915 KB.",
+      "times": "Inicio del programa: 2,9 s. Recorte: 14,3 s. Resultado a tamaño completo: 1200 x 900, 915 KB.",
       "status": "Listo.",
       "dlName": "test-bg-hard-sin-fondo.png",
       "noSubjectShown": false,
@@ -312,7 +360,7 @@
     },
     "removeBackgroundPtBr": {
       "ran": true,
-      "times": "Início do programa: 2,0 s. Recorte: 11,1 s. Resultado em tamanho real: 1200 x 900, 915 KB.",
+      "times": "Início do programa: 3,3 s. Recorte: 13,9 s. Resultado em tamanho real: 1200 x 900, 915 KB.",
       "status": "Pronto.",
       "dlName": "test-bg-hard-sem-fundo.png",
       "noSubjectShown": false,
@@ -323,6 +371,175 @@
       "fullSizeInTimes": true,
       "doneStatusOk": true,
       "dlSuffixOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m6BatchCompress": {
+      "rows": [
+        "photo-1page.pdf11.11 MB to 405.6 KB, under the 500 KB targetDownload",
+        "photo-1page.pdf11.11 MB to 405.6 KB, under the 500 KB targetDownload",
+        "test-10page.pdfalready under the target; original keptOriginal"
+      ],
+      "entries": [
+        {
+          "name": "photo-1page-smaller-2.pdf",
+          "size": 415377
+        },
+        {
+          "name": "photo-1page-smaller.pdf",
+          "size": 415377
+        },
+        {
+          "name": "test-10page.pdf",
+          "size": 7203
+        }
+      ],
+      "photoOutputsUnder500k": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m6BatchMerge": {
+      "note": "merged-benchzy.pdf25 files, 25 pages, 6.5 KBDownload (6.5 KB)",
+      "bytes": 6673,
+      "benchBytes": 6673,
+      "matchesBench": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m6BatchSplit": {
+      "pageCounts": [
+        {
+          "name": "test-10page-pages-1-2.pdf",
+          "pages": 2
+        },
+        {
+          "name": "test-3page-second-pages-1-2.pdf",
+          "pages": 2
+        }
+      ],
+      "twoFilesTwoPages": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m6BatchImages": {
+      "rows": [
+        "test-large-photo.jpg1.39 MB to 195.2 KB, quality 40, 4000x3000Download"
+      ],
+      "entries": [
+        {
+          "name": "test-large-photo-benchzy.jpg",
+          "size": 199856
+        }
+      ],
+      "benchLanding": 199856,
+      "matchesBench199856": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m6BatchConvert": {
+      "rows": [
+        "test-large-photo.jpg1.39 MB to 245.8 KB WEBP, 4000x3000Download"
+      ],
+      "entry": "test-large-photo.webp",
+      "bytes": 251730,
+      "magic": "RIFF/WEBP",
+      "within2pctOfBench": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m6BatchBg": {
+      "rows": [
+        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 14.0 sDownload",
+        "test-photo-realistic-large.jpgno clear subject found; nothing downloaded for this one"
+      ],
+      "entries": [
+        {
+          "name": "test-bg-hard-no-background.png",
+          "size": 936993
+        }
+      ],
+      "hardCutoutBytes": 936993,
+      "hardNearBench915k": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m6Workflows": {
+      "storedHasInvoicePack": true,
+      "log": "Step: Merge all PDFs into one…Merge: 4 PDFs became one file of 4 pages.Step: Compress PDF to 500 KB…Compress PDF: merged.pdf 11.11 MB to 406.4 KB.",
+      "output": {
+        "name": "merged-smaller.pdf",
+        "size": 416151
+      },
+      "outputUnder500k": true,
+      "persistsAfterReload": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m6Sign": {
+      "note": "Signed: your signature is drawn onto page 10 as part of the page itself (not a sticker that can be peeled off in an editor), 16 KB. This is your signature placed on your document; it carries no certificate and no audit trail, as the note above the tray says.",
+      "pages": 10,
+      "imagesOnLastPage": 1,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m6Strong": {
+      "note": "Strong result: 2 KB, down from 11.11 MB (photos at 12% size, quality 16).",
+      "strongBytes": 2066,
+      "underPresetLanding": true,
+      "textNote": "We could not make this PDF smaller. It has no photos inside to recompress, and re-saving alone does not shrink a text PDF (on our bench a re-save moved a text PDF from 7,203 bytes to 7,231). Here is your original back, unchanged.",
+      "textBytes": 7203,
+      "textUnchanged": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m6Interleave": {
+      "note": "Interleaved into one PDF of 13 pages, 7.7 KB: page 1 of the first file, then alternating. The first file had more pages; its remaining pages follow at the end in their own order. Check the order on a few pages before you rely on it: this page deals the pages like cards, it does not read them.",
+      "pages": 13,
+      "markers": [
+        "PAGE-01",
+        "SECOND-01",
+        "PAGE-02",
+        "SECOND-02",
+        "PAGE-03",
+        "SECOND-03",
+        "PAGE-04",
+        "PAGE-05",
+        "PAGE-06",
+        "PAGE-07",
+        "PAGE-08",
+        "PAGE-09",
+        "PAGE-10"
+      ],
+      "orderOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m6SplitSize": {
+      "parts": [
+        {
+          "name": "photo-3page-part-1.pdf",
+          "size": 11654172
+        },
+        {
+          "name": "photo-3page-part-2.pdf",
+          "size": 11654176
+        },
+        {
+          "name": "photo-3page-part-3.pdf",
+          "size": 11654182
+        }
+      ],
+      "partCount": 3,
+      "totalPages": 3,
+      "everyPartCarriesTheImage": true,
+      "overLimitFlagged": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m6Flatten": {
+      "note": "Flattened: 3 form fields baked into the pages; the finished file has 0 editable fields left, 4.1 KB. The values now print and display as ordinary page content.",
+      "fieldsLeft": 0,
+      "valueBakedIn": true,
       "consoleErrors": [],
       "failedRequests": []
     }

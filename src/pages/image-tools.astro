@@ -4,11 +4,13 @@ import Base from '../layouts/Base.astro';
 const live = [
   { name: 'Compress image to exact KB', href: '/compress-image/', note: 'The tool the big sites do not offer: a photo at the exact size a form, portal or shop asks for. The page searches quality and size together until it lands within a whisker of your target, and prints every try. On the bench, a normal photo landed within 0.6% of 200, 100, 50 and 20 KB.' },
   { name: 'Compress image to 50 KB', href: '/compress-image-to-50kb/', note: 'The form and seller preset, with the 50 KB target already set.' },
+  { name: 'Batch compress images', href: '/batch-compress-images/', note: 'The whole folder at one exact KB target, in one run: the same combined search per photo, a result line per file, one ZIP out. The metered converters count this job against you; this bench does not count anything.' },
+  { name: 'Batch convert images', href: '/batch-convert-images/', note: 'A folder converted to JPG, PNG or WebP at one quality, with an optional maximum width. On the bench, our WebP of the test photo came out at 251,730 bytes against the biggest converter\'s 435,388 on the same file.' },
+  { name: 'Batch remove background', href: '/batch-remove-background/', note: 'A folder of photos cut out at full size in one run. The model downloads once for the batch and is saved by your browser for the next one. Background removal\'s own workshop is next door.' },
   { name: 'Size checker', href: '/size-checker/', note: 'Before you shrink anything: exact bytes, real format, dimensions, and how the file lines up against the doors portals set (fits, or too big, and by how much).' },
 ];
 const planned = [
-  'Convert between JPG, PNG and WebP (on the bench, our WebP of the test photo came out at 251,730 bytes against the biggest converter\'s 435,388 on the same file)',
-  'Resize image to an exact width',
+  'Resize one image to an exact width (resizing a batch by maximum width works today on the batch convert bench)',
   'Strip hidden data (EXIF) with a before and after report (verified on the bench: injected place and camera data fully removed)',
 ];
 ---
