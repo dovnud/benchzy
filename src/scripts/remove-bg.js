@@ -1,6 +1,10 @@
 // Remove Background.
 // Engine: imgly's quantized ISNet build (44,342,436 bytes) through our own
 // onnxruntime-web pipeline, WASM, one thread (build plan T4/T5).
+// Delivery (T4): the model ships as 11 hashed pieces with a SHA-256
+// manifest (public/models/model-manifest.json, made by
+// tools/make-model-chunks.mjs). The loader fetches the pieces, checks every
+// piece's hash and then the whole file's hash, and only then runs it.
 // Preprocessing is the bench's own: resize to 1024x1024, (pixel - 128) / 256,
 // mask clipped to [0,1] (bench/BENCH-ROUND3B.md). The model downloads only
 // when the visitor presses start, and its size is printed before that.
@@ -12,8 +16,13 @@ ort.env.wasm.wasmPaths = '/ort/';
 ort.env.wasm.numThreads = 1;
 ort.env.logLevel = 'warning';
 
-const MODEL_URL = '/models/imgly-isnet-small-quantized.onnx';
+const MANIFEST_URL = '/models/model-manifest.json';
 const MODEL_BYTES = 44342436;
+
+async function sha256Hex(buf) {
+  const h = await crypto.subtle.digest('SHA-256', buf);
+  return [...new Uint8Array(h)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
 
 const $ = (id) => document.getElementById(id);
 const tray = $('bg-tray'), input = $('bg-file'), spec = $('bg-spec');
@@ -41,7 +50,7 @@ wireTray(tray, input, async (f) => {
       ['format', f.type || 'unknown'],
       ['size', fmtBytes(f.size)],
       ['dimensions', bitmap.width + ' x ' + bitmap.height],
-      ['model', '44.3 MB, downloads when you press start'],
+      ['model', '44.3 MB in 11 checked pieces, downloads when you press start'],
     ]);
     setStatus('Ready. Nothing has been downloaded or sent anywhere yet.');
     runBtn.disabled = false;
@@ -53,26 +62,30 @@ wireTray(tray, input, async (f) => {
 async function loadModel() {
   if (session) return session;
   if (!modelBuf) {
-    setStatus('Downloading the removal program: 0 of 44.3 MB…');
-    const res = await fetch(MODEL_URL);
-    if (!res.ok) throw new Error('model download failed (' + res.status + ')');
-    const total = parseInt(res.headers.get('content-length') || MODEL_BYTES, 10);
-    const reader = res.body.getReader();
-    const chunks = [];
-    let got = 0, lastShown = 0;
-    for (;;) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      chunks.push(value);
-      got += value.length;
-      if (got - lastShown > 1024 * 1024) {
-        lastShown = got;
-        setStatus(`Downloading the removal program: ${(got / 1048576).toFixed(1)} of ${(total / 1048576).toFixed(1)} MB…`);
-      }
+    setStatus('Fetching the removal program list…');
+    const mres = await fetch(MANIFEST_URL);
+    if (!mres.ok) throw new Error('model list download failed (' + mres.status + ')');
+    const manifest = await mres.json();
+    const total = manifest.totalBytes || MODEL_BYTES;
+    modelBuf = new Uint8Array(total);
+    let off = 0, got = 0;
+    for (let i = 0; i < manifest.chunks.length; i++) {
+      const c = manifest.chunks[i];
+      setStatus(`Downloading the removal program: ${(got / 1048576).toFixed(1)} of ${(total / 1048576).toFixed(1)} MB (piece ${i + 1} of ${manifest.chunks.length})…`);
+      const res = await fetch('/models/' + c.file);
+      if (!res.ok) throw new Error('model piece ' + (i + 1) + ' download failed (' + res.status + ')');
+      const buf = new Uint8Array(await res.arrayBuffer());
+      if (buf.length !== c.bytes) throw new Error('model piece ' + (i + 1) + ' arrived the wrong size; nothing was run.');
+      if ((await sha256Hex(buf)) !== c.sha256) throw new Error('model piece ' + (i + 1) + ' failed its check; nothing was run.');
+      modelBuf.set(buf, off);
+      off += buf.length;
+      got += buf.length;
     }
-    modelBuf = new Uint8Array(got);
-    let off = 0;
-    for (const c of chunks) { modelBuf.set(c, off); off += c.length; }
+    if ((await sha256Hex(modelBuf)) !== manifest.sha256) {
+      modelBuf = null;
+      throw new Error('the removal program failed its final check; nothing was run.');
+    }
+    setStatus('Removal program downloaded and checked, piece by piece. Starting it…');
   }
   setStatus('Starting the removal program…');
   session = await ort.InferenceSession.create(modelBuf.buffer, {

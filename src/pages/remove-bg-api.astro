@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+
+const facts = [
+  ['What is ending', 'The remove.bg self-service API stops on 1 December 2026 at 09:00 CET, with the standalone site. API keys stop working. (remove.bg announcement, read 7 November 2026.)'],
+  ['Where remove.bg sends you', 'Leonardo.Ai, also owned by Canva, is named by remove.bg as the API\'s new home. Pricing and terms there are Leonardo\'s, and were not part of our check.'],
+  ['What the old API cost', '1 credit per full-resolution image, 0.25 credit per preview, with 50 free previews a month. Prices per credit: ESTIMATE, from published reads of its pricing page, October to November 2026.'],
+  ['What happens to API credits', 'Every unused credit expires on 1 December 2026, subscription and pay-as-you-go alike.'],
+  ['What Benchzy offers developers', 'No API. Plainly: Benchzy has no API, no keys, and no server that receives files, because every tool runs inside the visitor\'s browser. There is nothing here to migrate an integration to.'],
+];
+---
+
+<Base title="For remove.bg API users: where the API goes · Benchzy" description="A short factual note for developers: the remove.bg API ends 1 December 2026, its official new home is Leonardo.Ai, and Benchzy offers no API and says so.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Note for developers · checked 8 November 2026</p>
+      <h1 class="font-display text-4xl font-black mt-2">For remove.bg API users</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        This page exists to be correct and complete for the developers searching it, including
+        the part that does us no favours: we are not a destination for your integration.
+      </p>
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7">
+      <dl>
+        {facts.map(([k, v]) => (
+          <div class="spec-row"><dt>{k}</dt><dd class="max-w-xl">{v}</dd></div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="mt-10 mb-4 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">If your jobs are human-scale</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          If a person, not a program, does the removing (a shop owner with a folder of product
+          photos, a designer on deadline), the web tool here does that job free, at full size,
+          with no key and no counter:
+          <a class="underline underline-offset-4" href="/remove-background/">remove a background</a>.
+          It will not plug into your pipeline, and this page will not pretend otherwise.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Why there is no API</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          An API means a server doing the work, and a server doing the work is the cost that
+          makes every other service ration the job with credits. Benchzy's tools run on the
+          visitor's device instead, which is exactly why the hand tools can be free with no
+          meter. The full reasoning is on the
+          <a class="underline underline-offset-4" href="/what-free-means/">what free means here</a> page.
+        </p>
+      </div>
+    </section>
+  </div>
+</Base>

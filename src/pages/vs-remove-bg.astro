@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro';
+
+// Facts only. Benchzy column: this site's measured behaviour (experiments
+// and benches in our research files). remove.bg column: its own pages and
+// terms as read 7 November 2026, plus our live test of the same date.
+// Prices are labelled ESTIMATE: remove.bg's pricing page shows no readable
+// price table, so its prices come from dated reads of that page by others.
+const rows = [
+  ['Free download size', 'Full size. The cutout is the same pixel size as your photo.', 'Capped at 0.25 megapixels. In our live test, a 1200 by 900 photo came back at 577 by 433.'],
+  ['What full size costs', 'Nothing. Full size is the only size.', '1 credit per photo. Credits are sold by subscription (from $9 a month for 40 credits) or one-off packs (from $3 for 3). Prices: ESTIMATE, from published reads of its pricing page, October to November 2026.'],
+  ['Account', 'No account exists. Nothing to sign up for, nothing to cancel.', 'No account needed for the small free download. Registering gives 1 free full-size credit, once.'],
+  ['Daily counter or credits', 'None. There is no counter in the program at all.', 'Full size runs on credits. Subscription credits expire at the end of each cycle on current plans, and die if you cancel.'],
+  ['Watermark on output', 'None, ever.', 'None on the free preview download (our live test).'],
+  ['Commercial use of free output', 'Allowed. Our output carries no licence restriction from us.', 'Free results are for private, non-commercial use under its terms (terms as read November 2026). Business use needs paid credits.'],
+  ['Where your photo is processed', 'In your browser, on your device. It is never uploaded.', 'On remove.bg servers. Every surface, web, app and plugin, sends the photo to them.'],
+  ['First-run download', 'The removal program, 44.3 MB, once, printed on the tool page before it loads.', 'Nothing to download; the work happens on their machines.'],
+  ['Speed', 'About 13 seconds a photo on a desktop in our tests. Phone speed unmeasured, and not promised.', 'Seconds, on their servers. We do not claim to beat this.'],
+  ['After the job', 'The tool only. No editor, no templates.', 'An editor with templates and effects, inside the site until it closes.'],
+  ['On 1 December 2026', 'Benchzy is independent of remove.bg and keeps running.', 'The standalone site, accounts, the self-service API and the plugins end at 09:00 CET. Every unused credit expires. The job moves into Canva, where background removal is a paid-plan feature.'],
+];
+---
+
+<Base title="Benchzy vs remove.bg, the dated facts · Benchzy" description="A facts-only comparison, checked 8 November 2026: free download size, credits, accounts, commercial use, where your photo is processed, and what happens on 1 December 2026.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Comparison · checked 8 November 2026</p>
+      <h1 class="font-display text-4xl font-black mt-2">Benchzy vs remove.bg</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Facts only, each one dated or measured. The remove.bg column comes from its own pages
+        and terms as read on 7 November 2026 and from a live test the same day. Where a fact
+        comes from other people's reads of a page we could not read ourselves, it is marked
+        ESTIMATE on the row.
+      </p>
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7">
+      <div class="grid gap-x-6 gap-y-1">
+        {rows.map(([what, us, them]) => (
+          <div class="py-3 border-b border-dotted border-line">
+            <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">{what}</h2>
+            <div class="grid gap-2 sm:grid-cols-2 mt-1">
+              <p class="leading-relaxed"><span class="font-bold">Benchzy:</span> {us}</p>
+              <p class="leading-relaxed text-ink-soft"><span class="font-bold text-ink">remove.bg:</span> {them}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mt-10 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">What this page does not claim</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          It does not claim our cutouts are better. We have never run a head-to-head quality test
+          against remove.bg on real photos; our quality tests used a standard test picture with
+          fine strands, which our program passed. It does not claim we are faster: their servers
+          answer in seconds, ours takes about 13 seconds a photo on a desktop, and phones are
+          unmeasured. The case for Benchzy is the checkable list above: full size, free, no
+          account, no credits, commercial use allowed, and your photo never leaving your device.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Try the job</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The tool is the same one this page describes, and the size printed there is the size
+          you get.
+        </p>
+        <p class="mt-3 flex gap-3 flex-wrap">
+          <a class="btn-primary no-underline" href="/remove-background/">Remove a background</a>
+          <a class="btn-primary no-underline" href="/remove-bg-december-1/">What happens on 1 December</a>
+        </p>
+      </div>
+    </section>
+  </div>
+</Base>

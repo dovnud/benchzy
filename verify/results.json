@@ -43,11 +43,85 @@
     "/size-checker/": {
       "consoleErrors": [],
       "failedRequests": []
+    },
+    "/remove-background-full-resolution/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/background-removal/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/vs-remove-bg/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/remove-bg-alternatives/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/remove-bg-december-1/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/remove-bg-api/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/check-it-yourself/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/what-free-means/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/tools/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/pdf-tools/": {
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "/image-tools/": {
+      "consoleErrors": [],
+      "failedRequests": []
     }
   },
   "tools": {
+    "witness": {
+      "status": "Job done in this page's memory. Network requests during the job: 0. Your file was read, fingerprinted and described without a single request carrying it anywhere.",
+      "verdict": "Requests since the witness started watching (just after this page loaded): 0, every one of them to this site itself, asking for page and program files. Requests with anything attached to them: 0. Requests while the witnessed job was running: 0.",
+      "spec": "filetest-10page.pdfsize7 KB (7203 bytes)real formatPDF documentfingerprint (SHA-256)f6765f5da45987d67a6aeb21227b65ed…pages10",
+      "liveRows": 0,
+      "zeroDuringJob": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "serviceWorker": {
+      "registered": true,
+      "cacheInfo": {
+        "keys": [
+          "benchzy-v1"
+        ],
+        "entries": 39,
+        "sample": [
+          "/remove-background/",
+          "/_astro/remove-background.astro_astro_type_script_index_0_lang.B-FSwSE1.js",
+          "/compress-pdf/",
+          "/_astro/compress-pdf.astro_astro_type_script_index_0_lang.Sop7ETle.js",
+          "/compress-image/",
+          "/_astro/compress-image.astro_astro_type_script_index_0_lang.xf8nsA8h.js"
+        ]
+      },
+      "offlineOk": true,
+      "offlineTitle": "Benchzy: file jobs, done on your device",
+      "consoleErrors": [],
+      "failedRequests": []
+    },
     "compressImage": {
-      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 7.3 seconds.",
+      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 7.4 seconds.",
       "blobSize": 199856,
       "targetBytes": 204800,
       "within5pct": true,
@@ -67,7 +141,7 @@
       "failedRequests": []
     },
     "ocr": {
-      "note": "Read 1 page, 177 characters, in 1.3 seconds. Check the text in the box before you use it, especially numbers: this engine has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and the .txt download uses your corrected text.",
+      "note": "Read 1 page, 177 characters, in 1.5 seconds. Check the text in the box before you use it, especially numbers: this engine has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and the .txt download uses your corrected text.",
       "checks": {
         "hasInvoice": true,
         "hasNumber": true,
@@ -91,7 +165,7 @@
     },
     "split": {
       "rangeSavedTo": "/home/hatch/workspace/benchzy-build/verify/out-split-1-5.pdf",
-      "rangeBytes": 3588,
+      "rangeBytes": 3590,
       "eachPageLinks": 10,
       "consoleErrors": [],
       "failedRequests": []
@@ -105,7 +179,7 @@
       "failedRequests": []
     },
     "presetImage50": {
-      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 6.8 seconds.",
+      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 6.9 seconds.",
       "blobSize": 50112,
       "within5pct": true,
       "consoleErrors": [],
@@ -124,8 +198,12 @@
     },
     "removeBackground": {
       "ran": true,
-      "times": "Program start: 1.9 s. Cutout: 12.0 s. Full size result: 1200 x 900, 915 KB.",
+      "times": "Program start: 2.8 s. Cutout: 10.7 s. Full size result: 1200 x 900, 915 KB.",
       "noSubjectShown": false,
+      "modelCache": {
+        "chunksCached": 11,
+        "manifestCached": 1
+      },
       "consoleErrors": [],
       "failedRequests": []
     }

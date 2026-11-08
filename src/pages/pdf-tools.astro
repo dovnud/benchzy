@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+
+const live = [
+  { name: 'Compress PDF to a size', href: '/compress-pdf/', note: 'The lead PDF job: pick a target, 200 KB, 500 KB, 2 MB or your own number, and the page works to land under it, printing the exact size it reached. If it cannot reach the target, it says so before you download.' },
+  { name: 'Compress PDF to 200 KB', href: '/compress-pdf-to-200kb/', note: 'The flagship preset for tight government and job portals, with the 200 KB target already set.' },
+  { name: 'Merge PDF', href: '/merge-pdf/', note: 'As many files as your device can hold, in your order. Pages are copied, not rebuilt, so nothing is re-encoded. On the bench, 25 files merged in 71 milliseconds and came out smaller than the biggest site\'s result on the same files.' },
+  { name: 'Split PDF', href: '/split-pdf/', note: 'Pull a page range out as one PDF, or take every page as its own file.' },
+  { name: 'Read a scan (OCR)', href: '/ocr-pdf/', note: 'Scanned pages are read at 300 DPI into checkable text, plus a searchable PDF. On the standard test invoice the bench read 96% of characters correctly; check money amounts, because the reader can drop a decimal point, and the page tells you so.' },
+];
+const planned = [
+  'JPG to PDF and PDF to JPG',
+  'Compress PDF to 100 KB, 500 KB, 1 MB and 50 KB preset pages',
+  'Rotate, extract, remove and organise pages',
+  'Add page numbers, add a watermark, view and strip PDF metadata',
+  'Protect and unlock PDF (after its engine passes a separate audit)',
+];
+---
+
+<Base title="PDF tools, free, in your browser · Benchzy" description="Compress a PDF to an exact size, merge, split and read scans, free, with the work done in your browser. No uploads, no accounts, no task counters.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Hub · PDF jobs</p>
+      <h1 class="font-display text-4xl font-black mt-2">PDF tools</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        The daily PDF jobs, done inside your browser: your document is never uploaded, there is
+        no account and no counter, and the sizes are printed exactly, before and after. Most of
+        these jobs finish in well under a second on the bench, because the engine is a tidy
+        open-source program (@cantoo/pdf-lib, on the
+        <a class="underline underline-offset-4" href="/credits/">credits page</a>), not a queue
+        on someone else's server.
+      </p>
+    </section>
+
+    <section class="mt-6 grid gap-4">
+      {live.map((t) => (
+        <article class="ticket-soft p-5 flex flex-wrap items-baseline gap-3">
+          <h2 class="font-display text-xl font-bold">{t.name}</h2>
+          <span class="stamp">On the bench</span>
+          <p class="w-full text-ink-soft leading-relaxed">{t.note}</p>
+          <a class="btn-primary no-underline mt-1" href={t.href}>Open the tool</a>
+        </article>
+      ))}
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">In the plan for this family</h2>
+      <ul class="mt-4 grid gap-3">
+        {planned.map((p) => (
+          <li class="ticket-soft p-4 font-mono text-sm leading-relaxed">{p} <span class="text-ink-soft">(measured or scoped; opens when it passes its checks)</span></li>
+        ))}
+      </ul>
+      <p class="mt-4 leading-relaxed text-ink-soft max-w-2xl">
+        One door stays shut on purpose: turning a PDF into a perfectly editable Word document
+        is a job this workshop does not promise, because the honest version of it is "basic
+        text, jumbled layout". A page that cannot do a job well says so, per the
+        <a class="underline underline-offset-4" href="/what-free-means/">standing rules</a>.
+      </p>
+    </section>
+  </div>
+</Base>

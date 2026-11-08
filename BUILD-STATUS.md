@@ -334,3 +334,143 @@ item 24 (size checker); Split PDF was pulled forward from 1B.
    named fix.
 4. Still owed from milestone 1's list: HowTo schema, memory guard (T8),
    workbench chain test (T7), speed budget with the design layer on (T11).
+
+---
+
+# Milestone 3 (2026-11-08): the rest of English 1A + the infrastructure debts
+
+LOCAL ONLY again: nothing pushed, deployed, registered or bought. The
+site is now 22 pages. Wave 1A's English set is complete except the
+FFmpeg-gated MP4 to MP3; what remains of 1A is the localised
+background-removal set (milestone 4 by design).
+
+## Pages built (BUILD-PLAN 2.2 item numbers)
+
+2. `/remove-background-full-resolution/` — the full-resolution preset
+   page: same island (same element IDs, second Astro page), preset copy
+   and FAQ built on the full-size promise, the measured 577x433 contrast
+   (live test, 7 November 2026) and the commercial-use line from
+   remove.bg's terms, both dated on the page.
+3. `/background-removal/` — the BG hub: tool, preset page, and the whole
+   shutdown set as doors, plus a "what we do not claim" section (no
+   quality crown, no speed crown, phone speed unmeasured).
+8. `/vs-remove-bg/` — the comparison page, built under the task's
+   claim-discipline rules in place of the pending attorney template:
+   facts only (free size with the measured 577x433, credits and expiry,
+   account, watermark from our live test, commercial use, processing
+   location, 1 December), prices carrying the ESTIMATE label and their
+   Oct–Nov 2026 dates on the row, and a printed "what this page does not
+   claim" section. No quality or speed ranking anywhere.
+9. `/remove-bg-alternatives/` — the alternatives guide: Canva (the
+   official destination), Pixlr, Photoroom, Removal.ai, Pixelcut, each
+   wall stated with its source class (own terms vs the dated shutdown
+   coverage read 7 November 2026), and Benchzy's own entry with its real
+   costs printed (44.3 MB first download, ~13 s desktop).
+10. `/remove-bg-december-1/` — the explainer: what ends (site, accounts,
+    every unused credit including pay-as-you-go sold as never expiring,
+    self-service API, plugins and apps), sources named per line
+    (remove.bg's own banner/terms read 7 Nov 2026; the shutdown FAQ "as
+    reported" by Photoroom 2026-10-29, AI Tools Police 2026-10-26, Hokai
+    2026-10-28), the enterprise-contracts line explicitly flagged
+    reported-not-confirmed, a before-the-date checklist, one sales link.
+11. `/remove-bg-api/` — the API migration note: keys stop 1 Dec, the
+    official new home is Leonardo.Ai, old credit pricing labelled
+    ESTIMATE, and the plain statement that Benchzy offers no API and
+    nothing to migrate an integration to.
+19. `/check-it-yourself/` — the proof page, built honestly: a live
+    witness (src/scripts/witness.js) that logs every resource the page
+    loads (browser Performance timeline) and every fetch/XHR the page
+    makes (watchers installed before any job can run), then runs a real
+    witnessed job (read a file, SHA-256 fingerprint, format sniff, image
+    dimensions / PDF page count via @cantoo/pdf-lib) and prints the
+    request count during the job. The page states exactly what this
+    proves and what it does not, and gives the manual network-panel
+    steps plus the per-family "what leaves your device" table.
+20. `/what-free-means/` — the commitments page from FINE-PRINT.md: the
+    never list (no accounts, no counters, no credits/minutes/meters, no
+    watermarks, no download held for payment, no fake buttons, no
+    smaller free size, no upload), why it can be free, and the
+    device-limit frame. Worded as a public commitment, not a "free
+    forever" guarantee, per FREE-SEO-PR's banned list.
+21. `/tools/` — all-tools hub (live tools stamped, unbuilt families
+    honestly "In the plan"). 22. `/pdf-tools/` — PDF hub, including the
+    shut door (editable Word fidelity) stated plainly. 23.
+    `/image-tools/` — image hub with the bench numbers and the AVIF
+    slow-option note.
+
+Also: nav gained "All tools"; the footer links the commitments and
+proof pages; the homepage lists the full-resolution door and links its
+network-witness line to the proof page; the credits page now describes
+the chunked model delivery and the service worker's exact scope.
+
+## Infrastructure
+
+- **T4 chunked model delivery, DONE.** `tools/make-model-chunks.mjs`
+  splits the canonical model (bench copy; its SHA-256 matched the
+  shipped single file before that file was removed) into 11 pieces of
+  4,031,131 bytes (last 4,031,126) with content-hash file names plus
+  `public/models/model-manifest.json` (per-piece SHA-256 + whole-file
+  SHA-256 7001d607…). `src/scripts/remove-bg.js` now fetches the
+  manifest, downloads the pieces with per-piece progress, verifies
+  every piece's hash and the whole file's hash (crypto.subtle), and
+  refuses to run on any mismatch. The size is still printed (44.3 MB,
+  "11 checked pieces") before anything loads. The single 44.3 MB
+  public asset is gone; `public/models/` holds only the manifest and
+  `chunks/`.
+- **Service worker, DONE.** `public/sw.js`, registered from the base
+  layout on every page. Scope, as written in its own header and on the
+  credits page: pages are network-first with a cached fallback; engine
+  assets (/models/, /ort/, /codecs/, /pdfjs/, /tesseract/) are
+  cache-first; other same-origin assets stale-while-revalidate. It
+  caches only what the visitor's browser has actually loaded; no
+  broader offline claim is made anywhere on the site.
+
+## Verified (verify/verify.mjs, extended; headless Chrome, dist/ served locally)
+
+- `astro build` clean, **22 pages**. Chunk integrity checked outside
+  the browser too: the 11 pieces reassemble to 44,342,436 bytes whose
+  SHA-256 equals the manifest and the canonical bench model.
+- **All 22 pages load with zero console errors and zero failed
+  requests.**
+- Background removal through the chunked loader, corpus
+  `test-bg-hard.png`: **program start 2.8 s (pieces fetched and
+  hash-verified), cutout 10.7 s, full-size 1200x900 result, 915 KB** —
+  the same output size as the single-file milestones. After the run,
+  the service-worker cache held all 11 model pieces plus the manifest.
+- Service worker: registration active; after the page loop its cache
+  held 39 entries; **an offline reload of a visited page succeeded**
+  (title and content served from cache with the network off).
+- Witness: the witnessed job on corpus `test-10page.pdf` (10 pages,
+  fingerprint shown) finished with **0 network requests during the job
+  and 0 requests with anything attached**, printed on the page.
+- All milestone 1–2 tool checks re-ran unchanged: compress image
+  199,856 B at q40 (byte-identical to bench), compress PDF photo
+  415,377 B under 500 KB, OCR key strings present with the known
+  decimal flaw reproduced, merge 25 files (6,674 B), split halves
+  3,588 B, presets 90,117 B / 50,112 B, size checker exact.
+- Screenshots of the two new pages (vs-remove-bg and check-it-yourself,
+  desktop; check-it-yourself also mobile) read against the anti-slop
+  list: ticket language, flat offset shadows, no gradients, no bento
+  grids, no emoji, no glow. One defect found and fixed: a stray empty
+  header row at the top of the vs table; rebuilt and re-verified after
+  the fix (final run: 22/22 pages clean).
+
+## Remaining wave-1A, final list
+
+- Items 4–7: the ES tool + full-resolution pages and the PT-BR tool +
+  free-alternative page. Localised strings are a human-review job;
+  milestone 4. No strings file was extracted in this milestone (the BG
+  island's strings live inside remove-bg.js and the two Astro pages,
+  so extraction is a milestone-4 task, not a trivial separation).
+- Item 18: MP4 to MP3, still FFmpeg-gated; no change.
+- That is all of 1A. Everything else on the milestone-2 remaining list
+  (items 2, 3, 8–11, 19, 20, 21–23, T4, service worker) is built above.
+
+## Still owed beyond 1A (unchanged from earlier lists)
+
+HowTo schema; memory guard (T8); workbench chain test (T7's full
+acceptance); speed budget with the design layer on (T11); the
+compress-PDF preset ladder refinement (200 KB preset lands ~90 KB
+where the bench reached ~195 KB); self-hosted font files before
+launch; FilePond/dnd-kit arrive with the batch and page-grid tools in
+1B.

@@ -57,7 +57,10 @@ try {
 
   // 1. Every page loads clean.
   for (const route of ['/', '/remove-background/', '/compress-pdf/', '/compress-image/', '/credits/',
-    '/ocr-pdf/', '/merge-pdf/', '/split-pdf/', '/compress-pdf-to-200kb/', '/compress-image-to-50kb/', '/size-checker/']) {
+    '/ocr-pdf/', '/merge-pdf/', '/split-pdf/', '/compress-pdf-to-200kb/', '/compress-image-to-50kb/', '/size-checker/',
+    '/remove-background-full-resolution/', '/background-removal/', '/vs-remove-bg/', '/remove-bg-alternatives/',
+    '/remove-bg-december-1/', '/remove-bg-api/', '/check-it-yourself/', '/what-free-means/',
+    '/tools/', '/pdf-tools/', '/image-tools/']) {
     const { page, errors, failed } = await openPage(BASE + route);
     results.pages[route] = { consoleErrors: errors, failedRequests: failed };
     console.log('PAGE', route, 'errors:', errors.length, 'failed:', failed.length, JSON.stringify([...errors, ...failed]).slice(0, 300));
@@ -82,6 +85,65 @@ try {
     if (route === '/merge-pdf/') {
       await page.screenshot({ path: path.join(SHOTS, 'merge-pdf-desktop.png'), fullPage: true });
     }
+    if (route === '/vs-remove-bg/') {
+      await page.screenshot({ path: path.join(SHOTS, 'vs-remove-bg-desktop.png'), fullPage: true });
+    }
+    if (route === '/check-it-yourself/') {
+      await page.screenshot({ path: path.join(SHOTS, 'check-it-yourself-desktop.png'), fullPage: true });
+      await page.setViewport({ width: 390, height: 844 });
+      await page.screenshot({ path: path.join(SHOTS, 'check-it-yourself-mobile.png'), fullPage: true });
+      await page.setViewport({ width: 1280, height: 900 });
+    }
+    await page.close();
+  }
+
+  // 1b. Check-it-yourself witness: run the witnessed job on a corpus PDF and
+  // confirm the page reports zero network requests during the job.
+  {
+    const { page, errors, failed } = await openPage(BASE + '/check-it-yourself/');
+    const input = await page.$('#w-file');
+    await input.uploadFile(path.join(CORPUS, 'test-10page.pdf'));
+    await page.waitForFunction(() => document.getElementById('w-job-status').textContent.includes('Job done'), { timeout: 60000 });
+    const status = await page.$eval('#w-job-status', (el) => el.textContent);
+    const verdict = await page.$eval('#w-verdict', (el) => el.textContent);
+    const spec = await page.$eval('#w-spec', (el) => el.textContent.replace(/\s+/g, ' '));
+    const liveRows = await page.$$eval('#w-live > li', (els) => els.length);
+    results.tools.witness = { status, verdict, spec, liveRows, zeroDuringJob: status.includes('Network requests during the job: 0'), consoleErrors: errors, failedRequests: failed };
+    console.log('TOOL witness:', status.slice(0, 160), '| live rows', liveRows);
+    await page.close();
+  }
+
+  // 1c. Service worker: registers, caches loaded assets, and a page visited
+  // before going offline still opens offline.
+  {
+    const { page, errors, failed } = await openPage(BASE + '/');
+    await page.waitForFunction(async () => {
+      if (!('serviceWorker' in navigator)) return false;
+      const reg = await navigator.serviceWorker.getRegistration('/');
+      return !!(reg && reg.active);
+    }, { timeout: 30000 });
+    await page.reload({ waitUntil: 'networkidle0' });
+    const cacheInfo = await page.evaluate(async () => {
+      const keys = await caches.keys();
+      let entries = 0; const sample = [];
+      for (const k of keys) { const c = await caches.open(k); const reqs = await c.keys(); entries += reqs.length; for (const r of reqs.slice(0, 6)) sample.push(new URL(r.url).pathname); }
+      return { keys, entries, sample };
+    });
+    let offlineOk = false, offlineTitle = '';
+    try {
+      if (page.setOfflineMode) await page.setOfflineMode(true);
+      else { const c = await page.createCDPSession(); await c.send('Network.emulateNetworkConditions', { offline: true, latency: 0, downloadThroughput: 0, uploadThroughput: 0 }); }
+      await page.reload({ waitUntil: 'load', timeout: 30000 });
+      offlineTitle = await page.title();
+      offlineOk = offlineTitle.toLowerCase().includes('benchzy');
+      if (page.setOfflineMode) await page.setOfflineMode(false);
+      else { const c = await page.createCDPSession(); await c.send('Network.emulateNetworkConditions', { offline: false, latency: 0, downloadThroughput: -1, uploadThroughput: -1 }); }
+    } catch (e) {
+      offlineOk = false; offlineTitle = 'offline reload threw: ' + e.message;
+      try { if (page.setOfflineMode) await page.setOfflineMode(false); } catch { /* ignore */ }
+    }
+    results.tools.serviceWorker = { registered: true, cacheInfo, offlineOk, offlineTitle, consoleErrors: errors, failedRequests: failed };
+    console.log('TOOL service-worker: caches', JSON.stringify(cacheInfo.keys), 'entries', cacheInfo.entries, '| offline reopen ok:', offlineOk);
     await page.close();
   }
 
@@ -299,7 +361,19 @@ try {
       }, { timeout: 420000 });
       const times = await page.$eval('#bg-times', (el) => el.textContent).catch(() => '');
       const noSubject = await page.$eval('#bg-nosubject', (el) => !el.classList.contains('hidden'));
-      results.tools.removeBackground = { ran: true, times, noSubjectShown: noSubject, consoleErrors: errors, failedRequests: failed };
+      const modelCache = await page.evaluate(async () => {
+        let chunks = 0, manifest = 0;
+        for (const k of await caches.keys()) {
+          const c = await caches.open(k);
+          for (const r of await c.keys()) {
+            const p = new URL(r.url).pathname;
+            if (p.startsWith('/models/chunks/')) chunks++;
+            if (p === '/models/model-manifest.json') manifest++;
+          }
+        }
+        return { chunksCached: chunks, manifestCached: manifest };
+      }).catch(() => ({ chunksCached: -1, manifestCached: -1 }));
+      results.tools.removeBackground = { ran: true, times, noSubjectShown: noSubject, modelCache, consoleErrors: errors, failedRequests: failed };
       console.log('TOOL remove-bg:', times, 'noSubject:', noSubject);
       await page.screenshot({ path: path.join(SHOTS, 'remove-bg-result.png'), fullPage: true });
     } catch (e) {

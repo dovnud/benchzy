@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+
+const nevers = [
+  ['No accounts', 'The tools need no account, no sign-up and no card. There is nothing to cancel because there is nothing to join.'],
+  ['No daily counters', 'There is no counter in any tool. Nothing counts your jobs, so nothing can run out. Do a job twice, or two hundred times; the page does not keep score.'],
+  ['No credits, no minutes, no meters', 'No unit of work is sold here. The price of a job is known before you start: free.'],
+  ['No watermarks', 'Your output is yours. Nothing of ours is stamped, printed or hidden on it.'],
+  ['No download held for payment', 'The download button is the end of the job, never the start of a checkout. On other sites the price often appears at that exact click; here it is just a download.'],
+  ['No fake buttons', 'Every button on a tool page does the thing its label says. Nothing here is dressed up to look like a download and act like an advert.'],
+  ['No smaller free size', 'Output is made at your file\'s own size. There is no small free tier and no big paid tier, because there are no tiers.'],
+  ['No upload', 'Your files are processed in your browser and are never sent to us. There is no server here that could receive them.'],
+];
+---
+
+<Base title="What free means here · Benchzy" description="The never list, in plain words: no accounts, no counters, no credits, no watermarks, no download held for payment. Why it can be true, and the one real limit, your device.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Standing page · the commitment</p>
+      <h1 class="font-display text-4xl font-black mt-2">What free means here</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        "Free" is the most abused word in file tools. It usually means a ration: a few jobs a
+        day, a small output, a download that turns into a checkout. This page is the written
+        commitment for what the word means on Benchzy, so the promise can be checked, not just
+        believed. This is a public commitment, in writing, here; if it ever changed, this page
+        would have to change first, in public.
+      </p>
+    </section>
+
+    <section class="mt-6 grid gap-4">
+      {nevers.map(([title, body]) => (
+        <article class="ticket-soft p-5">
+          <h2 class="font-display text-xl font-bold">{title}</h2>
+          <p class="text-ink-soft leading-relaxed mt-1">{body}</p>
+        </article>
+      ))}
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Why it can be free</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The big sites charge because every job runs on their computers and costs them money,
+          so the job has to be rationed. Benchzy's tools run inside your web browser, on your
+          device. A job here costs this site nothing, so there is nothing to ration. Premium is
+          free here because the work runs on your computer, not ours. The site itself is paid
+          for by ads on the pages; an ad can see which page you are on, and can never see your
+          file, because your file never leaves the page's memory.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">The one real limit</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The limit is your device, not us. We set no limit on jobs or file counts. Your browser
+          and device set the real ones: very large files can run out of memory, and a small
+          phone is slower than a desktop. When a job cannot run on your device, the tool says so
+          in plain words before or as it starts, and your file is unchanged. A second limit is
+          honest too: pages and programs you have used are saved by your browser, so those
+          tools can open again without a connection; a tool you have never opened still needs
+          one first visit.
+        </p>
+      </div>
+    </section>
+
+    <section class="ticket mt-10 p-6 mb-4">
+      <h2 class="font-display text-2xl font-bold">Do not take our word for it</h2>
+      <p class="mt-3 leading-relaxed text-ink-soft max-w-2xl">
+        The no-upload promise can be watched, live, while a job runs:
+        <a class="underline underline-offset-4" href="/check-it-yourself/">check it yourself</a>.
+        The engines behind every tool, and their licences, are named on the
+        <a class="underline underline-offset-4" href="/credits/">credits page</a>.
+      </p>
+    </section>
+  </div>
+</Base>

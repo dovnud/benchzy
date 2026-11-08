@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+
+const families = [
+  ['PDF tools', 'The @cantoo/pdf-lib program and, for scans, PDF.js plus Tesseract.js, all loaded from this site.', 'Nothing. The PDF is read into the page and the result is built there.'],
+  ['Image tools', 'The jSquash codec programs (WebAssembly), loaded from this site.', 'Nothing. The photo is decoded, worked on and re-encoded in the page.'],
+  ['Background removal', 'The removal program, 44.3 MB, arriving as 11 pieces your browser checks against a printed fingerprint list before running it.', 'Nothing. The photo stays in the page; only the program travels, and it travels to you, not from you.'],
+  ['Any page on this site', 'The page itself and its program files, like any website.', 'Page counts may be kept in aggregate. Pages carry ads; an ad sees the page you are on. It cannot see your file, which never leaves the page\'s memory.'],
+];
+const steps = [
+  'Open any tool page on this site.',
+  'Open your browser\'s developer tools and pick the Network panel. In Chrome it is under the menu "More tools, Developer tools"; in Firefox and Safari it is in the developer or Web Inspector menu.',
+  'Press the clear button on the network list, then run a job with a real file.',
+  'Watch the list while the job runs and at the moment you download. Every line is this page asking its own site for a program file. Nothing in the list carries your file, because no request is made with it.',
+];
+---
+
+<Base title="Check it yourself: the no-upload proof · Benchzy" description="Do not take our word for it. Run a job while this page lists every request it makes, live, or use your own browser network panel with these steps.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Proof page · trust nothing, watch it</p>
+      <h1 class="font-display text-4xl font-black mt-2">Check it yourself</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Every tool here says your file is never uploaded. That sentence is only worth something
+        if you can watch it being true. This page runs a real job while listing, live, every
+        request it makes. And because a page grading its own homework is worth little, the
+        manual steps below it show the same check with your own browser's tools, on any page
+        of this site.
+      </p>
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="witness">
+      <h2 class="font-display text-2xl font-bold">The live witness</h2>
+      <p class="mt-2 text-ink-soft leading-relaxed max-w-2xl">
+        Since this page opened, it has been keeping two lists: what it loaded when it arrived,
+        and every request it has made since. Run the job below and watch the second list while
+        it works.
+      </p>
+      <p id="w-verdict" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Witness arming…</p>
+
+      <div id="w-tray" class="tray p-6 text-center cursor-pointer mt-5" role="button" tabindex="0" aria-label="Pick a file for the witnessed job">
+        <p class="font-display text-xl font-bold">Drop any file here for the witnessed job</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">the job reads it, fingerprints it and describes it, in this page only</p>
+        <input id="w-file" type="file" class="hidden" />
+      </div>
+      <dl id="w-spec" class="mt-4">
+        <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+      </dl>
+      <p id="w-job-status" class="font-mono text-sm mt-3 leading-relaxed" aria-live="polite">No job yet.</p>
+
+      <div class="grid gap-6 md:grid-cols-2 mt-6">
+        <div>
+          <h3 class="font-mono text-xs uppercase tracking-widest text-ink-soft">Loaded when this page opened</h3>
+          <p id="w-before-count" class="font-mono text-xs text-ink-soft mt-1"></p>
+          <ul id="w-before" class="font-mono text-xs leading-relaxed mt-2 max-h-56 overflow-auto"></ul>
+        </div>
+        <div>
+          <h3 class="font-mono text-xs uppercase tracking-widest text-ink-soft">Requests since, live</h3>
+          <ul id="w-live" class="font-mono text-xs leading-relaxed mt-2 max-h-56 overflow-auto"></ul>
+        </div>
+      </div>
+      <p class="font-mono text-xs text-ink-soft mt-4 leading-relaxed">
+        What this proves, exactly: the job above ran with the requests shown, and none of them
+        carried your file. What it does not prove by itself: that other pages behave the same.
+        That is what your own network panel, below, is for.
+      </p>
+    </section>
+
+    <section class="mt-12">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">The same check, with your own tools</h2>
+      <ol class="mt-4 grid gap-4">
+        {steps.map((s, i) => (
+          <li class="ticket-soft p-4 font-mono text-sm leading-relaxed">
+            <span class="text-accent-deep font-bold">{String(i + 1).padStart(2, '0')} ·</span> {s}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">What leaves your device, family by family</h2>
+      <div class="mt-4 grid gap-4">
+        {families.map(([fam, loads, leaves]) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-display text-xl font-bold">{fam}</h3>
+            <dl class="mt-2">
+              <div class="spec-row"><dt>what loads</dt><dd class="max-w-xl">{loads}</dd></div>
+              <div class="spec-row"><dt>of your file, what leaves</dt><dd class="max-w-xl">{leaves}</dd></div>
+            </dl>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script>
+    import '../scripts/witness.js';
+  </script>
+</Base>

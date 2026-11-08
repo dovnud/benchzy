@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+
+// Service journalism, sourced from our dossier: remove.bg's own banner,
+// terms and announcement as read 7 November 2026, and its shutdown FAQ as
+// reported by Photoroom (29 October 2026), AI Tools Police (26 October
+// 2026) and Hokai (read 28 October 2026). Items only reported second-hand
+// are marked as reported, not stated.
+const closes = [
+  ['The website', 'The standalone remove.bg site stops being available at 09:00 CET on 1 December 2026. Background removal moves into Canva. (remove.bg banner and terms, read 7 November 2026.)'],
+  ['Accounts', 'Accounts end with the site. Subscriptions end automatically, with no further charge. (Shutdown FAQ, as reported.)'],
+  ['Every unused credit', 'All remaining credits expire at that moment, subscription credits and pay-as-you-go credits alike, including pay-as-you-go credits that were sold as never expiring. No refund for unused pay-as-you-go credits has been reported. (Shutdown FAQ and reporting, as reported.)'],
+  ['The self-service API', 'API keys stop working. API users are pointed to Leonardo.Ai, which is also owned by Canva.'],
+  ['Plugins and apps', 'The Photoshop plugin and the other integrations and plugins stop, and so do the desktop and Android apps, which depend on the API. (Shutdown FAQ, as reported.)'],
+];
+const todo = [
+  'Use your credits before the date, or accept losing them. They do not move to Canva and they are not refunded.',
+  'Download anything you still need from your account: past results, invoices, settings. The account ends with the site.',
+  'If your product calls the API, plan the move now. The official destination is Leonardo.Ai; keys for remove.bg stop working on the day.',
+  'Pick the tool your hands will use next and try it on a real photo before the date, not after it.',
+];
+---
+
+<Base title="What happens to remove.bg on 1 December 2026 · Benchzy" description="What closes, what happens to unused credits, where the API goes, and what to do before 1 December 2026. Dated facts from remove.bg's own announcement and terms, read November 2026.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Explainer · facts checked 8 November 2026</p>
+      <h1 class="font-display text-4xl font-black mt-2">What happens to remove.bg on 1 December</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        remove.bg, the best-known background remover, is closing its standalone site on
+        1 December 2026 at 09:00 CET. The job itself moves into Canva, where background removal
+        is a paid-plan feature. This page is the plain list of what ends, what happens to money
+        already spent, and what to do before the date. Facts are from remove.bg's own banner,
+        terms and announcement as read on 7 November 2026; where a fact comes from reports of
+        its shutdown FAQ, the line says "as reported".
+      </p>
+    </section>
+
+    <section class="mt-8">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">What ends</h2>
+      <div class="mt-4 grid gap-4">
+        {closes.map(([what, detail]) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-display text-xl font-bold">{what}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{detail}</p>
+          </article>
+        ))}
+      </div>
+      <p class="mt-4 font-mono text-xs text-ink-soft leading-relaxed">
+        One line in the reporting is not confirmed by remove.bg's own pages: that enterprise API
+        contracts continue past the date. Treat that as reported, not settled, and ask the
+        company directly if it is your contract.
+      </p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">What to do before 1 December</h2>
+      <ol class="mt-4 grid gap-4">
+        {todo.map((t, i) => (
+          <li class="ticket-soft p-4 font-mono text-sm leading-relaxed">
+            <span class="text-accent-deep font-bold">{String(i + 1).padStart(2, '0')} ·</span> {t}
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="ticket mt-10 p-6 mb-4">
+      <h2 class="font-display text-2xl font-bold">After the date</h2>
+      <p class="mt-3 leading-relaxed text-ink-soft max-w-2xl">
+        The habit has to live somewhere. The official home is Canva; the fuller list, with each
+        option's wall marked from its own terms, is our
+        <a class="underline underline-offset-4" href="/remove-bg-alternatives/">remove.bg alternatives</a> guide.
+        Our own tool does the job free, at full size, in your browser:
+        <a class="underline underline-offset-4" href="/remove-background/">remove a background</a>.
+        That is the only sales line on this page.
+      </p>
+    </section>
+  </div>
+</Base>
