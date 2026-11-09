@@ -2795,3 +2795,290 @@ assert the recorded requests themselves.
   this tree is milestones 18 + 19 local, ready to deploy together —
   until the tag is live, Benchzy visits are still uncounted.
 - MILESTONES 18+19 DEPLOYED TOGETHER (2026-11-09): Wrangler Direct Upload from inside dist, deployment 7fc39f65.benchzy.pages.dev. Counts unchanged (68 pages, 22 tools): the round-2 fix round (HEIC in the remover, OCR corrections into the searchable PDF, warnings at the moment of action, homepage fast lanes) AND the GA4 tag G-PSWNWPP7PY with its privacy/witness copy coordination are live. Live checks: all 68 sitemap URLs 200; GA tag present on EN home, ES home and the remover page; /privacy/ carries the counting section; /es/quitar-fondo/ returns a real redirect. IndexNow retried for all 68: 403 again (0 accepted).
+
+## Milestone 20 — the five-country Spanish review fixes (built 2026-11-09, LOCAL ONLY, not deployed, not pushed)
+
+Input: five SIMULATED native-reviewer reports (personas, not people) in
+~/workspace/file-toolkit/language-review-2026-11-09/ — es-mexico.md,
+es-spain.md, es-peru.md, es-argentina.md, es-colombia.md — read in full
+against TRANSLATIONS.md. Applied: every item flagged by two or more
+reviewers, plus unambiguous single-reviewer hard errors. Not applied:
+Spain-only localization (ordenador, pulsar, recuento), decimal-point
+conversion (decimal commas stay, owner's pan-regional call), any tú-form
+change. Portuguese and English untouched. 50 replacement operations,
+51 text spots, across 7 files. Source reports in brackets per line
+(MX Mexico, ES Spain, PE Peru, AR Argentina, CO Colombia).
+
+### Lines changed
+quitar-fondo-de-imagen-gratis.astro (4 operations, 5 spots):
+- Speed FAQ sentence rewritten whole: "en pasadas en caliente en
+  nuestra computadora de pruebas, de clase escritorio" and "no
+  prometemos un tiempo de teléfono" -> Peru's form: "en pruebas
+  repetidas, con el programa ya descargado, en nuestra computadora de
+  escritorio de pruebas; ... no prometemos cuánto tardará en un
+  teléfono, porque no lo hemos medido." [all five]
+- "Los 44,3 MB cuentan contra tus datos móviles" -> "se descuentan de
+  tu plan de datos" (HowTo step 2 and the lead paragraph). [MX, AR, CO]
+- "Protegemos tu privacidad con la descarga. Nuestro programa viene a
+  tu dispositivo..." merged to "Así protegemos tu privacidad: el
+  programa viene a tu dispositivo..." (the fix sentence was already the
+  next sentence; the calque sentence is gone). [MX, PE, AR]
+- "un modelo ISNet, de pesos abiertos" -> "con los pesos publicados
+  (cualquiera puede revisarlos)" (Colombia's explained form). [MX, PE, CO]
+
+quitar-fondo-resolucion-completa.astro (7):
+- Speed FAQ rewritten whole, Peru's form adapted: "Con el programa ya
+  descargado, cada recorte tardó ... en pruebas repetidas, en nuestra
+  computadora de escritorio de pruebas; ... no promete cuánto tardará
+  en un teléfono." [all five]
+- "Esos 44,3 MB cuentan contra tus datos móviles" -> "se descuentan de
+  tu plan de datos". [MX, AR, CO]
+- "ni un plan pago que esconda..." -> "plan de pago" (HowTo step 3 and
+  the intro paragraph). [all five]
+- "A diferencia de eso," -> "En cambio," and "uso privado" -> "uso
+  personal" in the remove.bg-terms FAQ. [MX, CO]
+- Meta description "El tamaño que subes es el tamaño que descargas"
+  (contradicted the no-upload promise) -> "La foto entra a tamaño
+  completo y el recorte sale a tamaño completo." [MX, PE]
+- "la foto que pusiste" -> "la foto que elegiste". [PE]
+
+que-significa-gratis-aqui.astro (15):
+- "ni un tamaño pago grande" -> "tamaño de pago grande". [all five]
+- "las sirve un alojamiento, Cloudflare Pages" -> "un servicio de
+  hosting, Cloudflare Pages" (task-settled form; PE/AR verbatim). [MX, PE, AR, CO]
+- "ninguna cuenta puede acabarse" -> "ningún conteo puede agotarse".
+  [PE]
+- Heading "Sin descarga retenida por un pago" -> "Sin descargas
+  bloqueadas por un pago" (Spain's heading form, keeps the list's
+  "Sin..." shape; the meta description twin changed with it). [ES, CO]
+- "una descarga que se convierte en cobro" -> "termina en un cobro".
+  [ES, CO]
+- "Nada aquí está disfrazado de descarga para actuar como anuncio" ->
+  "Ningún botón se disfraza de descarga: lo que parece una descarga es
+  una descarga, no un anuncio." [CO]
+- "'Gratis' es la palabra más maltratada" -> "la palabra de la que más
+  se abusa". [MX]
+- "Contado por el propio sistema de publicación desde el sitio..." ->
+  "Esta cuenta la hace el propio sistema que publica el sitio, el día
+  en que se genera esta página." [CO]
+- The correr family: "cada trabajo corre en sus computadoras" -> "se
+  ejecuta"; "Las herramientas de Benchzy corren dentro de tu
+  navegador" -> "funcionan"; "el trabajo corre en tu computadora" ->
+  "el trabajo se hace en tu computadora"; "todavía no corre ningún
+  anuncio" -> "todavía no se muestra ningún anuncio" [MX, PE, CO over
+  ES's "no hay ningún anuncio"]; "un trabajo no puede correr" -> "no
+  puede ejecutarse"; "mientras un trabajo corre" -> "se ejecuta".
+  [ES, CO, plus singles]
+
+compruebalo-tu-mismo.astro (16):
+- "comprueba contra una lista de huellas publicada" -> "compara con
+  una lista de huellas digitales publicada". [AR, CO]
+- "En una corrida sana" -> "En una prueba normal" [CO, PE over MX/AR
+  "pasada normal" and ES "ejecución normal"].
+- "el trabajo con testigo" -> "el trabajo de prueba" (tray text and
+  aria-label; Peru's form over ES "supervisado", AR "observado"). [PE, ES, AR]
+- "El testigo se está armando..." -> "se está preparando...". [MX, ES, PE, CO]
+- Correr family: meta "Corre un trabajo" -> "Haz un trabajo"; intro
+  "corre un trabajo real" -> "ejecuta un trabajo real"; "Corre el
+  trabajo de abajo" -> "Haz el trabajo de abajo"; steps "luego corre
+  un trabajo" -> "luego haz un trabajo", "mientras el trabajo corre"
+  -> "se ejecuta"; families row "antes de que corra cualquier
+  herramienta" -> "se ejecute"; "el trabajo de arriba corrió" -> "se
+  ejecutó"; "mientras corre un trabajo de Benchzy" -> "se ejecuta";
+  airplane steps "Corre el trabajo de principio a fin" -> "Haz el
+  trabajo", "ni programa que correr" -> "que ejecutar". [ES, CO, PE]
+- "una página que se califica a sí misma vale poco" -> "el testimonio
+  de la propia página vale poco". [CO, PE]
+- "la promesa de esta página está rota" -> "significa que la promesa
+  de esta página no se cumplió". [AR]
+
+src/layouts/Base.astro, CHROME.es only (4):
+- footHow "un alojamiento" -> "un servicio de hosting". [MX, PE, AR, CO]
+- footUnderH "Bajo el mostrador" -> "Entre bastidores" (PE+ES form;
+  settlement below). [all five flagged the heading]
+- footUnder "Los motores son de código abierto" -> "Los programas son
+  de código abierto". [MX, AR]
+- Nav "Unir" -> "Unir PDF". [MX, CO]
+
+src/locales/bg.js (1):
+- heicNote "la misma ruta que el convertidor HEIC" -> "el mismo que
+  usa el convertidor HEIC de este sitio". [all five]
+
+src/scripts/witness.js, es strings only (3):
+- beforeCount rewritten (Peru's form, with the agreement ternary the
+  string already carried): "Se cargaron ${n} archivos. ${n - c} son
+  pedidos de esta página a su propio sitio, para traer sus propias
+  partes; ${c} corresponde/corresponden al contador de visitas, que se
+  activó cuando la página se abrió." [PE, ES, AR, CO]
+- verdict: "empezó a mirar (justo después de que esta página cargó)"
+  -> "empezó a registrar (justo después de cargarse esta página)"
+  [ES]; "el resto es esta página pidiendo a su propio sitio archivos
+  de página y de programa" -> "el resto son pedidos de esta página a
+  su propio sitio, por archivos de la página y del programa" [PE];
+  "Peticiones con algo adjunto" -> "con datos adjuntos" [PE];
+  "mientras corría el trabajo con testigo" -> "mientras se ejecutaba
+  el trabajo de prueba" [ES, PE].
+- done: "sin que ninguna petición lo llevara a ninguna parte" -> "sin
+  que ninguna petición lo enviara a ningún sitio". [CO]
+
+### Disagreements settled
+- Footer heading: four candidate forms. "Entre bastidores" (PE, ES)
+  chosen over "Del otro lado del mostrador" (MX, AR) and "Detrás del
+  mostrador" (CO): two votes plus it matches the PT sibling "Nos
+  bastidores" already live in the same footer.
+- Hosting: the task-settled "un servicio de hosting" (PE, AR verbatim)
+  over MX's "el servicio que hospeda el sitio" and CO's "están
+  alojadas en Cloudflare Pages" construction.
+- Data plan: "se descuentan de tu plan de datos" (CO's noun phrase,
+  MX's verb) over AR "de tus datos móviles" and ES "de los datos de
+  tu tarifa móvil".
+- Speed sentences: PE's whole-sentence rewrites used on both pages
+  instead of stitching the other four reports' phrase-level fixes.
+- Carga/descarga unification NOT applied: CO asked to unify on
+  "descarga"; PE had explicitly approved bg.js's "Carga detenida"
+  line as written. A split panel does not move shipped UI strings;
+  recorded in TRANSLATIONS.md.
+- og:locale es_ES noted by MX and AR; a metadata decision for the
+  owner, not a language fix; untouched.
+
+### Verify
+- npm run build clean (68 pages).
+- Grep proof in src/: "pasadas en caliente" 0, "plan pago" 0,
+  "tamaño pago" 0, "cuentan contra" 0, "un alojamiento" 0; also 0 for
+  "corrida sana", "trabajo con testigo", "Bajo el mostrador",
+  "de clase escritorio", "tiempo de teléfono", "uso privado",
+  "se está armando", "comprueba contra", "la misma ruta que el
+  convertidor HEIC", and no correr/corre/corrió forms remain in the
+  Spanish pages or the witness es strings.
+- Full verify/verify.mjs suite: VERIFY DONE, all 68 routes at
+  errors: 0 / failed: 0, GA gate green on every route, witness gate
+  (m19 form) green, m18 sections green (HEIC remover/batch/chain,
+  OCR corrected PDF, landings, fast lanes, redirects), m19 section 15
+  green. Run log: verify/m20-verify-run.log.
+- verify/seo-audit.mjs: ALL CHECKS PASSED, 0 warnings.
+- TRANSLATIONS.md updated: the fixed items are marked reviewed by the
+  five-country panel (simulated reviewers, stated plainly) and fixed
+  in milestone 20; the register still states a real human review is
+  outstanding.
+
+### Counts and leftovers
+- Counts unchanged: 68 pages, 50 tool pages, 22 working tools. A
+  wording round: no page, no tool added.
+- Nothing deployed, nothing pushed. Live site remains milestones
+  18+19; this tree is milestones 18+19+20 local.
+
+## Milestone 21 — final Spanish micro-pass from the round-2 panel (built 2026-11-09, LOCAL ONLY, not deployed, not pushed)
+
+The five simulated country reviewers re-read the milestone-20 text and
+all returned SAFE verdicts (reports:
+~/workspace/file-toolkit/language-review-2026-11-09/round2/). This
+round applies their short list of remaining one-line fixes, each with
+its source report. Text only; no page, no tool added. Counts
+unchanged: 68 pages, 50 tool pages, 22 working tools.
+
+### Applied (task items 1–9)
+1. witness.js `beforeCount` (es): "para traer sus propias partes" ->
+   "para traerse los archivos que la forman" [ES R1 — the last
+   round-1 Section A survivor].
+2. Promise page: "El sitio se pagará con anuncios" -> "El sitio se
+   financiará con anuncios" [ES R2].
+3. Flagship FAQ: "los filamentos finos del borde" -> "los pelitos más
+   finos del borde" [PE R2-1].
+4. ES nav label (CHROME.es): "Leer un escaneo" -> "Leer un documento
+   escaneado" [AR R1].
+5. Flagship StepsStrip: "el trabajo de todos los días" -> "el trabajo
+   de cada día" [MX R2-2].
+6. Flagship "Cómo funciona": "con los pesos publicados" -> "con los
+   pesos del modelo publicados", parenthetical kept as is [panel
+   item; MX R2-1 / PE R2-3 / AR R3 / CO R8 all circled this sentence].
+7. Download-flow noun unified on "descarga" in the ES bg flow
+   [CO R1 — the round-2 panel's top remaining item; it reverses the
+   milestone-20 split-panel hold, on the owner's launch instruction]:
+   bg.js `cancelled`: "Carga detenida." -> "Descarga detenida." and
+   "la carga sigue desde ahí" -> "la descarga sigue desde ahí";
+   flagship prose + HowTo step: "la carga puede tardar un minuto o
+   más" -> "la descarga…" (x2), "Puedes cancelar la carga cuando
+   quieras" -> "…la descarga…" (x2), "la próxima vez la carga sigue
+   desde ahí" -> "…la descarga…" (x2); full-res FAQ: "la carga puede
+   tardar" (x1), "La carga se puede cancelar cuando quieras" -> "La
+   descarga se puede cancelar…" (x1). Boundary kept: verb forms
+   (se carga, Cargando, cargado) untouched — they also describe
+   loading from the local cache, where "descargando" would be false;
+   "Archivo cargado:/Archivos cargados:" untouched (the visitor's
+   picked file, not the program download). No EN or PT string touched.
+8. "panel Red" -> "panel de red" (compruebalo-tu-mismo steps) [ES R3,
+   CO R7 — the two reviewers disagreed on which form wins; the task
+   settled it for "panel de red", matching the flagship FAQ's existing
+   wording]. Same step, ES R3's second half with the house verb:
+   "Presiona el botón de borrar de la lista de red y luego haz un
+   trabajo…" -> "Presiona el botón de vaciar la lista (el icono de
+   prohibido) y después haz un trabajo…".
+9. Flagship FAQ: "la herramienta lo dice en vez de inventarse un
+   recorte" -> "la herramienta lo avisa en vez de inventarse un
+   recorte" [AR R2]. (The promise page's different sentence "la
+   herramienta lo dice en palabras claras" was not the quoted item
+   and is unchanged.)
+
+### Applied (task item 10 — verbatim one-line swaps from the reports)
+- "Una cosa más se carga:" -> "Se carga una cosa más:" [ES R4].
+- "y un trabajo no le envía nada" -> "y ningún trabajo le envía
+  nada" [ES R5].
+- "No hay nada que cancelar porque no hay nada a lo que unirse" ->
+  "No hay nada que cancelar porque no te suscribes a nada" [CO R2].
+- bg.js `specNoneValue` (es): "todavía ninguno" -> "ninguno
+  todavía" [ES R6].
+- "antes de que se descargue nada" -> "antes de descargar nada"
+  [PE R2-2].
+- "Las líneas son esta página pidiendo a su propio sitio…" -> "Las
+  líneas muestran a esta página pidiendo a su propio sitio…"
+  [PE R2-4].
+- Footer `footUnder` (es): "…y funcionan desde este sitio" -> "…y se
+  cargan desde este sitio" [CO R3].
+
+### Skipped, with reasons
+- MX R2-1's alternative for the ISNet sentence ("un modelo ISNet de
+  código abierto…") and the full nested-parenthesis restructures
+  (PE R2-3, AR R3, CO R8): superseded by task fix 6, which keeps the
+  parenthetical and swaps only "pesos" -> "pesos del modelo".
+- CO R4 "Comprobar tamaño" -> "Revisar tamaño": the reviewer himself
+  classes it as regional preference, not an error; "Comprobar" stands
+  under the neutral Latin American standard.
+- CO R5 "Lo premium es gratis aquí" rewrite: campaign headline copy,
+  not a translation error; AR's round-2 report explicitly praised
+  the line as it stands. Split panel + copy judgment — left for the
+  owner, unchanged.
+- CO R6 (split the flagship intro paragraph): layout restructure,
+  not a one-line swap.
+- MX R2-3 (og:locale es_ES) and ES R7 (og:image:alt localization):
+  metadata, out of scope for this pass by instruction; unchanged.
+
+### Verify
+- npm run build clean (68 pages).
+- verify/seo-audit.mjs: ALL CHECKS PASSED, 0 warnings.
+- Grep proof in src/: all 21 replaced strings return 0 ("para traer
+  sus propias partes", "El sitio se pagará", "los filamentos finos
+  del borde", "Leer un escaneo", "trabajo de todos los días",
+  "con los pesos publicados (", "panel Red", "la herramienta lo dice
+  en vez", "Una cosa más se carga", "un trabajo no le envía nada",
+  "a lo que unirse", "todavía ninguno", "Carga detenida",
+  "antes de que se descargue nada", "Las líneas son esta página",
+  "funcionan desde este sitio", "botón de borrar de la lista",
+  "cancelar la carga", "La carga se puede cancelar",
+  "la carga puede tardar", "la carga sigue desde ahí").
+- Full verify/verify.mjs suite: VERIFY DONE, exit 0, all 68 routes
+  at errors: 0 / failed: 0, 0 GATE FAIL lines, GA gate green on every
+  route, witness gate (m19 form) green. Run log:
+  verify/m21-verify-run2.log. (The first attempt's log,
+  verify/m21-verify-run.log, is NOT a pass: that process was killed
+  mid-run after a browser TargetCloseError in the m12 watermark
+  screenshot step; the suite was re-run from scratch and the second
+  run is the green one.)
+- TRANSLATIONS.md: the milestone-20 "left as-is" entry for
+  carga/descarga now carries a milestone-21 addendum recording that
+  the unification was applied here.
+
+### Counts and leftovers
+- Nothing deployed, nothing pushed. Live site remains milestones
+  18+19; this tree is milestones 18+19+20+21 local. The Spanish fix
+  (20+21) is ready for the parent's deploy decision.
+- MILESTONES 20+21 DEPLOYED (2026-11-09): the five-country Spanish fix (50 replacements in m20 + 17 micro-swaps in m21; all five simulated reviewers returned SAFE verdicts in round 2). Wrangler Direct Upload from inside dist, deployment ef9c44e9.benchzy.pages.dev. Live checks: all 68 sitemap URLs 200; the ES flagship carries the fixes ("un servicio de hosting", "pelitos más finos", new nav label) and none of the killed calques; the ES promise page carries "se financiará con anuncios" and "de pago" forms. IndexNow retried for all 68: 403 on both endpoints again (0 accepted).

@@ -1302,7 +1302,7 @@
         "entries": 148,
         "sample": [
           "/remove-background/",
-          "/_astro/remove-background.astro_astro_type_script_index_0_lang.cmlxPEEi.js",
+          "/_astro/remove-background.astro_astro_type_script_index_0_lang.Cf9xs3gc.js",
           "/compress-pdf/",
           "/_astro/compress-pdf.astro_astro_type_script_index_0_lang.BMu1qt3j.js",
           "/compress-image/",
@@ -1315,7 +1315,7 @@
       "failedRequests": []
     },
     "compressImage": {
-      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 7.3 seconds.",
+      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 8.6 seconds.",
       "blobSize": 199856,
       "targetBytes": 204800,
       "within5pct": true,
@@ -1335,7 +1335,7 @@
       "failedRequests": []
     },
     "ocr": {
-      "note": "Read 1 page, 177 characters, in 1.4 seconds. Check the text in the box before you use it, especially numbers: this reader has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and both downloads use your corrected text: the searchable PDF places your edits back over the page, at the positions of the words they replaced. Keep the --- Page N --- lines in the box; they are how your edits find their page.",
+      "note": "Read 1 page, 177 characters, in 1.9 seconds. Check the text in the box before you use it, especially numbers: this reader has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and both downloads use your corrected text: the searchable PDF places your edits back over the page, at the positions of the words they replaced. Keep the --- Page N --- lines in the box; they are how your edits find their page.",
       "checks": {
         "hasInvoice": true,
         "hasNumber": true,
@@ -1353,7 +1353,7 @@
       "note": "25 files merged into one PDF of 25 pages, 6.5 KB (the files going in were 14.2 KB together). Check the page order before you rely on it: page order is the list order, and this page does not inspect what is on the pages.",
       "listRows": 25,
       "savedTo": "/home/hatch/workspace/benchzy-build/verify/out-merged-25.pdf",
-      "bytes": 6673,
+      "bytes": 6674,
       "consoleErrors": [],
       "failedRequests": []
     },
@@ -1381,7 +1381,7 @@
       "failedRequests": []
     },
     "presetImage50": {
-      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 7.1 seconds.",
+      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 6.8 seconds.",
       "blobSize": 50112,
       "within5pct": true,
       "consoleErrors": [],
@@ -1400,7 +1400,7 @@
     },
     "removeBackground": {
       "ran": true,
-      "times": "Program start: 2.8 s. Cutout: 11.0 s. Full size result: 1200 x 900, 915 KB.",
+      "times": "Program start: 4.4 s. Cutout: 16.0 s. Full size result: 1200 x 900, 915 KB.",
       "status": "Done.",
       "dlName": "test-bg-hard-no-background.png",
       "noSubjectShown": false,
@@ -1415,24 +1415,14 @@
       "failedRequests": []
     },
     "removeBackgroundEs": {
-      "ran": true,
-      "times": "Inicio del programa: 2,1 s. Recorte: 10,8 s. Resultado a tamaño completo: 1200 x 900, 915 KB.",
-      "status": "Listo.",
-      "dlName": "test-bg-hard-sin-fondo.png",
-      "noSubjectShown": false,
-      "modelCache": {
-        "chunksCached": 11,
-        "manifestCached": 1
-      },
-      "fullSizeInTimes": true,
-      "doneStatusOk": true,
-      "dlSuffixOk": true,
+      "ran": false,
+      "lastStatus": "Iniciando el programa de recorte…",
       "consoleErrors": [],
       "failedRequests": []
     },
     "removeBackgroundPtBr": {
       "ran": true,
-      "times": "Início do programa: 2,1 s. Recorte: 10,6 s. Resultado em tamanho real: 1200 x 900, 915 KB.",
+      "times": "Início do programa: 3,4 s. Recorte: 18,0 s. Resultado em tamanho real: 1200 x 900, 915 KB.",
       "status": "Pronto.",
       "dlName": "test-bg-hard-sem-fundo.png",
       "noSubjectShown": false,
@@ -1472,7 +1462,7 @@
     },
     "m6BatchMerge": {
       "note": "merged-benchzy.pdf25 files, 25 pages, 6.5 KBDownload (6.5 KB)",
-      "bytes": 6673,
+      "bytes": 6674,
       "benchBytes": 6673,
       "matchesBench": true,
       "consoleErrors": [],
@@ -1540,7 +1530,7 @@
       "log": "Step: Merge all PDFs into one…Merge: 4 PDFs became one file of 4 pages.Step: Compress PDF to 500 KB…Compress PDF: merged.pdf 11.11 MB to 406.4 KB.",
       "output": {
         "name": "merged-smaller.pdf",
-        "size": 416150
+        "size": 416151
       },
       "outputUnder500k": true,
       "persistsAfterReload": true,
@@ -1631,7 +1621,7 @@
       "resumedToResult": true,
       "zipEntriesAfterResume": 1,
       "rowsAfterResume": [
-        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 11.0 sDownload",
+        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 11.4 sDownload",
         "test-photo-realistic-large.jpgno clear subject found; nothing downloaded for this one"
       ],
       "expectedAborts": "the cancelled chunk requests appear in failedRequests as ERR_ABORTED, by design",
@@ -2289,7 +2279,7 @@
       "failedRequests": []
     },
     "m14PdfToJpgStress": {
-      "stressMs": 1286,
+      "stressMs": 1250,
       "entries": 50,
       "consoleErrors": [],
       "failedRequests": []
@@ -2578,7 +2568,7 @@
         "opaqueFrac": 0.217
       },
       "sellerOk": true,
-      "logTail": "Step: Remove the background…Remove background: test-bg-hard.png (33.1 KB) cut out at full size 1200x900, in 10.3 s → test-bg-hard-no-background.png (915 KB).Step: Compress image to 50 KB…Compress image: test-bg-hard-no-background.png has see-through parts, so it stays a PNG: 915 KB to 49.6 KB at 185x139.",
+      "logTail": "Step: Remove the background…Remove background: test-bg-hard.png (33.1 KB) cut out at full size 1200x900, in 9.8 s → test-bg-hard-no-background.png (915 KB).Step: Compress image to 50 KB…Compress image: test-bg-hard-no-background.png has see-through parts, so it stays a PNG: 915 KB to 49.6 KB at 185x139.",
       "consoleErrors": [],
       "failedRequests": []
     },

@@ -5,11 +5,16 @@ Date: 2026-11-08. LOCAL ONLY: nothing here is published.
 ## Status, stated plainly
 
 **The Spanish and Portuguese strings on this site were drafted in-house and
-are PENDING HUMAN REVIEW before any public launch.** No native-speaker
-reviewer has read them yet. The pages are built and verified as software;
-they are not cleared as language. A human reviewer for each language must
-read every string below before the site goes public, and the launch
-checklist does not pass without that.
+are PENDING HUMAN REVIEW before any public launch.** No real native-speaker
+reviewer has read them yet. The Spanish set was read in full by a panel of
+five SIMULATED native-reviewer personas (Mexico, Spain, Peru, Argentina,
+Colombia) on 2026-11-09 and their agreed fixes were applied in milestone 20
+(see the milestone-20 section below); a simulation is not a human review,
+and the register stays honest: a real human review is still outstanding for
+both languages. The pages are built and verified as software; they are not
+cleared as language. A human reviewer for each language must read every
+string below before the site goes public, and the launch checklist does not
+pass without that.
 
 Scope of the drafted strings:
 - `src/locales/bg.js` — the background-removal island's runtime messages
@@ -142,6 +147,110 @@ NEW at-risk strings added by milestone 8 (review these too):
     witness script's runtime strings (beforeCount, verdict, done) in
     src/scripts/witness.js gained the counter bucket in es and pt-BR.
     Same in-house draft status as the rest of the set.
+
+## Milestone 20 additions (2026-11-09, five-country Spanish panel)
+
+The owner ordered a language check by five simulated native reviewers, one
+persona per country (Mexico, Spain, Peru, Argentina, Colombia), each written
+as an academically qualified native reader. Their reports live in
+~/workspace/file-toolkit/language-review-2026-11-09/ (es-mexico.md,
+es-spain.md, es-peru.md, es-argentina.md, es-colombia.md). They are
+SIMULATED reviewers, not people; this section records their panel pass the
+same way the milestone-8 section records the simulated-user panel. A real
+human review is still outstanding.
+
+RESOLVED from the panel (every item flagged by two or more reviewers, plus
+unambiguous single-reviewer hard errors):
+- Item 10 (footer heading): ES "Bajo el mostrador" → "Entre bastidores",
+  matching the PT sibling "Nos bastidores" (Peru and Spain proposed it;
+  Mexico and Argentina proposed "Del otro lado del mostrador"; the
+  bastidores form won on the two votes plus consistency with the PT page).
+- The speed FAQ calque "en pasadas en caliente" / "de clase escritorio"
+  (all five reports) → "en pruebas repetidas, con el programa ya
+  descargado, en nuestra computadora de escritorio de pruebas" (Peru's
+  wording), on both background-removal pages.
+- "plan pago" / "tamaño pago" (all five) → "plan de pago" / "tamaño de
+  pago" everywhere.
+- "un alojamiento" for hosting (Mexico, Peru, Argentina, Colombia) →
+  "un servicio de hosting" in the footer chrome and the promise page.
+- "cuentan contra tus datos móviles" (Mexico, Argentina, Colombia) →
+  "se descuentan de tu plan de datos".
+- "correr" for software running (Spain and Colombia systematically, plus
+  single-country flags) → ejecutarse / funcionar / hacerse per context,
+  across the promise page, the proof page and the witness strings;
+  "todavía no corre ningún anuncio" → "todavía no se muestra ningún
+  anuncio" (Mexico, Peru, Colombia).
+- "En una corrida sana" → "En una prueba normal" (Colombia, Peru).
+- "el trabajo con testigo" → "el trabajo de prueba" (Peru's form; Spain
+  proposed "supervisado", Argentina "observado") on the proof page and in
+  witness.js.
+- "comprueba contra una lista de huellas" → "compara con una lista de
+  huellas digitales publicada" (Argentina, Colombia).
+- "la misma ruta que el convertidor HEIC" (all five) → "el mismo que usa
+  el convertidor HEIC de este sitio".
+- "El testigo se está armando…" → "El testigo se está preparando…"
+  (Mexico, Spain, Peru, Colombia).
+- "un tiempo de teléfono" (Peru, Argentina, Colombia) → "cuánto tardará
+  en un teléfono" forms.
+- "Los motores son de código abierto" → "Los programas son de código
+  abierto" (Mexico, Argentina); nav "Unir" → "Unir PDF" (Mexico,
+  Colombia).
+- "Protegemos tu privacidad con la descarga" (Mexico, Peru, Argentina)
+  merged with the sentence that already followed it: "Así protegemos tu
+  privacidad: el programa viene a tu dispositivo…".
+- "de pesos abiertos" (Mexico, Peru, Colombia) → "con los pesos
+  publicados (cualquiera puede revisarlos)" (Colombia's explained form).
+- Single-reviewer hard errors fixed: the tangled witness count sentences
+  in witness.js (Peru's rewrite, with Spain's "empezó a registrar" and
+  "con datos adjuntos"); "ninguna cuenta puede acabarse" → "ningún
+  conteo puede agotarse" (Peru); "uso privado" → "uso personal" and
+  "A diferencia de eso," → "En cambio," (Colombia, Mexico); "Sin
+  descarga retenida por un pago" → "Sin descargas bloqueadas por un
+  pago" (Spain's heading form); "se convierte en cobro" → "termina en
+  un cobro"; "la palabra más maltratada" → "la palabra de la que más
+  se abusa" (Mexico); the meta description "El tamaño que subes es el
+  tamaño que descargas" (which contradicted the no-upload promise) →
+  "La foto entra a tamaño completo y el recorte sale a tamaño
+  completo" (Mexico); "la foto que pusiste" → "la foto que elegiste"
+  (Peru); "una página que se califica a sí misma" → "el testimonio de
+  la propia página" (Colombia, Peru); "Contado por el propio sistema de
+  publicación…" → "Esta cuenta la hace el propio sistema que publica el
+  sitio…" (Colombia); "la promesa de esta página está rota" → "significa
+  que la promesa de esta página no se cumplió" (Argentina).
+
+DELIBERATELY NOT APPLIED (house standard and scope, recorded so nobody
+re-litigates them blind):
+- Spain-only localization (ordenador, pulsar, recuento, sin rodeos, the
+  tray "Suelta" wording): the house standard stays neutral Latin
+  American, tú forms throughout.
+- Decimal commas stay (pan-regional choice, owner's call, already made);
+  Mexico's decimal-point note is recorded as the known cost of the
+  single standard.
+- Reviewer disagreement left as-is: Colombia asked to unify carga /
+  descarga on "descarga" everywhere; Peru had explicitly approved the
+  bg.js "Carga detenida" line as written. The strings stay.
+- og:locale es_ES → es_MX/es_419 (Mexico, Argentina): a metadata call
+  for the owner, not a language fix; not changed here.
+- "Lo premium es gratis aquí" stands: it is the site's campaign line,
+  not a translation error.
+
+## Milestone 21 addendum (2026-11-09, round-2 panel micro-pass)
+
+- The round-2 re-read returned SAFE verdicts from all five simulated
+  reviewers. Their remaining one-line fixes were applied in milestone
+  21 (full list in BUILD-STATUS.md).
+- This supersedes one milestone-20 entry above: the carga / descarga
+  split is resolved. The ES download flow now uses "descarga"
+  throughout for the program download ("Descarga detenida", "Puedes
+  cancelar la descarga", "la descarga sigue desde ahí"), per Colombia
+  R1 and the owner's launch instruction. Verb forms (se carga,
+  Cargando, cargado) and "Archivo cargado:" were deliberately kept:
+  they also cover loading from the local cache and the visitor's own
+  picked file.
+- Still standing from the milestone-20 list: Spain-only localization
+  not applied, decimal commas kept, og:locale unchanged (owner's
+  metadata call), "Lo premium es gratis aquí" unchanged (campaign
+  line; the panel split on it).
 
 ## What a reviewer receives
 

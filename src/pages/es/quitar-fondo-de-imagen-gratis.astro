@@ -29,11 +29,11 @@ const faq = [
   },
   {
     q: '¿Por qué la primera vez es más lenta?',
-    a: 'La primera vez, tu navegador descarga el programa de recorte (44,3 MB). Después queda guardado en tu dispositivo y las visitas siguientes empiezan al instante. El recorte en sí tardó entre 9,7 y 10,6 segundos por foto en pasadas en caliente en nuestra computadora de pruebas, de clase escritorio, una vez descargado el programa; la primera foto de una sesión tarda más. Los teléfonos varían y no prometemos un tiempo de teléfono que no hemos medido.',
+    a: 'La primera vez, tu navegador descarga el programa de recorte (44,3 MB). Después queda guardado en tu dispositivo y las visitas siguientes empiezan al instante. El recorte en sí tardó entre 9,7 y 10,6 segundos por foto en pruebas repetidas, con el programa ya descargado, en nuestra computadora de escritorio de pruebas; la primera foto de una sesión tarda más. Los teléfonos varían y no prometemos cuánto tardará en un teléfono, porque no lo hemos medido.',
   },
   {
     q: '¿Con qué fotos tiene dificultades?',
-    a: 'El pelo, el vidrio y los objetos transparentes salen bien, pero no perfectos; los filamentos finos del borde pueden perderse. Si una foto no tiene una figura clara, la herramienta lo dice en vez de inventarse un recorte.',
+    a: 'El pelo, el vidrio y los objetos transparentes salen bien, pero no perfectos; los pelitos más finos del borde pueden perderse. Si una foto no tiene una figura clara, la herramienta lo avisa en vez de inventarse un recorte.',
   },
 ];
 const faqJson = JSON.stringify({
@@ -51,7 +51,7 @@ const howToJson = JSON.stringify({
   inLanguage: 'es',
   step: [
     { '@type': 'HowToStep', position: 1, name: "Elige una foto", text: "Suelta una foto aquí, o haz clic para elegir una. Tu foto nunca se sube a ningún servidor." },
-    { '@type': 'HowToStep', position: 2, name: "Quita el fondo", text: "Presiona «Quitar el fondo». La primera vez se descarga el programa de recorte, 44,3 MB, en 11 piezas que tu navegador verifica una a una; en las visitas siguientes se usa la copia guardada. Los 44,3 MB cuentan contra tus datos móviles en un teléfono, así que la primera vez es mejor con Wi-Fi; con una conexión lenta, la carga puede tardar un minuto o más. Puedes cancelar la carga cuando quieras: las piezas que ya llegaron se quedan guardadas y la próxima vez la carga sigue desde ahí." },
+    { '@type': 'HowToStep', position: 2, name: "Quita el fondo", text: "Presiona «Quitar el fondo». La primera vez se descarga el programa de recorte, 44,3 MB, en 11 piezas que tu navegador verifica una a una; en las visitas siguientes se usa la copia guardada. Los 44,3 MB se descuentan de tu plan de datos en un teléfono, así que la primera vez es mejor con Wi-Fi; con una conexión lenta, la descarga puede tardar un minuto o más. Puedes cancelar la descarga cuando quieras: las piezas que ya llegaron se quedan guardadas y la próxima vez la descarga sigue desde ahí." },
     { '@type': 'HowToStep', position: 3, name: "El programa recorta la figura", text: "El programa lee la foto, calcula qué píxeles pertenecen a la figura y crea una imagen nueva en la que el resto es transparente." },
     { '@type': 'HowToStep', position: 4, name: "Compara y descarga", text: "Arrastra sobre la imagen para comparar el antes y el después, y descarga el recorte (PNG) a tamaño completo." },
   ],
@@ -65,17 +65,16 @@ const howToJson = JSON.stringify({
       <h1 class="font-display text-4xl font-black mt-2">Quitar fondo de imagen gratis</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         Elige una foto y esta página recorta la figura a tamaño completo. El trabajo se hace en tu
-        navegador: tu foto nunca se sube a ningún servidor. Protegemos tu privacidad con la
-        descarga. Nuestro programa viene a tu dispositivo y hace el trabajo allí, para que tu
+        navegador: tu foto nunca se sube a ningún servidor. Así protegemos tu privacidad: el programa viene a tu dispositivo y hace el trabajo allí, para que tu
         foto nunca salga de él. Otros sitios lo hacen al revés: tú les envías tu foto. La primera vez se descarga el programa
         de recorte, 44,3 MB, una sola vez, en 11 piezas que tu navegador verifica una a una; ese
-        tamaño está escrito aquí antes de que se descargue nada, y en las visitas siguientes se usa
-        la copia guardada. Los 44,3 MB cuentan contra tus datos móviles en un teléfono, así que la primera vez es mejor con Wi-Fi; con una conexión lenta, la carga puede tardar un minuto o más. Puedes cancelar la carga cuando quieras: las piezas que ya llegaron se quedan guardadas y la próxima vez la carga sigue desde ahí.
+        tamaño está escrito aquí antes de descargar nada, y en las visitas siguientes se usa
+        la copia guardada. Los 44,3 MB se descuentan de tu plan de datos en un teléfono, así que la primera vez es mejor con Wi-Fi; con una conexión lenta, la descarga puede tardar un minuto o más. Puedes cancelar la descarga cuando quieras: las piezas que ya llegaron se quedan guardadas y la próxima vez la descarga sigue desde ahí.
       </p>
       <LangLinks label="Esta página en:" links={langLinks} />
     </section>
 
-    <StepsStrip who="Para una foto de producto, una foto de perfil o un anuncio: el trabajo de todos los días es un recorte limpio para poner sobre cualquier fondo." steps={[{ n: '01', t: 'Elige una foto' }, { n: '02', t: 'Quita el fondo' }, { n: '03', t: 'Compara y descarga' }]} />
+    <StepsStrip who="Para una foto de producto, una foto de perfil o un anuncio: el trabajo de cada día es un recorte limpio para poner sobre cualquier fondo." steps={[{ n: '01', t: 'Elige una foto' }, { n: '02', t: 'Quita el fondo' }, { n: '03', t: 'Compara y descarga' }]} />
 
     <BgTicket locale="es" />
 
@@ -83,7 +82,7 @@ const howToJson = JSON.stringify({
       <div>
         <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Cómo funciona</h2>
         <p class="mt-3 leading-relaxed text-ink-soft">
-          Un programa de recorte de fondos (un modelo ISNet, de pesos abiertos, indicado en la
+          Un programa de recorte de fondos (un modelo ISNet, con los pesos del modelo publicados (cualquiera puede revisarlos), indicado en la
           <a class="underline underline-offset-4" href="/credits/">página de créditos</a>) funciona en esta página
           dentro de tu navegador. Lee la foto, calcula qué píxeles pertenecen a la figura
           y crea una imagen nueva en la que el resto es transparente. Como el trabajo se hace aquí,

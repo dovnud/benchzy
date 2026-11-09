@@ -34,12 +34,12 @@ const W_SETS = ({
   },
   es: {
     thisSite: 'este sitio', elsewhere: 'OTRO SITIO', withData: ' · CON DATOS ADJUNTOS', counter: 'contador de visitas',
-    beforeCount: (n, c) => `${n} archivos cargados. ${n - c} de ellos son esta página pidiendo a su propio sitio sus propias partes; ${c} ${c === 1 ? 'es' : 'son'} el contador de visitas activándose cuando la página se abrió.`,
-    verdict: (t, b, d, c) => `Peticiones desde que el testigo empezó a mirar (justo después de que esta página cargó): ${t}. De ellas, ${c} ${c === 1 ? 'fue' : 'fueron'} el contador de visitas activándose cuando la página se abrió; el resto es esta página pidiendo a su propio sitio archivos de página y de programa. Peticiones con algo adjunto: ${b}. Peticiones mientras corría el trabajo con testigo: ${d}.`,
+    beforeCount: (n, c) => `Se cargaron ${n} archivos. ${n - c} son pedidos de esta página a su propio sitio, para traerse los archivos que la forman; ${c} ${c === 1 ? 'corresponde' : 'corresponden'} al contador de visitas, que se activó cuando la página se abrió.`,
+    verdict: (t, b, d, c) => `Peticiones desde que el testigo empezó a registrar (justo después de cargarse esta página): ${t}. De ellas, ${c} ${c === 1 ? 'fue' : 'fueron'} el contador de visitas activándose cuando la página se abrió; el resto son pedidos de esta página a su propio sitio, por archivos de la página y del programa. Peticiones con datos adjuntos: ${b}. Peticiones mientras se ejecutaba el trabajo de prueba: ${d}.`,
     sniff: { jpeg: 'foto JPEG', png: 'imagen PNG', pdf: 'documento PDF', gif: 'imagen GIF', webp: 'imagen WebP', zip: 'archivo basado en ZIP', unknown: 'no reconocido por sus primeros bytes' },
     running: 'Trabajo en curso: leyendo tu archivo en la memoria de esta página…',
     file: 'archivo', size: 'tamaño', format: 'formato real', fingerprint: 'huella (SHA-256)', dimensions: 'dimensiones', pages: 'páginas', unreadable: 'no se pudo leer', bytes: ' bytes',
-    done: (n, c) => `Trabajo terminado en la memoria de esta página. Peticiones de red durante el trabajo: ${n} (las del contador de visitas entre ellas: ${c}). Tu archivo fue leído, identificado y descrito sin que ninguna petición lo llevara a ninguna parte.`,
+    done: (n, c) => `Trabajo terminado en la memoria de esta página. Peticiones de red durante el trabajo: ${n} (las del contador de visitas entre ellas: ${c}). Tu archivo fue leído, identificado y descrito sin que ninguna petición lo enviara a ningún sitio.`,
     failed: 'El trabajo no pudo terminar: ',
   },
   'pt-BR': {
