@@ -7,7 +7,7 @@
 // not download them again. It never sees the visitor's files: file jobs
 // run in page memory and no request carries them.
 const CACHE = 'benchzy-v1';
-const ENGINE_PREFIXES = ['/models/', '/ort/', '/codecs/', '/pdfjs/', '/tesseract/'];
+const ENGINE_PREFIXES = ['/models/', '/ort/', '/codecs/', '/pdfjs/', '/tesseract/', '/heif/'];
 
 self.addEventListener('install', () => {
   self.skipWaiting();

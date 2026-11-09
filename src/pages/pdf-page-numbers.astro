@@ -1,0 +1,182 @@
+---
+import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
+
+const faq = [
+  {
+    q: 'Why would I start at a number other than 1?',
+    a: 'When this file continues another one: an appendix that follows a 40-page report starts at 41, so the pack reads straight through. The first page stamped gets the number you type; the rest follow on.',
+  },
+  {
+    q: 'In "Page X of Y", what is Y?',
+    a: 'The last number stamped, counting only the pages you numbered. Number a whole 12-page file from 1 and the pages read "Page 1 of 12" to "Page 12 of 12". Number only pages 5 to 12 of it, starting at 5, and they read "Page 5 of 12" to "Page 12 of 12".',
+  },
+  {
+    q: 'Can the numbers be taken off later?',
+    a: 'Not by a switch: they are drawn onto the pages, the same way flattening bakes in a form\'s answers. Editing them off means editing the pages themselves. Keep your unnumbered original, and number a copy.',
+  },
+  {
+    q: 'Where does my document go?',
+    a: 'Nowhere. It is read into this page and numbered in your browser. Watch the network panel while it works if you want to check.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const howToJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: "How to add page numbers to a PDF",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Pick the PDF", text: "Drop a PDF on the tray, or click to pick one. It stays on this device. The page reads its page count before anything runs." },
+    { '@type': 'HowToStep', position: 2, name: "Choose the numbers", text: "Pick where they sit (bottom centre, bottom outside corner, or top centre), how they read ('Page X of Y', 'X of Y', or a plain number), the number to start from, and whether every page or one range is numbered." },
+    { '@type': 'HowToStep', position: 3, name: "Add the numbers", text: "Press 'Add the page numbers'. Each number is drawn onto its page as ordinary content and the file is saved." },
+    { '@type': 'HowToStep', position: 4, name: "Download the numbered PDF", text: "Take the finished file away, and keep your unnumbered original: drawn-in numbers are part of the pages now." },
+  ],
+});
+---
+
+<Base title="Add page numbers to a PDF, free · Benchzy" description="Stamp page numbers onto a PDF, bottom centre, outside corners or top, as 'Page X of Y' or a plain number, starting where you say, inside your browser. The numbers are drawn onto the pages themselves.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">PDF tools · pages</p>
+      <h1 class="font-display text-4xl font-black mt-2">Add page numbers</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Put page numbers on a finished PDF: pick where they sit, how they read, and the
+        number to start from. The numbers are drawn onto the pages themselves, in your
+        browser; the document is never uploaded.
+      </p>
+    </section>
+
+    <StepsStrip who="For a report, a contract pack or a court bundle that people must refer to by page ('see page 14'), which came off the printer with no numbers on it." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Choose the numbers' }, { n: '03', t: 'Number and download' }]} />
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="pn-tool">
+      <div id="pn-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
+        <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">PDF · it stays on this device</p>
+        <input id="pn-file" type="file" accept="application/pdf,.pdf" class="hidden" />
+      </div>
+      <p class="file-loaded hidden" data-loaded-for="pn-file" role="status"></p>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">Where they sit</h2>
+          <div class="mt-3 grid gap-3">
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="pn-pos" value="bottom-centre" checked />
+              <span>Bottom centre</span>
+            </label>
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="pn-pos" value="corners" />
+              <span>Bottom outside corner (right on odd numbers, left on even, the way books print it)</span>
+            </label>
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="pn-pos" value="top-centre" />
+              <span>Top centre</span>
+            </label>
+          </div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft mt-6">How they read</h2>
+          <div class="mt-3 grid gap-3">
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="pn-format" value="page-of" checked />
+              <span>Page X of Y</span>
+            </label>
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="pn-format" value="of" />
+              <span>X of Y</span>
+            </label>
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="pn-format" value="plain" />
+              <span>A plain number, X</span>
+            </label>
+            <div class="flex items-center gap-2 ml-6 flex-wrap">
+              <label class="font-mono text-xs uppercase tracking-widest text-ink-soft" for="pn-start">Start at</label>
+              <input id="pn-start" type="number" min="0" step="1" value="1" class="border border-ink bg-ticket px-3 py-2 font-mono w-24" />
+            </div>
+          </div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft mt-6">Which pages</h2>
+          <div class="mt-3 grid gap-3">
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="pn-scope" value="all" checked />
+              <span>Every page</span>
+            </label>
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="pn-scope" value="range" />
+              <span>One page range</span>
+            </label>
+            <div class="flex items-center gap-2 ml-6 flex-wrap">
+              <label class="font-mono text-xs uppercase tracking-widest text-ink-soft" for="pn-from">From page</label>
+              <input id="pn-from" type="number" min="1" step="1" value="1" class="border border-ink bg-ticket px-3 py-2 font-mono w-24" />
+              <label class="font-mono text-xs uppercase tracking-widest text-ink-soft" for="pn-to">To page</label>
+              <input id="pn-to" type="number" min="1" step="1" value="1" class="border border-ink bg-ticket px-3 py-2 font-mono w-24" />
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="pn-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <p class="action-note">
+            The numbers become part of the pages, like ink: they cannot be switched off
+            afterwards. Keep your unnumbered original, and number a copy.
+          </p>
+          <button id="pn-run" class="btn-primary w-full mt-5" type="button" disabled>Add the page numbers</button>
+          <p id="pn-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a PDF to begin.</p>
+        </div>
+      </div>
+
+      <div id="pn-result" class="receipt hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Result</h2>
+          <span class="stamp" id="pn-stamp">Done on your device</span>
+        </div>
+        <p id="pn-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
+        <a id="pn-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the numbered PDF</a>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The page writes each number straight onto its page as ordinary page content, at
+          the place you picked, then saves the file. The download is how we protect your
+          privacy: the program that does this job is part of this page, loaded from this
+          site, and your file is read into the page and never uploaded. Because the numbers
+          are drawn in, they print with the file everywhere and cannot fall off; they are
+          not form fields, and they do not change when the file is copied.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Drawn-in numbers are part of the page now: taking them off later means editing
+          the pages, so keep your unnumbered original. The numbers count the file's pages
+          as they stand when you run this; if you merge or cut pages afterwards, run it
+          again on the finished file so the numbers still match the pages.
+        </p>
+        <p class="mt-3 leading-relaxed text-ink-soft">A password-protected PDF cannot be opened by this tool. Take its password off first with the <a class="underline underline-offset-4" href="/unlock-pdf/">unlock tool</a>, then bring the file back.</p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script type="application/ld+json" set:html={howToJson}></script>
+  <script>
+    import '../scripts/pdf-page-numbers.js';
+  </script>
+</Base>

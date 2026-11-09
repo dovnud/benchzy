@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import LogoMark from '../components/LogoMark.astro';
 
 interface Alternate {
   hreflang: string;
@@ -12,6 +13,16 @@ interface Props {
   alternates?: Alternate[];
 }
 const { title, description, lang = 'en', alternates = [] } = Astro.props;
+
+// Language seam (milestone 18, round-2 Missing 8): an English page
+// that has NO Spanish or Portuguese version of itself (no es / pt-BR
+// alternate declared) carries a hidden line at the top of its main
+// content. A small inline script shows it, in the visitor's language
+// and with a link back, when the visit arrived from the Spanish or
+// Portuguese pages. Pages that do declare a translation never render
+// the line: they link to their own versions instead.
+const hasTranslation = alternates.some((a) => a.hreflang === 'es' || a.hreflang === 'pt-BR');
+const showLangNote = lang === 'en' && !hasTranslation;
 
 // Canonical + social cards (milestone 5). The canonical is this page's
 // own public URL on the production host; every page is self-referencing.
@@ -40,14 +51,19 @@ const CHROME = {
       { label: 'Size checker', href: '/size-checker/' },
     ],
     footHowH: 'How it works',
-    footHow: 'Every job runs inside your browser, on your device. Files are not uploaded. There is no server here that could receive them.',
+    footHow: 'Every job runs inside your browser, on your device. Files are not uploaded: they never reach a server. The pages of this site are served by a host, Cloudflare Pages, named on the privacy page.',
     footRulesH: 'The standing rules',
     footRules: 'No accounts. No sign-up. No daily counters. No watermarks on output. If a tool cannot do a job well, the page says so before you pick a file.',
     footFree: 'What free means here',
     footCheck: 'Check it yourself',
+    footPrivacy: 'Privacy',
+    freeHref: '/what-free-means/',
+    checkHref: '/check-it-yourself/',
     footUnderH: 'Under the counter',
     footUnder: 'The engines are open-source and run from this site.',
     footCredits: 'Credits and licences',
+    footFineL: 'Benchzy — the file workshop',
+    footFineR: 'Files sent to a server: 0',
   },
   es: {
     tagline: 'el taller de archivos',
@@ -61,14 +77,19 @@ const CHROME = {
       { label: 'Comprobar tamaño', href: '/size-checker/' },
     ],
     footHowH: 'Cómo funciona',
-    footHow: 'Cada trabajo se hace dentro de tu navegador, en tu dispositivo. Los archivos no se suben. No hay ningún servidor aquí que pudiera recibirlos.',
+    footHow: 'Cada trabajo se hace dentro de tu navegador, en tu dispositivo. Los archivos no se suben: nunca llegan a un servidor. Las páginas de este sitio las sirve un alojamiento, Cloudflare Pages, nombrado en la página de privacidad.',
     footRulesH: 'Las reglas de la casa',
     footRules: 'Sin cuentas. Sin registro. Sin contadores diarios. Sin marcas de agua en el resultado. Si una herramienta no puede hacer bien un trabajo, la página lo dice antes de que elijas un archivo.',
     footFree: 'Qué significa gratis aquí',
     footCheck: 'Compruébalo tú mismo',
+    footPrivacy: 'Privacidad',
+    freeHref: '/es/que-significa-gratis-aqui/',
+    checkHref: '/es/compruebalo-tu-mismo/',
     footUnderH: 'Bajo el mostrador',
     footUnder: 'Los motores son de código abierto y funcionan desde este sitio.',
     footCredits: 'Créditos y licencias',
+    footFineL: 'Benchzy — el taller de archivos',
+    footFineR: 'Archivos enviados a un servidor: 0',
   },
   'pt-BR': {
     tagline: 'a oficina de arquivos',
@@ -82,14 +103,19 @@ const CHROME = {
       { label: 'Verificar tamanho', href: '/size-checker/' },
     ],
     footHowH: 'Como funciona',
-    footHow: 'Todo trabalho é feito dentro do seu navegador, no seu aparelho. Os arquivos não são enviados. Não há nenhum servidor aqui que possa recebê-los.',
+    footHow: 'Todo trabalho é feito dentro do seu navegador, no seu aparelho. Os arquivos não são enviados: nunca chegam a um servidor. As páginas deste site são servidas por uma hospedagem, Cloudflare Pages, nomeada na página de privacidade.',
     footRulesH: 'As regras da casa',
     footRules: 'Sem contas. Sem cadastro. Sem contadores diários. Sem marcas d’água no resultado. Se uma ferramenta não consegue fazer bem um trabalho, a página avisa antes de você escolher um arquivo.',
     footFree: 'O que grátis significa aqui',
     footCheck: 'Confira você mesmo',
-    footUnderH: 'Debaixo do balcão',
+    footPrivacy: 'Privacidade',
+    freeHref: '/pt-br/o-que-significa-gratis/',
+    checkHref: '/pt-br/confira-voce-mesmo/',
+    footUnderH: 'Nos bastidores',
     footUnder: 'Os mecanismos são de código aberto e rodam a partir deste site.',
     footCredits: 'Créditos e licenças',
+    footFineL: 'Benchzy — a oficina de arquivos',
+    footFineR: 'Arquivos enviados a um servidor: 0',
   },
 };
 const c = CHROME[lang] || CHROME.en;
@@ -98,15 +124,6 @@ const c = CHROME[lang] || CHROME.en;
 <!doctype html>
 <html lang={lang}>
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VZQEZ11NLL" is:inline></script>
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-VZQEZ11NLL');
-    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
@@ -129,47 +146,114 @@ const c = CHROME[lang] || CHROME.en;
     {alternates.map((a) => (
       <link rel="alternate" hreflang={a.hreflang} href={a.href} />
     ))}
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23faf5ea'/%3E%3Crect x='4' y='4' width='24' height='24' fill='none' stroke='%231b2634' stroke-width='2'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='16' font-weight='bold' text-anchor='middle' fill='%23d9551e'%3EB%3C/text%3E%3C/svg%3E" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#faf6ee" />
+    {/* Google Analytics visit counter (milestone 19). The standard
+        Google tag: it fires once when a page opens and counts the
+        visit. It is not part of any tool and is never told anything
+        about a visitor's files; the privacy page names it and says
+        what it sees, and the check-it-yourself pages list its line
+        beside every other request. */}
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY" is:inline></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-PSWNWPP7PY');
+    </script>
   </head>
   <body class="min-h-screen flex flex-col">
-    <header class="border-b-2 border-ink bg-paper">
-      <div class="mx-auto max-w-5xl px-4 py-3 flex items-baseline gap-6 flex-wrap">
-        <a href="/" class="font-display text-3xl font-black tracking-tight text-ink no-underline">
-          Benchzy<span class="text-accent">.</span>
+    <header class="masthead">
+      <div class="mast-in">
+        <a href="/" class="wordmark" aria-label="Benchzy home">
+          <LogoMark size={30} />
+          benchzy
+          <span class="mast-tag">{c.tagline}</span>
         </a>
-        <span class="font-mono text-xs uppercase tracking-widest text-ink-soft hidden sm:inline">{c.tagline}</span>
-        <nav class="ml-auto flex gap-5 font-mono text-sm">
+        <nav class="mast-nav" aria-label="Main">
           {c.nav.map((n) => (
-            <a class="hover:text-accent-deep underline-offset-4 hover:underline" href={n.href}>{n.label}</a>
+            <a href={n.href}>{n.label}</a>
           ))}
         </nav>
       </div>
     </header>
 
     <main class="flex-1 w-full">
+      {showLangNote && (
+        <div class="mx-auto max-w-5xl px-4">
+          <p id="bz-lang-note" class="lang-note hidden" role="note"></p>
+        </div>
+      )}
+      {showLangNote && (
+        <script is:inline>
+          (function () {
+            var el = document.getElementById('bz-lang-note');
+            if (!el) return;
+            var lang = null;
+            try { lang = sessionStorage.getItem('bz-visit-lang'); } catch (e) {}
+            if (!lang && document.referrer) {
+              try {
+                var r = new URL(document.referrer);
+                if (r.origin === location.origin) {
+                  if (r.pathname.indexOf('/es/') === 0) lang = 'es';
+                  else if (r.pathname.indexOf('/pt-br/') === 0) lang = 'pt-BR';
+                }
+              } catch (e) {}
+            }
+            if (lang === 'es') {
+              el.innerHTML = 'Estás en una herramienta en inglés: todavía no tiene versión en español. <a href="/es/que-significa-gratis-aqui/">Volver a las páginas en español →</a>';
+            } else if (lang === 'pt-BR') {
+              el.innerHTML = 'Você está em uma ferramenta em inglês: ela ainda não tem versão em português. <a href="/pt-br/o-que-significa-gratis/">Voltar para as páginas em português →</a>';
+            } else { return; }
+            el.classList.remove('hidden');
+          })();
+        </script>
+      )}
       <slot />
     </main>
 
-    <footer class="border-t-2 border-ink mt-16">
-      <div class="mx-auto max-w-5xl px-4 py-8 grid gap-6 sm:grid-cols-3 font-mono text-xs leading-relaxed text-ink-soft">
-        <div>
-          <p class="text-ink font-bold uppercase tracking-widest mb-2">{c.footHowH}</p>
-          <p>{c.footHow}</p>
+    <footer class="site-foot">
+      <div class="mx-auto max-w-5xl px-4">
+        <div class="grid gap-6 sm:grid-cols-3 text-sm leading-relaxed text-ink-soft">
+          <div>
+            <p class="font-mono text-xs font-semibold text-ink uppercase tracking-widest mb-2">{c.footHowH}</p>
+            <p>{c.footHow}</p>
+          </div>
+          <div>
+            <p class="font-mono text-xs font-semibold text-ink uppercase tracking-widest mb-2">{c.footRulesH}</p>
+            <p>{c.footRules}</p>
+            <p class="mt-2">
+              <a class="underline underline-offset-4 hover:text-accent-deep" href={c.freeHref}>{c.footFree}</a> ·
+              <a class="underline underline-offset-4 hover:text-accent-deep" href={c.checkHref}>{c.footCheck}</a> ·
+              <a class="underline underline-offset-4 hover:text-accent-deep" href="/privacy/">{c.footPrivacy}</a>
+            </p>
+          </div>
+          <div>
+            <p class="font-mono text-xs font-semibold text-ink uppercase tracking-widest mb-2">{c.footUnderH}</p>
+            <p>{c.footUnder} <a class="underline underline-offset-4 hover:text-accent-deep" href="/credits/">{c.footCredits}</a>.</p>
+          </div>
         </div>
-        <div>
-          <p class="text-ink font-bold uppercase tracking-widest mb-2">{c.footRulesH}</p>
-          <p>{c.footRules}</p>
-          <p class="mt-2">
-            <a class="underline underline-offset-4 hover:text-accent-deep" href="/what-free-means/">{c.footFree}</a> ·
-            <a class="underline underline-offset-4 hover:text-accent-deep" href="/check-it-yourself/">{c.footCheck}</a>
-          </p>
-        </div>
-        <div>
-          <p class="text-ink font-bold uppercase tracking-widest mb-2">{c.footUnderH}</p>
-          <p>{c.footUnder} <a class="underline underline-offset-4 hover:text-accent-deep" href="/credits/">{c.footCredits}</a>.</p>
+        <div class="foot-fine mt-8 border-t border-line pt-4">
+          <span>{c.footFineL}</span>
+          <span>{c.footFineR}</span>
         </div>
       </div>
     </footer>
+    <script is:inline>
+      // Language seam (milestone 18): a visit to a Spanish or
+      // Portuguese page marks this tab's session, so an English-only
+      // tool page reached from there can say so at its top (see the
+      // note markup in <main>). Session storage only; nothing is kept
+      // past the session and nothing leaves the device.
+      try {
+        var l = document.documentElement.lang || '';
+        if (l.indexOf('es') === 0) sessionStorage.setItem('bz-visit-lang', 'es');
+        else if (l.indexOf('pt') === 0) sessionStorage.setItem('bz-visit-lang', 'pt-BR');
+      } catch (e) {}
+    </script>
     <script is:inline>
       // Repeat-visit caching: pages and engine files this browser has loaded
       // are kept by the service worker, so returning visits skip the big

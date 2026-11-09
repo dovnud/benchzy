@@ -1,0 +1,43 @@
+{
+  "big": {
+    "x1": {
+      "accuracy": 0.9921,
+      "secs": 1.6,
+      "chars": 509
+    }
+  },
+  "mid": {
+    "x1": {
+      "accuracy": 0.9882,
+      "secs": 0.9,
+      "chars": 507
+    },
+    "x2": {
+      "accuracy": 0.9862,
+      "secs": 1.5,
+      "chars": 506
+    }
+  },
+  "small": {
+    "x1": {
+      "accuracy": 0.9961,
+      "secs": 0.6,
+      "chars": 512
+    },
+    "x2": {
+      "accuracy": 0.9882,
+      "secs": 1.1,
+      "chars": 507
+    },
+    "x3": {
+      "accuracy": 0.9961,
+      "secs": 1.6,
+      "chars": 511
+    },
+    "x4": {
+      "accuracy": 0.9882,
+      "secs": 2.1,
+      "chars": 507
+    }
+  }
+}

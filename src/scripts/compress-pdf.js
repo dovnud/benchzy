@@ -28,6 +28,8 @@ let file = null, fileBytes = null, scanInfo = null, targetKB = 500, inited = fal
 // visitor's saved general preset does not override it.
 const toolEl = $('cp-tool');
 const presetKB = toolEl && toolEl.dataset.presetKb ? parseInt(toolEl.dataset.presetKb, 10) : null;
+// The 1 MB door presets 1024 KB; its label reads "1 MB", not "1024 KB".
+const targetLabel = (kb) => kb === 1024 ? '1 MB' : kb + ' KB';
 const lockTarget = !!toolEl && toolEl.dataset.lockTarget === '1';
 if (presetKB) targetKB = presetKB;
 if (!lockTarget) {
@@ -43,7 +45,7 @@ function setSpec(rows) {
 
 async function initCodecs() {
   if (inited) return;
-  setStatus('Loading the PDF engine (about 3 MB, once)…');
+  setStatus('Loading the PDF program (about 3 MB, one time only). It runs in your browser; your file is never uploaded…');
   const compile = async (p) => {
     const res = await fetch(p);
     return WebAssembly.compile(await res.arrayBuffer());
@@ -106,7 +108,7 @@ wireTray(tray, input, async (f) => {
       ['size now', fmtBytes(f.size)],
       ['pages', String(scanInfo.pageCount)],
       ['photos inside', scanInfo.images.length + ' (' + fmtBytes(scanInfo.imageBytes) + ')'],
-      strongMode ? ['mode', 'strong: smallest the bench can reach'] : ['target', targetKB + ' KB'],
+      strongMode ? ['mode', 'strong: smallest this tool can reach'] : ['target', targetLabel(targetKB)],
     ]);
     if (scanInfo.images.length === 0) {
       setStatus('This PDF has no photos inside to recompress. Run it anyway: you will get your original back with an honest note.');
@@ -154,7 +156,7 @@ runBtn.addEventListener('click', async () => {
     if (strongMode) {
       if (scanInfo.images.length === 0) {
         showResult(new Blob([fileBytes], { type: 'application/pdf' }), file.size,
-          'We could not make this PDF smaller. It has no photos inside to recompress, and re-saving alone does not shrink a text PDF (on our bench a re-save moved a text PDF from 7,203 bytes to 7,231). Here is your original back, unchanged.');
+          'We could not make this PDF smaller. It has no photos inside to recompress, and re-saving alone does not shrink a text PDF (in our tests a re-save moved a text PDF from 7,203 bytes to 7,231). Here is your original back, unchanged.');
         recordJob({ tool: 'Compress PDF (strong)', name: file.name, detail: 'no change possible' });
         return;
       }
@@ -163,7 +165,7 @@ runBtn.addEventListener('click', async () => {
       });
       if (!r.changed) {
         showResult(new Blob([fileBytes], { type: 'application/pdf' }), file.size,
-          'We could not make this PDF smaller than it already is, even at the strong end of the bench. Here is your original back, unchanged.');
+          'We could not make this PDF smaller than it already is, even at the strongest setting. Here is your original back, unchanged.');
         recordJob({ tool: 'Compress PDF (strong)', name: file.name, detail: 'no change possible' });
         return;
       }
@@ -275,8 +277,8 @@ runBtn.addEventListener('click', async () => {
     }
     const [bs, bq] = bestSetting;
     const note = best.length <= target
-      ? `Landed at ${fmtBytes(best.length)}, under your ${targetKB} KB target (was ${fmtBytes(file.size)}). Photos at ${Math.round(bs * 100)}% size, quality ${bq}.${skipped.length ? ' ' + skipped.length + ' photo(s) inside use a format we could not re-encode and were left as they were.' : ''}`
-      : `Smallest we could reach is ${fmtBytes(best.length)}, still above your ${targetKB} KB target (was ${fmtBytes(file.size)}). We show that plainly rather than pretend. Photos at ${Math.round(bs * 100)}% size, quality ${bq}.`;
+      ? `Landed at ${fmtBytes(best.length)}, under your ${targetLabel(targetKB)} target (was ${fmtBytes(file.size)}). Photos at ${Math.round(bs * 100)}% size, quality ${bq}.${skipped.length ? ' ' + skipped.length + ' photo(s) inside use a format we could not re-encode and were left as they were.' : ''}`
+      : `Smallest we could reach is ${fmtBytes(best.length)}, still above your ${targetLabel(targetKB)} target (was ${fmtBytes(file.size)}). We show that plainly rather than pretend. Photos at ${Math.round(bs * 100)}% size, quality ${bq}.`;
     showResult(new Blob([best], { type: 'application/pdf' }), best.length, note);
     if (!lockTarget) savePreset('compress-pdf', { targetKB });
     recordJob({ tool: 'Compress PDF', name: file.name, detail: fmtBytes(file.size) + ' to ' + fmtBytes(best.length) });

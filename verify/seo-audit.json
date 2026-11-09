@@ -9,42 +9,79 @@
     "/batch-convert-images/",
     "/batch-merge-pdf/",
     "/batch-remove-background/",
+    "/batch-resize-images/",
     "/batch-split-pdf/",
     "/check-it-yourself/",
     "/compress-image-to-50kb/",
     "/compress-image/",
     "/compress-pdf-strong/",
+    "/compress-pdf-to-100kb/",
+    "/compress-pdf-to-1mb/",
     "/compress-pdf-to-200kb/",
+    "/compress-pdf-to-500kb/",
+    "/compress-pdf-to-50kb/",
     "/compress-pdf/",
     "/credits/",
+    "/es/compruebalo-tu-mismo/",
+    "/es/que-significa-gratis-aqui/",
     "/es/quitar-fondo-de-imagen-gratis/",
     "/es/quitar-fondo-resolucion-completa/",
+    "/extract-images-pdf/",
     "/flatten-pdf/",
+    "/heic-to-jpg/",
     "/image-tools/",
     "/interleave-pdf/",
+    "/jpg-to-pdf/",
+    "/jpg-to-png/",
+    "/jpg-to-webp/",
     "/merge-pdf/",
+    "/ocr-image/",
     "/ocr-pdf/",
+    "/organize-pdf/",
+    "/pdf-metadata/",
+    "/pdf-page-numbers/",
+    "/pdf-to-jpg/",
     "/pdf-tools/",
+    "/png-to-jpg/",
+    "/png-to-webp/",
     "/presets/",
+    "/privacy/",
+    "/protect-pdf/",
     "/pt-br/alternativa-gratis-ao-remove-bg/",
+    "/pt-br/confira-voce-mesmo/",
+    "/pt-br/o-que-significa-gratis/",
     "/pt-br/remover-fundo-de-imagem-gratis/",
     "/remove-background-full-resolution/",
     "/remove-background/",
+    "/remove-background/quality/",
     "/remove-bg-alternatives/",
     "/remove-bg-api/",
     "/remove-bg-december-1/",
+    "/resize-image/",
+    "/rotate-pdf/",
     "/sign-pdf/",
     "/size-checker/",
     "/split-pdf/",
     "/tools/",
+    "/unlock-pdf/",
     "/vs-remove-bg/",
+    "/watermark-pdf/",
+    "/webp-to-jpg/",
+    "/webp-to-png/",
     "/what-free-means/",
     "/workflows/"
   ],
-  "sitemapCount": 38,
-  "sitemapHreflangLinks": 24,
+  "redirectPages": [
+    "/es/quitar-fondo/",
+    "/pt/remover-fundo/"
+  ],
+  "sitemapCount": 68,
+  "sitemapHreflangLinks": 48,
   "ldTypes": {
-    "/": [],
+    "/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/background-removal/": [],
     "/batch-compress-images/": [
       "FAQPage",
@@ -66,6 +103,10 @@
       "FAQPage",
       "HowTo"
     ],
+    "/batch-resize-images/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/batch-split-pdf/": [
       "FAQPage",
       "HowTo"
@@ -83,7 +124,23 @@
       "FAQPage",
       "HowTo"
     ],
+    "/compress-pdf-to-100kb/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/compress-pdf-to-1mb/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/compress-pdf-to-200kb/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/compress-pdf-to-500kb/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/compress-pdf-to-50kb/": [
       "FAQPage",
       "HowTo"
     ],
@@ -92,6 +149,8 @@
       "HowTo"
     ],
     "/credits/": [],
+    "/es/compruebalo-tu-mismo/": [],
+    "/es/que-significa-gratis-aqui/": [],
     "/es/quitar-fondo-de-imagen-gratis/": [
       "FAQPage",
       "HowTo"
@@ -100,7 +159,15 @@
       "FAQPage",
       "HowTo"
     ],
+    "/extract-images-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/flatten-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/heic-to-jpg/": [
       "FAQPage",
       "HowTo"
     ],
@@ -109,7 +176,23 @@
       "FAQPage",
       "HowTo"
     ],
+    "/jpg-to-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/jpg-to-png/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/jpg-to-webp/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/merge-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/ocr-image/": [
       "FAQPage",
       "HowTo"
     ],
@@ -117,12 +200,43 @@
       "FAQPage",
       "HowTo"
     ],
+    "/organize-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/pdf-metadata/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/pdf-page-numbers/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/pdf-to-jpg/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/pdf-tools/": [],
+    "/png-to-jpg/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/png-to-webp/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/presets/": [],
+    "/privacy/": [],
+    "/protect-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/pt-br/alternativa-gratis-ao-remove-bg/": [
       "FAQPage",
       "HowTo"
     ],
+    "/pt-br/confira-voce-mesmo/": [],
+    "/pt-br/o-que-significa-gratis/": [],
     "/pt-br/remover-fundo-de-imagem-gratis/": [
       "FAQPage",
       "HowTo"
@@ -135,9 +249,18 @@
       "FAQPage",
       "HowTo"
     ],
+    "/remove-background/quality/": [],
     "/remove-bg-alternatives/": [],
     "/remove-bg-api/": [],
     "/remove-bg-december-1/": [],
+    "/resize-image/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/rotate-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/sign-pdf/": [
       "FAQPage",
       "HowTo"
@@ -151,7 +274,23 @@
       "HowTo"
     ],
     "/tools/": [],
+    "/unlock-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/vs-remove-bg/": [],
+    "/watermark-pdf/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/webp-to-jpg/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/webp-to-png/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/what-free-means/": [],
     "/workflows/": [
       "FAQPage",
@@ -159,9 +298,9 @@
     ]
   },
   "recount": {
-    "pages": 38,
-    "toolPages": 25,
-    "tools": 9
+    "pages": 68,
+    "toolPages": 50,
+    "tools": 22
   },
   "orphans": [],
   "depth": {
@@ -173,30 +312,60 @@
     "/merge-pdf/": 1,
     "/ocr-pdf/": 1,
     "/size-checker/": 1,
+    "/es/que-significa-gratis-aqui/": 1,
+    "/pt-br/o-que-significa-gratis/": 1,
+    "/heic-to-jpg/": 1,
+    "/compress-pdf-to-50kb/": 1,
+    "/batch-remove-background/": 1,
     "/remove-background-full-resolution/": 1,
     "/compress-pdf-to-200kb/": 1,
+    "/compress-pdf-to-100kb/": 1,
+    "/compress-pdf-to-500kb/": 1,
+    "/compress-pdf-to-1mb/": 1,
+    "/compress-pdf-strong/": 1,
+    "/interleave-pdf/": 1,
     "/split-pdf/": 1,
+    "/organize-pdf/": 1,
+    "/sign-pdf/": 1,
+    "/flatten-pdf/": 1,
+    "/protect-pdf/": 1,
+    "/unlock-pdf/": 1,
+    "/rotate-pdf/": 1,
+    "/pdf-page-numbers/": 1,
+    "/watermark-pdf/": 1,
+    "/extract-images-pdf/": 1,
+    "/pdf-metadata/": 1,
+    "/jpg-to-pdf/": 1,
+    "/pdf-to-jpg/": 1,
+    "/batch-compress-pdf/": 1,
+    "/batch-merge-pdf/": 1,
+    "/batch-split-pdf/": 1,
+    "/workflows/": 1,
+    "/presets/": 1,
     "/compress-image-to-50kb/": 1,
-    "/check-it-yourself/": 1,
+    "/batch-compress-images/": 1,
+    "/batch-convert-images/": 1,
+    "/ocr-image/": 1,
+    "/resize-image/": 1,
+    "/batch-resize-images/": 1,
+    "/png-to-jpg/": 1,
+    "/jpg-to-png/": 1,
+    "/webp-to-jpg/": 1,
+    "/jpg-to-webp/": 1,
+    "/png-to-webp/": 1,
+    "/webp-to-png/": 1,
     "/what-free-means/": 1,
+    "/check-it-yourself/": 1,
+    "/privacy/": 1,
     "/credits/": 1,
     "/background-removal/": 2,
-    "/batch-remove-background/": 2,
     "/es/quitar-fondo-de-imagen-gratis/": 2,
     "/pt-br/remover-fundo-de-imagem-gratis/": 2,
     "/pdf-tools/": 2,
-    "/compress-pdf-strong/": 2,
-    "/interleave-pdf/": 2,
-    "/sign-pdf/": 2,
-    "/flatten-pdf/": 2,
-    "/workflows/": 2,
-    "/batch-compress-pdf/": 2,
-    "/batch-merge-pdf/": 2,
-    "/batch-split-pdf/": 2,
-    "/presets/": 2,
     "/image-tools/": 2,
-    "/batch-compress-images/": 2,
-    "/batch-convert-images/": 2,
+    "/remove-background/quality/": 2,
+    "/es/compruebalo-tu-mismo/": 2,
+    "/pt-br/confira-voce-mesmo/": 2,
     "/es/quitar-fondo-resolucion-completa/": 2,
     "/pt-br/alternativa-gratis-ao-remove-bg/": 2,
     "/vs-remove-bg/": 2,

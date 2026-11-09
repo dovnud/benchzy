@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import BgTicket from '../components/BgTicket.astro';
+import StepsStrip from '../components/StepsStrip.astro';
 import LangLinks from '../components/LangLinks.astro';
 
 const alternates = [
@@ -30,11 +31,11 @@ const faq = [
   },
   {
     q: 'Is there a catch with the first run?',
-    a: 'The first run downloads the removal program, 44.3 MB, in 11 pieces that your browser checks one by one. That is printed here, not hidden. After that the program is saved on your device and later visits start at once.',
+    a: 'The first run downloads the removal program, 44.3 MB, in 11 pieces that your browser checks one by one. That is printed here, not hidden. After that the program is saved on your device and later visits start at once. The 44.3 MB counts against mobile data on a phone, so the first run is better on Wi-Fi; on a slow connection the load can take a minute or more, and it can be cancelled while it runs: pieces already downloaded are kept, and the next run carries on from there.',
   },
   {
     q: 'How long does a cutout take?',
-    a: 'In our tests on a desktop computer, about 13 seconds a photo once the program is running. We have not measured phones, so this page makes no phone promise.',
+    a: 'In warm runs on our desktop-class test computer, 9.7 to 10.6 seconds a photo once the program is downloaded; the first photo of a session runs slower. We have not measured phones, so this page makes no phone promise.',
   },
 ];
 const faqJson = JSON.stringify({
@@ -60,7 +61,7 @@ const howToJson = JSON.stringify({
 <Base title="Free background remover, full resolution · Benchzy" description="Remove a photo background at full resolution, free, in your browser. The size you upload is the size you download. No credits, no account, no smaller free tier." alternates={alternates}>
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · background removal, full resolution</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Background removal · full resolution</p>
       <h1 class="font-display text-4xl font-black mt-2">Free background remover, full resolution</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         Full size is the only size here. The cutout is produced at the same pixel dimensions as
@@ -69,6 +70,8 @@ const howToJson = JSON.stringify({
       </p>
       <LangLinks label="This page in:" links={langLinks} />
     </section>
+
+    <StepsStrip who="For print, large displays, or any job where a small cutout would show: the cutout at your photo's own full size." steps={[{ n: '01', t: 'Pick a photo' }, { n: '02', t: 'Remove the background' }, { n: '03', t: 'Download the full-size cutout' }]} />
 
     <BgTicket locale="en" full />
 

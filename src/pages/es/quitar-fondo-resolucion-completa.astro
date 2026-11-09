@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import BgTicket from '../../components/BgTicket.astro';
+import StepsStrip from '../../components/StepsStrip.astro';
 import LangLinks from '../../components/LangLinks.astro';
 
 // Spanish strings drafted in-house 2026-11-08. PENDING HUMAN REVIEW
@@ -24,7 +25,7 @@ const faq = [
   },
   {
     q: '¿En qué se diferencia de remove.bg?',
-    a: 'En nuestra prueba en directo del 7 de noviembre de 2026, remove.bg gratis devolvió 577 por 433 píxeles de una foto de 1200 por 900, alrededor de una cuarta parte de los píxeles, y el tamaño completo allí cuesta un crédito por foto. Ese servicio, además, cierra el 1 de diciembre de 2026. Aquí el tamaño completo es el único tamaño, y es gratis.',
+    a: 'En nuestra prueba en vivo del 7 de noviembre de 2026, remove.bg gratis devolvió 577 por 433 píxeles de una foto de 1200 por 900, alrededor de una cuarta parte de los píxeles, y el tamaño completo allí cuesta un crédito por foto. Ese servicio, además, cierra el 1 de diciembre de 2026. Aquí el tamaño completo es el único tamaño, y es gratis.',
   },
   {
     q: '¿Puedo usar el recorte para mi tienda o mi negocio?',
@@ -32,11 +33,11 @@ const faq = [
   },
   {
     q: '¿Hay alguna trampa la primera vez?',
-    a: 'La primera vez se descarga el programa de recorte, 44,3 MB, en 11 piezas que tu navegador verifica una a una. Está escrito aquí, no escondido. Después el programa queda guardado en tu dispositivo y las visitas siguientes empiezan al instante.',
+    a: 'La primera vez se descarga el programa de recorte, 44,3 MB, en 11 piezas que tu navegador verifica una a una. Está escrito aquí, no escondido. Después el programa queda guardado en tu dispositivo y las visitas siguientes empiezan al instante. Esos 44,3 MB cuentan contra tus datos móviles en un teléfono, así que la primera vez es mejor con Wi-Fi; con una conexión lenta, la carga puede tardar un minuto o más. La carga se puede cancelar cuando quieras: las piezas que ya llegaron se quedan guardadas.',
   },
   {
     q: '¿Cuánto tarda un recorte?',
-    a: 'En nuestras pruebas en un ordenador de sobremesa, unos 13 segundos por foto una vez que el programa está funcionando. No hemos medido los teléfonos, así que esta página no promete ningún tiempo de teléfono.',
+    a: 'En pasadas en caliente en nuestra computadora de pruebas, de clase escritorio, entre 9,7 y 10,6 segundos por foto una vez descargado el programa; la primera foto de una sesión tarda más. No hemos medido los teléfonos, así que esta página no promete ningún tiempo de teléfono.',
   },
 ];
 const faqJson = JSON.stringify({
@@ -53,9 +54,9 @@ const howToJson = JSON.stringify({
   name: "Cómo quitar el fondo a resolución completa",
   inLanguage: 'es',
   step: [
-    { '@type': 'HowToStep', position: 1, name: "Elige una foto", text: "Suelta una foto en la bandeja, o haz clic para elegir una. Tu foto nunca se sube a ningún servidor." },
-    { '@type': 'HowToStep', position: 2, name: "Quita el fondo", text: "Pulsa «Quitar el fondo». La primera vez se descarga el programa de recorte, 44,3 MB, en 11 piezas verificadas por tu navegador." },
-    { '@type': 'HowToStep', position: 3, name: "El tamaño completo es el único tamaño", text: "El recorte sale con las mismas dimensiones en píxeles que tu foto, porque el trabajo se hace en tu navegador y a este sitio no le cuesta nada por foto. No hay créditos, ni cuenta, ni un nivel de pago que esconda el resultado verdadero." },
+    { '@type': 'HowToStep', position: 1, name: "Elige una foto", text: "Suelta una foto aquí, o haz clic para elegir una. Tu foto nunca se sube a ningún servidor." },
+    { '@type': 'HowToStep', position: 2, name: "Quita el fondo", text: "Presiona «Quitar el fondo». La primera vez se descarga el programa de recorte, 44,3 MB, en 11 piezas verificadas por tu navegador." },
+    { '@type': 'HowToStep', position: 3, name: "El tamaño completo es el único tamaño", text: "El recorte sale con las mismas dimensiones en píxeles que tu foto, porque el trabajo se hace en tu navegador y a este sitio no le cuesta nada por foto. No hay créditos, ni cuenta, ni un plan pago que esconda el resultado a tamaño completo." },
     { '@type': 'HowToStep', position: 4, name: "Descarga el recorte a tamaño completo (PNG)", text: "Arrastra sobre la imagen para comparar el antes y el después, y llévate el recorte a tamaño completo." },
   ],
 });
@@ -64,16 +65,18 @@ const howToJson = JSON.stringify({
 <Base lang="es" title="Quitar fondo gratis a resolución completa · Benchzy" description="Quita el fondo de una foto a resolución completa, gratis, en tu navegador. El tamaño que subes es el tamaño que descargas. Sin créditos, sin cuenta, sin un tamaño gratis reducido." alternates={alternates}>
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Orden de trabajo · quitar el fondo, resolución completa</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Quitar el fondo · resolución completa</p>
       <h1 class="font-display text-4xl font-black mt-2">Quitar el fondo gratis, a resolución completa</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         El tamaño completo es el único tamaño aquí. El recorte sale con las mismas dimensiones en
         píxeles que tu foto, porque el trabajo se hace en tu navegador y a este sitio no le cuesta
-        nada por foto. No hay créditos, ni cuenta, ni un nivel de pago que esconda el resultado
-        verdadero.
+        nada por foto. No hay créditos, ni cuenta, ni un plan pago que esconda el resultado a tamaño
+        completo.
       </p>
       <LangLinks label="Esta página en:" links={langLinks} />
     </section>
+
+    <StepsStrip who="Para imprimir, pantallas grandes o cualquier trabajo donde un recorte pequeño se notaría: el recorte al tamaño completo de tu foto." steps={[{ n: '01', t: 'Elige una foto' }, { n: '02', t: 'Quita el fondo' }, { n: '03', t: 'Descarga el recorte a tamaño completo' }]} />
 
     <BgTicket locale="es" full />
 
@@ -82,18 +85,18 @@ const howToJson = JSON.stringify({
         <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Por qué el tamaño completo puede ser gratis</h2>
         <p class="mt-3 leading-relaxed text-ink-soft">
           Los sitios que recortan fotos en sus propios servidores pagan por cada foto, así que
-          racionan el resultado verdadero: una vista previa pequeña gratis y el tamaño completo a
+          racionan el resultado a tamaño completo: una vista previa pequeña gratis y el tamaño completo a
           cambio de un pago. Esta página ejecuta el mismo tipo de programa dentro de tu navegador.
           Tu dispositivo hace el trabajo, la foto nunca sale de él, y un recorte no le cuesta nada
           a este sitio, así que no hay nada que racionar ni ningún tamaño que retener. La versión
           sencilla de ese trato está en la página
-          <a class="underline underline-offset-4" href="/what-free-means/">qué significa gratis aquí</a> (en inglés).
+          <a class="underline underline-offset-4" href="/es/que-significa-gratis-aqui/">qué significa gratis aquí</a>.
         </p>
       </div>
       <div>
         <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Límites honestos</h2>
         <p class="mt-3 leading-relaxed text-ink-soft">
-          El pelo, el cristal y los bordes transparentes salen bien, pero no perfectos. Las fotos
+          El pelo, el vidrio y los bordes transparentes salen bien, pero no perfectos. Las fotos
           muy grandes pueden quedarse sin memoria en teléfonos pequeños. La primera descarga es de
           44,3 MB y está escrita en esta página en vez de aparecer como sorpresa en el botón de
           descarga. Nuestros datos medidos sobre la alternativa famosa, con fechas, están en la

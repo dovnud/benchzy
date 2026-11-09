@@ -162,9 +162,16 @@ runBtn.addEventListener('click', async () => {
       }
       recordJob({ tool: 'Split PDF by size', name: file.name, detail: built.length + ' parts under ' + limitKB + ' KB' });
     } else {
+      // Every page as its own PDF, delivered as ONE ZIP (milestone 8,
+      // round-1 fix 7): one download for the whole cut, not one click
+      // per page. The per-page rows below stay, so a visitor who wants
+      // a single page on its own can still take just that one.
       setStatus('Cutting every page into its own file…');
+      const zipEntries = [];
       for (let i = 0; i < pageCount; i++) {
         const bytes = await extract([i]);
+        const name = base + '-page-' + (i + 1) + '.pdf';
+        zipEntries.push({ name, data: bytes });
         const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
         const row = document.createElement('div');
         row.className = 'spec-row items-center';
@@ -173,12 +180,20 @@ runBtn.addEventListener('click', async () => {
         const link = document.createElement('a');
         link.className = 'chip no-underline';
         link.href = url;
-        link.download = base + '-page-' + (i + 1) + '.pdf';
+        link.download = name;
         link.textContent = 'Download (' + fmtBytes(bytes.length) + ')';
         row.append(left, link);
         linksEl.appendChild(row);
       }
-      recordJob({ tool: 'Split PDF', name: file.name, detail: pageCount + ' single pages' });
+      const { blob, name } = await makeZip(zipEntries, base + '-pages.zip');
+      const z = document.createElement('a');
+      z.className = 'btn-primary inline-block no-underline mt-2';
+      z.href = URL.createObjectURL(blob);
+      z.download = name;
+      z.textContent = 'Download all ' + pageCount + ' pages as one ZIP (' + fmtBytes(blob.size) + ')';
+      z.id = 'sp-zip';
+      linksEl.prepend(z);
+      recordJob({ tool: 'Split PDF', name: file.name, detail: pageCount + ' single pages, one ZIP' });
     }
     result.classList.remove('hidden');
     const stamp = $('sp-stamp');

@@ -1,0 +1,143 @@
+---
+import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
+
+const faq = [
+  {
+    q: 'Why a whole page for 1 MB?',
+    a: 'Because 1 MB is the oldest attachment limit still standing: plenty of inboxes, contact forms and content systems cap an upload there. This page is the Compress PDF tool with the target already set to 1 MB, so the job is two clicks: pick the file, run.',
+  },
+  {
+    q: 'Will it always reach 1 MB?',
+    a: 'No, and the page will not pretend. Most photo-heavy documents land well above the tight doors and reach this one comfortably; a PDF whose bulk is not photos, or one that starts only slightly over, may not have enough to give up. When the target cannot be reached, the result line states the smallest size it could reach before you download.',
+  },
+  {
+    q: 'What gives when a PDF shrinks to 1 MB?',
+    a: 'The photos inside are recompressed smaller and softer, and at this generous target usually only a little softer. Text and drawings stay exactly as they were. The result line prints the size and quality setting used, so you can judge the trade.',
+  },
+  {
+    q: 'Where does my PDF go?',
+    a: 'Nowhere. It is read into this page and processed in your browser. Watch the network panel while it works if you want to check.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+// HowTo: the steps are this page's own workflow, transcribed from its
+// intro, ticket labels and "How it works" text.
+const howToJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: "How to compress a PDF to 1 MB",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Pick the file", text: "Drop a PDF on the tray, or click to pick one. This page is set to the 1 MB target before you start, and the file is never uploaded." },
+    { '@type': 'HowToStep', position: 2, name: "Run the job", text: "Press 'Compress to 1 MB'. The photos inside are recompressed smaller and softer; text and drawings stay exactly as they were." },
+    { '@type': 'HowToStep', position: 3, name: "Download the PDF", text: "Take away a PDF that fits the door, with the exact final size printed on the result. If the target cannot be reached, the result line states the smallest size it could reach before you download." },
+  ],
+});
+---
+
+<Base title="Compress a PDF to 1 MB, free, in your browser · Benchzy" description="Shrink a PDF under the 1 MB limit email and upload forms set, with the work done inside your browser. No upload, no account. The exact final size is shown before you download.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">PDF tools · preset 1 MB</p>
+      <h1 class="font-display text-4xl font-black mt-2">Compress PDF to 1 MB</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        The limit said: PDF, under 1 MB. This page is set to that target before you start.
+        Pick the file, run the job, and take away a PDF that fits the door, with the exact final
+        size printed on the result. Everything runs in your browser; the file is never uploaded.
+        A different target lives on the <a class="underline underline-offset-4 hover:text-accent-deep" href="/compress-pdf/">Compress PDF page</a>.
+      </p>
+    </section>
+
+    <StepsStrip who="For email inboxes, contact forms and content systems with a 1 MB upload limit, the oldest attachment door still standing." steps={[{ n: '01', t: 'Pick the file' }, { n: '02', t: 'Run the job' }, { n: '03', t: 'Download the PDF' }]} />
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="cp-tool" data-preset-kb="1024" data-lock-target="1">
+      <div id="cp-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
+        <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">PDF · it stays on this device</p>
+        <input id="cp-file" type="file" accept="application/pdf,.pdf" class="hidden" />
+      </div>
+      <p class="file-loaded hidden" data-loaded-for="cp-file" role="status"></p>
+      <p class="font-mono text-xs text-accent-deep mt-3">Before you pick: this file may not reach 1 MB. If it cannot, the result line states the smallest size it could reach, before you download anything.</p>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">Target size</h2>
+          <p class="font-display text-3xl font-black mt-3">1 MB</p>
+          <p class="text-ink-soft text-sm leading-relaxed mt-3 max-w-md">
+            Fixed by this page, the attachment preset. The page probes the photos inside your
+            PDF, picks a starting setting from the probe, and steps down only as far as it must,
+            so at this generous target the photos usually keep most of their quality.
+          </p>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="cp-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <p class="action-note">
+            This file may not reach 1 MB. Before you run it: a scanned page is a picture, so squeezed scans come out softer
+            to read. And a PDF whose pictures are not JPEGs may barely shrink at all. Both are
+            properties of the file, not a fault in the run.
+          </p>
+          <button id="cp-run" class="btn-primary w-full mt-5" type="button" disabled>Compress to 1 MB</button>
+          <p id="cp-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a PDF to begin.</p>
+        </div>
+      </div>
+
+      <div id="cp-result" class="receipt hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Result</h2>
+          <span class="stamp" id="cp-stamp">Done on your device</span>
+        </div>
+        <p id="cp-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
+        <a id="cp-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the PDF</a>
+        <p class="mt-3 text-sm leading-relaxed text-ink-soft max-w-2xl">Still too big, or too soft to use? Two doors from here: <a class="underline underline-offset-4" href="/compress-pdf-strong/">Compress PDF, strong</a> walks the deep end of the same ladder for the smallest honest result this file can give, and <a class="underline underline-offset-4" href="/split-pdf/">Split PDF</a> can cut the file into parts under a size you set.</p>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Most of a photo-heavy PDF is the photos inside it. This page reads those photos,
+          recompresses them at a smaller size and quality chosen from a quick probe of your file,
+          rebuilds the PDF, and checks the result against 1 MB. The page steps down only as far
+          as it must, so a document that fits at a gentle setting keeps it.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          We shrink PDFs by recompressing the images inside them and tidying the file. A PDF that
+          is already tightly compressed may not get much smaller. We always show you the before and
+          after size, and if we could not make it smaller, we say so and give you back your original.
+          Photos stored in formats other than JPEG are left as they are in this version, and the
+          result line tells you when that happened.
+        </p>
+        <p class="mt-3 leading-relaxed text-ink-soft">A password-protected PDF cannot be opened by this tool. Take its password off first with the <a class="underline underline-offset-4" href="/unlock-pdf/">unlock tool</a>, then bring the file back.</p>
+        <p class="mt-3 leading-relaxed text-ink-soft">When this door cannot reach your target, the onward doors are the <a class="underline underline-offset-4" href="/compress-pdf-strong/">strong compress door</a>, which walks the deep end of the ladder for the smallest honest result, and <a class="underline underline-offset-4" href="/split-pdf/">Split PDF</a>, which cuts the file into parts under a size you set.</p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script type="application/ld+json" set:html={howToJson}></script>
+  <script>
+    import '../scripts/compress-pdf.js';
+  </script>
+</Base>

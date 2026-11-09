@@ -1,10 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
+import LogoMark from '../components/LogoMark.astro';
 
 const doors = [
   { name: 'Remove background', href: '/remove-background/', note: 'The tool itself. Pick a photo, the page cuts out the subject at full size, in your browser.' },
-  { name: 'Batch remove background', href: '/batch-remove-background/', note: 'The same bench on a whole folder: one model download for the batch, every photo cut out at full size, one ZIP of transparent PNGs out.' },
-  { name: 'Free background remover, full resolution', href: '/remove-background-full-resolution/', note: 'The same bench, with the full-size promise in plain words: the size you upload is the size you download.' },
+  { name: 'Batch remove background', href: '/batch-remove-background/', note: 'The same tool on a whole folder: one model download for the batch, every photo cut out at full size, one ZIP of transparent PNGs out.' },
+  { name: 'Free background remover, full resolution', href: '/remove-background-full-resolution/', note: 'The same tool, with the full-size promise in plain words: the size you upload is the size you download.' },
   { name: 'Benchzy vs remove.bg', href: '/vs-remove-bg/', note: 'A facts-only comparison, dated and sourced: free sizes, credits, accounts, commercial use, and what happens on 1 December 2026.' },
   { name: 'remove.bg alternatives', href: '/remove-bg-alternatives/', note: 'The honest guide to the choices after the shutdown, including the official one inside Canva, with each wall marked from its own terms.' },
   { name: 'What happens to remove.bg on 1 December', href: '/remove-bg-december-1/', note: 'What closes, what happens to unused credits, where the API goes, and what to do before the date.' },
@@ -15,7 +16,8 @@ const doors = [
 <Base title="Background removal, free and full size · Benchzy" description="The background-removal workshop: a free full-size remover that runs in your browser, an honest comparison with remove.bg, alternatives, and the 1 December shutdown explainer.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Workshop · background removal</p>
+      <LogoMark size={56} />
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep mt-4">Workshop · background removal</p>
       <h1 class="font-display text-4xl font-black mt-2">Background removal</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         One job, done properly: the subject cut out at full size, free, with the work done inside
@@ -25,35 +27,35 @@ const doors = [
       </p>
     </section>
 
-    <section class="mt-6 grid gap-4">
+    <section class="ledger mt-6">
       {doors.map((d) => (
-        <article class="ticket-soft p-5 flex flex-wrap items-baseline gap-3">
-          <h2 class="font-display text-xl font-bold">{d.name}</h2>
-          <p class="w-full text-ink-soft leading-relaxed">{d.note}</p>
-          <a class="btn-primary no-underline mt-1" href={d.href}>Open</a>
-        </article>
+        <a class="job-row" href={d.href}>
+          <h2 class="job-name job-name-lg">{d.name}</h2>
+          <span class="job-meta"><span class="status-live">Ready</span><span class="open">Open →</span></span>
+          <span class="job-note">{d.note}</span>
+        </a>
       ))}
     </section>
 
     <section class="mt-10">
-      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">The same bench, in Spanish and Portuguese</h2>
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">The same tool, in Spanish and Portuguese</h2>
       <p class="mt-3 leading-relaxed text-ink-soft max-w-2xl">
         The tool and its full-size promise also run in the languages remove.bg's readers are
         searching in. The strings were drafted in-house and are marked in the project notes as
         pending review by a native reader before any public launch.
       </p>
-      <div class="mt-4 grid gap-4">
-        <article class="ticket-soft p-5 flex flex-wrap items-baseline gap-3">
+      <div class="ledger mt-4">
+        <article class="ledger-row flex flex-wrap items-baseline gap-3">
           <h3 class="font-display text-xl font-bold">Quitar fondo de imagen gratis</h3>
           <p class="w-full text-ink-soft leading-relaxed">La herramienta en español, a tamaño completo, sin subir la foto.</p>
-          <a class="btn-primary no-underline mt-1" href="/es/quitar-fondo-de-imagen-gratis/">Abrir</a>
-          <a class="btn-primary no-underline mt-1" href="/es/quitar-fondo-resolucion-completa/">A resolución completa</a>
+          <a class="open-link mt-1" href="/es/quitar-fondo-de-imagen-gratis/">Abrir</a>
+          <a class="open-link mt-1" href="/es/quitar-fondo-resolucion-completa/">A resolución completa</a>
         </article>
-        <article class="ticket-soft p-5 flex flex-wrap items-baseline gap-3">
+        <article class="ledger-row flex flex-wrap items-baseline gap-3">
           <h3 class="font-display text-xl font-bold">Remover fundo de imagem grátis</h3>
           <p class="w-full text-ink-soft leading-relaxed">A ferramenta em português, em tamanho real, sem enviar a foto, e a página de alternativa grátis ao remove.bg.</p>
-          <a class="btn-primary no-underline mt-1" href="/pt-br/remover-fundo-de-imagem-gratis/">Abrir</a>
-          <a class="btn-primary no-underline mt-1" href="/pt-br/alternativa-gratis-ao-remove-bg/">Alternativa ao remove.bg</a>
+          <a class="open-link mt-1" href="/pt-br/remover-fundo-de-imagem-gratis/">Abrir</a>
+          <a class="open-link mt-1" href="/pt-br/alternativa-gratis-ao-remove-bg/">Alternativa ao remove.bg</a>
         </article>
       </div>
     </section>
@@ -73,8 +75,11 @@ const doors = [
         <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">What we do not claim</h2>
         <p class="mt-3 leading-relaxed text-ink-soft">
           We do not claim the best cutouts or the fastest ones. We have not run a head-to-head
-          quality test against remove.bg on real photos, and our phone speed is unmeasured, so
-          neither appears as a promise anywhere on this site. What is claimed is checkable: full
+          quality test against remove.bg, and our phone speed is unmeasured, so
+          neither appears as a promise anywhere on this site. Our own hard-photo results,
+          including the cases where the remover visibly struggles, are shown on
+          <a class="underline underline-offset-4" href="/remove-background/quality/">the quality proof page</a>.
+          What is claimed is checkable: full
           size, free, no account, no counter, and a photo that never leaves your device, which
           you can <a class="underline underline-offset-4" href="/check-it-yourself/">check yourself</a>.
         </p>

@@ -1,0 +1,133 @@
+---
+import Base from '../../layouts/Base.astro';
+import LangLinks from '../../components/LangLinks.astro';
+
+// Portuguese (BR) translation drafted in-house 2026-11-08 (milestone
+// 8). PENDING HUMAN REVIEW before promotion (see TRANSLATIONS.md).
+// The score below is computed with the same build-time count as the
+// English page, from the page sources themselves.
+const alternates = [
+  { hreflang: 'en', href: '/what-free-means/' },
+  { hreflang: 'es', href: '/es/que-significa-gratis-aqui/' },
+  { hreflang: 'pt-BR', href: '/pt-br/o-que-significa-gratis/' },
+  { hreflang: 'x-default', href: '/what-free-means/' },
+];
+const langLinks = [
+  { label: 'English', href: '/what-free-means/' },
+  { label: 'Español', href: '/es/que-significa-gratis-aqui/' },
+  { label: 'Português (Brasil)', href: '/pt-br/o-que-significa-gratis/', current: true },
+];
+
+const pageSources = import.meta.glob('../**/*.astro', { query: '?raw', eager: true, import: 'default' });
+const TOOL_ENGINES = ['remove-bg', 'compress-pdf', 'compress-image', 'merge-pdf', 'split-pdf', 'ocr-pdf', 'ocr-image', 'size-checker', 'sign-pdf', 'flatten-pdf', 'protect-pdf', 'unlock-pdf', 'resize-image', 'rotate-pdf', 'pdf-page-numbers', 'watermark-pdf', 'extract-images-pdf', 'organize-pdf', 'pdf-metadata', 'jpg-to-pdf', 'pdf-to-jpg', 'heic-to-jpg'];
+const PAGE_SCRIPTS = ['batch-pdf', 'batch-image', 'batch-remove-bg', 'workflows', 'interleave-pdf', 'convert-image'];
+const enginesUsed = new Set();
+let toolPages = 0;
+for (const src of Object.values(pageSources)) {
+  const found = TOOL_ENGINES.filter((e) => src.includes(`scripts/${e}.js`));
+  const runner = PAGE_SCRIPTS.some((e) => src.includes(`scripts/${e}.js`));
+  if (found.length || runner) {
+    toolPages++;
+    found.forEach((e) => enginesUsed.add(e));
+  }
+}
+const pageCount = Object.keys(pageSources).length + 1;
+const toolCount = enginesUsed.size;
+
+const nevers = [
+  ['Sem contas', 'As ferramentas não precisam de conta, cadastro nem cartão. Não há nada para cancelar porque não há nada para assinar.'],
+  ['Sem contadores diários', 'Não há contador em nenhuma ferramenta. Nada conta os seus trabalhos, então nada pode acabar. Faça um trabalho duas vezes, ou duzentas; a página não marca pontos. As visitas às páginas são contadas, com o Google Analytics, nomeado na página de privacidade, para sabermos quais ferramentas são usadas; os trabalhos não são contados, e nenhuma contagem pode acabar nem bloquear uma ferramenta.'],
+  ['Sem créditos, sem minutos, sem medidores', 'Nenhuma unidade de trabalho é vendida aqui. O preço de um trabalho é conhecido antes de você começar: grátis.'],
+  ['Sem marcas d’água', 'O seu resultado é seu. Nada nosso vai carimbado, impresso ou escondido nele.'],
+  ['Sem download retido por pagamento', 'O botão de download é o fim do trabalho, nunca o começo de uma cobrança. Em outros sites, o preço costuma aparecer exatamente nesse clique; aqui é só um download.'],
+  ['Sem botões falsos', 'Cada botão em uma página de ferramenta faz o que o seu texto diz. Nada aqui está disfarçado de download para agir como anúncio.'],
+  ['Sem tamanho grátis reduzido', 'O resultado é feito no tamanho do seu próprio arquivo. Não há um tamanho grátis pequeno nem um tamanho pago grande, porque não há planos.'],
+  ['Sem envios', 'Os seus arquivos são processados no seu navegador e nunca são enviados para nós: nunca chegam a um servidor. As páginas deste site vêm de um servidor, claro: quem as serve é uma hospedagem, Cloudflare Pages, nomeada na página de privacidade. O programa viaja até o seu navegador; o seu arquivo não viaja para lugar nenhum.'],
+];
+---
+
+<Base lang="pt-BR" title="O que significa grátis aqui · Benchzy" description="A lista dos nuncas, em palavras claras: sem contas, sem contadores diários, sem créditos, sem marcas d'água, sem download retido por pagamento. Por que pode ser verdade, e o único limite real, o seu aparelho." alternates={alternates}>
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Página permanente · o compromisso</p>
+      <h1 class="font-display text-4xl font-black mt-2">O que significa grátis aqui</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        "Grátis" é a palavra mais maltratada das ferramentas de arquivos. Quase sempre significa
+        uma ração: poucos trabalhos por dia, um resultado pequeno, um download que vira cobrança.
+        Esta página é o compromisso escrito do que a palavra significa na Benchzy, para que a
+        promessa possa ser conferida, e não apenas acreditada. É um compromisso público, por
+        escrito, aqui; se um dia mudasse, esta página teria que mudar primeiro, em público.
+      </p>
+      <LangLinks label="Esta página em:" links={langLinks} />
+    </section>
+
+    <section class="ledger mt-6">
+      {nevers.map(([title, body]) => (
+        <article class="ledger-row">
+          <h2 class="font-display text-xl font-bold">{title}</h2>
+          <p class="text-ink-soft leading-relaxed mt-1">{body}</p>
+        </article>
+      ))}
+    </section>
+
+    <section class="ticket mt-10 p-6">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">O objetivo, dito como promessa</p>
+      <h2 class="font-display text-2xl font-bold mt-2">Uma só oficina, cada trabalho</h2>
+      <p class="mt-3 leading-relaxed max-w-2xl">
+        Nossa promessa: cada trabalho com arquivos em um só lugar. A contagem abaixo é impressa
+        a partir das páginas que este site realmente publica; é o placar, e cresce ferramenta a
+        ferramenta.
+      </p>
+      <dl class="mt-5 max-w-md">
+        <div class="spec-row"><dt>ferramentas que funcionam</dt><dd>{toolCount}</dd></div>
+        <div class="spec-row"><dt>páginas de ferramentas</dt><dd>{toolPages}</dd></div>
+        <div class="spec-row"><dt>páginas no total</dt><dd>{pageCount}</dd></div>
+      </dl>
+      <p class="mt-4 font-mono text-xs text-ink-soft leading-relaxed max-w-2xl">
+        Contado pelo próprio sistema de publicação a partir do site, no dia em que esta página
+        foi gerada. Cada ferramenta que entra no ar move o placar. As ferramentas estão na
+        página <a class="underline underline-offset-4 hover:text-accent-deep" href="/tools/">todas as ferramentas</a> (em inglês).
+      </p>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Por que pode ser grátis</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Os sites grandes cobram porque cada trabalho roda nos computadores deles e custa
+          dinheiro, então o trabalho precisa ser racionado. As ferramentas da Benchzy rodam
+          dentro do seu navegador, no seu aparelho. Trabalhamos assim para proteger a sua
+          privacidade: o programa viaja até o seu navegador. O seu arquivo não viaja para lugar
+          nenhum. Um trabalho aqui não custa nada para este site, então não há nada para
+          racionar. O premium é grátis aqui porque o trabalho roda no seu computador, não no
+          nosso. O site será pago por anúncios nas páginas; nenhum anúncio roda ainda. Quando
+          eles chegarem, um anúncio poderá ver em que página você está, e nunca poderá ver o seu
+          arquivo, porque o seu arquivo nunca sai da memória da página.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">O único limite real</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          O limite é o seu aparelho, não nós. Não colocamos limite nos trabalhos nem na
+          quantidade de arquivos. O seu navegador e o seu aparelho colocam os limites reais:
+          arquivos muito grandes podem ficar sem memória, e um celular pequeno é mais lento que
+          um computador de mesa. Quando um trabalho não pode rodar no seu aparelho, a ferramenta
+          avisa em palavras claras antes de começar ou ao começar, e o seu arquivo fica intacto.
+          Há um segundo limite, também honesto: as páginas e os programas que você já usou ficam
+          salvos no seu navegador, então essas ferramentas podem abrir de novo sem conexão; uma
+          ferramenta que você nunca abriu ainda precisa de uma primeira visita com conexão.
+        </p>
+      </div>
+    </section>
+
+    <section class="ticket mt-10 p-6 mb-4">
+      <h2 class="font-display text-2xl font-bold">Não acredite só na nossa palavra</h2>
+      <p class="mt-3 leading-relaxed text-ink-soft max-w-2xl">
+        A promessa de não enviar arquivos pode ser observada ao vivo, enquanto um trabalho roda:
+        <a class="underline underline-offset-4" href="/pt-br/confira-voce-mesmo/">confira você mesmo</a>.
+        Os programas por trás de cada ferramenta, e as suas licenças, estão na
+        <a class="underline underline-offset-4" href="/credits/">página de créditos</a> (em inglês).
+      </p>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,158 @@
+---
+import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
+
+const faq = [
+  {
+    q: 'What kind of password is it?',
+    a: 'The strongest current kind: AES-256, revision 6, the same protection Acrobat writes. The finished file asks for the password before it opens, in any modern reader. Very old readers (from before this kind existed) may not be able to open it at all.',
+  },
+  {
+    q: 'I forgot the password. Can anyone get the file open again?',
+    a: 'No. Not here, not anywhere. That is not a missing feature; it is what a real password means. This page cannot help, no other tool can help, and any page that promises to open a password-locked file without the password is describing something else. Choose a password you will remember, and keep it somewhere safe.',
+  },
+  {
+    q: 'Where does my password go?',
+    a: 'Nowhere. It is typed into this page and used inside this page, in your browser, and it is gone when the page closes. Watch the network panel while it works if you want to check: like every job here, nothing is sent anywhere.',
+  },
+  {
+    q: 'Can I protect a file that already has a password?',
+    a: 'Not directly: this page says so when you pick one. Take the old password off first with the unlock tool, then protect the file again here with the new one.',
+  },
+  {
+    q: 'Does this also stop people printing or copying?',
+    a: 'The password stops the file opening at all without it, which covers everything inside. This tool sets one password for the whole file; it does not offer the separate print/copy permission switches some programs set. If the file opens, it can be read in full.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const howToJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: "How to protect a PDF with a password",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Pick the PDF", text: "Drop a PDF on the tray, or click to pick one. It stays on this device. The page reads its page count and checks whether it already has a password." },
+    { '@type': 'HowToStep', position: 2, name: "Type a password twice", text: "Type the password you want, twice, the same both times: 12 characters or more, because length is what protects you. There is no recovery if you forget it, and the password never leaves this page." },
+    { '@type': 'HowToStep', position: 3, name: "Protect the PDF", text: "Press 'Protect the PDF'. The file is locked with AES-256 in your browser, then checked: shut without the password, open with it." },
+    { '@type': 'HowToStep', position: 4, name: "Download the protected PDF", text: "Take the finished file away. Keep your unprotected original somewhere safe, and the password somewhere safer." },
+  ],
+});
+---
+
+<Base title="Protect PDF: put a password on a PDF, free · Benchzy" description="Put a real password on your own PDF, AES-256, inside your browser. The password is typed and used on this page only; it is never sent anywhere. No recovery exists, and the page says so before you run.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">PDF tools · passwords</p>
+      <h1 class="font-display text-4xl font-black mt-2">Protect PDF</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Put a password on a finished PDF before you send it: the file will ask for the
+        password before it opens, anywhere. The lock is the strongest current kind
+        (AES-256), the work runs in your browser, and the password itself never leaves
+        this page.
+      </p>
+    </section>
+
+    <StepsStrip who="For a finished PDF you are about to send somewhere it should not be readable by everyone who touches it." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Type a password twice' }, { n: '03', t: 'Protect and download' }]} />
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="pt-tool">
+      <div id="pt-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
+        <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">PDF · it stays on this device</p>
+        <input id="pt-file" type="file" accept="application/pdf,.pdf" class="hidden" />
+      </div>
+      <p class="file-loaded hidden" data-loaded-for="pt-file" role="status"></p>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">The password</h2>
+          <p class="text-ink-soft text-sm leading-relaxed mt-3 max-w-md">
+            The minimum is 12 characters, stated before you type: length is what protects
+            you, because every added character makes the password far harder to guess. A
+            short phrase you will remember beats a short clever string you will forget.
+          </p>
+          <label class="block mt-3 text-sm font-bold" for="pt-pw1">Type a password (12 characters or more)</label>
+          <input id="pt-pw1" type="password" class="mt-1 w-full border border-ink bg-ticket px-3 py-2" autocomplete="new-password" />
+          <label class="block mt-4 text-sm font-bold" for="pt-pw2">Type it again</label>
+          <input id="pt-pw2" type="password" class="mt-1 w-full border border-ink bg-ticket px-3 py-2" autocomplete="new-password" />
+          <label class="mt-3 flex items-center gap-2 text-sm text-ink-soft cursor-pointer">
+            <input id="pt-show" type="checkbox" /> Show the passwords while I type
+          </label>
+          <p class="action-note">
+            Read this before you run: choose a password you will remember, and keep it
+            somewhere safe. <strong>There is no recovery, by design.</strong> If you forget
+            it, the file stays shut, here and everywhere, and nobody can open it for you.
+            That is what a real password means. When you send the protected file, send the
+            password by a different channel than the file (a message, not the same email),
+            so the two never travel together.
+          </p>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="pt-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <dl class="mt-4">
+            <div class="spec-row"><dt>protection</dt><dd>AES-256, the strongest current kind</dd></div>
+            <div class="spec-row"><dt>password goes</dt><dd>nowhere: typed and used on this page only</dd></div>
+          </dl>
+          <button id="pt-run" class="btn-primary w-full mt-5" type="button" disabled>Protect the PDF</button>
+          <p id="pt-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a PDF to begin.</p>
+        </div>
+      </div>
+
+      <div id="pt-result" class="receipt hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Result</h2>
+          <span class="stamp" id="pt-stamp">Done on your device</span>
+        </div>
+        <p id="pt-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
+        <a id="pt-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the protected PDF</a>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The page opens your PDF, locks it with the password you typed using the PDF
+          engine's own standard protection (AES-256, revision 6), and then checks the
+          finished file the way a reader will meet it: it must refuse to open without
+          the password and open with it, with every page present. Only then is the
+          download offered. Your unprotected original is never changed.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          A password is only as strong as the password: a short or guessed one can be
+          tried against the file by someone patient, because the file itself is the
+          lock. That is why this page requires 12 characters or more, and a password not
+          used anywhere else is worth more than a clever one.
+          This tool sets one password for the whole file; it does not set the separate
+          print/copy permission switches, and a file that already has a password must
+          be unlocked first. Very old readers may not open AES-256 files at all.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script type="application/ld+json" set:html={howToJson}></script>
+  <script>
+    import '../scripts/protect-pdf.js';
+  </script>
+</Base>

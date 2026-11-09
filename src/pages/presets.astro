@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
 
 const presets = [
   {
@@ -26,10 +27,22 @@ const presets = [
     steps: 'Compress image to 200 KB',
     job: 'A product shoot at listing size: every photo worked to 200 KB in one run, ready for the shop that asked for them.',
   },
+  {
+    id: 'starter-seller-cutouts',
+    name: 'Seller cutouts',
+    steps: 'Remove the background → Compress image to 50 KB',
+    job: 'The marketplace listing: the product cut out of its photo at full size, then the cutout fitted to the shop\'s 50 KB door, see-through parts kept.',
+  },
+  {
+    id: 'starter-receipt-words',
+    name: 'Receipt words',
+    steps: 'Read the words (OCR)',
+    job: 'A photo of a receipt becomes its words, in a box you can check, fix, copy, or download as text. The chain ends in plain text; check amounts before you use them.',
+  },
 ];
 ---
 
-<Base title="Preset chains: ready-made workflows for the weekly jobs · Benchzy" description="One-click workflow chains for the jobs people repeat: the invoice pack, the portal pack, the paid pack, seller photos. Save one, run it on your files in the workflows bench.">
+<Base title="Preset chains: ready-made workflows for the weekly jobs · Benchzy" description="One-click workflow chains for the jobs people repeat: the invoice pack, the portal pack, the paid pack, seller photos. Save one, run it on your files in the workflows page.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
       <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Hub · the workbench · preset chains</p>
@@ -37,8 +50,8 @@ const presets = [
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         Ready-made <a class="underline underline-offset-4 hover:text-accent-deep" href="/workflows/">workflow chains</a> for the
         jobs that come back every week. Save one to this browser with a click, then run it on
-        the workflows bench whenever the job lands again. Building your own chain from single
-        steps is on the same bench.
+        the workflows page whenever the job lands again. Building your own chain from single
+        steps is on the same page.
       </p>
     </section>
 
@@ -53,6 +66,8 @@ const presets = [
         </article>
       ))}
     </section>
+
+    <StepsStrip who="For the common chains, ready-made: an invoice pack, a portal pack, a seller's photo set." steps={[{ n: '01', t: 'Pick a ready-made chain' }, { n: '02', t: 'Drop your files' }, { n: '03', t: 'Run the chain' }]} />
 
     <section class="ticket mt-12 p-6 mb-4">
       <h2 class="font-display text-2xl font-bold">Why chains live here</h2>

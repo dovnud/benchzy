@@ -6,7 +6,7 @@
 // measured). The mode is set by data-mode on #bp-tool; each batch door
 // page carries the same ticket furniture with its own settings.
 import { PDFDocument } from '@cantoo/pdf-lib';
-import { fmtBytes, recordJob, wireTrayMulti } from './workbench.js';
+import { fmtBytes, recordJob, wireTrayMulti, showLoadedBanner } from './workbench.js';
 import { compressPdfToTarget } from './lib/pdf-compress-core.js';
 import { makeZip } from './lib/zip.js';
 
@@ -108,6 +108,7 @@ if (folderInput) {
   folderInput.addEventListener('change', () => {
     const fs = [...folderInput.files].filter((f) => /\.pdf$/i.test(f.name) || f.type === 'application/pdf');
     if (fs.length) {
+      showLoadedBanner(folderInput, fs);
       result.classList.add('hidden');
       (async () => {
         for (const f of fs) {

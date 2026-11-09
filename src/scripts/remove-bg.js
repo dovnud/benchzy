@@ -11,6 +11,7 @@
 // A near-empty mask is reported honestly as "no clear subject found".
 import * as ort from 'onnxruntime-web/wasm';
 import { fmtBytes, recordJob, wireTray } from './workbench.js';
+import { bitmapFromPhotoFile } from './lib/bg-engine.js';
 import { BG_STRINGS } from '../locales/bg.js';
 
 // Every user-facing string comes from the locale file; the page picks its
@@ -36,8 +37,32 @@ async function sha256Hex(buf) {
 const $ = (id) => document.getElementById(id);
 const tray = $('bg-tray'), input = $('bg-file'), spec = $('bg-spec');
 const runBtn = $('bg-run'), status = $('bg-status'), result = $('bg-result');
+const cancelBtn = $('bg-cancel');
 const noSubject = $('bg-nosubject');
-let file = null, bitmap = null, session = null, modelBuf = null, running = false;
+let file = null, bitmap = null, previewUrl = null, session = null, modelBuf = null, running = false;
+// Cancel support (milestone 8, round-1 fix 2): the load is abortable,
+// and the pieces already fetched and checked are KEPT in this page, so
+// a later start resumes where the load stopped instead of starting
+// over. The cancelled status line says exactly that, in plain words.
+let modelParts = null; // per-piece verified buffers, or null per piece
+let loadAbort = null;
+
+function keptPieces() {
+  return modelParts ? modelParts.filter(Boolean).length : 0;
+}
+function cancelledError(total) {
+  const e = new Error('load cancelled');
+  e.cancelled = true;
+  e.kept = keptPieces();
+  e.total = total;
+  return e;
+}
+function showCancel(on) {
+  if (cancelBtn) cancelBtn.classList.toggle('hidden', !on);
+}
+if (cancelBtn) {
+  cancelBtn.addEventListener('click', () => { if (loadAbort) loadAbort.abort(); });
+}
 
 function setStatus(msg) { status.textContent = msg; }
 function setSpec(rows) {
@@ -50,13 +75,19 @@ wireTray(tray, input, async (f) => {
   runBtn.disabled = true;
   file = f;
   try {
-    bitmap = await createImageBitmap(f);
+    // HEIC photos are decoded by the shipped libheif reader first
+    // (milestone 18): createImageBitmap cannot read them in Chrome or
+    // Firefox, and the preview comes from the decoded picture for the
+    // same reason.
+    const got = await bitmapFromPhotoFile(f);
+    bitmap = got.bitmap;
+    previewUrl = got.previewUrl;
     const prev = $('bg-preview');
-    prev.src = URL.createObjectURL(f);
+    prev.src = previewUrl;
     prev.classList.remove('hidden');
     setSpec([
       [S.specFile, f.name],
-      [S.specFormat, f.type || S.formatUnknown],
+      [S.specFormat, got.format || f.type || S.formatUnknown],
       [S.specSize, num(fmtBytes(f.size))],
       [S.specDimensions, bitmap.width + ' x ' + bitmap.height],
       [S.specModel, S.modelValue],
@@ -76,22 +107,40 @@ async function loadModel() {
     if (!mres.ok) throw new Error(S.errList(mres.status));
     const manifest = await mres.json();
     const total = manifest.totalBytes || MODEL_BYTES;
-    modelBuf = new Uint8Array(total);
-    let off = 0, got = 0;
-    for (let i = 0; i < manifest.chunks.length; i++) {
-      const c = manifest.chunks[i];
-      setStatus(S.downloading(num((got / 1048576).toFixed(1)), num((total / 1048576).toFixed(1)), i + 1, manifest.chunks.length));
-      const res = await fetch('/models/' + c.file);
-      if (!res.ok) throw new Error(S.errPieceDownload(i + 1, res.status));
-      const buf = new Uint8Array(await res.arrayBuffer());
-      if (buf.length !== c.bytes) throw new Error(S.errPieceSize(i + 1));
-      if ((await sha256Hex(buf)) !== c.sha256) throw new Error(S.errPieceCheck(i + 1));
-      modelBuf.set(buf, off);
-      off += buf.length;
-      got += buf.length;
+    const n = manifest.chunks.length;
+    if (!modelParts || modelParts.length !== n) modelParts = new Array(n).fill(null);
+    let got = modelParts.reduce((a, p) => a + (p ? p.length : 0), 0);
+    loadAbort = new AbortController();
+    showCancel(true);
+    try {
+      for (let i = 0; i < n; i++) {
+        if (modelParts[i]) continue;
+        const c = manifest.chunks[i];
+        setStatus(S.downloading(num((got / 1048576).toFixed(1)), num((total / 1048576).toFixed(1)), i + 1, n));
+        let buf;
+        try {
+          const res = await fetch('/models/' + c.file, { signal: loadAbort.signal });
+          if (!res.ok) throw new Error(S.errPieceDownload(i + 1, res.status));
+          buf = new Uint8Array(await res.arrayBuffer());
+        } catch (err) {
+          if (loadAbort.signal.aborted) throw cancelledError(n);
+          throw err;
+        }
+        if (buf.length !== c.bytes) throw new Error(S.errPieceSize(i + 1));
+        if ((await sha256Hex(buf)) !== c.sha256) throw new Error(S.errPieceCheck(i + 1));
+        modelParts[i] = buf;
+        got += buf.length;
+      }
+    } finally {
+      showCancel(false);
+      loadAbort = null;
     }
+    modelBuf = new Uint8Array(total);
+    let off = 0;
+    for (const p of modelParts) { modelBuf.set(p, off); off += p.length; }
     if ((await sha256Hex(modelBuf)) !== manifest.sha256) {
       modelBuf = null;
+      modelParts = null;
       throw new Error(S.errFinalCheck);
     }
     setStatus(S.downloadedChecked);
@@ -190,9 +239,8 @@ runBtn.addEventListener('click', async () => {
     const blob = await new Promise((r) => full.toBlob(r, 'image/png'));
 
     const resultUrl = URL.createObjectURL(blob);
-    const beforeUrl = URL.createObjectURL(file);
     $('bg-after-img').src = resultUrl;
-    $('bg-before-img').src = beforeUrl;
+    $('bg-before-img').src = previewUrl || URL.createObjectURL(file);
     const dl = $('bg-download');
     dl.href = resultUrl;
     dl.download = file.name.replace(/\.[^.]+$/, '') + S.downloadSuffix;
@@ -206,7 +254,8 @@ runBtn.addEventListener('click', async () => {
     setStatus(S.done);
     recordJob({ tool: S.toolName, name: file.name, detail: S.detailPrefix + W + 'x' + H });
   } catch (err) {
-    setStatus(S.wentWrongPrefix + (err && err.message ? err.message : err));
+    if (err && err.cancelled) setStatus(S.cancelled(err.kept, err.total));
+    else setStatus(S.wentWrongPrefix + (err && err.message ? err.message : err));
   } finally {
     running = false;
     runBtn.disabled = false;

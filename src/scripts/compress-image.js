@@ -12,6 +12,7 @@ import pngDecode, { init as initPngDec } from '@jsquash/png/decode.js';
 import webpDecode, { init as initWebpDec } from '@jsquash/webp/decode.js';
 import resize, { initResize } from '@jsquash/resize';
 import { fmtBytes, recordJob, savePreset, getPreset, wireTray } from './workbench.js';
+import { isHeifFile, decodeHeicToImageData } from './lib/heif-core.js';
 
 const $ = (id) => document.getElementById(id);
 const tray = $('ci-tray'), input = $('ci-file'), spec = $('ci-spec');
@@ -39,7 +40,7 @@ function setSpec(rows) {
 
 async function initCodecs() {
   if (inited) return;
-  setStatus('Loading the image engine (about 2 MB, once)…');
+  setStatus('Loading the image program (about 2 MB, one time only). It runs in your browser; your file is never uploaded…');
   const compile = async (p) => {
     const res = await fetch(p);
     return WebAssembly.compile(await res.arrayBuffer());
@@ -53,6 +54,12 @@ async function initCodecs() {
 }
 
 async function decodeImage(f, buf) {
+  // HEIC/HEIF (iPhone photos): the libheif decoder (milestone 15).
+  if (isHeifFile(f, buf)) {
+    setStatus('Loading the HEIC reader (about 1.6 MB, one time only) and reading the photo…');
+    const r = await decodeHeicToImageData(buf);
+    return r.imageData;
+  }
   if (f.type === 'image/jpeg') return jpegDecode(buf);
   if (f.type === 'image/png') return pngDecode(buf);
   if (f.type === 'image/webp') return webpDecode(buf);

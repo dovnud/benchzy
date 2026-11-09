@@ -10,12 +10,12 @@ document.querySelectorAll('[data-preset]').forEach((btn) => {
   const note = document.querySelector('[data-preset-note="' + btn.dataset.preset + '"]');
   if (!starter) return;
   if (getChains().some((c) => c.id === starter.id) && note) {
-    note.textContent = 'Saved in this browser. Open the workflows bench to run it.';
+    note.textContent = 'Saved in this browser. Open the workflows page to run it.';
   }
   btn.addEventListener('click', () => {
     if (!getChains().some((c) => c.id === starter.id)) addChain(starter);
-    if (note) note.textContent = 'Saved in this browser. Now open the workflows bench, drop your files, and run it.';
-    btn.textContent = 'Saved. Open the workflows bench';
+    if (note) note.textContent = 'Saved in this browser. Now open the workflows page, drop your files, and run it.';
+    btn.textContent = 'Saved. Open the workflows page';
     btn.setAttribute('href', '/workflows/');
   });
 });

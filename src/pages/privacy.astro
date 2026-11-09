@@ -1,0 +1,151 @@
+---
+import Base from '../layouts/Base.astro';
+// Privacy page (milestone 8, round-1 user-test fix 1: the round-1
+// panel found no privacy page at all). Every statement below is true
+// of the site as built and shipped today: there is no account system
+// and no upload endpoint; the tool programs run in the visitor's
+// browser; and since milestone 19 the visits are counted with
+// Google Analytics, named and explained in its own section below
+// (the milestone-19 copy replaced this page's earlier "no analytics
+// script runs today" position in the same step that installed the
+// tag, so the page never claimed one thing while the site did
+// another). No advertising script runs. If any of that changes,
+// this page changes first, and it says so below.
+---
+
+<Base title="Privacy · Benchzy" description="What Benchzy keeps and what it does not: no accounts, no file uploads, visits counted with Google Analytics, no ad scripts. Your files are processed in your browser and never sent to us.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Privacy</p>
+      <h1 class="font-display text-4xl font-black mt-2">What this site keeps, in plain words</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Benchzy is built so that your files never reach us. Every tool on this site runs as a
+        program inside your browser, on your device. There is nothing to upload to, and no
+        account to sign up for, so the short version is: we never see your files, your name, or
+        your email address, because the site never asks for them and has no way to receive them.
+      </p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">What the server keeps</h2>
+      <div class="mt-4 space-y-3 leading-relaxed text-ink-soft max-w-3xl">
+        <p>
+          The host is named here, not hidden behind a phrase: this site is served by
+          Cloudflare Pages. The hosting service keeps routine request logs: which page or
+          program file was asked for, when, and the technical details a browser sends with
+          every request (such as its type and your network address). Those logs exist so the
+          site can be served and protected from abuse. They contain no files, because no file
+          is ever sent.
+        </p>
+        <p>
+          How long anything is kept: we keep no logs of our own, none at all. The host's
+          connection logs exist on the host's own schedule, which the host sets and can
+          change; this page will not invent a number of days for someone else's system.
+        </p>
+        <p>
+          There are no accounts on Benchzy, so there is no account data. No tool on this site
+          has an upload: pick a file in any tool and it is read by the page in your browser,
+          never transmitted. And no advertising script runs on these pages. One script does
+          count visits; it has its own section next, in the open.
+        </p>
+        <p>
+          Passwords, for the two tools that ask for one (protect a PDF, unlock a PDF):
+          passwords are used in the page only and are gone when the page closes. They are
+          never typed into anything that sends them anywhere, never stored, and never logged
+          by us.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Counting visits, in plain words</h2>
+      <div class="mt-4 space-y-3 leading-relaxed text-ink-soft max-w-3xl">
+        <p>
+          Visits to these pages are counted with Google Analytics, a visit counter run by
+          Google. It is how we learn which tools get used and which pages nobody finds, so we
+          know what to build and what to fix. This page names it rather than letting it ride
+          along quietly: the counter was switched on only when this section was written to
+          say so.
+        </p>
+        <p>
+          What the counter sees: that a page was opened, which page it was, roughly where in
+          the world the connection comes from, and what kind of device and browser asked.
+          That is the ordinary information a page opening carries, and Google keeps the
+          counts on its own systems, under its own rules.
+        </p>
+        <p>
+          What it never sees: your files. The counter fires when a page opens. It is not part
+          of any tool, it is never told a file's name, size or contents, and running a tool
+          sends it nothing at all. The
+          <a class="underline underline-offset-4" href="/check-it-yourself/">check-it-yourself page</a>
+          lists the counter's own line beside every other request the page makes, so you can
+          watch exactly that.
+        </p>
+        <p>
+          Counting is not something a tool needs, so you can block it and lose nothing: a
+          content blocker or your browser's tracking protection stops the counter like any
+          other, and Google publishes its own opt-out add-on (the Google Analytics opt-out
+          add-on) for the same job. Every tool on this site works exactly the same with the
+          counter blocked.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">What your browser stores on your device</h2>
+      <div class="mt-4 space-y-3 leading-relaxed text-ink-soft max-w-3xl">
+        <p>
+          The batch tools and the workflow builder keep a small workbench list in your
+          browser's local storage: the names and sizes of files you added, the presets you
+          saved, and the workflow steps you built. That list lives on your device only; it is
+          not sent anywhere, and it holds names and sizes, never the files themselves.
+        </p>
+        <p>
+          Your browser also keeps a cached copy of the tool programs themselves (for example
+          the 44.3 MB background-removal program), so repeat visits start without downloading
+          them again. That cache holds program files only.
+        </p>
+        <p>
+          To clear all of it: use your browser's "clear site data" or "clear browsing data"
+          option for benchzy.com. That removes the workbench list, your presets and workflows,
+          and the cached programs in one go. Saved result files you already downloaded are
+          ordinary files on your device and stay yours to keep or delete.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Ads, stated plainly</h2>
+      <div class="mt-4 space-y-3 leading-relaxed text-ink-soft max-w-3xl">
+        <p>
+          No ads are served on Benchzy yet. The plan is for the site to be paid for by ads on
+          the pages. When ads start, the advertising network will be named on this page before
+          the first ad runs, and this section will say what that network can see.
+        </p>
+        <p>
+          One thing will not change: an ad can never see your file. That is not a promise about
+          physics; it is how this site is built. Your file is processed by the tool program
+          inside your browser and is never sent to any server, ours or an advertiser's, so
+          there is no copy of it for an ad to see.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">What we do not protect you from</h2>
+      <ul class="mt-4 space-y-2 leading-relaxed text-ink-soft max-w-3xl list-disc pl-6">
+        <li>Your own device. If your computer or phone is compromised, or someone else uses it, anything on it, including files you processed here, is exposed to them.</li>
+        <li>Your browser extensions. Extensions you installed can read the pages you visit, including this one.</li>
+        <li>Your network seeing the visit itself. Your internet provider, employer, or Wi-Fi operator can see that you visited benchzy.com. They cannot see your files, because your files never travel.</li>
+        <li>What you do with a result afterwards. Once you download a finished file and share it, where it goes is up to you.</li>
+      </ul>
+      <p class="mt-4 leading-relaxed text-ink-soft max-w-3xl">
+        You can check the technical claims on this page yourself: the
+        <a class="underline underline-offset-4" href="/check-it-yourself/">check-it-yourself page</a>
+        watches a live run and lists every request the page makes, and
+        <a class="underline underline-offset-4" href="/what-free-means/">what free means here</a>
+        states the deal in full.
+      </p>
+    </section>
+  </div>
+</Base>

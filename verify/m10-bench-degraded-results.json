@@ -1,0 +1,22 @@
+{
+  "x1": {
+    "accuracy": 0.998,
+    "secs": 0.9,
+    "chars": 513
+  },
+  "x2": {
+    "accuracy": 0.9901,
+    "secs": 1,
+    "chars": 508
+  },
+  "x3": {
+    "accuracy": 0.9941,
+    "secs": 1.3,
+    "chars": 510
+  },
+  "x4": {
+    "accuracy": 0.9921,
+    "secs": 1.7,
+    "chars": 509
+  }
+}

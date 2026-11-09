@@ -1,0 +1,83 @@
+---
+// The ticket for the six single-file convert doors (milestone 11).
+// One markup, six pages: each page passes its direction and its own
+// "what changes" note, and imports src/scripts/convert-image.js
+// itself (the build counts tool pages from the page sources, so the
+// import must live in the page, not here). The alpha rule is rendered
+// here, before the run, on every door that ends in JPG: the colour
+// picker sits in the controls, not in the fine print.
+interface Props {
+  from: 'jpeg' | 'png' | 'webp';
+  to: 'jpeg' | 'png' | 'webp';
+  note: string;
+}
+const { from, to, note } = Astro.props;
+const NAMES = { jpeg: 'JPG', png: 'PNG', webp: 'WebP' };
+const ACCEPTS = { jpeg: 'image/jpeg,.jpg,.jpeg', png: 'image/png,.png', webp: 'image/webp,.webp' };
+const fromName = NAMES[from];
+const toName = NAMES[to];
+---
+
+<section class="ticket mt-6 p-5 sm:p-7" id="cv-tool" data-from={from} data-to={to}>
+  <div id="cv-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label={`Pick a ${fromName} file`}>
+    <p class="font-display text-xl font-bold">Drop a {fromName} on the tray, or click to pick one</p>
+    <p class="font-mono text-xs text-ink-soft mt-2">{fromName} in · {toName} out · it stays on this device</p>
+    <input id="cv-file" type="file" accept={ACCEPTS[from]} class="hidden" />
+  </div>
+  <p class="file-loaded hidden" data-loaded-for="cv-file" role="status"></p>
+
+  <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+    <div>
+      <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">What changes</h2>
+      <p class="text-ink-soft text-sm leading-relaxed mt-3 max-w-md">{note}</p>
+      {to === 'jpeg' && (
+        <div class="mt-5">
+          <h3 class="font-mono text-xs uppercase tracking-widest text-ink-soft">See-through parts become</h3>
+          <div class="flex items-center gap-2 mt-2 flex-wrap">
+            <span id="cv-bgs" class="flex gap-2">
+              <button type="button" class="chip" data-bg="#ffffff" aria-pressed="true">White</button>
+              <button type="button" class="chip" data-bg="#000000" aria-pressed="false">Black</button>
+            </span>
+            <input id="cv-bg" type="color" value="#ffffff" class="w-12 h-10 border border-ink bg-ticket cursor-pointer" aria-label="Pick the background colour" />
+          </div>
+          <p class="text-ink-soft text-sm leading-relaxed mt-2 max-w-md">
+            JPG cannot hold see-through pixels. If your {fromName} has transparent parts, they
+            are painted over this colour when it converts: white, unless you pick another.
+            The result line says when this happened.
+          </p>
+        </div>
+      )}
+      <img id="cv-preview" alt="The converted result" class="hidden w-full border border-line bg-paper-deep object-contain max-h-72 mt-5" />
+    </div>
+    <div>
+      {to !== 'png' && (
+        <div id="cv-quality-row">
+          <label class="font-mono text-xs uppercase tracking-widest text-ink-soft block" for="cv-quality">Quality ({toName})</label>
+          <input id="cv-quality" type="number" min="1" max="100" step="1" value="90" class="mt-1 border border-ink bg-ticket px-3 py-2 font-mono w-24" />
+          <p class="text-ink-soft text-sm mt-2">Higher keeps more detail and more bytes. 90 is a good all-round setting.</p>
+        </div>
+      )}
+      {to === 'png' && (
+        <p class="text-ink-soft text-sm leading-relaxed">
+          PNG is lossless, so there is no quality setting on this door: the decoded picture
+          is written exactly, pixel for pixel.
+        </p>
+      )}
+      <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft mt-5">File spec</h2>
+      <dl id="cv-spec" class="mt-2">
+        <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+      </dl>
+      <button id="cv-run" class="btn-primary w-full mt-5" type="button" disabled>Convert to {toName}</button>
+      <p id="cv-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a {fromName} to begin.</p>
+    </div>
+  </div>
+
+  <div id="cv-result" class="receipt hidden mt-8">
+    <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+      <h2 class="font-display text-2xl font-bold">Result</h2>
+      <span class="stamp" id="cv-stamp">Done on your device</span>
+    </div>
+    <p id="cv-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
+    <a id="cv-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the {toName}</a>
+  </div>
+</section>

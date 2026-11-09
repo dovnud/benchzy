@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
 
 const faq = [
   {
@@ -40,7 +41,7 @@ const howToJson = JSON.stringify({
 <Base title="Sign PDF: your signature on your document, free · Benchzy" description="Draw or type your signature and place it on your own PDF, inside your browser. Plainly scoped: no signing requests, no certificates, no legal e-signature claims.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · PDF bench · sign</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">PDF tools · sign</p>
       <h1 class="font-display text-4xl font-black mt-2">Sign PDF</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         Your signature, on your document, placed as part of the page. Draw it or type it,
@@ -48,6 +49,8 @@ const howToJson = JSON.stringify({
         browser; the document is never uploaded.
       </p>
     </section>
+
+    <StepsStrip who="For signing your own document: a permission form, an agreement, a school slip. Self-signing only." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Make your signature' }, { n: '03', t: 'Place it and download' }]} />
 
     <section class="ticket-soft mt-6 p-5">
       <h2 class="font-display text-xl font-bold">What this is, and what it is not</h2>
@@ -67,6 +70,7 @@ const howToJson = JSON.stringify({
         <p class="font-mono text-xs text-ink-soft mt-2">PDF · it stays on this device</p>
         <input id="sg-file" type="file" accept="application/pdf,.pdf" class="hidden" />
       </div>
+      <p class="file-loaded hidden" data-loaded-for="sg-file" role="status"></p>
 
       <div class="grid gap-6 mt-6 md:grid-cols-2">
         <div>
@@ -87,6 +91,12 @@ const howToJson = JSON.stringify({
             <label class="font-mono text-xs uppercase tracking-widest text-ink-soft" for="sg-typed">Or type your name</label>
             <input id="sg-typed" type="text" maxlength="60" placeholder="Your name" class="border border-ink bg-ticket px-3 py-2 font-mono w-52" />
           </div>
+          <p class="action-note">
+            A typed signature is your name set in a signature style. It is not a copy of your
+            hand, and it does not become one by being placed on the page. If the document needs
+            your hand, draw it.
+          </p>
+
           <div class="flex gap-4 mt-3 flex-wrap">
             <span class="font-mono text-xs uppercase tracking-widest text-ink-soft self-center">Ink</span>
             <label class="flex items-baseline gap-2"><input type="radio" name="sg-ink" value="ink" checked /><span>Workshop ink</span></label>
@@ -134,7 +144,7 @@ const howToJson = JSON.stringify({
         </div>
       </div>
 
-      <div id="sg-result" class="hidden mt-8">
+      <div id="sg-result" class="receipt hidden mt-8">
         <div class="tear pt-5 flex items-center gap-4 flex-wrap">
           <h2 class="font-display text-2xl font-bold">Result</h2>
           <span class="stamp" id="sg-stamp">Done on your device</span>
@@ -163,6 +173,7 @@ const howToJson = JSON.stringify({
           a signature style, not a copy of your hand; where a document needs your actual hand,
           draw it.
         </p>
+        <p class="mt-3 leading-relaxed text-ink-soft">A password-protected PDF cannot be opened by this tool. Take its password off first with the <a class="underline underline-offset-4" href="/unlock-pdf/">unlock tool</a>, then bring the file back.</p>
       </div>
     </section>
 

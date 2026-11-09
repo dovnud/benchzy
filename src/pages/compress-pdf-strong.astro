@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
 
 const faq = [
   {
@@ -8,7 +9,7 @@ const faq = [
   },
   {
     q: 'How much smaller does it get?',
-    a: 'On a photo-heavy PDF, much smaller than the balanced settings, at a visible cost to the photos. On a text PDF, almost nothing can shrink at any setting: on our bench a plain re-save moved a text PDF from 7,203 bytes to 7,231. The page says so instead of pretending, and returns your original.',
+    a: 'On a photo-heavy PDF, much smaller than the balanced settings, at a visible cost to the photos. On a text PDF, almost nothing can shrink at any setting: in our tests a plain re-save moved a text PDF from 7,203 bytes to 7,231. The page says so instead of pretending, and returns your original.',
   },
   {
     q: 'Will the photos still look good?',
@@ -30,16 +31,16 @@ const howToJson = JSON.stringify({
   name: "How to compress a PDF as small as it will go",
   step: [
     { '@type': 'HowToStep', position: 1, name: "Pick the file", text: "Drop a PDF on the tray, or click to pick one. The file is never uploaded." },
-    { '@type': 'HowToStep', position: 2, name: "Run the strong compression", text: "Press 'Compress, strong'. The photos inside are recompressed at the deep end of the bench's ladder, stepping down until a step stops buying real shrinkage." },
-    { '@type': 'HowToStep', position: 3, name: "Download the PDF", text: "Take away the smallest file the bench could honestly reach, with its exact size and the photo setting printed on the result." },
+    { '@type': 'HowToStep', position: 2, name: "Run the strong compression", text: "Press 'Compress, strong'. The photos inside are recompressed at the deep end of the ladder, stepping down until a step stops buying real shrinkage." },
+    { '@type': 'HowToStep', position: 3, name: "Download the PDF", text: "Take away the smallest file this tool could honestly reach, with its exact size and the photo setting printed on the result." },
   ],
 });
 ---
 
-<Base title="Compress PDF, strong: as small as it will go, free · Benchzy" description="The strong end of the PDF shrink bench: no target, the smallest honest result, with the photo trade printed on the result. Inside your browser; no upload, no account.">
+<Base title="Compress PDF, strong: as small as it will go, free · Benchzy" description="The strong end of PDF shrinking: no target, the smallest honest result, with the photo trade printed on the result. Inside your browser; no upload, no account.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · PDF bench · strong mode</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">PDF tools · strong mode</p>
       <h1 class="font-display text-4xl font-black mt-2">Compress PDF, strong</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         When the instruction is just "as small as possible": no target, no balancing. This
@@ -49,12 +50,15 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
+    <StepsStrip who="For a file that must go as small as it honestly can, when there is no target, only a stubborn limit or a slow connection." steps={[{ n: '01', t: 'Pick the file' }, { n: '02', t: 'Run the strong compression' }, { n: '03', t: 'Download the PDF' }]} />
+
     <section class="ticket mt-6 p-5 sm:p-7" id="cp-tool" data-mode="strong">
       <div id="cp-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
         <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
         <p class="font-mono text-xs text-ink-soft mt-2">PDF · it stays on this device</p>
         <input id="cp-file" type="file" accept="application/pdf,.pdf" class="hidden" />
       </div>
+      <p class="file-loaded hidden" data-loaded-for="cp-file" role="status"></p>
 
       <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
         <div>
@@ -71,12 +75,17 @@ const howToJson = JSON.stringify({
           <dl id="cp-spec" class="mt-2">
             <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
           </dl>
+          <p class="action-note">
+            Before you run it: a scanned page is a picture, so squeezed scans come out softer
+            to read. And a PDF whose pictures are not JPEGs may barely shrink at all. Both are
+            properties of the file, not a fault in the run.
+          </p>
           <button id="cp-run" class="btn-primary w-full mt-5" type="button" disabled>Compress, strong</button>
           <p id="cp-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a PDF to begin.</p>
         </div>
       </div>
 
-      <div id="cp-result" class="hidden mt-8">
+      <div id="cp-result" class="receipt hidden mt-8">
         <div class="tear pt-5 flex items-center gap-4 flex-wrap">
           <h2 class="font-display text-2xl font-bold">Result</h2>
           <span class="stamp" id="cp-stamp">Done on your device</span>
@@ -105,6 +114,7 @@ const howToJson = JSON.stringify({
           archival-grade results of the big desktop programs; we show the before and after
           bytes, which is the checkable part.
         </p>
+        <p class="mt-3 leading-relaxed text-ink-soft">A password-protected PDF cannot be opened by this tool. Take its password off first with the <a class="underline underline-offset-4" href="/unlock-pdf/">unlock tool</a>, then bring the file back.</p>
       </div>
     </section>
 

@@ -1,0 +1,599 @@
+{
+ "when": "2026-11-08T23:33:17.873Z",
+ "pass": 28,
+ "total": 28,
+ "baseInfo": {
+  "text": {
+   "pages": 3,
+   "form": {},
+   "attachments": []
+  },
+  "form": {
+   "pages": 1,
+   "form": {
+    "fullname": "Grace Hopper",
+    "subscribe": true,
+    "plan": [
+     "Pro"
+    ]
+   },
+   "attachments": []
+  },
+  "attach": {
+   "pages": 1,
+   "form": {},
+   "attachments": [
+    "m9-notes.txt"
+   ]
+  },
+  "sig": {
+   "pages": 1,
+   "form": {
+    "Signature1": "PDFSignature"
+   },
+   "attachments": [],
+   "sig": {
+    "field": true,
+    "sigdict": true,
+    "byterange": true
+   }
+  },
+  "big": {
+   "pages": 300,
+   "form": {},
+   "attachments": []
+  }
+ },
+ "rows": [
+  {
+   "case": "text__rc4-40-r2__open",
+   "base": "text",
+   "algo": "rc4-40-r2",
+   "R": 2,
+   "cipher": "RC4-40",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "text__rc4-40-r2__owner-only",
+   "base": "text",
+   "algo": "rc4-40-r2",
+   "R": 2,
+   "cipher": "RC4-40",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "text__rc4-128-r3__open",
+   "base": "text",
+   "algo": "rc4-128-r3",
+   "R": 3,
+   "cipher": "RC4-128",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "text__rc4-128-r3__owner-only",
+   "base": "text",
+   "algo": "rc4-128-r3",
+   "R": 3,
+   "cipher": "RC4-128",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "text__rc4-128-r4__open",
+   "base": "text",
+   "algo": "rc4-128-r4",
+   "R": 4,
+   "cipher": "RC4-128",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "text__rc4-128-r4__owner-only",
+   "base": "text",
+   "algo": "rc4-128-r4",
+   "R": 4,
+   "cipher": "RC4-128",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "text__aes-128-r4__open",
+   "base": "text",
+   "algo": "aes-128-r4",
+   "R": 4,
+   "cipher": "AESV2",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "text__aes-128-r4__owner-only",
+   "base": "text",
+   "algo": "aes-128-r4",
+   "R": 4,
+   "cipher": "AESV2",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "text__aes-256-r5__open",
+   "base": "text",
+   "algo": "aes-256-r5",
+   "R": 5,
+   "cipher": "AESV3",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "text__aes-256-r5__owner-only",
+   "base": "text",
+   "algo": "aes-256-r5",
+   "R": 5,
+   "cipher": "AESV3",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "text__aes-256-r6__open",
+   "base": "text",
+   "algo": "aes-256-r6",
+   "R": 6,
+   "cipher": "AESV3",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "text__aes-256-r6__owner-only",
+   "base": "text",
+   "algo": "aes-256-r6",
+   "R": 6,
+   "cipher": "AESV3",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "form__aes-128-r4__open",
+   "base": "form",
+   "algo": "aes-128-r4",
+   "R": 4,
+   "cipher": "AESV2",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true,
+    "formValues": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "form__aes-128-r4__owner-only",
+   "base": "form",
+   "algo": "aes-128-r4",
+   "R": 4,
+   "cipher": "AESV2",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true,
+    "formValues": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "form__aes-256-r6__open",
+   "base": "form",
+   "algo": "aes-256-r6",
+   "R": 6,
+   "cipher": "AESV3",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true,
+    "formValues": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "form__aes-256-r6__owner-only",
+   "base": "form",
+   "algo": "aes-256-r6",
+   "R": 6,
+   "cipher": "AESV3",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true,
+    "formValues": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "attach__aes-128-r4__open",
+   "base": "attach",
+   "algo": "aes-128-r4",
+   "R": 4,
+   "cipher": "AESV2",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true,
+    "attachments": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "attach__aes-128-r4__owner-only",
+   "base": "attach",
+   "algo": "aes-128-r4",
+   "R": 4,
+   "cipher": "AESV2",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true,
+    "attachments": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "attach__aes-256-r6__open",
+   "base": "attach",
+   "algo": "aes-256-r6",
+   "R": 6,
+   "cipher": "AESV3",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true,
+    "attachments": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "attach__aes-256-r6__owner-only",
+   "base": "attach",
+   "algo": "aes-256-r6",
+   "R": 6,
+   "cipher": "AESV3",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true,
+    "attachments": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "sig__aes-128-r4__open",
+   "base": "sig",
+   "algo": "aes-128-r4",
+   "R": 4,
+   "cipher": "AESV2",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true,
+    "sigStructure": true
+   },
+   "naiveSaveReloadsClean": false,
+   "sigDetail": {
+    "field": true,
+    "sigdict": true,
+    "byterange": true
+   }
+  },
+  {
+   "case": "sig__aes-128-r4__owner-only",
+   "base": "sig",
+   "algo": "aes-128-r4",
+   "R": 4,
+   "cipher": "AESV2",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true,
+    "sigStructure": true
+   },
+   "naiveSaveReloadsClean": false,
+   "sigDetail": {
+    "field": true,
+    "sigdict": true,
+    "byterange": true
+   }
+  },
+  {
+   "case": "sig__aes-256-r6__open",
+   "base": "sig",
+   "algo": "aes-256-r6",
+   "R": 6,
+   "cipher": "AESV3",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true,
+    "sigStructure": true
+   },
+   "naiveSaveReloadsClean": false,
+   "sigDetail": {
+    "field": true,
+    "sigdict": true,
+    "byterange": true
+   }
+  },
+  {
+   "case": "sig__aes-256-r6__owner-only",
+   "base": "sig",
+   "algo": "aes-256-r6",
+   "R": 6,
+   "cipher": "AESV3",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true,
+    "sigStructure": true
+   },
+   "naiveSaveReloadsClean": false,
+   "sigDetail": {
+    "field": true,
+    "sigdict": true,
+    "byterange": true
+   }
+  },
+  {
+   "case": "big__aes-128-r4__open",
+   "base": "big",
+   "algo": "aes-128-r4",
+   "R": 4,
+   "cipher": "AESV2",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "big__aes-128-r4__owner-only",
+   "base": "big",
+   "algo": "aes-128-r4",
+   "R": 4,
+   "cipher": "AESV2",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "big__aes-256-r6__open",
+   "base": "big",
+   "algo": "aes-256-r6",
+   "R": 6,
+   "cipher": "AESV3",
+   "kind": "open",
+   "checks": {
+    "noPasswordRefused": true,
+    "wrongPasswordRefused": true,
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  },
+  {
+   "case": "big__aes-256-r6__owner-only",
+   "base": "big",
+   "algo": "aes-256-r6",
+   "R": 6,
+   "cipher": "AESV3",
+   "kind": "owner-only",
+   "checks": {
+    "plainLoadBehaviour": "refused",
+    "loadWithPassword": true,
+    "noStaleEncryptString": true,
+    "outputOpensClean": true,
+    "outputNotEncrypted": true,
+    "pages": true,
+    "textEqual": true
+   },
+   "naiveSaveReloadsClean": false
+  }
+ ]
+}

@@ -30,6 +30,18 @@ const CLUSTERS = [
     es: '/es/quitar-fondo-resolucion-completa/',
     'pt-BR': '/pt-br/alternativa-gratis-ao-remove-bg/',
   },
+  // Trust-page clusters (milestone 8): the promise page and the proof
+  // page, fully translated, wired both ways like the pages declare.
+  {
+    en: '/what-free-means/',
+    es: '/es/que-significa-gratis-aqui/',
+    'pt-BR': '/pt-br/o-que-significa-gratis/',
+  },
+  {
+    en: '/check-it-yourself/',
+    es: '/es/compruebalo-tu-mismo/',
+    'pt-BR': '/pt-br/confira-voce-mesmo/',
+  },
 ];
 const clusterOf = new Map();
 for (const cluster of CLUSTERS) {

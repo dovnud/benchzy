@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
 
 const faq = [
   {
@@ -16,7 +17,15 @@ const faq = [
   },
   {
     q: 'Where do my files go while a chain runs?',
-    a: 'Nowhere. Every step runs in this page, in your browser, with the same engines as the single-tool benches. Watch the network panel while it works if you want to check.',
+    a: 'Nowhere. Every step runs in this page, in your browser, with the same engines as the single tools. Watch the network panel while it works if you want to check.',
+  },
+  {
+    q: 'Why are some steps greyed out in the builder?',
+    a: 'A chain works on one kind of file at a time. Once a chain starts with a photo step, the PDF steps are not offered: handed a photo, they would pass it through untouched, and the chain would print a step that did nothing. The same the other way round. Reading the words (OCR) fits either kind, and it is always the last step, because what it hands on is text, not a file.',
+  },
+  {
+    q: 'What does a chain give me when it reads the words?',
+    a: 'The words themselves, one box per file, which you can check, fix, copy, or download as a .txt; the download uses the text exactly as it stands in the box. Check numbers before you use them: this reader has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page.',
   },
 ];
 const faqJson = JSON.stringify({
@@ -29,7 +38,7 @@ const howToJson = JSON.stringify({
   '@type': 'HowTo',
   name: "How to build and run a workflow chain",
   step: [
-    { '@type': 'HowToStep', position: 1, name: "Take a starter chain or build your own", text: "Take a starter chain (Invoice pack, Portal pack, Paid pack, Seller photos), or add steps one at a time: merge, compress PDF, split, stamp, compress image." },
+    { '@type': 'HowToStep', position: 1, name: "Take a starter chain or build your own", text: "Take a starter chain (Invoice pack, Portal pack, Paid pack, Seller photos, Seller cutouts, Receipt words), or add steps one at a time: merge, compress PDF, split, stamp, compress image, remove the background, read the words (OCR, always last: it ends the chain with text)." },
     { '@type': 'HowToStep', position: 2, name: "Save the chain under your name", text: "Give the chain a name and save it. It is kept in this browser's storage and will be here on your next visit." },
     { '@type': 'HowToStep', position: 3, name: "Drop files on the tray", text: "Drop the files the chain should work on. They are read into this page; they are never uploaded." },
     { '@type': 'HowToStep', position: 4, name: "Run the chain", text: "Press 'Run the chain'. Steps run top to bottom, each feeding the next, and the run log prints what every step did to every file." },
@@ -38,26 +47,56 @@ const howToJson = JSON.stringify({
 });
 ---
 
-<Base title="Workflows: chain file jobs into one saved run, free · Benchzy" description="Build a chain of file jobs (merge, then shrink, then stamp), save it in your browser, and run it on dropped files end to end. No upload, no account.">
+<Base title="Workflows: chain file jobs into one saved run, free · Benchzy" description="Build a chain of file jobs (cut out a photo, then shrink it; merge, then stamp), save it in your browser, and run it on dropped files end to end. No upload, no account.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · the workbench · workflows</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Workflows</p>
       <h1 class="font-display text-4xl font-black mt-2">Workflows</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
-        The job you do every week, done in one run. Chain the benches together (merge, then
+        The job you do every week, done in one run. Chain the tools together (merge, then
         shrink, then stamp), save the chain under your own name, and run it on the next folder
         that lands. Ready-made chains live on the
         <a class="underline underline-offset-4 hover:text-accent-deep" href="/presets/">preset gallery</a>.
+        Just one scan to read, once? Skip the chain: the one-off reader is
+        <a class="underline underline-offset-4 hover:text-accent-deep" href="/ocr-pdf/">Read a scan (OCR)</a>,
+        and it is also the only route to a searchable PDF. A chain that reads the words ends in
+        plain text, in boxes you can check and fix; no searchable PDF comes out of a chain.
       </p>
     </section>
 
-    <section class="ticket mt-6 p-5 sm:p-7" id="wf-tool">
+    <StepsStrip who="For the same few jobs in the same order, every week: build the chain once, then run files through it." steps={[{ n: '01', t: 'Take a starter chain or build your own' }, { n: '02', t: 'Drop files on the tray' }, { n: '03', t: 'Run the chain' }]} />
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="wf-panel">
       <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">Starter chains</h2>
-      <div class="flex gap-2 mt-3 flex-wrap">
-        <button class="chip" type="button" data-starter="starter-invoice-pack">Invoice pack: merge, then shrink to 500 KB</button>
-        <button class="chip" type="button" data-starter="starter-portal-pack">Portal pack: shrink each PDF to 200 KB</button>
-        <button class="chip" type="button" data-starter="starter-paid-pack">Paid pack: merge, stamp PAID IN FULL, shrink</button>
-        <button class="chip" type="button" data-starter="starter-seller-photos">Seller photos: shrink each photo to 200 KB</button>
+      <p class="mt-2 text-ink-soft leading-relaxed max-w-2xl">
+        Six ready-made chains. Read what each one does, then add it with its button; it lands
+        in your saved chains below, ready to run.
+      </p>
+      <div class="mt-3">
+        <div class="spec-row">
+          <dt><button class="chip" type="button" data-starter="starter-invoice-pack">Invoice pack</button></dt>
+          <dd class="max-w-xl">Step 1: merge the dropped PDFs into one file. Step 2: shrink the merged file to 500 KB.</dd>
+        </div>
+        <div class="spec-row">
+          <dt><button class="chip" type="button" data-starter="starter-portal-pack">Portal pack</button></dt>
+          <dd class="max-w-xl">Step 1: shrink each dropped PDF to 200 KB, one result per file.</dd>
+        </div>
+        <div class="spec-row">
+          <dt><button class="chip" type="button" data-starter="starter-paid-pack">Paid pack</button></dt>
+          <dd class="max-w-xl">Step 1: merge the dropped PDFs into one file. Step 2: stamp PAID IN FULL on the merged file. Step 3: shrink it to 500 KB.</dd>
+        </div>
+        <div class="spec-row">
+          <dt><button class="chip" type="button" data-starter="starter-seller-photos">Seller photos</button></dt>
+          <dd class="max-w-xl">Step 1: shrink each dropped photo to 200 KB, one result per photo.</dd>
+        </div>
+        <div class="spec-row">
+          <dt><button class="chip" type="button" data-starter="starter-seller-cutouts">Seller cutouts</button></dt>
+          <dd class="max-w-xl">Step 1: cut the background out of each dropped photo, at its full size. Step 2: shrink each cutout to 50 KB, as a see-through PNG.</dd>
+        </div>
+        <div class="spec-row">
+          <dt><button class="chip" type="button" data-starter="starter-receipt-words">Receipt words</button></dt>
+          <dd class="max-w-xl">Step 1: read the words off each dropped photo of a receipt. The chain ends in plain text, in a box you can check and fix; check amounts before you use them.</dd>
+        </div>
       </div>
 
       <div class="tear mt-6 pt-5">
@@ -65,7 +104,7 @@ const howToJson = JSON.stringify({
         <div class="flex items-end gap-2 mt-3 flex-wrap">
           <span>
             <label class="font-mono text-xs uppercase tracking-widest text-ink-soft block mb-1" for="wf-tool">Step</label>
-            <select id="wf-tool" class="border border-ink bg-ticket px-3 py-2 font-mono"></select>
+            <select id="wf-tool" class="border border-ink bg-ticket px-3 py-2 font-mono max-w-full"></select>
           </span>
           <span>
             <label class="font-mono text-xs uppercase tracking-widest text-ink-soft block mb-1" for="wf-target">Target (KB, compress steps)</label>
@@ -85,6 +124,7 @@ const howToJson = JSON.stringify({
           </span>
           <button id="wf-add" class="chip" type="button">Add the step</button>
         </div>
+        <p id="wf-picker-note" class="font-mono text-sm text-ink-soft mt-3 leading-relaxed max-w-2xl" aria-live="polite"></p>
         <div id="wf-steps" class="mt-4"></div>
         <div class="flex items-center gap-2 mt-4 flex-wrap">
           <label class="font-mono text-xs uppercase tracking-widest text-ink-soft" for="wf-name">Chain name</label>
@@ -104,22 +144,31 @@ const howToJson = JSON.stringify({
           <p class="font-mono text-xs text-ink-soft mt-2">PDFs and images, as the chain needs · they stay on this device</p>
           <input id="wf-file" type="file" multiple class="hidden" />
         </div>
+        <p class="file-loaded hidden" data-loaded-for="wf-file" role="status"></p>
         <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
           <dl id="wf-spec">
             <div class="spec-row"><dt>files on the tray</dt><dd>0</dd></div>
           </dl>
           <div>
             <button id="wf-run" class="btn-primary w-full" type="button" disabled>Run the chain</button>
+            <button id="wf-cancel" class="btn-ghost w-full mt-2 hidden" type="button">Cancel the download</button>
             <p id="wf-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Take a starter chain or build one, then drop files.</p>
           </div>
         </div>
       </div>
 
-      <div id="wf-result" class="hidden mt-8">
+      <div id="wf-result" class="receipt hidden mt-8">
         <div class="tear pt-5 flex items-center gap-4 flex-wrap">
           <h2 class="font-display text-2xl font-bold">Chain output</h2>
           <span class="stamp" id="wf-stamp">Done on your device</span>
         </div>
+        <p id="wf-ocr-note" class="hidden font-mono text-sm leading-relaxed mt-4 max-w-2xl">
+          Words read by a chain come from the same reader as the Read a scan and photo OCR
+          pages. Check the text in each box before you use it, especially numbers: this reader
+          has been caught dropping the decimal point in money amounts (124.50 read as 12450)
+          on a clean test page. Fix anything in a box and its Copy, its .txt download and the
+          ZIP all use your corrected text.
+        </p>
         <div id="wf-outputs" class="mt-4 grid gap-1"></div>
         <a id="wf-zip" class="btn-primary inline-block no-underline mt-4 hidden" href="#" download>Download all outputs as one ZIP</a>
         <h3 class="font-mono text-xs uppercase tracking-widest text-ink-soft mt-6">Run log</h3>
@@ -131,21 +180,37 @@ const howToJson = JSON.stringify({
       <div>
         <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
         <p class="mt-3 leading-relaxed text-ink-soft">
-          A chain is the benches, run in sequence in this page: merge deals PDFs into one
+          A chain is the tools, run in sequence in this page: merge deals PDFs into one
           file, compress works a file toward its target, split takes a page range, stamp
           writes a line of text onto every page, compress image works a photo toward its
-          target. Each step hands its output to the next, and the run log prints every step's
-          work per file, including the files a step could not use and passed through.
+          target, remove the background cuts a photo's background out at its full size,
+          and read the words (OCR) turns a photo or a scanned PDF into text. Each step
+          hands its output to the next, and the run log prints every step's work per file,
+          including the files a step could not use and passed through. The builder offers
+          only the steps that fit the chain you are building: a photo chain and a PDF
+          chain are kept apart, because a step handed the other kind passes it through
+          untouched. Reading the words is always the last step, because it hands on text,
+          not a file.
         </p>
       </div>
       <div>
         <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
         <p class="mt-3 leading-relaxed text-ink-soft">
-          Chains run steps in order, on the files as they are; the bench does not read your
-          documents, so a chain cannot branch on what a file says. A chain lives only in this
-          browser: it is not synced, shared or backed up, and a different browser starts
-          empty. The steps are the five listed; steps that would need a server (sending,
-          requesting, certifying) do not exist here.
+          Every tool with a bench here can be a chain step, background removal and reading
+          the words included. The honest edges are these. The reading step reads English in
+          chains (the single reading pages also read Spanish and Portuguese), always runs
+          last, and hands back the words as text in a box: it does not make the searchable
+          PDF the Read a scan page makes. A cutout shrunk by the compress step stays a
+          see-through PNG: PNG has no quality dial, so the search shrinks the picture's
+          dimensions to fit the target, and if even the smallest size it searches is over the
+          target, the run log says so and hands you that smallest result. Background
+          removal's 44 MB program loads inside the chain the same way it loads on its own
+          pages, with the same Cancel: stop the load and the pieces already down are kept
+          for the next run. Chains run steps in order, on the files as they are; apart from
+          the reading step, no step looks at what a file says, so a chain cannot branch on
+          content. A chain lives only in this browser: it is not synced, shared or backed
+          up, and a different browser starts empty. The steps are the seven listed; steps
+          that would need a server (sending, requesting, certifying) do not exist here.
         </p>
       </div>
     </section>
@@ -164,6 +229,7 @@ const howToJson = JSON.stringify({
   </div>
   <script type="application/ld+json" set:html={faqJson}></script>
   <script type="application/ld+json" set:html={howToJson}></script>
+  <script is:inline src="/tesseract/tesseract.min.js"></script>
   <script>
     import '../scripts/workflows.js';
   </script>

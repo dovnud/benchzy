@@ -1,63 +1,72 @@
 ---
 import Base from '../layouts/Base.astro';
+import LogoMark from '../components/LogoMark.astro';
 
 const live = [
   { name: 'Compress PDF to a size', href: '/compress-pdf/', note: 'The lead PDF job: pick a target, 200 KB, 500 KB, 2 MB or your own number, and the page works to land under it, printing the exact size it reached. If it cannot reach the target, it says so before you download.' },
   { name: 'Compress PDF to 200 KB', href: '/compress-pdf-to-200kb/', note: 'The flagship preset for tight government and job portals, with the 200 KB target already set.' },
+  { name: 'Compress PDF to 50 KB', href: '/compress-pdf-to-50kb/', note: 'The tightest door in common use, the visa and passport portal preset, with the 50 KB target already set. The result line states the smallest size reached when a file cannot get there.' },
+  { name: 'Compress PDF to 100 KB', href: '/compress-pdf-to-100kb/', note: 'The form-portal preset, with the 100 KB target already set for government, job-application and university uploads.' },
+  { name: 'Compress PDF to 500 KB', href: '/compress-pdf-to-500kb/', note: 'The email-and-boards preset, with the 500 KB target already set. In our tests an 11.65 MB photo PDF landed at 415 KB.' },
+  { name: 'Compress PDF to 1 MB', href: '/compress-pdf-to-1mb/', note: 'The attachment preset, with the 1 MB target already set for inboxes, contact forms and content systems that cap an upload there.' },
   { name: 'Compress PDF, strong', href: '/compress-pdf-strong/', note: 'The strong setting the suites keep paid: no target, the deep end of the same ladder, the smallest honest result. Strong on photo PDFs; on text PDFs it says plainly that almost nothing can shrink.' },
-  { name: 'Merge PDF', href: '/merge-pdf/', note: 'As many files as your device can hold, in your order. Pages are copied, not rebuilt, so nothing is re-encoded. On the bench, 25 files merged in 71 milliseconds and came out smaller than the biggest site\'s result on the same files.' },
+  { name: 'Merge PDF', href: '/merge-pdf/', note: 'As many files as your device can hold, in your order. Pages are copied, not rebuilt, so nothing is re-encoded. In our tests, 25 files merged in 71 milliseconds and came out smaller than the biggest site\'s result on the same files.' },
   { name: 'Interleave PDF', href: '/interleave-pdf/', note: 'Deal two PDFs together a page at a time (A1, B1, A2, B2), with the second file readable back to front: the repair for a duplex document scanned on a one-sided scanner.' },
   { name: 'Split PDF', href: '/split-pdf/', note: 'Pull a page range out as one PDF, take every page as its own file, or cut the file into parts that each fit under a size you set, each part checked against the limit before download.' },
+  { name: 'Remove and organise pages', href: '/organize-pdf/', note: 'See a picture of every page, take pages out, drag the rest into the right order, and copy a page that belongs in twice. Pages move inside the file and are never rebuilt, so words, pictures, filled form answers, bookmarks and the stored details all come through; the page itself lists the three honest catches.' },
   { name: 'Sign PDF', href: '/sign-pdf/', note: 'Draw or type your signature and place it on your own document, drawn into the page itself. Scope printed on the page: no signing requests to others, no audit certificates, no legal e-signature claim.' },
   { name: 'Flatten PDF', href: '/flatten-pdf/', note: 'Bake a filled form\'s answers into the pages so the file displays and prints the same everywhere. Annotations that are not form fields are counted and reported, never silently dropped.' },
+  { name: 'Protect PDF', href: '/protect-pdf/', note: 'Put a real password on your own PDF: AES-256, the strongest current kind, written in your browser. The password is typed and used on the page only, and there is no recovery if it is forgotten; the page says so before you run.' },
+  { name: 'Unlock PDF', href: '/unlock-pdf/', note: 'Take the password off your own PDF. An open password must be known and typed; the permission switches on a file that already opens come off without one, and the page explains the difference before the tray. Tested against every standard password kind, forms, attachments and a 300-page file.' },
+  { name: 'Rotate PDF', href: '/rotate-pdf/', note: 'Turn every page, or one page range, by a quarter or half turn. The turn is a setting each page carries inside the file, so nothing is redrawn and nothing loses quality.' },
+  { name: 'Add page numbers', href: '/pdf-page-numbers/', note: 'Stamp page numbers onto the pages themselves: bottom centre, the bottom outside corner, or top centre, as "Page X of Y" or a plain number, starting at the number you give.' },
+  { name: 'Watermark PDF', href: '/watermark-pdf/', note: 'Stamp DRAFT, CONFIDENTIAL or your own words across the pages, diagonal or straight, at the size and strength you pick. Printed into the pages, and the page says plainly: a label, not a lock.' },
+  { name: 'Extract images from PDF', href: '/extract-images-pdf/', note: 'Pull the pictures stored inside a PDF out as files: stored JPEGs byte for byte, other pictures rebuilt as PNGs, and a written report naming anything that cannot be pulled, with its reason.' },
+  { name: 'View and strip PDF metadata', href: '/pdf-metadata/', note: 'The label card every PDF carries (title, author, subject, keywords, maker, dates), shown exactly as stored, blanks included. Change the title or author, or wipe the whole card, XMP second copy included. The page says plainly: wiping the card is not cleaning the document.' },
+  { name: 'JPG to PDF', href: '/jpg-to-pdf/', note: 'Pictures into one PDF: JPG, PNG and WebP, one picture per page, in the order on the list, each page sized to its picture or fitted onto A4 or Letter. JPEG and PNG pictures go in exactly as stored, with no recompression.' },
+  { name: 'PDF to JPG', href: '/pdf-to-jpg/', note: 'Every page of a PDF as a picture: JPG at quality 92 or exact PNG, at screen size (96 DPI) or print size (200 DPI), one picture itself or one ZIP in page order. The page warns first: the words become part of the pictures.' },
   { name: 'Batch compress PDF', href: '/batch-compress-pdf/', note: 'The paid-extra job, free here: a whole folder of PDFs worked to one target size in a single run, with a result line per file and one ZIP out.' },
   { name: 'Batch merge PDF', href: '/batch-merge-pdf/', note: 'Pick a whole folder at once, sort the tray by file name, and merge it into one file.' },
   { name: 'Batch split PDF', href: '/batch-split-pdf/', note: 'One page range cut from every file in the folder in a single run.' },
-  { name: 'Workflows', href: '/workflows/', note: 'Chain these benches into one saved run: merge, then shrink, then stamp, on the next folder that lands. Saved in your browser, run end to end here.' },
-  { name: 'Read a scan (OCR)', href: '/ocr-pdf/', note: 'Scanned pages are read at 300 DPI into checkable text, plus a searchable PDF. On the standard test invoice the bench read 96% of characters correctly; check money amounts, because the reader can drop a decimal point, and the page tells you so.' },
-];
-const planned = [
-  'JPG to PDF and PDF to JPG',
-  'Compress PDF to 100 KB, 500 KB, 1 MB and 50 KB preset pages',
-  'Rotate, extract, remove and organise pages',
-  'Add page numbers, add a watermark, view and strip PDF metadata',
-  'Protect and unlock PDF (after its engine passes a separate audit)',
+  { name: 'Workflows', href: '/workflows/', note: 'Chain these tools into one saved run: merge, then shrink, then stamp, on the next folder that lands. Saved in your browser, run end to end here.' },
+  { name: 'Read a scan (OCR)', href: '/ocr-pdf/', note: 'Scanned pages are read at 300 DPI into checkable text, plus a searchable PDF. In our tests the reader read 96% of characters correctly on the standard test invoice; check money amounts, because the reader can drop a decimal point, and the page tells you so.' },
 ];
 ---
 
 <Base title="PDF tools, free, in your browser · Benchzy" description="Compress a PDF to an exact size, merge, split and read scans, free, with the work done in your browser. No uploads, no accounts, no task counters.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Hub · PDF jobs</p>
+      <LogoMark size={56} />
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep mt-4">Hub · PDF jobs</p>
       <h1 class="font-display text-4xl font-black mt-2">PDF tools</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         The daily PDF jobs, done inside your browser: your document is never uploaded, there is
         no account and no counter, and the sizes are printed exactly, before and after. Most of
-        these jobs finish in well under a second on the bench, because the engine is a tidy
+        these jobs finish in well under a second in our tests, because the engine is a tidy
         open-source program (@cantoo/pdf-lib, on the
         <a class="underline underline-offset-4" href="/credits/">credits page</a>), not a queue
         on someone else's server.
       </p>
     </section>
 
-    <section class="mt-6 grid gap-4">
+    <section class="ledger mt-6">
       {live.map((t) => (
-        <article class="ticket-soft p-5 flex flex-wrap items-baseline gap-3">
-          <h2 class="font-display text-xl font-bold">{t.name}</h2>
-          <span class="stamp">On the bench</span>
-          <p class="w-full text-ink-soft leading-relaxed">{t.note}</p>
-          <a class="btn-primary no-underline mt-1" href={t.href}>Open the tool</a>
-        </article>
+        <a class="job-row" href={t.href}>
+          <h2 class="job-name job-name-lg">{t.name}</h2>
+          <span class="job-meta"><span class="status-live">Ready</span><span class="open">Open →</span></span>
+          <span class="job-note">{t.note}</span>
+        </a>
       ))}
     </section>
 
     <section class="mt-10 mb-4">
-      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">In the plan for this family</h2>
-      <ul class="mt-4 grid gap-3">
-        {planned.map((p) => (
-          <li class="ticket-soft p-4 font-mono text-sm leading-relaxed">{p} <span class="text-ink-soft">(measured or scoped; opens when it passes its checks)</span></li>
-        ))}
-      </ul>
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">The family, complete</h2>
+      <p class="mt-4 leading-relaxed text-ink-soft max-w-2xl">
+        Every job on this family's plan is built and listed above: the planned list is
+        empty. The workshop's running count of working tools is kept on the
+        <a class="underline underline-offset-4" href="/what-free-means/">what free means here</a>
+        page, where it is counted from the site itself.
+      </p>
       <p class="mt-4 leading-relaxed text-ink-soft max-w-2xl">
         One door stays shut on purpose: turning a PDF into a perfectly editable Word document
         is a job this workshop does not promise, because the honest version of it is "basic

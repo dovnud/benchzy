@@ -1,5 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
+import LangLinks from '../components/LangLinks.astro';
+
+// Language cluster (milestone 8): this page in Spanish and Brazilian
+// Portuguese, full translations, wired both ways.
+const alternates = [
+  { hreflang: 'en', href: '/what-free-means/' },
+  { hreflang: 'es', href: '/es/que-significa-gratis-aqui/' },
+  { hreflang: 'pt-BR', href: '/pt-br/o-que-significa-gratis/' },
+  { hreflang: 'x-default', href: '/what-free-means/' },
+];
+const langLinks = [
+  { label: 'English', href: '/what-free-means/', current: true },
+  { label: 'Español', href: '/es/que-significa-gratis-aqui/' },
+  { label: 'Português (Brasil)', href: '/pt-br/o-que-significa-gratis/' },
+];
 
 // The score (milestone 5): counted here, at build time, from the page
 // sources themselves, so the numbers printed in the promise section are
@@ -8,13 +23,13 @@ import Base from '../layouts/Base.astro';
 // is the number of distinct engines, so preset pages and translations
 // count as pages, never as new tools. Nothing below is typed by hand.
 const pageSources = import.meta.glob('./**/*.astro', { query: '?raw', eager: true, import: 'default' });
-const TOOL_ENGINES = ['remove-bg', 'compress-pdf', 'compress-image', 'merge-pdf', 'split-pdf', 'ocr-pdf', 'size-checker', 'sign-pdf', 'flatten-pdf'];
+const TOOL_ENGINES = ['remove-bg', 'compress-pdf', 'compress-image', 'merge-pdf', 'split-pdf', 'ocr-pdf', 'ocr-image', 'size-checker', 'sign-pdf', 'flatten-pdf', 'protect-pdf', 'unlock-pdf', 'resize-image', 'rotate-pdf', 'pdf-page-numbers', 'watermark-pdf', 'extract-images-pdf', 'organize-pdf', 'pdf-metadata', 'jpg-to-pdf', 'pdf-to-jpg', 'heic-to-jpg'];
 // Runner scripts (milestone 6): pages that work files through the
 // engines above (batch doors, interleave, workflow chains) are tool
 // pages, but they are not new tools, so they never add to the tool
 // count. The audit in verify/seo-audit.mjs holds the same two lists;
 // keep them identical.
-const PAGE_SCRIPTS = ['batch-pdf', 'batch-image', 'batch-remove-bg', 'workflows', 'interleave-pdf'];
+const PAGE_SCRIPTS = ['batch-pdf', 'batch-image', 'batch-remove-bg', 'workflows', 'interleave-pdf', 'convert-image'];
 const enginesUsed = new Set();
 let toolPages = 0;
 for (const src of Object.values(pageSources)) {
@@ -32,17 +47,17 @@ const toolCount = enginesUsed.size;
 
 const nevers = [
   ['No accounts', 'The tools need no account, no sign-up and no card. There is nothing to cancel because there is nothing to join.'],
-  ['No daily counters', 'There is no counter in any tool. Nothing counts your jobs, so nothing can run out. Do a job twice, or two hundred times; the page does not keep score.'],
+  ['No daily counters', 'There is no counter in any tool. Nothing counts your jobs, so nothing can run out. Do a job twice, or two hundred times; the page does not keep score. Visits to pages are counted, with Google Analytics, named on the privacy page, so we can see which tools get used; jobs are not, and no count of anything can ever run out or lock a tool.'],
   ['No credits, no minutes, no meters', 'No unit of work is sold here. The price of a job is known before you start: free.'],
   ['No watermarks', 'Your output is yours. Nothing of ours is stamped, printed or hidden on it.'],
   ['No download held for payment', 'The download button is the end of the job, never the start of a checkout. On other sites the price often appears at that exact click; here it is just a download.'],
   ['No fake buttons', 'Every button on a tool page does the thing its label says. Nothing here is dressed up to look like a download and act like an advert.'],
   ['No smaller free size', 'Output is made at your file\'s own size. There is no small free tier and no big paid tier, because there are no tiers.'],
-  ['No upload', 'Your files are processed in your browser and are never sent to us. There is no server here that could receive them.'],
+  ['No upload', 'Your files are processed in your browser and are never sent to us: they never reach a server. The pages of this site do come from a server, of course: a host serves them, Cloudflare Pages, named on the privacy page. The program travels to your browser; your file never travels anywhere.'],
 ];
 ---
 
-<Base title="What free means here · Benchzy" description="The never list, in plain words: no accounts, no counters, no credits, no watermarks, no download held for payment. Why it can be true, and the one real limit, your device.">
+<Base title="What free means here · Benchzy" description="The never list, in plain words: no accounts, no daily counters, no credits, no watermarks, no download held for payment. Why it can be true, and the one real limit, your device." alternates={alternates}>
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
       <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Standing page · the commitment</p>
@@ -54,11 +69,12 @@ const nevers = [
         believed. This is a public commitment, in writing, here; if it ever changed, this page
         would have to change first, in public.
       </p>
+      <LangLinks label="This page in:" links={langLinks} />
     </section>
 
-    <section class="mt-6 grid gap-4">
+    <section class="ledger mt-6">
       {nevers.map(([title, body]) => (
-        <article class="ticket-soft p-5">
+        <article class="ledger-row">
           <h2 class="font-display text-xl font-bold">{title}</h2>
           <p class="text-ink-soft leading-relaxed mt-1">{body}</p>
         </article>
@@ -69,8 +85,8 @@ const nevers = [
       <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">The aim, stated as a promise</p>
       <h2 class="font-display text-2xl font-bold mt-2">One workshop, every job</h2>
       <p class="mt-3 leading-relaxed max-w-2xl">
-        Our promise: every file job in one place. We are growing Benchzy into the biggest toolkit
-        on the web, tool by tool, and the count below is the score.
+        Our promise: every file job in one place. The count below is printed from the pages
+        this site actually ships; it is the score, and it grows tool by tool.
       </p>
       <dl class="mt-5 max-w-md">
         <div class="spec-row"><dt>working tools</dt><dd>{toolCount}</dd></div>
@@ -78,8 +94,7 @@ const nevers = [
         <div class="spec-row"><dt>pages in all</dt><dd>{pageCount}</dd></div>
       </dl>
       <p class="mt-4 font-mono text-xs text-ink-soft leading-relaxed max-w-2xl">
-        Counted by the build from the site itself, on the day this page was built. "Biggest" is
-        the aim on this page, not a claim about today; the growth is the point, and every tool
+        Counted by the build from the site itself, on the day this page was built. Every tool
         that ships moves the score. The tools themselves are listed on the
         <a class="underline underline-offset-4 hover:text-accent-deep" href="/tools/">all tools page</a>.
       </p>
@@ -91,10 +106,12 @@ const nevers = [
         <p class="mt-3 leading-relaxed text-ink-soft">
           The big sites charge because every job runs on their computers and costs them money,
           so the job has to be rationed. Benchzy's tools run inside your web browser, on your
-          device. A job here costs this site nothing, so there is nothing to ration. Premium is
+          device. We work this way to protect your privacy: the program travels to your
+          browser. Your file never travels anywhere. A job here costs this site nothing, so there is nothing to ration. Premium is
           free here because the work runs on your computer, not ours. The site itself is paid
-          for by ads on the pages; an ad can see which page you are on, and can never see your
-          file, because your file never leaves the page's memory.
+          for by ads on the pages; no ads run yet. When ads come, an ad will be able to see
+          which page you are on, and will never be able to see your file, because your file
+          never leaves the page's memory.
         </p>
       </div>
       <div>

@@ -1,0 +1,189 @@
+---
+import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
+
+const faq = [
+  {
+    q: 'Can the watermark be removed?',
+    a: 'Not here, and not by accident: it is printed into the pages when the file saves. But a determined person with a full PDF editor could still lift it off. That is the honest position: the stamp stops a casual reader mistaking the file, not a determined one copying it. If the file itself must stay shut, put a password on it as well, with the protect tool.',
+  },
+  {
+    q: 'Does the stamp cover photos and charts too?',
+    a: 'Yes. It is drawn over the whole page, across text, photos and charts alike, at the strength you picked. At the light setting it sits under your reading; at the strong setting it is the first thing seen.',
+  },
+  {
+    q: 'How long can the stamp be?',
+    a: 'Up to 40 characters: a word or a short phrase, like DRAFT, CONFIDENTIAL or DO NOT COPY. The stamp is sized to span the page, so a long sentence would be shrunk to nothing; if you need a paragraph on the file, it belongs in the document, not across it.',
+  },
+  {
+    q: 'Where does my document go?',
+    a: 'Nowhere. It is read into this page and watermarked in your browser. Watch the network panel while it works if you want to check.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const howToJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: "How to watermark a PDF",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Pick the PDF", text: "Drop a PDF on the tray, or click to pick one. It stays on this device. The page reads its page count before anything runs." },
+    { '@type': 'HowToStep', position: 2, name: "Write the stamp", text: "Type the words (DRAFT, CONFIDENTIAL, or your own, up to 40 characters), and pick the size, the strength, diagonal or straight, and every page or one range." },
+    { '@type': 'HowToStep', position: 3, name: "Watermark the PDF", text: "Press 'Watermark the PDF'. The words are printed into each chosen page and the file is saved with them inside it." },
+    { '@type': 'HowToStep', position: 4, name: "Download the watermarked PDF", text: "Take the finished file away, and keep your clean original: this page cannot un-stamp a file." },
+  ],
+});
+---
+
+<Base title="Watermark a PDF: stamp DRAFT or your own words across the pages, free · Benchzy" description="Stamp a short text across every page of a PDF, or one range: diagonal or straight, at the size and strength you pick, inside your browser. Stated plainly on the page: a label, not a lock.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">PDF tools · pages</p>
+      <h1 class="font-display text-4xl font-black mt-2">Watermark PDF</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Stamp one short text (DRAFT, CONFIDENTIAL, or your own words) across the pages of a
+        PDF, so anyone who opens it knows what it is. The stamp is printed into the pages
+        when the file saves, in your browser; the document is never uploaded.
+      </p>
+    </section>
+
+    <StepsStrip who="For a draft going out for comments, a quote that is not final, or a pack that must not be mistaken for the signed version." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Write the stamp' }, { n: '03', t: 'Watermark and download' }]} />
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="wm-tool">
+      <div id="wm-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
+        <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">PDF · it stays on this device</p>
+        <input id="wm-file" type="file" accept="application/pdf,.pdf" class="hidden" />
+      </div>
+      <p class="file-loaded hidden" data-loaded-for="wm-file" role="status"></p>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">The stamp</h2>
+          <label class="block mt-3 text-sm font-bold" for="wm-text">Words to stamp</label>
+          <input id="wm-text" type="text" value="DRAFT" maxlength="40" class="mt-1 w-full border border-ink bg-ticket px-3 py-2" autocomplete="off" />
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft mt-6">Size</h2>
+          <div class="mt-3 grid gap-3">
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="wm-size" value="small" />
+              <span>Small (about a third of the page across)</span>
+            </label>
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="wm-size" value="medium" checked />
+              <span>Medium (over half the page across)</span>
+            </label>
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="wm-size" value="large" />
+              <span>Large (most of the page across)</span>
+            </label>
+          </div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft mt-6">Strength and slant</h2>
+          <div class="mt-3 grid gap-3">
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="wm-opacity" value="0.15" />
+              <span>Light: you read through it</span>
+            </label>
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="wm-opacity" value="0.3" checked />
+              <span>Medium: plainly there</span>
+            </label>
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="wm-opacity" value="0.5" />
+              <span>Strong: the first thing seen</span>
+            </label>
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="wm-layout" value="diagonal" checked />
+              <span>Diagonal, corner to corner</span>
+            </label>
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="wm-layout" value="straight" />
+              <span>Straight, across the middle</span>
+            </label>
+          </div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft mt-6">Which pages</h2>
+          <div class="mt-3 grid gap-3">
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="wm-scope" value="all" checked />
+              <span>Every page</span>
+            </label>
+            <label class="flex items-baseline gap-2">
+              <input type="radio" name="wm-scope" value="range" />
+              <span>One page range</span>
+            </label>
+            <div class="flex items-center gap-2 ml-6 flex-wrap">
+              <label class="font-mono text-xs uppercase tracking-widest text-ink-soft" for="wm-from">From page</label>
+              <input id="wm-from" type="number" min="1" step="1" value="1" class="border border-ink bg-ticket px-3 py-2 font-mono w-24" />
+              <label class="font-mono text-xs uppercase tracking-widest text-ink-soft" for="wm-to">To page</label>
+              <input id="wm-to" type="number" min="1" step="1" value="1" class="border border-ink bg-ticket px-3 py-2 font-mono w-24" />
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="wm-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <p class="action-note">
+            Read this before you run: the stamp becomes part of the pages, like ink soaked
+            into the paper. Keep your clean original; this page cannot un-stamp a file.
+          </p>
+          <button id="wm-run" class="btn-primary w-full mt-5" type="button" disabled>Watermark the PDF</button>
+          <p id="wm-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a PDF to begin.</p>
+        </div>
+      </div>
+
+      <div id="wm-result" class="receipt hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Result</h2>
+          <span class="stamp" id="wm-stamp">Done on your device</span>
+        </div>
+        <p id="wm-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
+        <a id="wm-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the watermarked PDF</a>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The page writes your words onto every page you chose, at the size and strength you
+          picked, and saves the file with the words inside it. The download is how we
+          protect your privacy: the program that does this job is part of this page, loaded
+          from this site, and your file is read into the page and never uploaded. From then
+          on the stamp prints and copies with the file, like ink soaked into the paper.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          A watermark is a label, not a lock. It is printed into the page content, which
+          means a determined person with a full PDF editor could still lift it off; it
+          stops a casual reader mistaking the file, not a determined one copying it. If
+          the file itself must stay shut, put a password on it as well, with the
+          <a class="underline underline-offset-4" href="/protect-pdf/">protect tool</a>.
+        </p>
+        <p class="mt-3 leading-relaxed text-ink-soft">A password-protected PDF cannot be opened by this tool. Take its password off first with the <a class="underline underline-offset-4" href="/unlock-pdf/">unlock tool</a>, then bring the file back.</p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script type="application/ld+json" set:html={howToJson}></script>
+  <script>
+    import '../scripts/watermark-pdf.js';
+  </script>
+</Base>

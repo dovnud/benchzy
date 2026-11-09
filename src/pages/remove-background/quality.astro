@@ -1,0 +1,203 @@
+---
+import Base from '../../layouts/Base.astro';
+
+// Milestone 17: the flagship quality-proof page. Every picture below
+// was produced by driving this site's own /remove-background/ tool in
+// a browser (verify/m17-make-gallery.mjs, 2026-11-09); the cutouts
+// are the tool's own download files, byte for byte, and the crops
+// are native-pixel squares of those files over a checkerboard
+// (verify/m17-finish-gallery.py). Nothing was retouched. The two
+// cases where the tool visibly struggles (chrome, glass) are shown
+// as what they are. Provenance per photo: verify/m17-sources/
+// PROVENANCE.md, and the credits printed under each case.
+const cases = [
+  {
+    id: 'white',
+    name: 'White on white',
+    hard: 'A white egg on a white table against a white background. The only thing separating the egg from its surroundings is a soft shadow.',
+    dims: '1024 x 683',
+    mp: '0.70 megapixels',
+    secs: '10.6 s',
+    verdict: 'Held.',
+    result: 'The shell\u2019s edge is followed all the way round. One flaw, and the crop below is framed to show it: a faint spray of half-clear specks floats just left of the egg, where the pale background and the shadow nearly match the shell.',
+    original: '/proof/white-original.jpg',
+    credit: 'Photo: \u201cWhite chicken egg\u201d by Ren West, CC BY 2.0, via Wikimedia Commons.',
+  },
+  {
+    id: 'hair',
+    name: 'Fine hair',
+    hard: 'A portrait with a head of fine, flyaway curls, photographed against a patterned chair and a warm wall.',
+    dims: '1280 x 1918',
+    mp: '2.46 megapixels',
+    secs: '9.7 s',
+    verdict: 'Held.',
+    result: 'The crop is the story: single curls and loose strands are followed one by one, with the background taken out from between them. Two honest marks against it: a strip of her chair came along at the bottom edge, and the loosest strands at the top keep a hint of the warm wall behind them.',
+    original: '/proof/hair-original.jpg',
+    credit: 'Photo: \u201cSmiling senior woman with curly hair portrait\u201d by Shixart1985, CC BY 2.0, via Wikimedia Commons.',
+  },
+  {
+    id: 'busy',
+    name: 'A busy background',
+    hard: 'A street-market portrait: stacks of bananas, hanging cloth, tarpaulins, and a second person in red standing directly behind her.',
+    dims: '1920 x 1290',
+    mp: '2.48 megapixels',
+    secs: '9.7 s',
+    verdict: 'Held, with a judgement call you should see.',
+    result: 'The market clutter is gone and the hairline against it is clean, down to single grey hairs in the crop. But the woman in red was kept too: this program removes backgrounds, it does not choose between two people. A sliver of the banana stack at the frame\u2019s left edge came along as well.',
+    original: '/proof/busy-original.jpg',
+    credit: 'Photo: \u201cWayuu woman with sad face in the market buying\u201d by Wilfredor, CC0, via Wikimedia Commons.',
+  },
+  {
+    id: 'glass',
+    name: 'Glass',
+    hard: 'A glass of iced water on a wooden table, with a laptop beside it: a subject you can see through, next to a solid one.',
+    dims: '1920 x 1282',
+    mp: '2.46 megapixels',
+    secs: '10.2 s',
+    verdict: 'Mixed.',
+    result: 'The laptop is gone completely, and the rim of the glass and the water\u2019s surface are solid. Below the rim, the clear walls of the glass fade to half strength, and a piece of the table under the glass came along at half strength with them. Judge it in the crop: the rim is a clean cut, the wall of the glass is not.',
+    original: '/proof/glass-original.jpg',
+    credit: 'Photo: \u201cA clear glass of water sits next to a laptop\u201d by Shixart1985, CC BY 2.0, via Wikimedia Commons.',
+  },
+  {
+    id: 'chrome',
+    name: 'Chrome',
+    hard: 'A motorcycle engine at close range: polished chrome and black fins, with the sky and the ground reflected in every curve.',
+    dims: '1024 x 695',
+    mp: '0.71 megapixels',
+    secs: '9.9 s',
+    verdict: 'The limit case on this page.',
+    result: 'The dark parts and the exhaust pipe are solid, but much of the bright chrome came out half see-through: the checkerboard shows through the engine. Metal that mirrors its surroundings reads to the program as partly background. This result is shown unedited on purpose: it is the honest edge of what this tool can do today.',
+    original: '/proof/chrome-original.webp',
+    credit: 'Photo: \u201cMotorcycle engine\u201d, CC0, via rawpixel.',
+  },
+  {
+    id: 'strands',
+    name: 'The test picture',
+    hard: 'Not a photograph: the drawn picture this project uses to grade the remover, a fan of fine strands over a figure. It is the picture behind the bench figures quoted elsewhere on this site (95.9% of its strand points kept, no background point kept).',
+    dims: '1200 x 900',
+    mp: '1.08 megapixels',
+    secs: '9.8 s',
+    verdict: 'Held.',
+    result: 'The strand fan survives, thinning toward its edges, as it did in the bench runs. It is here so the measured claim and the photographs can be checked against each other, not as a substitute for them.',
+    original: '/proof/strands-original.png',
+    credit: 'Picture: drawn by this project\u2019s test-corpus generator, 7 November 2026. Synthetic, and labelled that way wherever it appears.',
+  },
+];
+const speedRows = [
+  ['White egg', '1024 x 683', '0.70', '10.6 s'],
+  ['Chrome engine', '1024 x 695', '0.71', '9.9 s'],
+  ['Glass of water', '1920 x 1282', '2.46', '10.2 s'],
+  ['Curly hair portrait', '1280 x 1918', '2.46', '9.7 s'],
+  ['Market portrait', '1920 x 1290', '2.48', '9.7 s'],
+  ['Test picture', '1200 x 900', '1.08', '9.8 s'],
+];
+---
+
+<Base title="Background removal quality: hard photos, run and shown · Benchzy" description="Six hard photos (white on white, fine hair, a busy market portrait, glass, chrome) run through Benchzy's own background remover, with the unedited outputs, 100% edge crops, the cases where it visibly struggles, and the measured times.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Background removal · Quality proof</p>
+      <h1 class="font-display text-4xl font-black mt-2">Hard photos, run through the remover</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Anyone can promise clean cutouts. This page shows them. On 9 November 2026 we ran six
+        hard photos through the same <a class="underline underline-offset-4" href="/remove-background/">background remover</a> this
+        site offers you, and published what came out, unedited: the photo, the cutout on a
+        checkerboard so its edges can be judged, and a crop at 100%, where one pixel on the
+        screen is one pixel of the photo. Four cases held up. Two visibly struggled, and they
+        are on this page too, labelled as what they are.
+      </p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How long a cut takes, measured</h2>
+      <p class="mt-3 leading-relaxed text-ink-soft max-w-2xl">
+        These are the times the tool itself printed during the runs above, on our test
+        computer: a desktop-class machine with four processor cores, in Chrome, with the
+        removal program already downloaded. Each photo ran twice; the time printed is the
+        second, warm run.
+      </p>
+      <div class="ticket-soft p-5 mt-4 max-w-2xl">
+        <dl>
+          {speedRows.map(([name, dims, mp, secs]) => (
+            <div class="spec-row"><dt>{name}</dt><dd>{dims} · {mp} MP · {secs}</dd></div>
+          ))}
+        </dl>
+      </div>
+      <p class="mt-4 leading-relaxed text-ink-soft max-w-2xl">
+        One photo at three sizes says the rest: the market portrait at 0.70 megapixels took
+        9.8 s, at 2.48 megapixels 9.7 s, and at 5.57 megapixels 10.3 s. Size barely moves the
+        time, because the program reads every photo at one working size (1024 x 1024) and
+        spends its time there; only the final full-size write-out grows with the photo. So
+        this page prints seconds per photo, not a per-megapixel figure the measurements do
+        not support.
+      </p>
+      <p class="mt-3 leading-relaxed text-ink-soft max-w-2xl">
+        The first photo of a session costs more: starting the program measured 2.6 s, and the
+        day's first cut ran 11.6 s before later cuts settled at about 10 s. On a first-ever
+        visit, add the one-time 44.3 MB program download. Your own device will differ, faster
+        or slower. No phone time is printed anywhere on this page: we have never measured
+        one, and a guessed figure would be a claim, not a measurement.
+      </p>
+    </section>
+
+    {cases.map((c) => (
+      <section class="mt-12">
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">{c.name}</h2>
+        <p class="mt-3 leading-relaxed max-w-2xl">{c.hard}</p>
+        <p class="mt-2 font-mono text-sm text-ink-soft">{c.dims} · {c.mp} · warm cut {c.secs} on the test computer</p>
+        <div class="grid gap-4 md:grid-cols-2 mt-4">
+          <figure>
+            <img src={c.original} alt={`The ${c.name} photo before any work`} class="w-full border border-line" loading="lazy" />
+            <figcaption class="font-mono text-xs text-ink-soft mt-1">The photo, as it arrived</figcaption>
+          </figure>
+          <figure>
+            <img src={`/proof/${c.id}-ground.png`} alt={`The ${c.name} cutout on a checkerboard`} class="w-full border border-line" loading="lazy" />
+            <figcaption class="font-mono text-xs text-ink-soft mt-1">The cutout, on a checkerboard so the edges show</figcaption>
+          </figure>
+        </div>
+        <figure class="mt-4">
+          <img src={`/proof/${c.id}-crop.png`} alt={`A 100% crop of the hardest edge of the ${c.name} cutout`} style="width:360px;max-width:100%" class="border border-line" loading="lazy" />
+          <figcaption class="font-mono text-xs text-ink-soft mt-1">100% crop, 360 x 360 pixels lifted from the cutout at full size. Nothing is enlarged or sharpened.</figcaption>
+        </figure>
+        <p class="mt-4 leading-relaxed max-w-2xl"><span class="font-bold">{c.verdict}</span> {c.result}</p>
+        <p class="mt-2 text-sm text-ink-soft">
+          {c.credit} The cutout file itself, exactly as the tool produced it:
+          <a class="underline underline-offset-4" href={`/proof/${c.id}-cutout.png`} download>download the PNG</a>.
+        </p>
+      </section>
+    ))}
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Where it still struggles</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Named from the runs on this page, not from a brochure. Bright chrome and other
+          mirror-like metal can come out half see-through, because a reflection of the
+          background reads as background. Clear glass keeps its rim and edges but its walls
+          can fade, and what sits under the glass can come along at half strength. Against a
+          background that nearly matches the subject, a faint spray of half-clear specks can
+          survive beside the edge. And the program removes backgrounds only: a second person,
+          a chair, a stack of bananas at the frame's edge, anything that reads as part of the
+          scene's subject, is kept, as the market portrait above shows.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How these were made</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The remover is an ISNet program (open weights, listed on the
+          <a class="underline underline-offset-4" href="/credits/">credits page</a>) that runs
+          inside the visitor's browser: the photo never leaves the device, and the cutout is
+          written at the photo's full size. These gallery runs were made by opening the tool
+          page itself in a test browser and picking each photo there, so what is shown is the
+          shipped tool's own output, not a lab version of it. The photos are other people's
+          work, credited under each case with its licence; the test picture is our own
+          drawing. If your photo is one of the hard kinds, expect the range this page shows,
+          the strong cases and the weak ones alike, and
+          <a class="underline underline-offset-4" href="/remove-background/">try the tool</a> on
+          your own picture: the result is free at full size either way.
+        </p>
+      </div>
+    </section>
+  </div>
+</Base>

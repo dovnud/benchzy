@@ -2,11 +2,37 @@
   "pages": {
     "/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/remove-background/": {
       "consoleErrors": [],
       "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      },
       "i18n": {
         "htmlLang": "en",
         "islandLocale": "en",
@@ -21,43 +47,190 @@
     },
     "/compress-pdf/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/compress-image/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/credits/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/ocr-pdf/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/ocr-image/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/merge-pdf/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/split-pdf/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/compress-pdf-to-200kb/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/compress-image-to-50kb/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/size-checker/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/remove-background-full-resolution/": {
       "consoleErrors": [],
       "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      },
       "i18n": {
         "htmlLang": "en",
         "islandLocale": "en",
@@ -70,49 +243,227 @@
         "statusText": "Pick a photo to begin."
       }
     },
+    "/remove-background/quality/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
     "/background-removal/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/vs-remove-bg/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/remove-bg-alternatives/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/remove-bg-december-1/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/remove-bg-api/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/check-it-yourself/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      },
+      "trustI18n": {
+        "htmlLang": "en",
+        "alternates": [
+          "en=/check-it-yourself/",
+          "es=/es/compruebalo-tu-mismo/",
+          "pt-BR=/pt-br/confira-voce-mesmo/",
+          "x-default=/check-it-yourself/"
+        ]
+      }
     },
     "/what-free-means/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      },
+      "trustI18n": {
+        "htmlLang": "en",
+        "alternates": [
+          "en=/what-free-means/",
+          "es=/es/que-significa-gratis-aqui/",
+          "pt-BR=/pt-br/o-que-significa-gratis/",
+          "x-default=/what-free-means/"
+        ]
+      }
     },
     "/tools/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/pdf-tools/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/image-tools/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/es/quitar-fondo-de-imagen-gratis/": {
       "consoleErrors": [],
       "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      },
       "i18n": {
         "htmlLang": "es",
         "islandLocale": "es",
@@ -128,6 +479,19 @@
     "/es/quitar-fondo-resolucion-completa/": {
       "consoleErrors": [],
       "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      },
       "i18n": {
         "htmlLang": "es",
         "islandLocale": "es",
@@ -143,6 +507,19 @@
     "/pt-br/remover-fundo-de-imagem-gratis/": {
       "consoleErrors": [],
       "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      },
       "i18n": {
         "htmlLang": "pt-BR",
         "islandLocale": "pt-BR",
@@ -158,6 +535,19 @@
     "/pt-br/alternativa-gratis-ao-remove-bg/": {
       "consoleErrors": [],
       "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      },
       "i18n": {
         "htmlLang": "pt-BR",
         "islandLocale": "pt-BR",
@@ -172,60 +562,734 @@
     },
     "/batch-compress-pdf/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/batch-merge-pdf/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/batch-split-pdf/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/batch-compress-images/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/batch-convert-images/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/batch-remove-background/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/workflows/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/presets/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/sign-pdf/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/flatten-pdf/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/interleave-pdf/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/protect-pdf/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/unlock-pdf/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/rotate-pdf/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/pdf-page-numbers/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/watermark-pdf/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/extract-images-pdf/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/organize-pdf/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/pdf-metadata/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/jpg-to-pdf/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/pdf-to-jpg/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/compress-pdf-to-50kb/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/compress-pdf-to-100kb/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/compress-pdf-to-500kb/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/compress-pdf-to-1mb/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
     },
     "/compress-pdf-strong/": {
       "consoleErrors": [],
-      "failedRequests": []
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/privacy/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/resize-image/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/batch-resize-images/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/png-to-jpg/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/jpg-to-png/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/webp-to-jpg/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/jpg-to-webp/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/png-to-webp/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/webp-to-png/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/heic-to-jpg/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      }
+    },
+    "/es/que-significa-gratis-aqui/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      },
+      "trustI18n": {
+        "htmlLang": "es",
+        "alternates": [
+          "en=/what-free-means/",
+          "es=/es/que-significa-gratis-aqui/",
+          "pt-BR=/pt-br/o-que-significa-gratis/",
+          "x-default=/what-free-means/"
+        ]
+      }
+    },
+    "/es/compruebalo-tu-mismo/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      },
+      "trustI18n": {
+        "htmlLang": "es",
+        "alternates": [
+          "en=/check-it-yourself/",
+          "es=/es/compruebalo-tu-mismo/",
+          "pt-BR=/pt-br/confira-voce-mesmo/",
+          "x-default=/check-it-yourself/"
+        ]
+      }
+    },
+    "/pt-br/o-que-significa-gratis/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      },
+      "trustI18n": {
+        "htmlLang": "pt-BR",
+        "alternates": [
+          "en=/what-free-means/",
+          "es=/es/que-significa-gratis-aqui/",
+          "pt-BR=/pt-br/o-que-significa-gratis/",
+          "x-default=/what-free-means/"
+        ]
+      }
+    },
+    "/pt-br/confira-voce-mesmo/": {
+      "consoleErrors": [],
+      "failedRequests": [],
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaOk": true,
+      "m8": {
+        "privacyLinked": true,
+        "aggregateGone": true
+      },
+      "trustI18n": {
+        "htmlLang": "pt-BR",
+        "alternates": [
+          "en=/check-it-yourself/",
+          "es=/es/compruebalo-tu-mismo/",
+          "pt-BR=/pt-br/confira-voce-mesmo/",
+          "x-default=/check-it-yourself/"
+        ]
+      }
     }
   },
   "tools": {
     "witness": {
-      "status": "Job done in this page's memory. Network requests during the job: 0. Your file was read, fingerprinted and described without a single request carrying it anywhere.",
-      "verdict": "Requests since the witness started watching (just after this page loaded): 0, every one of them to this site itself, asking for page and program files. Requests with anything attached to them: 0. Requests while the witnessed job was running: 0.",
+      "status": "Job done in this page's memory. Network requests during the job: 0 (the visit counter's own among them: 0). Your file was read, fingerprinted and described without a single request carrying it anywhere.",
+      "verdict": "Requests since the witness started watching (just after this page loaded): 1. Of those, 1 was the visit counter firing as the page opened; the rest are this page asking its own site for page and program files. Requests with anything attached to them: 0. Requests while the witnessed job was running: 0.",
       "spec": "filetest-10page.pdfsize7 KB (7203 bytes)real formatPDF documentfingerprint (SHA-256)f6765f5da45987d67a6aeb21227b65ed…pages10",
-      "liveRows": 0,
-      "zeroDuringJob": true,
+      "liveRows": 1,
+      "beforeCount": "10 files loaded. 9 of them are this page asking its own site for its own parts; 1 is the visit counter firing as the page opened.",
+      "duringTotal": 0,
+      "duringCounter": 0,
+      "withBody": 0,
+      "counterRowsLabelled": 2,
+      "zeroNonCounterDuringJob": true,
+      "witnessOk": true,
       "consoleErrors": [],
       "failedRequests": []
     },
@@ -235,14 +1299,14 @@
         "keys": [
           "benchzy-v1"
         ],
-        "entries": 77,
+        "entries": 148,
         "sample": [
           "/remove-background/",
-          "/_astro/remove-background.astro_astro_type_script_index_0_lang.Uomc4faW.js",
+          "/_astro/remove-background.astro_astro_type_script_index_0_lang.cmlxPEEi.js",
           "/compress-pdf/",
-          "/_astro/compress-pdf.astro_astro_type_script_index_0_lang.CuXhnXa2.js",
+          "/_astro/compress-pdf.astro_astro_type_script_index_0_lang.BMu1qt3j.js",
           "/compress-image/",
-          "/_astro/compress-image.astro_astro_type_script_index_0_lang.Dt5Uhl9H.js"
+          "/_astro/compress-image.astro_astro_type_script_index_0_lang.nSY1b0o6.js"
         ]
       },
       "offlineOk": true,
@@ -251,7 +1315,7 @@
       "failedRequests": []
     },
     "compressImage": {
-      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 9.2 seconds.",
+      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 7.3 seconds.",
       "blobSize": 199856,
       "targetBytes": 204800,
       "within5pct": true,
@@ -271,7 +1335,7 @@
       "failedRequests": []
     },
     "ocr": {
-      "note": "Read 1 page, 177 characters, in 2.3 seconds. Check the text in the box before you use it, especially numbers: this engine has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and the .txt download uses your corrected text.",
+      "note": "Read 1 page, 177 characters, in 1.4 seconds. Check the text in the box before you use it, especially numbers: this reader has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and both downloads use your corrected text: the searchable PDF places your edits back over the page, at the positions of the words they replaced. Keep the --- Page N --- lines in the box; they are how your edits find their page.",
       "checks": {
         "hasInvoice": true,
         "hasNumber": true,
@@ -300,6 +1364,14 @@
       "consoleErrors": [],
       "failedRequests": []
     },
+    "m8SplitZip": {
+      "rows": 12,
+      "zipPath": "/home/hatch/workspace/benchzy-build/verify/m8-split12.zip",
+      "entryCount": 12,
+      "allPdfs": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
     "presetPdf200": {
       "note": "Landed at 88 KB, under your 200 KB target (was 11.11 MB). Photos at 35% size, quality 38.",
       "outputBytes": 90117,
@@ -309,7 +1381,7 @@
       "failedRequests": []
     },
     "presetImage50": {
-      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 8.5 seconds.",
+      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 7.1 seconds.",
       "blobSize": 50112,
       "within5pct": true,
       "consoleErrors": [],
@@ -328,7 +1400,7 @@
     },
     "removeBackground": {
       "ran": true,
-      "times": "Program start: 3.9 s. Cutout: 13.5 s. Full size result: 1200 x 900, 915 KB.",
+      "times": "Program start: 2.8 s. Cutout: 11.0 s. Full size result: 1200 x 900, 915 KB.",
       "status": "Done.",
       "dlName": "test-bg-hard-no-background.png",
       "noSubjectShown": false,
@@ -344,7 +1416,7 @@
     },
     "removeBackgroundEs": {
       "ran": true,
-      "times": "Inicio del programa: 2,9 s. Recorte: 14,3 s. Resultado a tamaño completo: 1200 x 900, 915 KB.",
+      "times": "Inicio del programa: 2,1 s. Recorte: 10,8 s. Resultado a tamaño completo: 1200 x 900, 915 KB.",
       "status": "Listo.",
       "dlName": "test-bg-hard-sin-fondo.png",
       "noSubjectShown": false,
@@ -360,7 +1432,7 @@
     },
     "removeBackgroundPtBr": {
       "ran": true,
-      "times": "Início do programa: 3,3 s. Recorte: 13,9 s. Resultado em tamanho real: 1200 x 900, 915 KB.",
+      "times": "Início do programa: 2,1 s. Recorte: 10,6 s. Resultado em tamanho real: 1200 x 900, 915 KB.",
       "status": "Pronto.",
       "dlName": "test-bg-hard-sem-fundo.png",
       "noSubjectShown": false,
@@ -449,7 +1521,7 @@
     },
     "m6BatchBg": {
       "rows": [
-        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 14.0 sDownload",
+        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 11.1 sDownload",
         "test-photo-realistic-large.jpgno clear subject found; nothing downloaded for this one"
       ],
       "entries": [
@@ -468,7 +1540,7 @@
       "log": "Step: Merge all PDFs into one…Merge: 4 PDFs became one file of 4 pages.Step: Compress PDF to 500 KB…Compress PDF: merged.pdf 11.11 MB to 406.4 KB.",
       "output": {
         "name": "merged-smaller.pdf",
-        "size": 416151
+        "size": 416150
       },
       "outputUnder500k": true,
       "persistsAfterReload": true,
@@ -486,7 +1558,7 @@
       "note": "Strong result: 2 KB, down from 11.11 MB (photos at 12% size, quality 16).",
       "strongBytes": 2066,
       "underPresetLanding": true,
-      "textNote": "We could not make this PDF smaller. It has no photos inside to recompress, and re-saving alone does not shrink a text PDF (on our bench a re-save moved a text PDF from 7,203 bytes to 7,231). Here is your original back, unchanged.",
+      "textNote": "We could not make this PDF smaller. It has no photos inside to recompress, and re-saving alone does not shrink a text PDF (in our tests a re-save moved a text PDF from 7,203 bytes to 7,231). Here is your original back, unchanged.",
       "textBytes": 7203,
       "textUnchanged": true,
       "consoleErrors": [],
@@ -540,6 +1612,1169 @@
       "note": "Flattened: 3 form fields baked into the pages; the finished file has 0 editable fields left, 4.1 KB. The values now print and display as ordinary page content.",
       "fieldsLeft": 0,
       "valueBakedIn": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m8CancelSingle": {
+      "midStatus": "Loading stopped. 3 of 11 pieces are already here and are kept; press start again and the load carries on from there. Nothing was run.",
+      "keptPieces": 3,
+      "totalPieces": 11,
+      "usableAfterCancel": true,
+      "resumedToResult": true,
+      "expectedAborts": "the cancelled chunk requests appear in failedRequests as ERR_ABORTED, by design",
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m8CancelBatch": {
+      "midStatus": "Loading stopped. 3 of 11 pieces are already here and are kept; press start again and the load carries on from there. Nothing was run.",
+      "usableAfterCancel": true,
+      "resumedToResult": true,
+      "zipEntriesAfterResume": 1,
+      "rowsAfterResume": [
+        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 11.0 sDownload",
+        "test-photo-realistic-large.jpgno clear subject found; nothing downloaded for this one"
+      ],
+      "expectedAborts": "the cancelled chunk requests appear in failedRequests as ERR_ABORTED, by design",
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m8BatchCompress100": {
+      "filesRun": 100,
+      "rows": 100,
+      "zipEntries": 100,
+      "printedClaimMatches": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m8BatchConvert100": {
+      "filesRun": 100,
+      "rows": 100,
+      "zipEntries": 100,
+      "printedClaimMatches": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m8BatchMerge50": {
+      "filesRun": 50,
+      "mergedPages": 50,
+      "printedClaimMatches": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m8BatchCompressPdf50": {
+      "filesRun": 50,
+      "rows": 50,
+      "zipEntries": 50,
+      "printedClaimMatches": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m9WeakCrypto": {
+      "srcMentions": 0,
+      "distEnablementsOutsideForkErrorText": []
+    },
+    "m9Protect": {
+      "noPwRefused": true,
+      "wrongRefused": true,
+      "openedPages": 10,
+      "srcPages": 10,
+      "pdfjs": {
+        "noPassword": "PasswordException",
+        "wrongPassword": "PasswordException",
+        "correctPassword": 10
+      },
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m9RoundTrip": {
+      "pages": 10,
+      "isEncrypted": false,
+      "textIdentical": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m9UnlockOpen": {
+      "wrongPasswordRefusedInOpen": true,
+      "pages": 3,
+      "isEncrypted": false,
+      "textEqualsBase": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m9UnlockOwnerOnly": {
+      "specSaysPermissions": true,
+      "pages": 3,
+      "isEncrypted": false,
+      "textEqualsBase": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m10Big": {
+      "accuracy": 0.9921,
+      "copyExact": true,
+      "downloadExact": true,
+      "crossLinks": {
+        "pdfPointsToImage": true,
+        "imagePointsToPdf": true
+      },
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m10Small": {
+      "tipShown": true,
+      "accuracy": 0.9901,
+      "nativeBenchAccuracy": 0.9428,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m10Languages": {
+      "esOk": true,
+      "esAccuracy": 1,
+      "ptOk": true,
+      "ptAccuracy": 1,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m11Resize": {
+      "lockedWidthOnly": {
+        "w": 1000,
+        "h": 750,
+        "bytes": 186977,
+        "type": "image/jpeg"
+      },
+      "lockedHeightOnly": {
+        "w": 800,
+        "h": 600,
+        "bytes": 137213,
+        "type": "image/jpeg"
+      },
+      "percent25": {
+        "w": 1000,
+        "h": 750,
+        "bytes": 186977,
+        "type": "image/jpeg"
+      },
+      "exactFrame": {
+        "w": 1000,
+        "h": 1000,
+        "bytes": 225641,
+        "type": "image/jpeg"
+      },
+      "exactDimsOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m11Flatten": {
+      "px": {
+        "corner": [
+          51,
+          103,
+          153,
+          255
+        ],
+        "center": [
+          223,
+          49,
+          48,
+          255
+        ],
+        "w": 120,
+        "h": 90,
+        "type": "image/jpeg"
+      },
+      "flatOk": true,
+      "centerOk": true,
+      "shapeOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m11Doors": {
+      "/jpg-to-png/": {
+        "fixture": "photo.jpg",
+        "sig": [
+          137,
+          80,
+          78,
+          71,
+          13,
+          10,
+          26,
+          10,
+          0,
+          0,
+          0,
+          13
+        ],
+        "signatureOk": true,
+        "consoleErrors": [],
+        "failedRequests": []
+      },
+      "/webp-to-jpg/": {
+        "fixture": "photo.webp",
+        "sig": [
+          255,
+          216,
+          255,
+          224,
+          0,
+          16,
+          74,
+          70,
+          73,
+          70,
+          0,
+          1
+        ],
+        "signatureOk": true,
+        "consoleErrors": [],
+        "failedRequests": []
+      },
+      "/jpg-to-webp/": {
+        "fixture": "photo.jpg",
+        "sig": [
+          82,
+          73,
+          70,
+          70,
+          58,
+          10,
+          0,
+          0,
+          87,
+          69,
+          66,
+          80
+        ],
+        "signatureOk": true,
+        "consoleErrors": [],
+        "failedRequests": []
+      },
+      "/png-to-webp/": {
+        "fixture": "opaque.png",
+        "sig": [
+          82,
+          73,
+          70,
+          70,
+          96,
+          9,
+          0,
+          0,
+          87,
+          69,
+          66,
+          80
+        ],
+        "signatureOk": true,
+        "consoleErrors": [],
+        "failedRequests": []
+      },
+      "/webp-to-png/": {
+        "fixture": "photo.webp",
+        "sig": [
+          137,
+          80,
+          78,
+          71,
+          13,
+          10,
+          26,
+          10,
+          0,
+          0,
+          0,
+          13
+        ],
+        "signatureOk": true,
+        "consoleErrors": [],
+        "failedRequests": []
+      }
+    },
+    "m11BatchResize50": {
+      "filesRun": 50,
+      "rows": 50,
+      "zipEntries": 50,
+      "printedClaimMatches": true,
+      "firstRow": "photo-001.jpg900x675 to 320x240 · 21.1 KB to 8 KB JPEGDownload",
+      "firstRowWidth320": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m12Rotate": {
+      "angles": [
+        90,
+        90,
+        90,
+        90,
+        90,
+        90,
+        90,
+        90,
+        90,
+        90
+      ],
+      "all90": true,
+      "swap": {
+        "orig": {
+          "w": 612,
+          "h": 792
+        },
+        "out": {
+          "w": 792,
+          "h": 612
+        }
+      },
+      "swapped": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m12RotateRange": {
+      "angles": [
+        0,
+        90,
+        90,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rangeOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m12PageNumbers": {
+      "allStamped": true,
+      "sample": "Page 1 of 5",
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m12PageNumbersRange": {
+      "rangeOk": true,
+      "stamped": [
+        "Page 5 of 6",
+        "Page 6 of 6"
+      ],
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m12Watermark": {
+      "wordsEverywhere": true,
+      "renderDiff": {
+        "pixels": 307200,
+        "moved": 3238
+      },
+      "rangeOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m12Extract": {
+      "zipEntries": [
+        "page-1-image-1.jpg",
+        "page-2-image-2.png",
+        "page-3-image-3.png"
+      ],
+      "jpgIdentical": true,
+      "alphaEqual": true,
+      "opaqueEqual": true,
+      "vectorLine": true,
+      "reportSample": "Page 1, 5 — a 640 x 480 picture: pulled (the stored JPEG, byte for byte).Page 2 — a 120 x 90 picture: pulled (rebuilt as a PNG, with its stored transparency put back).Page 3 — a 640 x 480 picture: pulled (rebuilt from the stored picture data as a PNG).Page 4 — no stored pictures on this page.",
+      "specText": "fileimages.pdfsize now12.4 KBpages5stored pictures3on pages1, 2, 3, 5",
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m12ExtractWeird": {
+      "entries": [
+        "page-1-image-1.png",
+        "page-1-image-2.png",
+        "page-1-image-3.png",
+        "page-1-image-4.png"
+      ],
+      "namedSkips": true,
+      "grayOk": true,
+      "reportSample": "Page 1 — a 4 x 3 picture: pulled (rebuilt from the stored picture data as a PNG).Page 1 — a 3 x 2 picture: pulled (rebuilt from the stored picture data as a PNG).Page 1 — a 2 x 1 picture: pulled (rebuilt from the stored picture data as a PNG).Page 1 — a 8 x 2 picture: pulled (rebuilt from the stored picture data as a PNG).Page 1 — a 4 x 4 picture: NOT pulled. it is a JPEG 2000 picture, and no open",
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m13Organize": {
+      "tiles": 4,
+      "thumbsOk": true,
+      "labels": [
+        "Page 3 · now 1 of 4",
+        "Page 1 · now 2 of 4",
+        "Page 1 · now 3 of 4",
+        "Page 4 · now 4 of 4"
+      ],
+      "markers": [
+        "PAGE-THREE",
+        "PAGE-ONE",
+        "PAGE-ONE",
+        "PAGE-FOUR"
+      ],
+      "orderOk": true,
+      "images": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "imagesOk": true,
+      "titleKept": true,
+      "render": {
+        "w": 640,
+        "h": 480,
+        "nonWhiteSamples": 19544,
+        "pages": 4
+      },
+      "renderOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m13OrganizeRefuseEmpty": {
+      "lastState": {
+        "tiles": 1,
+        "delDisabled": true,
+        "noteShown": true,
+        "noteText": "At least one page has to stay in the document, so the last page cannot be removed. A document with no pages is not a document."
+      },
+      "pages": 1,
+      "oneMarker": "PAGE-FOUR",
+      "refuseOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m13MetaView": {
+      "viewSample": "titleQuarterly Report (Final)authorJo ExamplesubjectBoard paperskeywordsalpha beta gammacreatorBench Creator 1.0producerBench Producer 2.0creationdateD:20250115103000Z — read as: 15 January 2025, 10:30:00moddateD:20250620081500Z — read as: 20 June 2025, 08:15:",
+      "showsExactly": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m13MetaStrip": {
+      "backKeys": [],
+      "gettersEmpty": true,
+      "pdfinfoClean": true,
+      "viewBlank": true,
+      "pages": 2,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m13MetaSet": {
+      "title": "Gate Title 13",
+      "author": "Gate Author 13",
+      "subjectKept": "Board papers",
+      "setOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m14JpgToPdf": {
+      "note": "3 pictures became one PDF of 3 pages, 3.3 KB, each page sized to its picture. JPEG and PNG pictures went in exactly as stored, with no recompression. 1 WebP picture was rebuilt as PNG inside the PDF (a PDF cannot hold WebP; PNG keeps every pixel, so the picture is unchanged).",
+      "order": [
+        "img-blue.webp",
+        "img-red.jpg",
+        "img-green.png"
+      ],
+      "orderOk": true,
+      "sizes": [
+        [
+          400,
+          400
+        ],
+        [
+          300,
+          200
+        ],
+        [
+          200,
+          300
+        ]
+      ],
+      "dims": [
+        [
+          400,
+          400
+        ],
+        [
+          300,
+          200
+        ],
+        [
+          200,
+          300
+        ]
+      ],
+      "centers": {
+        "1": [
+          40,
+          80,
+          200
+        ],
+        "2": [
+          201,
+          40,
+          30
+        ],
+        "3": [
+          30,
+          160,
+          60
+        ]
+      },
+      "redBytesOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m14JpgToPdfA4": {
+      "page": [
+        595.28,
+        841.89
+      ],
+      "a4Ok": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m14PdfToJpgPrint": {
+      "note": "5 pages became 5 JPG pictures at print size (200 DPI) (page 1: 1700 x 2200 pixels), packed into one ZIP, 253.4 KB in all. The words on the pages are part of the pictures now: they cannot be selected or searched as text.",
+      "entries": 5,
+      "checks": [
+        {
+          "name": "pages5-page-1.jpg",
+          "format": "jpeg",
+          "w": 1700,
+          "h": 2200,
+          "band": [
+            201,
+            40,
+            30
+          ],
+          "bandOk": true,
+          "dark": 1743
+        },
+        {
+          "name": "pages5-page-2.jpg",
+          "format": "jpeg",
+          "w": 1700,
+          "h": 2200,
+          "band": [
+            30,
+            160,
+            60
+          ],
+          "bandOk": true,
+          "dark": 1721
+        },
+        {
+          "name": "pages5-page-3.jpg",
+          "format": "jpeg",
+          "w": 1700,
+          "h": 2200,
+          "band": [
+            40,
+            80,
+            201
+          ],
+          "bandOk": true,
+          "dark": 2067
+        },
+        {
+          "name": "pages5-page-4.jpg",
+          "format": "jpeg",
+          "w": 1700,
+          "h": 2200,
+          "band": [
+            230,
+            140,
+            20
+          ],
+          "bandOk": true,
+          "dark": 1892
+        },
+        {
+          "name": "pages5-page-5.jpg",
+          "format": "jpeg",
+          "w": 1700,
+          "h": 2200,
+          "band": [
+            130,
+            61,
+            180
+          ],
+          "bandOk": true,
+          "dark": 1676
+        }
+      ],
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m14PdfToJpgScreen": {
+      "entries": 5,
+      "checks": [
+        {
+          "name": "pages5-page-1.png",
+          "format": "png",
+          "w": 816,
+          "h": 1056,
+          "band": [
+            200,
+            40,
+            30
+          ],
+          "bandOk": true,
+          "dark": 393
+        },
+        {
+          "name": "pages5-page-2.png",
+          "format": "png",
+          "w": 816,
+          "h": 1056,
+          "band": [
+            30,
+            160,
+            60
+          ],
+          "bandOk": true,
+          "dark": 394
+        },
+        {
+          "name": "pages5-page-3.png",
+          "format": "png",
+          "w": 816,
+          "h": 1056,
+          "band": [
+            40,
+            80,
+            200
+          ],
+          "bandOk": true,
+          "dark": 471
+        },
+        {
+          "name": "pages5-page-4.png",
+          "format": "png",
+          "w": 816,
+          "h": 1056,
+          "band": [
+            230,
+            140,
+            20
+          ],
+          "bandOk": true,
+          "dark": 440
+        },
+        {
+          "name": "pages5-page-5.png",
+          "format": "png",
+          "w": 816,
+          "h": 1056,
+          "band": [
+            130,
+            60,
+            180
+          ],
+          "bandOk": true,
+          "dark": 377
+        }
+      ],
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m14PdfToJpgSingle": {
+      "dlName": "pages1-page-1.png",
+      "format": "png",
+      "w": 816,
+      "h": 1056,
+      "singleOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m14PdfToJpgStress": {
+      "stressMs": 1286,
+      "entries": 50,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m14Preset50k": {
+      "note": "Landed at 25.1 KB, under your 50 KB target (was 11.11 MB). Photos at 25% size, quality 38.",
+      "outputBytes": 25696,
+      "landed": true,
+      "honest": false,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m15HeicToJpg": {
+      "note": "HEIC, 348.9 KB → JPG, 213.4 KB (quality 90). The photo is 1200 x 900 px.",
+      "meta": {
+        "w": 1200,
+        "h": 900,
+        "type": "image/jpeg",
+        "bytes": 218528,
+        "corners": {
+          "TL": [
+            168,
+            250,
+            202
+          ],
+          "TR": [
+            178,
+            249,
+            173
+          ],
+          "BL": [
+            168,
+            199,
+            194
+          ],
+          "BR": [
+            178,
+            200,
+            162
+          ]
+        },
+        "centreMean": [
+          164,
+          34,
+          126
+        ]
+      },
+      "jpegMagic": true,
+      "wasmServed": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m15HeicUpright": {
+      "note": "HEIC, 2.4 KB → JPG, 3.4 KB (quality 90). The photo is 400 x 300 px. It was stored turned, with a note saying how it stands; this copy is upright.",
+      "meta": {
+        "w": 400,
+        "h": 300,
+        "type": "image/jpeg",
+        "bytes": 3466,
+        "corners": {
+          "TL": [
+            221,
+            40,
+            31
+          ],
+          "TR": [
+            29,
+            200,
+            60
+          ],
+          "BL": [
+            30,
+            60,
+            220
+          ],
+          "BR": [
+            240,
+            219,
+            40
+          ]
+        },
+        "centreMean": [
+          131,
+          123,
+          131
+        ]
+      },
+      "upright": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m15HeicTenBit": {
+      "note": "HEIC, 582 B → JPG, 794 B (quality 90). The photo is 256 x 64 px. The original holds more brightness range than a JPG can show (it is a 10-bit photo); this copy is in the standard range.",
+      "meta": {
+        "w": 256,
+        "h": 64,
+        "type": "image/jpeg",
+        "bytes": 794,
+        "corners": {
+          "TL": [
+            30,
+            30,
+            30
+          ],
+          "TR": [
+            225,
+            225,
+            225
+          ],
+          "BL": [
+            30,
+            30,
+            30
+          ],
+          "BR": [
+            225,
+            225,
+            225
+          ]
+        },
+        "centreMean": [
+          null,
+          null,
+          null
+        ]
+      },
+      "tenOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m15HeicResizeDoor": {
+      "meta": {
+        "w": 600,
+        "h": 450,
+        "type": "image/jpeg",
+        "bytes": 93504,
+        "corners": {
+          "TL": [
+            206,
+            236,
+            150
+          ],
+          "TR": [
+            136,
+            237,
+            171
+          ],
+          "BL": [
+            206,
+            222,
+            195
+          ],
+          "BR": [
+            138,
+            223,
+            220
+          ]
+        },
+        "centreMean": [
+          142,
+          63,
+          127
+        ]
+      },
+      "rsOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m15HeicBatchDoor": {
+      "entries": [
+        {
+          "name": "photo.webp",
+          "size": 56944
+        }
+      ],
+      "bcOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m15HeicCompressDoor": {
+      "spec": "filephoto.heicformatimage/heifsize now348.9 KBdimensions1200 x 900target200 KB",
+      "status": "Done.",
+      "ciOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m15HeicOcrDoor": {
+      "text": "The quick brown fox 12345",
+      "accuracy": 1,
+      "ocOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m16Picker": {
+      "initial": {
+        "merge": false,
+        "compress-pdf": false,
+        "split": false,
+        "stamp": false,
+        "compress-image": false,
+        "remove-bg": false,
+        "ocr": false
+      },
+      "initialNote": "A chain works on one kind of file: PDF steps and photo steps are not mixed, because a step handed the other kind passes it through untouched. Read the words (OCR) takes either kind and ends the chain with text.",
+      "afterImage": {
+        "merge": true,
+        "compress-pdf": true,
+        "split": true,
+        "stamp": true,
+        "compress-image": false,
+        "remove-bg": false,
+        "ocr": false
+      },
+      "imageNote": "This chain works on photos, so the PDF steps are not offered: handed a photo, they would pass it through untouched and the step would do nothing. Start a new chain for PDF steps. Read the words (OCR) still fits: it reads photos too, and ends the chain with text.",
+      "afterPdf": {
+        "merge": false,
+        "compress-pdf": false,
+        "split": false,
+        "stamp": false,
+        "compress-image": true,
+        "remove-bg": true,
+        "ocr": false
+      },
+      "pdfNote": "This chain works on PDFs, so the photo steps are not offered: handed a PDF, they would pass it through untouched and the step would do nothing. Start a new chain for photo steps. Read the words (OCR) still fits: it reads PDFs too, and ends the chain with text.",
+      "runEnabledOk": true,
+      "ocrAllDisabled": {
+        "merge": true,
+        "compress-pdf": true,
+        "split": true,
+        "stamp": true,
+        "compress-image": true,
+        "remove-bg": true,
+        "ocr": true
+      },
+      "ocrNote": "Read the words (OCR) is in this chain. It turns files into text, so the chain ends there: no step can be added after it. Remove it if you want to keep building.",
+      "runBlockedAfterMove": true,
+      "warningShown": true,
+      "pickerOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m16OcrChainImage": {
+      "accuracy": 0.9921,
+      "noteShown": true,
+      "log": "Step: Read the words (OCR) → text…Read words: fixture-big.png (148.3 KB) → 509 characters of text.",
+      "ocrOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m16OcrChainPdf": {
+      "hasInvoice": true,
+      "hasNumber": true,
+      "chars": 177,
+      "pdfOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m16SellerChain": {
+      "cutoutOnly": {
+        "type": "image/png",
+        "size": 936993,
+        "w": 1200,
+        "h": 900,
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transFrac": 0.578,
+        "opaqueFrac": 0.236
+      },
+      "cutOk": true,
+      "seller": {
+        "type": "image/png",
+        "size": 50841,
+        "w": 185,
+        "h": 139,
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transFrac": 0.574,
+        "opaqueFrac": 0.217
+      },
+      "sellerOk": true,
+      "logTail": "Step: Remove the background…Remove background: test-bg-hard.png (33.1 KB) cut out at full size 1200x900, in 10.3 s → test-bg-hard-no-background.png (915 KB).Step: Compress image to 50 KB…Compress image: test-bg-hard-no-background.png has see-through parts, so it stays a PNG: 915 KB to 49.6 KB at 185x139.",
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m17ProofCheck": {
+      "passed": true
+    },
+    "m17ProofPage": {
+      "fromTool": true,
+      "imgs": 18,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m18HeicRemover": {
+      "specShowsHeic": true,
+      "cutHeic": {
+        "type": "image/png",
+        "size": 1297218,
+        "w": 1200,
+        "h": 900,
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transFrac": 0.547,
+        "opaqueFrac": 0.236
+      },
+      "cutJpg": {
+        "type": "image/png",
+        "size": 1343215,
+        "w": 1200,
+        "h": 900,
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transFrac": 0.565,
+        "opaqueFrac": 0.232
+      },
+      "sameClass": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m18HeicBatch": {
+      "listText": "1. bg-twin.heic1200 x 900 · 322.1 KBRemove",
+      "rowsText": "bg-twin.heiccut out at full size 1200x900, 1.24 MB, in 11.2 sDownload",
+      "ok": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m18HeicChain": {
+      "cut": {
+        "type": "image/png",
+        "size": 1297218,
+        "w": 1200,
+        "h": 900,
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "transFrac": 0.547,
+        "opaqueFrac": 0.236
+      },
+      "ok": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m18OcrCorrectedPdf": {
+      "from": "12450",
+      "to": "124.50",
+      "carriesFix": true,
+      "flawGone": true,
+      "statusText": "Done. The searchable PDF carries your corrected text: your edits in the box were placed back over the page, at the positions of the words they replaced.",
+      "layerSample": "INVOICE 2026-TEST-0042 Date: 7   November 2026 tem:Widgetassembly Quantity: 3 Price: 4150  Total due: 124.50 This page isanimage only. OCR mustread it thereisno text layer.\n",
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m18Landings": {
+      "compress-pdf-to-100kb": {
+        "target": "100 KB",
+        "outputBytes": 90117,
+        "printed": "landed at 88 KB",
+        "printedOk": true,
+        "pointersOk": true,
+        "consoleErrors": [],
+        "failedRequests": []
+      },
+      "compress-pdf-to-50kb": {
+        "target": "50 KB",
+        "outputBytes": 25696,
+        "printed": "landed at 25.1 KB",
+        "printedOk": true,
+        "pointersOk": true,
+        "consoleErrors": [],
+        "failedRequests": []
+      }
+    },
+    "m18FastLanes": {
+      "lanes": [
+        {
+          "href": "/compress-image/",
+          "text": "Shrink a photo for a form →"
+        },
+        {
+          "href": "/heic-to-jpg/",
+          "text": "My iPhone photo will not upload →"
+        },
+        {
+          "href": "/compress-pdf-to-50kb/",
+          "text": "Get files under a visa or portal limit →"
+        },
+        {
+          "href": "/remove-background/",
+          "text": "Cut out a product photo →"
+        }
+      ],
+      "lanesOk": true,
+      "landingsOk": [
+        {
+          "href": "/compress-image/",
+          "h1": "Compress image to exact KB",
+          "ok": true,
+          "errors": [],
+          "failed": []
+        },
+        {
+          "href": "/heic-to-jpg/",
+          "h1": "HEIC to JPG",
+          "ok": true,
+          "errors": [],
+          "failed": []
+        },
+        {
+          "href": "/compress-pdf-to-50kb/",
+          "h1": "Compress PDF to 50 KB",
+          "ok": true,
+          "errors": [],
+          "failed": []
+        },
+        {
+          "href": "/remove-background/",
+          "h1": "Remove background",
+          "ok": true,
+          "errors": [],
+          "failed": []
+        }
+      ],
+      "allLand": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m18Redirects": {
+      "hOk": true
+    },
+    "m18MetaDates": {
+      "datesOk": true,
+      "viewSample": "titleQuarterly Report (Final)authorJo ExamplesubjectBoard paperskeywordsalpha beta gammacreatorBench Creator 1.0producerBench Producer 2.0creationdateD:20250115103000Z — read as: 15 January 2025, 10:30:00moddateD:20250620081500Z — read as: 20 June 2025, 08:15:00pdf version1.7pages2file size1.5 KB",
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m18ProtectFloor": {
+      "statusText": "That password is 10 characters. The minimum here is 12: length is what protects you, because a longer password takes far longer to guess. Add a few more words you will remember.",
+      "stillHidden": true,
+      "floorOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m19GaHome": {
+      "ga": {
+        "js": [
+          "https://www.googletagmanager.com/gtag/js?id=G-PSWNWPP7PY"
+        ],
+        "collects": [
+          "https://www.google-analytics.com/g/collect?v=2&tid=G-PSWNWPP7PY&en=page_view"
+        ]
+      },
+      "gaHomeOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m19Privacy": {
+      "privOk": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m19BgSendsNothing": {
+      "requestsDuringRun": 1,
+      "withBody": 0,
+      "crossOrigin": [],
+      "strayCrossOrigin": [],
+      "bgSendOk": true,
       "consoleErrors": [],
       "failedRequests": []
     }

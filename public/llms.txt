@@ -1,37 +1,62 @@
 # Benchzy
 
-> Benchzy is a workshop of free file tools that run inside the visitor's web browser. Files are processed on the visitor's own device and are never uploaded; there is no server that receives them. There are no accounts, no sign-up, no daily counters, no credits and no watermarks. Output is produced at the file's full size. The site is paid for by ads on the pages; an ad can see which page a visitor is on and can never see their file.
+> Benchzy is a workshop of free file tools that run inside the visitor's web browser. Files are processed on the visitor's own device and are never uploaded; there is no server that receives them. There are no accounts, no sign-up, no daily counters, no credits and no watermarks. Output is produced at the file's full size. The site will be paid for by ads on the pages; no ads run yet. When ads come, an ad will be able to see which page a visitor is on and will never be able to see their file.
 
 ## Tools
 
 - [Remove background](https://benchzy.com/remove-background/): Remove the background from a photo at full size, free, in the browser. The first visit downloads the removal program (44.3 MB, in 11 hash-checked pieces); the photo itself is never sent anywhere.
+- [Background removal quality proof](https://benchzy.com/remove-background/quality/): Six hard photos (white on white, fine hair, a busy market portrait, glass, chrome, and the project's drawn test picture) run through the site's own remover, with the unedited outputs, 100% edge crops, the two cases where it visibly struggles, and the measured cut times on the test computer.
 - [Free background remover, full resolution](https://benchzy.com/remove-background-full-resolution/): The same remover, on the page that states the full-size promise and the dated facts about the alternative that closes 1 December 2026.
 - [Compress PDF to an exact size](https://benchzy.com/compress-pdf/): Shrink a PDF to a target the visitor picks (200 KB, 500 KB, 2 MB or a custom size), in the browser, with the exact final size shown before download.
 - [Compress PDF to 200 KB](https://benchzy.com/compress-pdf-to-200kb/): The compress-PDF tool with the 200 KB target preset, for form portals with a hard 200 KB limit.
+- [Compress PDF to 50 KB](https://benchzy.com/compress-pdf-to-50kb/): The compress-PDF tool with the 50 KB target preset, for visa and passport portals with a hard 50 KB limit. When a file cannot reach it, the result states the smallest size reached.
+- [Compress PDF to 100 KB](https://benchzy.com/compress-pdf-to-100kb/): The compress-PDF tool with the 100 KB target preset, for government form portals and application systems with a hard 100 KB limit.
+- [Compress PDF to 500 KB](https://benchzy.com/compress-pdf-to-500kb/): The compress-PDF tool with the 500 KB target preset, for email attachments, job boards and university portals.
+- [Compress PDF to 1 MB](https://benchzy.com/compress-pdf-to-1mb/): The compress-PDF tool with the 1 MB target preset, for inboxes, contact forms and content systems that cap an upload at 1 MB.
 - [Compress image to an exact KB](https://benchzy.com/compress-image/): Shrink a photo to an exact target size in KB, searched by quality and dimensions, in the browser; the achieved size and its distance from the target are shown.
 - [Compress image to 50 KB](https://benchzy.com/compress-image-to-50kb/): The compress-image tool with the 50 KB target preset, for forms and listings.
 - [Merge PDF](https://benchzy.com/merge-pdf/): Combine as many PDFs as the device can hold into one file, in the visitor's order. Pages are copied, not recompressed.
 - [Split PDF](https://benchzy.com/split-pdf/): Pull a page range out of a PDF as its own file, or take every page as a separate PDF.
 - [Read a scanned PDF (OCR)](https://benchzy.com/ocr-pdf/): Turn a scanned PDF into checkable, editable text plus a searchable PDF. Pages are rendered at 300 DPI and read in the browser.
+- [Read the words in a photo (OCR)](https://benchzy.com/ocr-image/): Read the words out of a photo or screenshot into checkable, editable text you can copy or download as a .txt. English, Spanish and Portuguese, read in the browser.
 - [File size checker](https://benchzy.com/size-checker/): Read any file's exact size in bytes, its real format (from its bytes, not its name), dimensions, page count or duration, and whether it fits common portal limits.
 - [Batch compress PDF](https://benchzy.com/batch-compress-pdf/): A folder of PDFs worked to one target size in a single run, with a result line per file and one ZIP out. The job the big suites sell as a paid extra.
 - [Batch merge PDF](https://benchzy.com/batch-merge-pdf/): Pick a whole folder at once, sort the tray by file name, and merge it into one PDF.
 - [Batch split PDF](https://benchzy.com/batch-split-pdf/): One page range cut from every file in a folder in a single run.
 - [Batch compress images](https://benchzy.com/batch-compress-images/): A folder of photos worked to one exact KB target in a single run, with a result line per file and one ZIP out.
 - [Batch convert images](https://benchzy.com/batch-convert-images/): A folder converted to JPG, PNG or WebP at one quality, with an optional maximum width.
+- [Resize image](https://benchzy.com/resize-image/): Resize one photo to exact pixels, by percent, or from presets (passport 413 x 531 px, square post 1080 x 1080, video thumbnail 1280 x 720, a 1600 px long side), in the browser. Dimensions and bytes printed before and after; enlarging is stated to add no detail.
+- [Batch resize images](https://benchzy.com/batch-resize-images/): A folder resized to one pixel size in a single run, every photo keeping its own format and shape inside the frame. Tested with 50 files in one run.
+- [HEIC to JPG](https://benchzy.com/heic-to-jpg/): Convert one iPhone HEIC or HEIF photo to a JPG, PNG or WebP in the browser, at full size, turned upright if it was stored turned. The brightness-range change is stated before the run; a Live Photo's still converts and the result line says when a file also holds a video.
+- [PNG to JPG](https://benchzy.com/png-to-jpg/): Convert one PNG to a JPG in the browser. Transparent parts are painted over a colour the visitor picks (white by default), stated before the run.
+- [JPG to PNG](https://benchzy.com/jpg-to-png/): Convert one JPG to a PNG in the browser: an exact copy of the picture as it is. The picture does not improve and the file grows; both are stated on the page.
+- [WebP to JPG](https://benchzy.com/webp-to-jpg/): Convert one WebP to a JPG in the browser, for editors and portals that refuse WebP. Transparent parts are painted over a colour the visitor picks.
+- [JPG to WebP](https://benchzy.com/jpg-to-webp/): Convert one JPG to a WebP in the browser, for websites, at a picked quality.
+- [PNG to WebP](https://benchzy.com/png-to-webp/): Convert one PNG to a WebP in the browser, for websites: smaller, transparency kept, a lossy write at a picked quality.
+- [WebP to PNG](https://benchzy.com/webp-to-png/): Convert one WebP to a PNG in the browser: an exact copy of the picture, transparency kept, for editing and archiving.
 - [Batch remove background](https://benchzy.com/batch-remove-background/): A folder of photos cut out at full size in one run, one ZIP of transparent PNGs.
 - [Compress PDF, strong](https://benchzy.com/compress-pdf-strong/): Strong PDF compression with no target: the smallest honest result from the deep end of the ladder, with the photo trade printed on the result.
 - [Interleave PDF](https://benchzy.com/interleave-pdf/): Deal pages from two PDFs together (A1, B1, A2, B2), with the second file readable back to front. The duplex scan repair.
 - [Sign PDF](https://benchzy.com/sign-pdf/): Draw or type a signature and place it on your own PDF, drawn into the page itself. Self-signing only: no signing requests to others, no audit certificates, no legal e-signature claim.
 - [Flatten PDF](https://benchzy.com/flatten-pdf/): Bake a filled form's answers into the pages so the file displays and prints the same everywhere. Annotations that are not form fields are counted and reported, never silently dropped.
-- [Workflows](https://benchzy.com/workflows/): Chain the benches (merge, shrink, split, stamp) into named chains saved in the visitor's browser, then run a chain on dropped files.
-- [Preset chains](https://benchzy.com/presets/): Ready-made workflow chains: invoice pack, portal pack, paid pack, seller photos.
+- [Protect PDF](https://benchzy.com/protect-pdf/): Put a real password on your own PDF, AES-256, inside the browser. The password is typed and used on the page only; there is no recovery if it is forgotten.
+- [Unlock PDF](https://benchzy.com/unlock-pdf/): Take the password off your own PDF, inside the browser. An open password must be known and typed; a permissions password on a file that already opens comes off without typing one.
+- [Rotate PDF](https://benchzy.com/rotate-pdf/): Turn every page of a PDF, or one page range, by a quarter or half turn, in the browser. The turn is a setting each page carries inside the file, so the pages are not redrawn and nothing loses quality.
+- [Add page numbers](https://benchzy.com/pdf-page-numbers/): Stamp page numbers onto a PDF's pages themselves, in the browser: bottom centre, the bottom outside corner, or top centre, as "Page X of Y" or a plain number, starting at the number the visitor gives.
+- [Watermark PDF](https://benchzy.com/watermark-pdf/): Stamp a short text (DRAFT, CONFIDENTIAL, or the visitor's own words) across a PDF's pages, diagonal or straight, at a picked size and strength, in the browser. Printed into the pages; the page states plainly that it is a label, not a lock.
+- [Extract images from PDF](https://benchzy.com/extract-images-pdf/): Pull the pictures stored inside a PDF out as files, in the browser: stored JPEGs byte for byte, other pictures rebuilt as PNGs with their stored transparency put back, and a written report naming anything that cannot be pulled, with its reason.
+- [Remove and organise PDF pages](https://benchzy.com/organize-pdf/): See a picture of every page of a PDF, take pages out, drag the rest into order, or copy a page, in the browser. Pages move inside the file and are never rebuilt, so words, pictures, filled form answers and bookmarks come through; the page lists its honest catches (a removed page's contents stay in the file's storage, and a bookmark to a removed page leads nowhere).
+- [PDF metadata](https://benchzy.com/pdf-metadata/): See the details a PDF stores about itself (title, author, subject, keywords, maker, dates), exactly as stored, in the browser. Change the title or author, or wipe the whole label card including the XMP second copy. The page states plainly that wiping the card is not cleaning the document.
+- [JPG to PDF](https://benchzy.com/jpg-to-pdf/): Turn JPG, PNG and WebP pictures into one PDF, one picture per page, in the visitor's order, in the browser. Each page is sized to its picture, or the pictures are fitted onto A4 or Letter pages. JPEG and PNG pictures go in exactly as stored; a WebP picture is rebuilt as a PNG inside the PDF, losslessly.
+- [PDF to JPG](https://benchzy.com/pdf-to-jpg/): Turn every page of a PDF into a picture, in the browser: JPG at quality 92 or exact PNG, at screen size (96 DPI) or print size (200 DPI). A one-page file returns the picture itself; a longer one returns one ZIP with the pictures named in page order. The words on the pages become part of the pictures.
+- [Workflows](https://benchzy.com/workflows/): Chain the tools together (merge, shrink, split, stamp, remove a background, read the words) into named chains saved in the visitor's browser, then run a chain on dropped files.
+- [Preset chains](https://benchzy.com/presets/): Ready-made workflow chains: invoice pack, portal pack, paid pack, seller photos, seller cutouts.
 
 ## Tool hubs
 
 - [All tools](https://benchzy.com/tools/): Every Benchzy tool on one page.
-- [PDF tools](https://benchzy.com/pdf-tools/): The PDF bench: compress to an exact size, merge, split, read scans.
-- [Image tools](https://benchzy.com/image-tools/): The image bench: compress to an exact KB, size checker, background removal.
+- [PDF tools](https://benchzy.com/pdf-tools/): PDF tools: compress to an exact size, merge, split, read scans.
+- [Image tools](https://benchzy.com/image-tools/): Image tools: compress to an exact KB, size checker, background removal.
 - [Background removal](https://benchzy.com/background-removal/): The background-removal workshop: the remover, the full-resolution page, and the shutdown pages below.
 
 ## The remove.bg shutdown, in English
@@ -52,4 +77,9 @@
 
 - [What free means here](https://benchzy.com/what-free-means/): The written commitment: no accounts, no counters, no credits, no watermarks, no download held for payment, no smaller free size, no upload — and the one real limit, the visitor's device.
 - [Check it yourself](https://benchzy.com/check-it-yourself/): The no-upload proof. Run a job while the page lists every request it makes, live, or follow the steps to check in the browser's own network panel.
+- [Privacy](https://benchzy.com/privacy/): What the server keeps (routine request logs only), what the browser stores on the visitor's device, the ads position, and what the site does not protect a visitor from.
+- [Qué significa gratis aquí (Español)](https://benchzy.com/es/que-significa-gratis-aqui/): The what-free-means commitment in Spanish (in-house draft, pending human review).
+- [Compruébalo tú mismo (Español)](https://benchzy.com/es/compruebalo-tu-mismo/): The no-upload proof page in Spanish (in-house draft, pending human review).
+- [O que significa grátis aqui (Português)](https://benchzy.com/pt-br/o-que-significa-gratis/): The what-free-means commitment in Brazilian Portuguese (in-house draft, pending human review).
+- [Confira você mesmo (Português)](https://benchzy.com/pt-br/confira-voce-mesmo/): The no-upload proof page in Brazilian Portuguese (in-house draft, pending human review).
 - [Credits and licences](https://benchzy.com/credits/): Every engine, model and library Benchzy runs, with its licence.

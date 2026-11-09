@@ -1,0 +1,39 @@
+PAGE / errors: 0 failed: 0 []
+PAGE /remove-background/ errors: 0 failed: 0 []
+I18N /remove-background/ {"htmlLang":"en","islandLocale":"en","alternates":["en=/remove-background/","es=/es/quitar-fondo-de-imagen-gratis/","pt-BR=/pt-br/remover-fundo-de-imagem-gratis/","x-default=/remove-background/"],"statusText":"Pick a photo to begin."}
+PAGE /compress-pdf/ errors: 0 failed: 0 []
+PAGE /compress-image/ errors: 0 failed: 0 []
+PAGE /credits/ errors: 0 failed: 0 []
+PAGE /ocr-pdf/ errors: 0 failed: 0 []
+PAGE /merge-pdf/ errors: 0 failed: 0 []
+PAGE /split-pdf/ errors: 0 failed: 0 []
+PAGE /compress-pdf-to-200kb/ errors: 0 failed: 0 []
+PAGE /compress-image-to-50kb/ errors: 0 failed: 0 []
+PAGE /size-checker/ errors: 0 failed: 0 []
+PAGE /remove-background-full-resolution/ errors: 0 failed: 0 []
+I18N /remove-background-full-resolution/ {"htmlLang":"en","islandLocale":"en","alternates":["en=/remove-background-full-resolution/","es=/es/quitar-fondo-resolucion-completa/","pt-BR=/pt-br/alternativa-gratis-ao-remove-bg/","x-default=/remove-background-full-resolution/"],"statusText":"Pick a photo to begin."}
+PAGE /background-removal/ errors: 0 failed: 0 []
+PAGE /vs-remove-bg/ errors: 0 failed: 0 []
+PAGE /remove-bg-alternatives/ errors: 0 failed: 0 []
+PAGE /remove-bg-december-1/ errors: 0 failed: 0 []
+file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/LifecycleWatcher.js:33
+    #error = new Error('LifecycleWatcher terminated');
+             ^
+
+Error: Navigating frame was detached
+    at <instance_members_initializer> (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/LifecycleWatcher.js:33:14)
+    at new LifecycleWatcher (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/LifecycleWatcher.js:37:16)
+    at CdpFrame.goto (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/Frame.js:152:29)
+    at CdpFrame.<anonymous> (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/util/decorators.js:101:27)
+    at CdpPage.goto (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/api/Page.js:582:43)
+    at openPage (file:///home/hatch/workspace/benchzy-build/verify/verify.mjs:67:16)
+    at async file:///home/hatch/workspace/benchzy-build/verify/verify.mjs:94:38 {
+  cause: Error: LifecycleWatcher disposed
+      at LifecycleWatcher.dispose (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/LifecycleWatcher.js:170:29)
+      at CdpFrame.goto (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/Frame.js:176:25)
+      at async CdpPage.goto (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/api/Page.js:582:20)
+      at async openPage (file:///home/hatch/workspace/benchzy-build/verify/verify.mjs:67:5)
+      at async file:///home/hatch/workspace/benchzy-build/verify/verify.mjs:94:38
+}
+
+Node.js v24.22.1

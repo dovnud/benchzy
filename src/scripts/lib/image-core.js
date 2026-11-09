@@ -12,6 +12,7 @@ import pngEncode, { init as initPngEnc } from '@jsquash/png/encode.js';
 import webpDecode, { init as initWebpDec } from '@jsquash/webp/decode.js';
 import webpEncode, { init as initWebpEnc } from '@jsquash/webp/encode.js';
 import resize, { initResize } from '@jsquash/resize';
+import { isHeifFile, decodeHeicToImageData } from './heif-core.js';
 
 let inited = false;
 
@@ -32,6 +33,14 @@ export async function initImageCodecs() {
 }
 
 export async function decodeImageFile(f, buf) {
+  // HEIC/HEIF (iPhone photos): the libheif decoder, loaded only for
+  // these files (milestone 15, lib/heif-core.js). Checked before the
+  // type tests because a HEIC file's reported type is unreliable
+  // (often empty); the check sniffs the file's own bytes.
+  if (isHeifFile(f, buf)) {
+    const r = await decodeHeicToImageData(buf);
+    return r.imageData;
+  }
   if (f.type === 'image/jpeg') return jpegDecode(buf);
   if (f.type === 'image/png') return pngDecode(buf);
   if (f.type === 'image/webp') return webpDecode(buf);
@@ -46,6 +55,36 @@ export async function decodeImageFile(f, buf) {
 
 export async function resizeImageData(img, width, height) {
   return resize(img, { width, height });
+}
+
+// True when any pixel is not fully opaque. JPEG cannot hold see-through
+// pixels at all, so the doors that end in JPEG check this before they
+// encode and paint the transparent parts over a colour the visitor
+// picked (milestone 11). The scan is a plain alpha-channel walk; even
+// a 4000x3000 photo is a few milliseconds.
+export function hasAlpha(img) {
+  const d = img.data;
+  for (let i = 3; i < d.length; i += 4) {
+    if (d[i] !== 255) return true;
+  }
+  return false;
+}
+
+// Composite an image over one solid colour (a CSS hex like '#ffffff')
+// and return the flattened pixels. Semi-transparent pixels blend with
+// the colour exactly the way a browser would show them on a page of
+// that colour. Fully opaque input comes back pixel-identical.
+export function flattenOnto(img, color) {
+  const src = document.createElement('canvas');
+  src.width = img.width; src.height = img.height;
+  src.getContext('2d').putImageData(img, 0, 0);
+  const out = document.createElement('canvas');
+  out.width = img.width; out.height = img.height;
+  const ctx = out.getContext('2d');
+  ctx.fillStyle = color || '#ffffff';
+  ctx.fillRect(0, 0, out.width, out.height);
+  ctx.drawImage(src, 0, 0);
+  return ctx.getImageData(0, 0, out.width, out.height);
 }
 
 const ENCODERS = {
@@ -129,4 +168,45 @@ export async function compressImageToTarget(img, targetBytes, onProgress) {
     best = bestUnder() || closest();
   }
   return { ...best, attempts };
+}
+
+// The same job for a picture with see-through parts (a cutout), where
+// JPEG is not an option because it cannot hold transparency. PNG is
+// lossless and has no quality dial, so the only lever is the picture's
+// dimensions: binary-search the scale and keep the largest result at
+// or under the target, the same keep-the-best-under rule as the JPEG
+// search above. If even the smallest searched scale is over the
+// target, the smallest attempt comes back with over: true and the
+// caller says so plainly; nothing is quietly flattened or re-encoded
+// as JPEG behind the visitor's back.
+export async function compressPngToTarget(img, targetBytes, onProgress) {
+  const say = onProgress || (() => {});
+  const cache = new Map();
+  let attempts = 0;
+  async function attempt(s) {
+    if (!cache.has(s)) {
+      attempts++;
+      const im = s === 1 ? img : await resize(img, {
+        width: Math.max(1, Math.round(img.width * s)),
+        height: Math.max(1, Math.round(img.height * s)),
+      });
+      const buf = await pngEncode(im);
+      const rec = { buf, bytes: buf.byteLength, s, w: im.width, h: im.height };
+      cache.set(s, rec);
+      say(rec, attempts);
+    }
+    return cache.get(s);
+  }
+  const full = await attempt(1);
+  if (full.bytes <= targetBytes) return { ...full, attempts, over: false };
+  let best = null;
+  let lo = 0.05, hi = 1.0;
+  for (let i = 0; i < 7; i++) {
+    const s = (lo + hi) / 2;
+    const r = await attempt(s);
+    if (r.bytes <= targetBytes) { best = r; lo = s; } else { hi = s; }
+  }
+  if (best) return { ...best, attempts, over: false };
+  const smallest = await attempt(0.05);
+  return { ...smallest, attempts, over: true };
 }

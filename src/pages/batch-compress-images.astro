@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
 
 const faq = [
   {
@@ -8,11 +9,11 @@ const faq = [
   },
   {
     q: 'How long does a batch take?',
-    a: 'On our bench, 25 images were converted in 22.1 seconds total, under a second a file on average. Exact-KB searches take a few tries per photo, so a batch of big photos takes a little longer; the page works through them one at a time and says where it is.',
+    a: 'In our tests, 25 images were converted in 22.1 seconds total, under a second a file on average. Exact-KB searches take a few tries per photo, so a batch of big photos takes a little longer; the page works through them one at a time and says where it is.',
   },
   {
     q: 'What formats can go in?',
-    a: 'JPEG, PNG and WebP are read by the bench codecs; most other formats your browser can display are read through the browser itself. Everything comes out as JPEG at your target size, like the single-photo page.',
+    a: 'JPEG, PNG and WebP are read by the page\'s own codecs; most other formats your browser can display are read through the browser itself. Everything comes out as JPEG at your target size, like the single-photo page.',
   },
   {
     q: 'Where do my photos go?',
@@ -40,22 +41,26 @@ const howToJson = JSON.stringify({
 <Base title="Batch compress images: shrink many photos to one exact size, free · Benchzy" description="Compress a folder of photos to one exact KB target in a single run, inside your browser. Per-file results, one ZIP download. No upload, no account, no operation counter.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · Image bench · batch</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Image tools · batch</p>
       <h1 class="font-display text-4xl font-black mt-2">Batch compress images</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         The whole camera roll, at the size the form or the shop asked for. Set one target and
         every photo is worked to it in a single run. The metered converters count operations
-        and minutes against you; this bench does not count anything. One photo at a time is on
+        and minutes against you; this page does not count anything. One photo at a time is on
         the <a class="underline underline-offset-4 hover:text-accent-deep" href="/compress-image/">Compress image page</a>.
       </p>
     </section>
 
+    <StepsStrip who="For a folder of photos that all have to fit one KB limit: listings, form uploads, a whole shoot." steps={[{ n: '01', t: 'Pick your images' }, { n: '02', t: 'Set one target' }, { n: '03', t: 'Run and download the results' }]} />
+
     <section class="ticket mt-6 p-5 sm:p-7" id="bi-tool" data-mode="compress">
       <div id="bi-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick images">
         <p class="font-display text-xl font-bold">Drop images on the tray, or click to pick them</p>
-        <p class="font-mono text-xs text-ink-soft mt-2">JPEG · PNG · WebP · as many as you like · they stay on this device</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">JPEG · PNG · WebP · tested with 100 files in one run · they stay on this device</p>
+        <p class="font-mono text-xs text-ink-soft mt-1">JPG, PNG, WebP and iPhone HEIC photos work here.</p>
         <input id="bi-file" type="file" accept="image/*" multiple class="hidden" />
       </div>
+      <p class="file-loaded hidden" data-loaded-for="bi-file" role="status"></p>
 
       <ul id="bi-list" class="mt-6"></ul>
 
@@ -86,7 +91,7 @@ const howToJson = JSON.stringify({
         </div>
       </div>
 
-      <div id="bi-result" class="hidden mt-8">
+      <div id="bi-result" class="receipt hidden mt-8">
         <div class="tear pt-5 flex items-center gap-4 flex-wrap">
           <h2 class="font-display text-2xl font-bold">Results</h2>
           <span class="stamp" id="bi-stamp">Done on your device</span>
@@ -100,7 +105,7 @@ const howToJson = JSON.stringify({
       <div>
         <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
         <p class="mt-3 leading-relaxed text-ink-soft">
-          Each photo runs the same search as the single-photo bench: quality first, then
+          Each photo runs the same search as the single-photo tool: quality first, then
           quality and dimensions together when quality alone has no setting close enough to
           your target. Attempts are kept, not re-encoded, and the winner is printed on the
           result line with its quality and dimensions.
@@ -112,8 +117,10 @@ const howToJson = JSON.stringify({
           Output is JPEG, the format the exact-size search is measured on. A photo that cannot
           land under the target even at the smallest sensible size is returned at the closest
           size reached, and the result line says "closest reached" rather than pretending. One
-          honest absence: AVIF is not offered in batch; the bench measured it at about 50
-          seconds a photo.
+          honest absence: AVIF is not offered in batch; our tests measured it at about 50
+          seconds a photo. The batch was tested with 100 files in one run; past that, the
+          limit is your device's memory, not a rule of ours, and a file that fails is named
+          on its own result line, never silently dropped.
         </p>
       </div>
     </section>

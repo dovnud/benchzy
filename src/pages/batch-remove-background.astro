@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
 
 const faq = [
   {
@@ -40,7 +41,7 @@ const howToJson = JSON.stringify({
 <Base title="Batch remove background: cut out many photos at once, free · Benchzy" description="Remove the background from a whole folder of photos in one run, at full resolution, inside your browser. One model download for the batch. No upload, no account, no credits.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · Background bench · batch</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Background removal · batch</p>
       <h1 class="font-display text-4xl font-black mt-2">Batch remove background</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         A product folder, a team page, a whole shoot: drop the photos on the tray and every one
@@ -50,12 +51,16 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
+    <StepsStrip who="For a folder of product photos that all need the same clean cutout." steps={[{ n: '01', t: 'Pick your photos' }, { n: '02', t: 'Cut out the batch' }, { n: '03', t: 'Download the ZIP' }]} />
+
     <section class="ticket mt-6 p-5 sm:p-7" id="bb-tool">
       <div id="bb-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick images">
         <p class="font-display text-xl font-bold">Drop photos on the tray, or click to pick them</p>
-        <p class="font-mono text-xs text-ink-soft mt-2">JPEG · PNG · WebP · as many as you like · the model is 44.3 MB, once</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">JPEG · PNG · WebP · a whole folder in one run · the model is 44.3 MB, once</p>
+        <p class="font-mono text-xs text-ink-soft mt-1">JPG, PNG, WebP and iPhone HEIC photos work here. A HEIC photo is read by a decoder program inside this page before it is cut out.</p>
         <input id="bb-file" type="file" accept="image/*" multiple class="hidden" />
       </div>
+      <p class="file-loaded hidden" data-loaded-for="bb-file" role="status"></p>
 
       <ul id="bb-list" class="mt-6"></ul>
 
@@ -64,9 +69,14 @@ const howToJson = JSON.stringify({
           <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">How the batch runs</h2>
           <p class="text-ink-soft text-sm leading-relaxed mt-3 max-w-md">
             Photos run one at a time, each at its own full resolution, at roughly the same
-            per-photo pace as the single-photo bench (about 13 seconds a photo on our test
-            desktop; phone times are not measured yet, and the page will not pretend they
-            are). The model is saved by your browser, so the next batch starts at once.
+            per-photo pace as the single-photo tool (9.7 to 10.6 seconds a photo in warm runs
+            on our desktop-class test computer, once the program is downloaded; the first
+            photo of a session runs slower; phone times are not measured yet, and the page
+            will not pretend they are). The model is saved by your browser, so the next batch starts at once. The
+            one model load counts against mobile data on a phone, so a first batch is better
+            on Wi-Fi; on a slow connection the load can take a minute or more. The load can
+            be cancelled while it runs: pieces already downloaded are kept, and the next run
+            carries on from there.
           </p>
         </div>
         <div>
@@ -75,11 +85,12 @@ const howToJson = JSON.stringify({
             <div class="spec-row"><dt>files on the tray</dt><dd>0</dd></div>
           </dl>
           <button id="bb-run" class="btn-primary w-full mt-5" type="button" disabled>Cut out the batch</button>
+          <button id="bb-cancel" class="btn-ghost w-full mt-3 hidden" type="button">Cancel the download</button>
           <p id="bb-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick images to begin. The model (44.3 MB) downloads once, when you press start.</p>
         </div>
       </div>
 
-      <div id="bb-result" class="hidden mt-8">
+      <div id="bb-result" class="receipt hidden mt-8">
         <div class="tear pt-5 flex items-center gap-4 flex-wrap">
           <h2 class="font-display text-2xl font-bold">Results</h2>
           <span class="stamp" id="bb-stamp">Done on your device</span>
@@ -93,7 +104,7 @@ const howToJson = JSON.stringify({
       <div>
         <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
         <p class="mt-3 leading-relaxed text-ink-soft">
-          The same program as the single-photo bench (ISNet, run through our own runtime)
+          The same program as the single-photo tool (ISNet, run through our own runtime)
           reads each photo, works out the subject's outline, and composites the cutout at the
           photo's own full resolution. The model arrives as 11 pieces, each checked against
           its fingerprint, and the finished batch packs into one ZIP of transparent PNGs.

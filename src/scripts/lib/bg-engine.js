@@ -8,6 +8,7 @@
 // keeps its own copy and its locale strings; this core reports progress
 // as plain data and lets each page word it.
 import * as ort from 'onnxruntime-web/wasm';
+import { isHeifFile, decodeHeicToImageData } from './heif-core.js';
 
 ort.env.wasm.wasmPaths = '/ort/';
 ort.env.wasm.numThreads = 1;
@@ -23,34 +24,58 @@ async function sha256Hex(buf) {
 
 let session = null;
 let modelBuf = null;
+// Cancel support (milestone 8, round-1 fix 2): the load accepts an
+// AbortSignal; pieces already fetched and checked are KEPT in this
+// module, so a later load resumes where the stopped one left off. A
+// cancel throws an error with .cancelled, .kept and .total set.
+let modelParts = null;
+
+function cancelledError(total) {
+  const e = new Error('load cancelled');
+  e.cancelled = true;
+  e.kept = modelParts ? modelParts.filter(Boolean).length : 0;
+  e.total = total;
+  return e;
+}
 
 // onProgress receives { phase, gotMB, totalMB, piece, pieces } with
 // phase one of 'list' | 'piece' | 'checked' | 'starting'.
-export async function loadBgSession(onProgress) {
+export async function loadBgSession(onProgress, signal) {
   const say = onProgress || (() => {});
   if (session) return session;
   if (!modelBuf) {
     say({ phase: 'list' });
-    const mres = await fetch(MANIFEST_URL);
+    const mres = await fetch(MANIFEST_URL, { signal });
     if (!mres.ok) throw new Error('model list download failed (HTTP ' + mres.status + ')');
     const manifest = await mres.json();
     const total = manifest.totalBytes || MODEL_BYTES;
-    modelBuf = new Uint8Array(total);
-    let off = 0, got = 0;
-    for (let i = 0; i < manifest.chunks.length; i++) {
+    const n = manifest.chunks.length;
+    if (!modelParts || modelParts.length !== n) modelParts = new Array(n).fill(null);
+    let got = modelParts.reduce((a, p) => a + (p ? p.length : 0), 0);
+    for (let i = 0; i < n; i++) {
+      if (modelParts[i]) continue;
       const c = manifest.chunks[i];
-      say({ phase: 'piece', gotMB: got / 1048576, totalMB: total / 1048576, piece: i + 1, pieces: manifest.chunks.length });
-      const res = await fetch('/models/' + c.file);
-      if (!res.ok) throw new Error('model piece ' + (i + 1) + ' download failed (HTTP ' + res.status + ')');
-      const buf = new Uint8Array(await res.arrayBuffer());
+      say({ phase: 'piece', gotMB: got / 1048576, totalMB: total / 1048576, piece: i + 1, pieces: n });
+      let buf;
+      try {
+        const res = await fetch('/models/' + c.file, { signal });
+        if (!res.ok) throw new Error('model piece ' + (i + 1) + ' download failed (HTTP ' + res.status + ')');
+        buf = new Uint8Array(await res.arrayBuffer());
+      } catch (err) {
+        if (signal && signal.aborted) throw cancelledError(n);
+        throw err;
+      }
       if (buf.length !== c.bytes) throw new Error('model piece ' + (i + 1) + ' arrived at the wrong size; nothing ran');
       if ((await sha256Hex(buf)) !== c.sha256) throw new Error('model piece ' + (i + 1) + ' failed its check; nothing ran');
-      modelBuf.set(buf, off);
-      off += buf.length;
+      modelParts[i] = buf;
       got += buf.length;
     }
+    modelBuf = new Uint8Array(total);
+    let off = 0;
+    for (const p of modelParts) { modelBuf.set(p, off); off += p.length; }
     if ((await sha256Hex(modelBuf)) !== manifest.sha256) {
       modelBuf = null;
+      modelParts = null;
       throw new Error('the model failed its final check; nothing ran');
     }
     say({ phase: 'checked' });
@@ -61,6 +86,29 @@ export async function loadBgSession(onProgress) {
     graphOptimizationLevel: 'all',
   });
   return session;
+}
+
+// Decode a picked photo file into a bitmap the engine can cut.
+// HEIC/HEIF (iPhone photos) cannot be read by createImageBitmap in
+// Chrome or Firefox, so those files go through the shipped libheif
+// decoder (milestone 15) first; the preview URL for a HEIC file is a
+// PNG of the decoded picture, because an object URL of the HEIC file
+// itself does not render in those browsers either. Returns
+// { bitmap, previewUrl, format } where format is 'HEIC' when the
+// decoder was used, otherwise null (callers fall back to file.type).
+export async function bitmapFromPhotoFile(file) {
+  const buf = await file.arrayBuffer();
+  if (isHeifFile(file, buf)) {
+    const r = await decodeHeicToImageData(buf);
+    const c = document.createElement('canvas');
+    c.width = r.imageData.width; c.height = r.imageData.height;
+    c.getContext('2d').putImageData(r.imageData, 0, 0);
+    const bitmap = await createImageBitmap(c);
+    const previewBlob = await new Promise((res) => c.toBlob(res, 'image/png'));
+    return { bitmap, previewUrl: URL.createObjectURL(previewBlob), format: 'HEIC' };
+  }
+  const bitmap = await createImageBitmap(file);
+  return { bitmap, previewUrl: URL.createObjectURL(file), format: null };
 }
 
 // Cut the background out of one decoded bitmap. Returns

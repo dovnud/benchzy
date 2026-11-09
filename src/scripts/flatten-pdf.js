@@ -98,7 +98,7 @@ runBtn.addEventListener('click', async () => {
     }
     if (info.otherAnnots > 0) {
       note += ' Reported, not hidden: this file also carries ' + info.otherAnnots + ' annotation' + (info.otherAnnots === 1 ? '' : 's') +
-        ' that are not form fields (highlights, notes or similar). This engine cannot bake those into the page, so they remain annotations in the output.';
+        ' that are not form fields (highlights, notes or similar). This tool cannot bake those into the page, so they remain annotations in the output.';
     }
     $('fl-achieved').textContent = note;
     result.classList.remove('hidden');

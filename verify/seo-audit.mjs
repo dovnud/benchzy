@@ -35,6 +35,21 @@ const distRoutes = walk(DIST).sort();
 out.distPages = distRoutes;
 console.log('dist pages:', distRoutes.length);
 
+// Short language URLs (milestone 8 as meta-refresh stub pages;
+// milestone 18 as TRUE redirects): the stubs were one-sentence pages,
+// and Cloudflare Pages serves an existing static file in preference
+// to a _redirects rule, so milestone 18 deleted the stubs and the
+// short URLs are now 301 rules in dist/_redirects. What this audit
+// asserts is the same as ever: the short URLs land on the real
+// localized tool pages and stay out of the sitemap; the mechanism
+// check below matches the mechanism that actually ships.
+const REDIRECTS = {
+  '/es/quitar-fondo/': '/es/quitar-fondo-de-imagen-gratis/',
+  '/pt/remover-fundo/': '/pt-br/remover-fundo-de-imagem-gratis/',
+};
+const contentRoutes = distRoutes.filter((r) => !(r in REDIRECTS));
+out.redirectPages = Object.keys(REDIRECTS);
+
 const html = {};
 for (const r of distRoutes) {
   html[r] = fs.readFileSync(path.join(DIST, r === '/' ? 'index.html' : r.slice(1) + 'index.html'), 'utf8');
@@ -51,7 +66,7 @@ else {
   const urlCount = (sm.match(/<url>/g) || []).length;
   if (urlCount !== locs.length) fail(`sitemap: ${urlCount} <url> vs ${locs.length} <loc>`);
   out.sitemapCount = locs.length;
-  const expected = distRoutes.map((r) => SITE + r).sort();
+  const expected = contentRoutes.map((r) => SITE + r).sort();
   const got = [...locs].sort();
   if (JSON.stringify(got) !== JSON.stringify(expected)) {
     fail('sitemap URL set != dist page set');
@@ -60,13 +75,18 @@ else {
   }
   const hreflangCount = (sm.match(/<xhtml:link /g) || []).length;
   out.sitemapHreflangLinks = hreflangCount;
-  if (hreflangCount !== 24) fail(`sitemap: expected 24 hreflang links (2 clusters x 4 x 3 pages), got ${hreflangCount}`);
+  // Milestone 8: 4 clusters (2 background-removal + the promise page
+  // and the proof page, translated in milestone 8) x 4 links x 3 pages.
+  if (hreflangCount !== 48) fail(`sitemap: expected 48 hreflang links (4 clusters x 4 x 3 pages), got ${hreflangCount}`);
+  for (const r of Object.keys(REDIRECTS)) {
+    if (locs.includes(SITE + r)) fail(`sitemap: redirect page ${r} must not be listed`);
+  }
   console.log('sitemap: locs', locs.length, 'hreflang links', hreflangCount);
 }
 
 // --- per-page head checks ---
 const ldTypes = {};
-for (const r of distRoutes) {
+for (const r of contentRoutes) {
   const h = html[r];
   const canonicals = [...h.matchAll(/<link rel="canonical" href="([^"]+)"/g)].map((m) => m[1]);
   if (canonicals.length !== 1) fail(`${r}: ${canonicals.length} canonical tags`);
@@ -75,6 +95,10 @@ for (const r of distRoutes) {
     if (!h.includes(`property="${prop}"`)) fail(`${r}: missing ${prop}`);
   }
   if (!h.includes('name="twitter:card"')) fail(`${r}: missing twitter:card`);
+  // Milestone 8: the privacy page is footer-linked on every page.
+  if (!h.includes('href="/privacy/"')) fail(`${r}: footer privacy link missing`);
+  // Milestone 8: the aggregate-logs sentence is killed site-wide.
+  if (h.includes('may be kept in aggregate')) fail(`${r}: still carries the killed aggregate sentence`);
   const blocks = [...h.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => m[1]);
   ldTypes[r] = [];
   for (const b of blocks) {
@@ -98,11 +122,11 @@ function srcFiles(dir, base = '') {
   }
   return files;
 }
-const TOOL_ENGINES = ['remove-bg', 'compress-pdf', 'compress-image', 'merge-pdf', 'split-pdf', 'ocr-pdf', 'size-checker', 'sign-pdf', 'flatten-pdf'];
+const TOOL_ENGINES = ['remove-bg', 'compress-pdf', 'compress-image', 'merge-pdf', 'split-pdf', 'ocr-pdf', 'ocr-image', 'size-checker', 'sign-pdf', 'flatten-pdf', 'protect-pdf', 'unlock-pdf', 'resize-image', 'rotate-pdf', 'pdf-page-numbers', 'watermark-pdf', 'extract-images-pdf', 'organize-pdf', 'pdf-metadata', 'jpg-to-pdf', 'pdf-to-jpg', 'heic-to-jpg'];
 // Runner scripts (milestone 6): tool pages that run the engines above
 // (batch doors, interleave, workflow chains); tool pages, not new tools.
 // Mirrors the counting in src/pages/what-free-means.astro exactly.
-const PAGE_SCRIPTS = ['batch-pdf', 'batch-image', 'batch-remove-bg', 'workflows', 'interleave-pdf'];
+const PAGE_SCRIPTS = ['batch-pdf', 'batch-image', 'batch-remove-bg', 'workflows', 'interleave-pdf', 'convert-image'];
 const srcList = srcFiles(SRC_PAGES);
 const enginesUsed = new Set();
 const toolRoutes = [];
@@ -114,8 +138,11 @@ for (const f of srcList) {
     found.forEach((e) => enginesUsed.add(e));
     let route = '/' + f.replace(/\.astro$/, '');
     if (route.endsWith('/index')) route = route.slice(0, -'index'.length);
-    if (route === '/index') route = '/';
-    else route += '/';
+    else if (route !== '/') route += '/';
+    // (Milestone 7: the homepage became a tool page when the flagship
+    // moved into its hero; the old derivation turned its route into
+    // '//' and the schema lookup missed the JSON-LD that is verifiably
+    // in dist/index.html. The requirement itself is unchanged.)
     toolRoutes.push(route);
   }
 }
@@ -140,9 +167,9 @@ else {
 if (!fs.existsSync(path.join(DIST, 'llms.txt'))) fail('dist/llms.txt missing');
 
 // --- internal link graph: orphans + depth ---
-const inbound = new Map(distRoutes.map((r) => [r, new Set()]));
+const inbound = new Map(contentRoutes.map((r) => [r, new Set()]));
 const edges = new Map();
-for (const r of distRoutes) {
+for (const r of contentRoutes) {
   const targets = new Set();
   for (const m of html[r].matchAll(/href="(\/[^"#]*)"/g)) {
     let t = m[1];
@@ -153,7 +180,7 @@ for (const r of distRoutes) {
   }
   edges.set(r, targets);
 }
-const orphans = distRoutes.filter((r) => r !== '/' && inbound.get(r).size === 0);
+const orphans = contentRoutes.filter((r) => r !== '/' && inbound.get(r).size === 0);
 out.orphans = orphans;
 if (orphans.length) fail('orphan pages: ' + orphans.join(', '));
 const depth = { '/': 0 };
@@ -167,7 +194,7 @@ while (queue.length) {
 out.depth = depth;
 const deep = Object.entries(depth).filter(([, d]) => d > 3);
 if (deep.length) fail('pages deeper than 3 clicks: ' + deep.map(([r, d]) => `${r} (${d})`).join(', '));
-const unreached = distRoutes.filter((r) => depth[r] === undefined);
+const unreached = contentRoutes.filter((r) => depth[r] === undefined);
 if (unreached.length) fail('pages unreachable from home: ' + unreached.join(', '));
 console.log('depths:', JSON.stringify(depth));
 
@@ -188,12 +215,20 @@ if (!wfm.includes('Our promise: every file job in one place.')) fail('what-free-
 // NUMBERS.md; "the biggest one" = the biggest photo inside a PDF, in the
 // compress pages' own how-it-works text. Any other use fails the audit.
 const BIGGEST_ALLOWED = [/the biggest converter/gi, /the biggest PDF site/gi, /the biggest site/gi, /the biggest one/gi];
-for (const r of distRoutes) {
+for (const r of contentRoutes) {
   if (r === '/what-free-means/') continue;
   let rest = html[r];
   for (const re of BIGGEST_ALLOWED) rest = rest.replace(re, '');
   if (/biggest/i.test(rest)) fail(`${r}: contains "biggest" outside the commitments page (not a reviewed rival reference)`);
   if (/most tools/i.test(html[r])) fail(`${r}: contains "most tools" outside the commitments page`);
+}
+
+// --- redirects: true 301 rules in _redirects, no stub shadowing ---
+const redirectsFile = fs.existsSync(path.join(DIST, '_redirects'))
+  ? fs.readFileSync(path.join(DIST, '_redirects'), 'utf8') : '';
+for (const [r, target] of Object.entries(REDIRECTS)) {
+  if (!redirectsFile.includes(`${r} ${target} 301`)) fail(`redirect ${r}: no 301 rule to ${target} in dist/_redirects`);
+  if (distRoutes.includes(r)) fail(`redirect ${r}: a stub page still exists in dist and would shadow the rule`);
 }
 
 fs.writeFileSync(path.join(HERE, 'seo-audit.json'), JSON.stringify(out, null, 2));

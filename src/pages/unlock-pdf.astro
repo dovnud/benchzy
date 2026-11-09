@@ -1,0 +1,178 @@
+---
+import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
+
+const faq = [
+  {
+    q: 'I have forgotten the password. Can this page open my file?',
+    a: 'No, and no page can. If a PDF asks for a password before it will open, that password has to be known and typed. A page that promises to open such a file without it is describing the other kind of password (the permission switches) while letting you believe it means this one. We do not write that promise, here or anywhere.',
+  },
+  {
+    q: 'How can the permission kind come off without typing anything? Is that breaking in?',
+    a: 'No. A permissions password does not lock the content away: the file already opens, and the restrictions are switches a reader agrees to honour. Taking them off is re-saving the file without the switches. Every serious PDF tool does it, and the PDF standard itself names it as a separate thing from opening a locked file.',
+  },
+  {
+    q: 'Where does my password go?',
+    a: 'Nowhere. It is typed into this page and used inside this page, in your browser, and it is gone when the page closes. The check-it-yourself page lets you watch the network while a job runs, this one included.',
+  },
+  {
+    q: 'Will my form answers, attachments and pages survive?',
+    a: 'Yes, in our own testing: this tool was checked against files protected with every standard password kind, including a filled form, a file with attachments, a file carrying a signature, and a 300-page file. Pages, form answers and attachments all came through whole, and the finished file was re-opened and counted before the download was offered.',
+  },
+  {
+    q: 'What happens to a signed PDF?',
+    a: 'The signature is carried over with the file, but any re-save, here or in any tool, means the signed bytes are no longer the exact bytes that were signed, so the signature will no longer verify as untouched. If a signature must stay provable, keep the protected original as the record and treat the unlocked copy as a working copy.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const howToJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: "How to take a password off your own PDF",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Pick the PDF", text: "Drop a PDF on the tray, or click to pick one. It stays on this device. The page checks what kind of password the file has: one that locks it shut, or one that only switches off printing, copying and editing." },
+    { '@type': 'HowToStep', position: 2, name: "Type the open password, if the file asks for one", text: "If the file asks for a password to open, type that password: it must be the right one. If the file opens already, leave the box empty; its permission switches come off without one." },
+    { '@type': 'HowToStep', position: 3, name: "Take the password off", text: "Press 'Take the password off'. The file is re-saved in your browser with no password, then checked: it must open with no password and carry every page." },
+    { '@type': 'HowToStep', position: 4, name: "Download the unlocked PDF", text: "Take the finished file away. Your protected original is never changed." },
+  ],
+});
+---
+
+<Base title="Unlock PDF: take a password off your own PDF, free · Benchzy" description="Take the password off a PDF you own, inside your browser. An open password must be known and typed; a permissions password on a file that already opens comes off without one. Your file and password never leave this page.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">PDF tools · passwords</p>
+      <h1 class="font-display text-4xl font-black mt-2">Unlock PDF</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Take the password off a PDF that is yours, so it opens like an ordinary file
+        again. The work runs in your browser; the file and the password never leave
+        this page.
+      </p>
+    </section>
+
+    <section class="ticket-soft mt-6 p-5 sm:p-6" aria-label="The two kinds of PDF password">
+      <h2 class="font-display text-2xl font-bold">Two kinds of password. Read this first.</h2>
+      <div class="mt-3 grid gap-5 md:grid-cols-2">
+        <div>
+          <h3 class="font-bold">1. A password that locks the file shut</h3>
+          <p class="text-ink-soft leading-relaxed mt-1">
+            If a PDF asks for a password before it will open, that password must be
+            known and typed here. There is no other way, on this site or any other.
+            If you have forgotten it, this page cannot help, and neither can anyone
+            else.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-bold">2. A password that only switches things off</h3>
+          <p class="text-ink-soft leading-relaxed mt-1">
+            Some PDFs open fine but will not print, copy or edit. That kind is a set
+            of permission switches, and it can be taken off without typing it,
+            because that is how PDF permissions work in every tool. It is not a
+            trick, and it is not breaking in.
+          </p>
+        </div>
+      </div>
+      <p class="mt-4 leading-relaxed">
+        <strong>Your files only:</strong> only take passwords off your own files, or
+        files you have permission to change. You are responsible for that right.
+      </p>
+      <p class="mt-2 leading-relaxed text-ink-soft">
+        The password is typed into this page and used inside this page. It is never
+        sent anywhere, and it is gone when the page closes. The
+        <a class="underline underline-offset-4" href="/check-it-yourself/">check-it-yourself page</a>
+        lets you watch that happen, like every other job here.
+      </p>
+    </section>
+
+    <StepsStrip who="For your own PDF whose password you know, or whose print, copy and edit switches you want back." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Type the password, if it asks for one' }, { n: '03', t: 'Take it off and download' }]} />
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="un-tool">
+      <div id="un-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
+        <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">PDF · it stays on this device</p>
+        <input id="un-file" type="file" accept="application/pdf,.pdf" class="hidden" />
+      </div>
+      <p class="file-loaded hidden" data-loaded-for="un-file" role="status"></p>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">The password</h2>
+          <label class="block mt-3 text-sm font-bold" for="un-pw">The file's open password</label>
+          <input id="un-pw" type="password" class="mt-1 w-full border border-ink bg-ticket px-3 py-2" autocomplete="off" />
+          <label class="mt-3 flex items-center gap-2 text-sm text-ink-soft cursor-pointer">
+            <input id="un-show" type="checkbox" /> Show the password while I type
+          </label>
+          <p class="action-note">
+            Leave the box empty if the file opens without one: that is the permission
+            kind, and its switches come off with nothing typed. If the file asks for a
+            password to open, type it exactly; a wrong one simply does not open the
+            file, and the page will say so.
+          </p>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="un-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <button id="un-run" class="btn-primary w-full mt-5" type="button" disabled>Take the password off</button>
+          <p id="un-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a PDF to begin.</p>
+        </div>
+      </div>
+
+      <div id="un-result" class="receipt hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Result</h2>
+          <span class="stamp" id="un-stamp">Done on your device</span>
+        </div>
+        <p id="un-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
+        <a id="un-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the unlocked PDF</a>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The page opens the file with the password (or with the empty password, for
+          the permission kind), then re-saves it with the protection left out
+          entirely: not just the password prompt, but the old protection machinery
+          itself, so the finished file carries no trace of it. The result is checked
+          before download: it must open with no password and hold every page the
+          original held. Your protected original is never changed.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          An open password that is not known cannot be helped, by this page or any
+          other; that is the whole point of the lock. A signed file keeps its
+          signature through the re-save, but the signature will no longer verify as
+          untouched, because the bytes changed; keep the original as the record.
+          Files whose insides this page cannot read are refused in the open, never
+          guessed at.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script type="application/ld+json" set:html={howToJson}></script>
+  <script>
+    import '../scripts/unlock-pdf.js';
+  </script>
+</Base>

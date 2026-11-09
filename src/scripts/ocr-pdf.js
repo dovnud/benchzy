@@ -44,7 +44,7 @@ wireTray(tray, input, async (f) => {
     if (pageCount > MAX_PAGES) {
       setStatus('That is ' + pageCount + ' pages. This page reads up to ' + MAX_PAGES + ' at a time; split the file first (the Split PDF tool) and read it in parts.');
     } else {
-      setStatus('Ready. Reading happens here in the page; the first run loads the reading engine (about 10 MB, once).');
+      setStatus('Ready. Reading happens here in the page; the first run loads the reading program (about 10 MB, one time only).');
       runBtn.disabled = false;
     }
   } catch (err) {
@@ -66,8 +66,8 @@ function loadPdfjs() {
 
 async function getWorker() {
   if (worker) return worker;
-  if (!window.Tesseract) throw new Error('the reading engine did not load');
-  setStatus('Loading the reading engine (about 10 MB, once)…');
+  if (!window.Tesseract) throw new Error('the reading program did not load');
+  setStatus('Loading the reading program (about 10 MB, one time only). It runs in your browser; your file is never uploaded…');
   worker = await window.Tesseract.createWorker('eng', window.Tesseract.OEM && window.Tesseract.OEM.LSTM_ONLY, {
     workerPath: '/tesseract/worker.min.js',
     corePath: '/tesseract/core',
@@ -134,7 +134,7 @@ runBtn.addEventListener('click', async () => {
     const chars = pagesData.reduce((a, p) => a + p.text.length, 0);
     $('oc-achieved').textContent =
       'Read ' + pageCount + ' page' + (pageCount === 1 ? '' : 's') + ', ' + chars + ' characters, in ' + secs + ' seconds. ' +
-      'Check the text in the box before you use it, especially numbers: this engine has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and the .txt download uses your corrected text.';
+      'Check the text in the box before you use it, especially numbers: this reader has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and both downloads use your corrected text: the searchable PDF places your edits back over the page, at the positions of the words they replaced. Keep the --- Page N --- lines in the box; they are how your edits find their page.';
     result.classList.remove('hidden');
     const stamp = $('oc-stamp');
     stamp.classList.remove('land');
@@ -160,22 +160,120 @@ $('oc-download-txt').addEventListener('click', () => {
   setTimeout(() => URL.revokeObjectURL(url), 5000);
 });
 
+// Corrected text into the searchable PDF (milestone 18, round-2
+// Broken 3). The visitor fixes the read in the box; the searchable PDF
+// must carry the FIXED text, not the raw read. Faithful re-placement
+// works like this: the box text is split back into pages on the
+// --- Page N --- lines the box itself was filled with; each page's
+// corrected tokens are aligned to the recogniser's words by a longest
+// common subsequence walk over normalised tokens. A corrected token
+// that matches or replaces a read word is drawn at that word's box; a
+// token the visitor inserted is drawn just after the word before it; a
+// word the visitor deleted is simply not drawn. If the page markers
+// were edited away, the split fails and the PDF falls back to the
+// as-read layer, and the status line says so plainly.
+function splitBoxPages(boxText, count) {
+  if (count === 1) return [boxText];
+  const parts = boxText.split(/^--- Page (\d+) ---\s*$/m);
+  // parts: [pre, "1", text1, "2", text2, ...]
+  if (parts.length !== 1 + count * 2) return null;
+  if (parts[0].trim() !== '') return null;
+  const pages = [];
+  for (let i = 0; i < count; i++) {
+    if (parseInt(parts[1 + i * 2], 10) !== i + 1) return null;
+    pages.push(parts[2 + i * 2]);
+  }
+  return pages;
+}
+function tokenizeCorrected(text) {
+  return (text.match(/\S+/g) || []).filter((t) => t.replace(/[^\x20-\x7E]/g, '').trim() !== '');
+}
+function normToken(t) {
+  return t.toLowerCase().replace(/[^a-z0-9]+/g, '');
+}
+// Returns [{ text, x0, y0, x1, y1 }] in 300 DPI pixels, ready to draw.
+function alignCorrectedWords(origWords, correctedTokens) {
+  const a = origWords.map((w) => normToken(w.text));
+  const b = correctedTokens.map((t) => normToken(t));
+  const n = a.length, m = b.length;
+  // LCS table.
+  const dp = [];
+  for (let i = 0; i <= n; i++) dp.push(new Uint32Array(m + 1));
+  for (let i = n - 1; i >= 0; i--) {
+    for (let j = m - 1; j >= 0; j--) {
+      dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    }
+  }
+  // Standard LCS backtrack into an op list: match / del (a read word
+  // the visitor removed) / ins (a corrected token with no read word).
+  const ops = [];
+  let i = 0, j = 0;
+  while (i < n && j < m) {
+    if (a[i] === b[j]) { ops.push({ t: 'match', i, j }); i++; j++; }
+    else if (dp[i + 1][j] >= dp[i][j + 1]) { ops.push({ t: 'del', i }); i++; }
+    else { ops.push({ t: 'ins', j }); j++; }
+  }
+  while (i < n) { ops.push({ t: 'del', i }); i++; }
+  while (j < m) { ops.push({ t: 'ins', j }); j++; }
+  // A deletion immediately followed by an insertion at the same spot
+  // is a substitution: the corrected token takes the read word's box.
+  const out = [];
+  let prev = null; // last placed box, for bare insertions
+  const place = (text, box) => {
+    const placed = { text, x0: box.x0, y0: box.y0, x1: box.x1, y1: box.y1 };
+    out.push(placed);
+    prev = placed;
+  };
+  for (let k = 0; k < ops.length; k++) {
+    const op = ops[k];
+    if (op.t === 'match') {
+      place(correctedTokens[op.j], origWords[op.i]);
+    } else if (op.t === 'del') {
+      const next = ops[k + 1];
+      if (next && next.t === 'ins') {
+        place(correctedTokens[next.j], origWords[op.i]);
+        k++;
+      }
+      // A bare deletion draws nothing.
+    } else { // ins
+      if (prev) {
+        const gap = Math.max(2, (prev.x1 - prev.x0) * 0.08);
+        place(correctedTokens[op.j], { x0: prev.x1 + gap, y0: prev.y0, x1: prev.x1 + gap + (prev.x1 - prev.x0), y1: prev.y1 });
+      } else if (origWords.length) {
+        const f = origWords[0];
+        place(correctedTokens[op.j], { x0: f.x0, y0: f.y0, x1: f.x1, y1: f.y1 });
+      }
+    }
+  }
+  return out;
+}
+
 // Searchable PDF: the rendered page, with the words laid over it at
-// opacity 0 so the file can be searched and copied. Positions come from
+// opacity 0 so the file can be searched and copied. The words are the
+// ones in the box, as corrected, placed back at the positions of the
+// words they came from (see alignCorrectedWords above). Positions are
 // the recogniser's word boxes at 300 DPI, converted to points.
 $('oc-download-pdf').addEventListener('click', async () => {
   if (!pagesData.length) return;
   setStatus('Building the searchable PDF…');
   try {
+    const boxPages = splitBoxPages(textBox.value, pagesData.length);
+    let anyEdited = false;
     const doc = await PDFDocument.create();
     const font = await doc.embedFont(StandardFonts.Helvetica);
     const px2pt = 72 / DPI;
-    for (const p of pagesData) {
+    for (let pi = 0; pi < pagesData.length; pi++) {
+      const p = pagesData[pi];
       const img = await doc.embedPng(p.png);
       const wPt = p.wPx * px2pt, hPt = p.hPx * px2pt;
       const page = doc.addPage([wPt, hPt]);
       page.drawImage(img, { x: 0, y: 0, width: wPt, height: hPt });
-      for (const word of p.words) {
+      let drawWords = p.words;
+      if (boxPages) {
+        if (boxPages[pi].trim() !== p.text.trim()) anyEdited = true;
+        drawWords = alignCorrectedWords(p.words, tokenizeCorrected(boxPages[pi]));
+      }
+      for (const word of drawWords) {
         const clean = word.text.replace(/[^\x20-\x7E]/g, '').trim();
         if (!clean) continue;
         const size = Math.min(72, Math.max(4, (word.y1 - word.y0) * px2pt));
@@ -195,7 +293,13 @@ $('oc-download-pdf').addEventListener('click', async () => {
     a.download = file.name.replace(/\.pdf$/i, '') + '-searchable.pdf';
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 5000);
-    setStatus('Done. The searchable PDF carries the text exactly as read; your edits in the box are in the .txt.');
+    if (!boxPages) {
+      setStatus('Done. This searchable PDF carries the text exactly as read: the --- Page N --- lines in the box were changed, so your edits could not be matched back to their pages. Your corrected text is in the .txt download; put the page lines back and the PDF will carry your edits too.');
+    } else if (anyEdited) {
+      setStatus('Done. The searchable PDF carries your corrected text: your edits in the box were placed back over the page, at the positions of the words they replaced.');
+    } else {
+      setStatus('Done. The searchable PDF carries the text from the box, unchanged from the read.');
+    }
   } catch (err) {
     setStatus('The searchable PDF could not be built: ' + (err && err.message ? err.message : err));
   }

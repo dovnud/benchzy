@@ -1,0 +1,148 @@
+---
+import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
+
+const faq = [
+  {
+    q: 'Why did one picture come out as a PNG and another as a JPG?',
+    a: 'Because of how each one is stored in the file. A picture stored as a JPEG comes out as that JPEG, byte for byte. Every other stored picture is rebuilt from its stored data and written as a PNG, which loses nothing. The report under the result says which happened to each picture.',
+  },
+  {
+    q: 'A chart on the page did not come out. Why?',
+    a: 'Most charts, logos and diagrams in PDFs are drawn with lines and shapes (vector drawing instructions), not stored as pictures. There is no picture file inside the PDF to pull out of them. The report names every page that stores no pictures, so a gap is explained, never silent.',
+  },
+  {
+    q: 'The picture I got is smaller than it looked in the document.',
+    a: 'You get the picture at the size it is stored, which is its real size. A page can stretch a small stored picture across a whole sheet; the stretching is the page\'s doing, and the stored pixels are what they are. Nothing here enlarges a picture and pretends the detail was there.',
+  },
+  {
+    q: 'Where does my document go?',
+    a: 'Nowhere. It is read into this page and its pictures are pulled out in your browser. Watch the network panel while it works if you want to check.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const howToJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: "How to extract the images from a PDF",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Pick the PDF", text: "Drop a PDF on the tray, or click to pick one. It stays on this device. The page counts the pictures stored inside it before anything runs, and says which pages they sit on." },
+    { '@type': 'HowToStep', position: 2, name: "Extract the images", text: "Press 'Extract the images'. Stored JPEGs are saved byte for byte; other stored pictures are rebuilt as PNGs, with their stored transparency put back." },
+    { '@type': 'HowToStep', position: 3, name: "Read the report", text: "The report under the result names every stored picture, pulled or not, with its reason, and every page that stores none." },
+    { '@type': 'HowToStep', position: 4, name: "Download the pictures", text: "One picture downloads as itself; several arrive in one ZIP." },
+  ],
+});
+---
+
+<Base title="Extract images from a PDF: pull the stored pictures out, free · Benchzy" description="Pull the pictures stored inside a PDF out as files, in your browser: stored JPEGs byte for byte, other pictures rebuilt as PNGs, and a written report naming anything that cannot be pulled, with its reason.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">PDF tools · pages</p>
+      <h1 class="font-display text-4xl font-black mt-2">Extract images from PDF</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Take the pictures back out of a PDF: the photos and graphics stored inside it, saved
+        as their own files. Stored JPEGs come out byte for byte; other stored pictures are
+        rebuilt as PNGs. Anything that cannot be pulled is named in a written report, never
+        dropped quietly.
+      </p>
+    </section>
+
+    <StepsStrip who="For getting your photos back out of a PDF someone sent you, lifting a chart or a logo out of a report, or rescuing the pictures from a file when the originals are gone." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Extract the images' }, { n: '03', t: 'Read the report and download' }]} />
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="ex-tool">
+      <div id="ex-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
+        <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">PDF · it stays on this device</p>
+        <input id="ex-file" type="file" accept="application/pdf,.pdf" class="hidden" />
+      </div>
+      <p class="file-loaded hidden" data-loaded-for="ex-file" role="status"></p>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">What comes out</h2>
+          <p class="text-ink-soft text-sm leading-relaxed mt-3 max-w-md">
+            A picture stored in the file as a JPEG comes out as that JPEG, untouched. Every
+            other stored picture is rebuilt from its stored data as a PNG, with any stored
+            transparency put back. One picture downloads as itself; several arrive in one
+            ZIP. The report under the result covers every stored picture in the file,
+            including any that cannot be pulled, and every page that stores none.
+          </p>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="ex-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <button id="ex-run" class="btn-primary w-full mt-5" type="button" disabled>Extract the images</button>
+          <p id="ex-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a PDF to begin.</p>
+        </div>
+      </div>
+
+      <div id="ex-result" class="receipt hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Result</h2>
+          <span class="stamp" id="ex-stamp">Done on your device</span>
+        </div>
+        <p id="ex-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
+        <a id="ex-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the pictures</a>
+        <h3 class="font-mono text-xs uppercase tracking-widest text-ink-soft mt-6">The report, picture by picture</h3>
+        <ul id="ex-report" class="mt-2 grid gap-1 text-sm leading-relaxed"></ul>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          A PDF stores most pictures as their own objects inside the file. This page walks
+          the file, finds those stored pictures, and saves each one: a stored JPEG exactly
+          as it sits in the file, and every other openable picture rebuilt from its stored
+          data as a PNG, with its stored transparency put back. The download is how we
+          protect your privacy: the program travels to your browser and the work happens
+          there, so your file never travels anywhere.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Not everything on a page is a stored picture. Text, lines, charts drawn as shapes
+          and logos drawn as paths are drawing instructions, not stored pictures, and there
+          is no picture file to pull from them. A few picture encodings cannot be opened
+          here (JPEG 2000, fax-encoded scans, JBIG2), and pictures painted inline in a
+          page's instructions instead of being stored are not pulled either. When the file
+          holds any of those, the report names them and says why, instead of skipping them
+          quietly.
+        </p>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          A scanned book is the plain case of this: each page is one stored picture, so this
+          tool hands you one picture per page, exactly as stored. If what you want is the
+          page itself as a picture you can crop, the
+          <a class="underline underline-offset-4" href="/pdf-to-jpg/">PDF to JPG tool</a>
+          renders every page for you; crop the picture afterwards in any photo editor.
+        </p>
+        <p class="mt-3 leading-relaxed text-ink-soft">A password-protected PDF cannot be opened by this tool. Take its password off first with the <a class="underline underline-offset-4" href="/unlock-pdf/">unlock tool</a>, then bring the file back.</p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script type="application/ld+json" set:html={howToJson}></script>
+  <script>
+    import '../scripts/extract-images-pdf.js';
+  </script>
+</Base>

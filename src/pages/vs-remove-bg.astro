@@ -15,9 +15,9 @@ const rows = [
   ['Commercial use of free output', 'Allowed. Our output carries no licence restriction from us.', 'Free results are for private, non-commercial use under its terms (terms as read November 2026). Business use needs paid credits.'],
   ['Where your photo is processed', 'In your browser, on your device. It is never uploaded.', 'On remove.bg servers. Every surface, web, app and plugin, sends the photo to them.'],
   ['First-run download', 'The removal program, 44.3 MB, once, printed on the tool page before it loads.', 'Nothing to download; the work happens on their machines.'],
-  ['Speed', 'About 13 seconds a photo on a desktop in our tests. Phone speed unmeasured, and not promised.', 'Seconds, on their servers. We do not claim to beat this.'],
+  ['Speed', '9.7 to 10.6 seconds a photo in warm runs on a desktop-class test computer, once the program is downloaded; the first photo of a session is slower. Phone speed unmeasured, and not promised.', 'Seconds, on their servers. We do not claim to beat this.'],
   ['After the job', 'The tool only. No editor, no templates.', 'An editor with templates and effects, inside the site until it closes.'],
-  ['On 1 December 2026', 'Benchzy is independent of remove.bg and keeps running.', 'The standalone site, accounts, the self-service API and the plugins end at 09:00 CET. Every unused credit expires. The job moves into Canva, where background removal is a paid-plan feature.'],
+  ['On 1 December 2026', 'Benchzy is independent of remove.bg.', 'The standalone site, accounts, the self-service API and the plugins end at 09:00 CET. Every unused credit expires. The job moves into Canva, where background removal is a paid-plan feature.'],
 ];
 ---
 
@@ -53,10 +53,13 @@ const rows = [
         <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">What this page does not claim</h2>
         <p class="mt-3 leading-relaxed text-ink-soft">
           It does not claim our cutouts are better. We have never run a head-to-head quality test
-          against remove.bg on real photos; our quality tests used a standard test picture with
-          fine strands, which our program passed. It does not claim we are faster: their servers
-          answer in seconds, ours takes about 13 seconds a photo on a desktop, and phones are
-          unmeasured. The case for Benchzy is the checkable list above: full size, free, no
+          against remove.bg. Our own hard-photo tests are published on
+          <a class="underline underline-offset-4" href="/remove-background/quality/">the quality proof page</a>:
+          real photos (white on white, fine hair, a busy street portrait) plus the two cases
+          where our remover visibly struggles, chrome and glass. It does not claim we are faster: their servers
+          answer in seconds, ours takes 9.7 to 10.6 seconds a photo in warm runs on a
+          desktop-class machine once the program is downloaded (the first photo of a
+          session is slower), and phones are unmeasured. The case for Benchzy is the checkable list above: full size, free, no
           account, no credits, commercial use allowed, and your photo never leaving your device.
         </p>
       </div>

@@ -112,13 +112,46 @@ export function addChain(chain) {
   return c;
 }
 
+// ——— The file-loaded shout (owner fix 3, milestone 7) ———
+// Every tool page carries an empty banner element under its tray:
+// <p class="file-loaded hidden" data-loaded-for="<file input id>">.
+// The moment a file lands (picker or drop), the tray wiring fills it
+// BEFORE the tool's own callback runs: the words "File loaded:", the
+// file name bold in safety orange, the size in mono. No tool can
+// forget to shout. Wording comes from the element's data attributes
+// when a page localises them; English is the default.
+export function showLoadedBanner(inputEl, files) {
+  if (!inputEl || !inputEl.id || !files || !files.length) return;
+  const el = document.querySelector('[data-loaded-for="' + inputEl.id + '"]');
+  if (!el) return;
+  const total = files.reduce((a, f) => a + (f.size || 0), 0);
+  let name = files[0].name || 'file';
+  if (files.length > 1) name += ' +' + (files.length - 1) + ' more';
+  const label = document.createElement('span');
+  label.className = 'fl-label';
+  label.textContent = files.length > 1
+    ? (el.getAttribute('data-label-many') || 'Files loaded:')
+    : (el.getAttribute('data-label-single') || 'File loaded:');
+  const nameEl = document.createElement('span');
+  nameEl.className = 'fl-name';
+  nameEl.textContent = name;
+  const sizeEl = document.createElement('span');
+  sizeEl.className = 'fl-size';
+  sizeEl.textContent = fmtBytes(total) + (files.length > 1 ? ' in all' : '');
+  el.replaceChildren(label, nameEl, sizeEl);
+  el.classList.remove('hidden');
+  el.classList.remove('pop');
+  void el.offsetWidth;
+  el.classList.add('pop');
+}
+
 // Wire a tray for several files at once (merge bench). The callback gets
 // an array of File objects, from the picker or from a drop.
 export function wireTrayMulti(trayEl, inputEl, onFiles) {
   const pick = () => inputEl.click();
   trayEl.addEventListener('click', (e) => { if (e.target !== inputEl) pick(); });
   trayEl.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
-  inputEl.addEventListener('change', () => { if (inputEl.files.length) onFiles([...inputEl.files]); inputEl.value = ''; });
+  inputEl.addEventListener('change', () => { if (inputEl.files.length) { const fs = [...inputEl.files]; showLoadedBanner(inputEl, fs); onFiles(fs); } inputEl.value = ''; });
   for (const ev of ['dragenter', 'dragover']) {
     trayEl.addEventListener(ev, (e) => { e.preventDefault(); trayEl.classList.add('dragging'); });
   }
@@ -127,7 +160,7 @@ export function wireTrayMulti(trayEl, inputEl, onFiles) {
   }
   trayEl.addEventListener('drop', (e) => {
     const fs = e.dataTransfer && e.dataTransfer.files ? [...e.dataTransfer.files] : [];
-    if (fs.length) onFiles(fs);
+    if (fs.length) { showLoadedBanner(inputEl, fs); onFiles(fs); }
   });
 }
 
@@ -136,7 +169,7 @@ export function wireTray(trayEl, inputEl, onFile) {
   const pick = () => inputEl.click();
   trayEl.addEventListener('click', (e) => { if (e.target !== inputEl) pick(); });
   trayEl.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(); } });
-  inputEl.addEventListener('change', () => { if (inputEl.files[0]) onFile(inputEl.files[0]); });
+  inputEl.addEventListener('change', () => { if (inputEl.files[0]) { showLoadedBanner(inputEl, [inputEl.files[0]]); onFile(inputEl.files[0]); } });
   for (const ev of ['dragenter', 'dragover']) {
     trayEl.addEventListener(ev, (e) => { e.preventDefault(); trayEl.classList.add('dragging'); });
   }
@@ -145,6 +178,6 @@ export function wireTray(trayEl, inputEl, onFile) {
   }
   trayEl.addEventListener('drop', (e) => {
     const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-    if (f) onFile(f);
+    if (f) { showLoadedBanner(inputEl, [f]); onFile(f); }
   });
 }

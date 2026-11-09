@@ -1,0 +1,171 @@
+{
+  "white": {
+    "file": "white.jpg",
+    "attempts": [
+      {
+        "loadSecs": 2.6,
+        "cutSecs": 11.6,
+        "width": 1024,
+        "height": 683,
+        "bytes": 420835,
+        "wallSecs": 15.3
+      },
+      {
+        "loadSecs": 0,
+        "cutSecs": 10.6,
+        "width": 1024,
+        "height": 683,
+        "bytes": 420835,
+        "wallSecs": 11.9
+      }
+    ]
+  },
+  "chrome": {
+    "file": "chrome.webp",
+    "attempts": [
+      {
+        "loadSecs": 0,
+        "cutSecs": 10.6,
+        "width": 1024,
+        "height": 695,
+        "bytes": 1348918,
+        "wallSecs": 11.8
+      },
+      {
+        "loadSecs": 0,
+        "cutSecs": 9.9,
+        "width": 1024,
+        "height": 695,
+        "bytes": 1348918,
+        "wallSecs": 10.6
+      }
+    ]
+  },
+  "glass": {
+    "file": "glass.jpg",
+    "attempts": [
+      {
+        "loadSecs": 0,
+        "cutSecs": 10.1,
+        "width": 1920,
+        "height": 1282,
+        "bytes": 1294674,
+        "wallSecs": 10.8
+      },
+      {
+        "loadSecs": 0,
+        "cutSecs": 10.2,
+        "width": 1920,
+        "height": 1282,
+        "bytes": 1294674,
+        "wallSecs": 11
+      }
+    ]
+  },
+  "hair": {
+    "file": "hair.jpg",
+    "attempts": [
+      {
+        "loadSecs": 0,
+        "cutSecs": 9.8,
+        "width": 1280,
+        "height": 1918,
+        "bytes": 3349962,
+        "wallSecs": 10.7
+      },
+      {
+        "loadSecs": 0,
+        "cutSecs": 9.7,
+        "width": 1280,
+        "height": 1918,
+        "bytes": 3349962,
+        "wallSecs": 10.6
+      }
+    ]
+  },
+  "busy": {
+    "file": "busy.jpg",
+    "attempts": [
+      {
+        "loadSecs": 0,
+        "cutSecs": 10,
+        "width": 1920,
+        "height": 1290,
+        "bytes": 2698764,
+        "wallSecs": 10.9
+      },
+      {
+        "loadSecs": 0,
+        "cutSecs": 9.7,
+        "width": 1920,
+        "height": 1290,
+        "bytes": 2698764,
+        "wallSecs": 10.5
+      }
+    ]
+  },
+  "strands": {
+    "file": "strands.png",
+    "attempts": [
+      {
+        "loadSecs": 0,
+        "cutSecs": 9.5,
+        "width": 1200,
+        "height": 900,
+        "bytes": 936993,
+        "wallSecs": 10.4
+      },
+      {
+        "loadSecs": 0,
+        "cutSecs": 9.8,
+        "width": 1200,
+        "height": 900,
+        "bytes": 936993,
+        "wallSecs": 10.6
+      }
+    ]
+  },
+  "busy-1024": {
+    "file": "busy-1024.jpg",
+    "attempts": [
+      {
+        "loadSecs": 0,
+        "cutSecs": 9.8,
+        "width": 1024,
+        "height": 688,
+        "bytes": 799553,
+        "wallSecs": 10.5
+      },
+      {
+        "loadSecs": 0,
+        "cutSecs": 9.8,
+        "width": 1024,
+        "height": 688,
+        "bytes": 799553,
+        "wallSecs": 10.5
+      }
+    ]
+  },
+  "busy-2880": {
+    "file": "busy-2880.jpg",
+    "attempts": [
+      {
+        "loadSecs": 0,
+        "cutSecs": 11,
+        "width": 2880,
+        "height": 1935,
+        "bytes": 5414303,
+        "wallSecs": 14.5
+      },
+      {
+        "loadSecs": 0,
+        "cutSecs": 10.3,
+        "width": 2880,
+        "height": 1935,
+        "bytes": 5414303,
+        "wallSecs": 11.5
+      }
+    ]
+  },
+  "consoleErrors": []
+}

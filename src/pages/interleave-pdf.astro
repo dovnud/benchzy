@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
 
 const faq = [
   {
@@ -40,7 +41,7 @@ const howToJson = JSON.stringify({
 <Base title="Interleave PDF: alternate pages from two files (scan repair), free · Benchzy" description="Deal pages from two PDFs together, A1 B1 A2 B2, with a back-to-front option for the second file: the duplex scan repair, inside your browser.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · PDF bench · merge variant</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">PDF tools · merge variant</p>
       <h1 class="font-display text-4xl font-black mt-2">Interleave PDF</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         Two files, one document: the fronts in one, the backs in the other. Interleave deals
@@ -49,6 +50,8 @@ const howToJson = JSON.stringify({
         the <a class="underline underline-offset-4 hover:text-accent-deep" href="/merge-pdf/">Merge PDF page</a>.
       </p>
     </section>
+
+    <StepsStrip who="For a two-sided document scanned on a one-sided scanner: the fronts in one file, the backs in another, dealt back into order." steps={[{ n: '01', t: 'Pick the two files' }, { n: '02', t: 'Set the dealing order' }, { n: '03', t: 'Interleave and download' }]} />
 
     <section class="ticket mt-6 p-5 sm:p-7" id="il-tool">
       <div class="grid gap-4 md:grid-cols-2">
@@ -63,6 +66,8 @@ const howToJson = JSON.stringify({
           <input id="il-file-b" type="file" accept="application/pdf,.pdf" class="hidden" />
         </div>
       </div>
+      <p class="file-loaded hidden" data-loaded-for="il-file-a" role="status"></p>
+      <p class="file-loaded hidden" data-loaded-for="il-file-b" role="status"></p>
 
       <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
         <div>
@@ -93,7 +98,7 @@ const howToJson = JSON.stringify({
         </div>
       </div>
 
-      <div id="il-result" class="hidden mt-8">
+      <div id="il-result" class="receipt hidden mt-8">
         <div class="tear pt-5 flex items-center gap-4 flex-wrap">
           <h2 class="font-display text-2xl font-bold">Result</h2>
           <span class="stamp" id="il-stamp">Done on your device</span>
@@ -109,7 +114,7 @@ const howToJson = JSON.stringify({
         <p class="mt-3 leading-relaxed text-ink-soft">
           The page copies one page from A, one from B, one from A, and so on into a new file,
           with B's order reversed when you ask. Pages are copied, not rebuilt, so nothing is
-          recompressed; the engine is the same page-copying the merge bench measured at 71
+          recompressed; the engine is the same page-copying the merge tool measured at 71
           milliseconds for a 25-file pack.
         </p>
       </div>
@@ -117,11 +122,12 @@ const howToJson = JSON.stringify({
         <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
         <p class="mt-3 leading-relaxed text-ink-soft">
           A missing or doubled page in either scan throws the whole deal out from that point
-          on; the bench deals numbers, it does not proofread. Split a wrong pair out with the
+          on; this page deals numbers, it does not proofread. Split a wrong pair out with the
           <a class="underline underline-offset-4" href="/split-pdf/">Split PDF page</a> and deal
           again. If one file is longer, its extra pages land at the end, and the result line
           says so.
         </p>
+        <p class="mt-3 leading-relaxed text-ink-soft">A password-protected PDF cannot be opened by this tool. Take its password off first with the <a class="underline underline-offset-4" href="/unlock-pdf/">unlock tool</a>, then bring the file back.</p>
       </div>
     </section>
 

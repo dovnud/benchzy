@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import BgTicket from '../components/BgTicket.astro';
+import StepsStrip from '../components/StepsStrip.astro';
 import LangLinks from '../components/LangLinks.astro';
 
 const alternates = [
@@ -26,7 +27,7 @@ const faq = [
   },
   {
     q: 'Why is the first run slower?',
-    a: 'The first time, your browser downloads the removal program (44.3 MB). After that it is saved on your device and later visits start at once. The cut itself took about 13 seconds per photo on a desktop computer in our tests; phones vary and we do not promise a phone time we have not measured.',
+    a: 'The first time, your browser downloads the removal program (44.3 MB). After that it is saved on your device and later visits start at once. The cut itself took 9.7 to 10.6 seconds per photo in warm runs on our desktop-class test computer, once the program is downloaded; the first photo of a session runs slower. Phones vary and we do not promise a phone time we have not measured.',
   },
   {
     q: 'What photos does it struggle with?',
@@ -56,16 +57,24 @@ const howToJson = JSON.stringify({
 <Base title="Remove background from a photo, free, in your browser · Benchzy" description="Remove the background from a photo at full size, free, with the work done inside your browser. No upload, no account, no preview-size limit." alternates={alternates}>
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · background removal</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Background removal</p>
       <h1 class="font-display text-4xl font-black mt-2">Remove background</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         Pick a photo and this page cuts out the subject at full size. The work runs in your browser:
-        your photo is never uploaded. The first run downloads the removal program, 44.3 MB, once,
+        your photo is never uploaded. The 44.3 MB counts against mobile data on a phone, so the first run is better on Wi-Fi; on a slow connection the load can take a minute or more, and it can be cancelled while it runs: pieces already downloaded are kept, and the next run carries on from there. The download is how we protect your privacy. Our program
+        comes to your device and does the work there, so your photo never leaves it. Other sites
+        do it the other way round: you send them your photo. The first run downloads the removal program, 44.3 MB, once,
         as 11 pieces your browser checks one by one; that size is printed here before anything
-        loads, and later visits reuse the saved copy.
+        loads, and later visits reuse the saved copy. Before you trust it with a hard photo,
+        you can look at what it did with six of ours:
+        <a class="underline underline-offset-4" href="/remove-background/quality/">the quality proof page</a>
+        shows white on white, fine hair, glass and chrome, run through this same tool, with
+        100% edge crops and the cases where it visibly struggles.
       </p>
       <LangLinks label="This page in:" links={langLinks} />
     </section>
+
+    <StepsStrip who="For a product photo, a profile picture, or a listing shot: the everyday job is a clean cutout you can drop onto any background." steps={[{ n: '01', t: 'Pick a photo' }, { n: '02', t: 'Remove the background' }, { n: '03', t: 'Compare and download' }]} />
 
     <BgTicket locale="en" />
 

@@ -1,0 +1,104 @@
+{
+  "white": {
+    "sourceFile": "white.jpg",
+    "width": 1024,
+    "height": 683,
+    "megapixels": 0.7,
+    "sourceBytes": 96376,
+    "cutoutBytes": 420835,
+    "transparentFrac": 0.723,
+    "opaqueFrac": 0.215,
+    "cropBox": [
+      180,
+      180,
+      360
+    ],
+    "warmCutSecs": 10.6,
+    "warmLoadSecs": 0
+  },
+  "chrome": {
+    "sourceFile": "chrome.webp",
+    "width": 1024,
+    "height": 695,
+    "megapixels": 0.71,
+    "sourceBytes": 418514,
+    "cutoutBytes": 1348918,
+    "transparentFrac": 0.513,
+    "opaqueFrac": 0.031,
+    "cropBox": [
+      480,
+      110,
+      360
+    ],
+    "warmCutSecs": 9.9,
+    "warmLoadSecs": 0
+  },
+  "glass": {
+    "sourceFile": "glass.jpg",
+    "width": 1920,
+    "height": 1282,
+    "megapixels": 2.46,
+    "sourceBytes": 279029,
+    "cutoutBytes": 1294674,
+    "transparentFrac": 0.76,
+    "opaqueFrac": 0.079,
+    "cropBox": [
+      300,
+      300,
+      360
+    ],
+    "warmCutSecs": 10.2,
+    "warmLoadSecs": 0
+  },
+  "hair": {
+    "sourceFile": "hair.jpg",
+    "width": 1280,
+    "height": 1918,
+    "megapixels": 2.46,
+    "sourceBytes": 375685,
+    "cutoutBytes": 3349962,
+    "transparentFrac": 0.218,
+    "opaqueFrac": 0.657,
+    "cropBox": [
+      40,
+      20,
+      360
+    ],
+    "warmCutSecs": 9.7,
+    "warmLoadSecs": 0
+  },
+  "busy": {
+    "sourceFile": "busy.jpg",
+    "width": 1920,
+    "height": 1290,
+    "megapixels": 2.48,
+    "sourceBytes": 561951,
+    "cutoutBytes": 2698764,
+    "transparentFrac": 0.586,
+    "opaqueFrac": 0.394,
+    "cropBox": [
+      950,
+      80,
+      360
+    ],
+    "warmCutSecs": 9.7,
+    "warmLoadSecs": 0
+  },
+  "strands": {
+    "sourceFile": "strands.png",
+    "width": 1200,
+    "height": 900,
+    "megapixels": 1.08,
+    "sourceBytes": 33942,
+    "cutoutBytes": 936993,
+    "transparentFrac": 0.578,
+    "opaqueFrac": 0.24,
+    "cropBox": [
+      430,
+      140,
+      360
+    ],
+    "warmCutSecs": 9.8,
+    "warmLoadSecs": 0
+  }
+}

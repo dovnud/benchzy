@@ -1,0 +1,29 @@
+---
+// The job in three steps, at the top of every tool page (milestone 8,
+// round-1 fix 8). One "who is this for" sentence, then the three things
+// the visitor does — the same steps the page's HowTo schema carries,
+// moved out of the bottom of the page to where a first-timer reads.
+// Text is passed per page from the page's own copy; nothing here is
+// generated.
+interface Step {
+  n: string;
+  t: string;
+}
+interface Props {
+  who: string;
+  steps: Step[];
+}
+const { who, steps } = Astro.props;
+---
+
+<section class="steps-strip" aria-label="Who this is for, and the job in three steps">
+  <p class="ss-who">{who}</p>
+  <ol class="ss-steps">
+    {steps.map((s, i) => (
+      <li>
+        <span class="ss-n">{s.n}</span>
+        <p>{s.t}</p>
+      </li>
+    ))}
+  </ol>
+</section>

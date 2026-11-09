@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
 
 const faq = [
   {
@@ -8,11 +9,11 @@ const faq = [
   },
   {
     q: 'How good is the WebP?',
-    a: 'Measured on our bench: the test photo as WebP at quality 80 came out at 251,730 bytes, against 435,388 bytes from the biggest converter on the same photo. That is the setting this page starts on.',
+    a: 'Measured in our tests: the test photo as WebP at quality 80 came out at 251,730 bytes, against 435,388 bytes from the biggest converter on the same photo. That is the setting this page starts on.',
   },
   {
     q: 'Is there a per-day allowance?',
-    a: 'No. The metered converters ration this job by minutes and operations; this bench has no counter to hit, because the work runs on your device and costs this site nothing per photo.',
+    a: 'No. The metered converters ration this job by minutes and operations; this page has no counter to hit, because the work runs on your device and costs this site nothing per photo.',
   },
   {
     q: 'Where do my photos go?',
@@ -40,22 +41,33 @@ const howToJson = JSON.stringify({
 <Base title="Batch convert images: JPG, PNG and WebP in bulk, free · Benchzy" description="Convert a folder of photos to JPG, PNG or WebP in one run, inside your browser, with an optional maximum width. No upload, no account, no conversion minutes.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · Image bench · batch</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Image tools · batch</p>
       <h1 class="font-display text-4xl font-black mt-2">Batch convert images</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         A folder of mixed photos, one format out. Pick JPG, PNG or WebP, set the quality, and
         every photo is converted in a single run, with an optional maximum width for shops and
         listings that cap dimensions. If instead you need one exact file size, the
-        <a class="underline underline-offset-4 hover:text-accent-deep" href="/batch-compress-images/">batch compress bench</a> is next door.
+        <a class="underline underline-offset-4 hover:text-accent-deep" href="/batch-compress-images/">batch compress page</a> is next door.
+        Converting just one photo, with the direction picked for you:
+        <a class="underline underline-offset-4 hover:text-accent-deep" href="/png-to-jpg/">PNG to JPG</a> ·
+        <a class="underline underline-offset-4 hover:text-accent-deep" href="/jpg-to-png/">JPG to PNG</a> ·
+        <a class="underline underline-offset-4 hover:text-accent-deep" href="/webp-to-jpg/">WebP to JPG</a> ·
+        <a class="underline underline-offset-4 hover:text-accent-deep" href="/jpg-to-webp/">JPG to WebP</a> ·
+        <a class="underline underline-offset-4 hover:text-accent-deep" href="/png-to-webp/">PNG to WebP</a> ·
+        <a class="underline underline-offset-4 hover:text-accent-deep" href="/webp-to-png/">WebP to PNG</a>.
       </p>
     </section>
+
+    <StepsStrip who="For a folder in the wrong format: a shoot to JPG, screenshots to PNG, a set to WebP for a website." steps={[{ n: '01', t: 'Pick your images' }, { n: '02', t: 'Pick the output format' }, { n: '03', t: 'Run and download the results' }]} />
 
     <section class="ticket mt-6 p-5 sm:p-7" id="bi-tool" data-mode="convert">
       <div id="bi-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick images">
         <p class="font-display text-xl font-bold">Drop images on the tray, or click to pick them</p>
-        <p class="font-mono text-xs text-ink-soft mt-2">JPEG · PNG · WebP · as many as you like · they stay on this device</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">JPEG · PNG · WebP · tested with 100 files in one run · they stay on this device</p>
+        <p class="font-mono text-xs text-ink-soft mt-1">JPG, PNG, WebP and iPhone HEIC photos work here.</p>
         <input id="bi-file" type="file" accept="image/*" multiple class="hidden" />
       </div>
+      <p class="file-loaded hidden" data-loaded-for="bi-file" role="status"></p>
 
       <ul id="bi-list" class="mt-6"></ul>
 
@@ -78,7 +90,7 @@ const howToJson = JSON.stringify({
             </span>
           </div>
           <p class="text-ink-soft text-sm leading-relaxed mt-3 max-w-md">
-            The starting settings are the bench's own: WebP at quality 80 is where our test
+            The starting settings come from our own tests: WebP at quality 80 is where our test
             photo beat the biggest converter's result on the same file.
           </p>
         </div>
@@ -92,7 +104,7 @@ const howToJson = JSON.stringify({
         </div>
       </div>
 
-      <div id="bi-result" class="hidden mt-8">
+      <div id="bi-result" class="receipt hidden mt-8">
         <div class="tear pt-5 flex items-center gap-4 flex-wrap">
           <h2 class="font-display text-2xl font-bold">Results</h2>
           <span class="stamp" id="bi-stamp">Done on your device</span>
@@ -107,7 +119,7 @@ const howToJson = JSON.stringify({
         <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
         <p class="mt-3 leading-relaxed text-ink-soft">
           Each photo is decoded by the open-source jSquash codecs, optionally scaled to your
-          maximum width, and encoded in the format you picked, one file at a time. On the bench,
+          maximum width, and encoded in the format you picked, one file at a time. In our tests,
           25 images converted in 22.1 seconds total. The sizes are printed per file, before and
           after, so a conversion that grows a file is visible, never silent.
         </p>
@@ -117,9 +129,11 @@ const howToJson = JSON.stringify({
         <p class="mt-3 leading-relaxed text-ink-soft">
           Converting cannot add detail: a small or soft photo stays small and soft in its new
           format, and a JPEG converted to PNG gets bigger, not better; the result line shows
-          the bytes either way. AVIF is not offered: the bench measured its encoding at about
+          the bytes either way. AVIF is not offered: our tests measured its encoding at about
           50 seconds a photo. Hidden camera and location data (EXIF) does not survive
-          re-encoding, which most people want, but if you need it kept, keep the original.
+          re-encoding, which most people want, but if you need it kept, keep the original. The
+          batch was tested with 100 files in one run; past that, the limit is your device's
+          memory, not a rule of ours.
         </p>
       </div>
     </section>

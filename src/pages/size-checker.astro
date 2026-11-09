@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
 
 const faq = [
   {
@@ -41,7 +42,7 @@ const howToJson = JSON.stringify({
 <Base title="File size checker: exact bytes, dimensions, pages · Benchzy" description="Drop any file and read its exact size in bytes, its real format, dimensions, page count or duration, and whether it fits the limits portals set. In your browser, no upload.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · the counter</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Size checker</p>
       <h1 class="font-display text-4xl font-black mt-2">Size checker</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         A portal rejected your file and its message was three words long. Before you fix the file,
@@ -50,12 +51,15 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
+    <StepsStrip who="For checking a file against a portal's limit before you upload it, and learning what the file really is." steps={[{ n: '01', t: 'Pick a file' }, { n: '02', t: 'Read its spec' }, { n: '03', t: 'Check it against the doors' }]} />
+
     <section class="ticket mt-6 p-5 sm:p-7" id="sc-tool">
       <div id="sc-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a file">
         <p class="font-display text-xl font-bold">Drop any file on the tray, or click to pick one</p>
         <p class="font-mono text-xs text-ink-soft mt-2">any format · it stays on this device</p>
         <input id="sc-file" type="file" class="hidden" />
       </div>
+      <p class="file-loaded hidden" data-loaded-for="sc-file" role="status"></p>
 
       <div class="grid gap-6 mt-6 md:grid-cols-2">
         <div>
@@ -89,7 +93,7 @@ const howToJson = JSON.stringify({
         <p class="mt-3 leading-relaxed text-ink-soft">
           This page reports the file you have; it does not change it, and it cannot know a specific
           portal's private rules beyond the limits they print. When a file is over a door, the
-          benches next door do the shrinking: <a class="underline underline-offset-4 hover:text-accent-deep" href="/compress-pdf/">Compress PDF</a> and
+          tools next door do the shrinking: <a class="underline underline-offset-4 hover:text-accent-deep" href="/compress-pdf/">Compress PDF</a> and
           <a class="underline underline-offset-4 hover:text-accent-deep" href="/compress-image/">Compress image</a> take an exact target and work to land under it.
         </p>
       </div>

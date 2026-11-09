@@ -1,0 +1,18 @@
+M17 white run 1 : cut 11.6 s, 1024x683 420835 B
+M17 white run 2 : cut 10.6 s, 1024x683 420835 B
+M17 chrome run 1 : cut 10.6 s, 1024x695 1348918 B
+M17 chrome run 2 : cut 9.9 s, 1024x695 1348918 B
+M17 glass run 1 : cut 10.1 s, 1920x1282 1294674 B
+M17 glass run 2 : cut 10.2 s, 1920x1282 1294674 B
+M17 hair run 1 : cut 9.8 s, 1280x1918 3349962 B
+M17 hair run 2 : cut 9.7 s, 1280x1918 3349962 B
+M17 busy run 1 : cut 10 s, 1920x1290 2698764 B
+M17 busy run 2 : cut 9.7 s, 1920x1290 2698764 B
+M17 strands run 1 : cut 9.5 s, 1200x900 936993 B
+M17 strands run 2 : cut 9.8 s, 1200x900 936993 B
+M17 busy-1024 run 1 : cut 9.8 s, 1024x688 799553 B
+M17 busy-1024 run 2 : cut 9.8 s, 1024x688 799553 B
+M17 busy-2880 run 1 : cut 11 s, 2880x1935 5414303 B
+M17 busy-2880 run 2 : cut 10.3 s, 2880x1935 5414303 B
+M17 console errors: []
+M17 GALLERY RUNS DONE

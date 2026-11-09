@@ -1,0 +1,11 @@
+list before: ["1. img-red.jpg","2. img-green.png","3. img-blue.webp"] | after: ["1. img-blue.webp","2. img-red.jpg","3. img-green.png"]
+TOOL m14 jpg-to-pdf: 3 pictures became one PDF of 3 pages, 3.3 KB, each page sized to its picture. JPEG and PNG pictures went in exactly as stored, with no recompression. 1 WebP picture was rebuilt as PNG inside the PDF (a PDF cannot hold WebP; PNG keeps every pixel, so the picture is unchanged).
+  sizes [[400,400],[300,200],[200,300]] | image dims [[400,400],[300,200],[200,300]] | centers {"1":[40,80,200],"2":[201,40,30],"3":[30,160,60]} | red JPEG byte-identical: true | errors 0 0
+TOOL m14 jpg-to-pdf A4: page 595.28 x 841.89 | ok: true | errors 0
+TOOL m14 pdf-to-jpg print: 5 pages became 5 JPG pictures at print size (200 DPI) (page 1: 1700 x 2200 pixels), packed into one ZIP, 253.4 KB in all. The words on the pages are part of the pictures now: they cannot be selected or searched as text.
+  entries 5 | checks [["jpeg",1700,2200,true,1743],["jpeg",1700,2200,true,1721],["jpeg",1700,2200,true,2067],["jpeg",1700,2200,true,1892],["jpeg",1700,2200,true,1676]] | errors 0 0
+TOOL m14 pdf-to-jpg screen PNG: entries 5 | checks [["png",816,1056,true,393],["png",816,1056,true,394],["png",816,1056,true,471],["png",816,1056,true,440],["png",816,1056,true,377]] | errors 0
+TOOL m14 pdf-to-jpg single: download name pages1-page-1.png | meta png 816 x 1056 | ok: true | errors 0
+TOOL m14 pdf-to-jpg stress: 50-page document rendered in 1200 ms | zip entries 50 | errors 0
+TOOL m14 preset-50k: dataset 50/1 | Landed at 25.1 KB, under your 50 KB target (was 11.11 MB). Photos at 25% size, quality 38. | bytes 25696 | landed: true | honest fallback: false | errors 0
+M14 PROBE DONE

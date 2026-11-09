@@ -3,16 +3,45 @@
 // carries the full key set (normalizeStep in workbench.js), with null
 // for the parameters its tool does not use. The step tools are the
 // measured engines run in sequence: merge, compress-pdf (to a target),
-// split (a page range), stamp (a line of text on every page) and
-// compress-image (to a target). Nothing here is a new engine.
+// split (a page range), stamp (a line of text on every page),
+// compress-image (to a target), remove-bg (the flagship cutout engine)
+// and ocr (the reading engine). Nothing here is a new engine.
+//
+// Two rules shape what the builder offers, and the workflows page
+// prints both in its own words:
+// - A chain works on ONE kind of file. The pdf steps and the image
+//   steps are kept apart (kind below): handed the other kind, a step
+//   would pass every file through untouched and print a step that did
+//   nothing. A stray file of the other kind on the tray still passes
+//   through at run time, logged per file, as chains have always done.
+// - Read the words (OCR) takes either kind (kind 'any') and is always
+//   the last step: what it hands on is text, not a file, so no step
+//   can come after it (endsWithText).
 
 export const STEP_TOOLS = [
-  { id: 'merge', label: 'Merge all PDFs into one' },
-  { id: 'compress-pdf', label: 'Compress PDF to a target size' },
-  { id: 'split', label: 'Split PDF to a page range' },
-  { id: 'stamp', label: 'Stamp a line of text on every PDF page' },
-  { id: 'compress-image', label: 'Compress image to a target size' },
+  { id: 'merge', label: 'Merge all PDFs into one', kind: 'pdf' },
+  { id: 'compress-pdf', label: 'Compress PDF to a target size', kind: 'pdf' },
+  { id: 'split', label: 'Split PDF to a page range', kind: 'pdf' },
+  { id: 'stamp', label: 'Stamp a line of text on every PDF page', kind: 'pdf' },
+  { id: 'compress-image', label: 'Compress image to a target size', kind: 'image' },
+  { id: 'remove-bg', label: 'Remove the background (photo in, see-through PNG out)', kind: 'image' },
+  { id: 'ocr', label: 'Read the words (OCR) — ends the chain with text', kind: 'any', endsWithText: true },
 ];
+
+export function stepTool(id) {
+  return STEP_TOOLS.find((t) => t.id === id) || null;
+}
+
+// The kind of file a chain works on, set by its first step that has
+// one: 'pdf', 'image', or null (no steps yet, or only the OCR step,
+// which takes either kind and ends the chain anyway).
+export function chainKind(steps) {
+  for (const s of steps || []) {
+    const t = stepTool(s.tool);
+    if (t && (t.kind === 'pdf' || t.kind === 'image')) return t.kind;
+  }
+  return null;
+}
 
 export function describeStep(step) {
   switch (step.tool) {
@@ -21,6 +50,8 @@ export function describeStep(step) {
     case 'split': return 'Take pages ' + (step.fromPage || 1) + ' to ' + (step.toPage || 'end');
     case 'stamp': return 'Stamp "' + (step.text || 'PAID') + '" on every page';
     case 'compress-image': return 'Compress image to ' + (step.targetKB || 200) + ' KB';
+    case 'remove-bg': return 'Remove the background';
+    case 'ocr': return 'Read the words (OCR) → text';
     default: return step.tool;
   }
 }
@@ -58,6 +89,21 @@ export const STARTER_CHAINS = [
     name: 'Seller photos',
     steps: [
       { tool: 'compress-image', targetKB: 200, fromPage: null, toPage: null, text: null },
+    ],
+  },
+  {
+    id: 'starter-seller-cutouts',
+    name: 'Seller cutouts',
+    steps: [
+      { tool: 'remove-bg', targetKB: null, fromPage: null, toPage: null, text: null },
+      { tool: 'compress-image', targetKB: 50, fromPage: null, toPage: null, text: null },
+    ],
+  },
+  {
+    id: 'starter-receipt-words',
+    name: 'Receipt words',
+    steps: [
+      { tool: 'ocr', targetKB: null, fromPage: null, toPage: null, text: null },
     ],
   },
 ];

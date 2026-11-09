@@ -6,15 +6,23 @@
 // batch, and its size is printed before anything loads. A photo with no
 // clear subject is listed as such, never silently passed over.
 import { fmtBytes, recordJob, wireTrayMulti } from './workbench.js';
-import { loadBgSession, cutoutBitmap, MODEL_BYTES } from './lib/bg-engine.js';
+import { loadBgSession, cutoutBitmap, bitmapFromPhotoFile, MODEL_BYTES } from './lib/bg-engine.js';
 import { makeZip } from './lib/zip.js';
 
 const $ = (id) => document.getElementById(id);
 const tray = $('bb-tray'), input = $('bb-file'), listEl = $('bb-list');
 const spec = $('bb-spec'), runBtn = $('bb-run'), status = $('bb-status'), result = $('bb-result');
+const cancelBtn = $('bb-cancel');
 const rowsEl = $('bb-rows'), zipLink = $('bb-zip');
 let entries = []; // { file, bitmap, error }
 let running = false;
+// Cancel support (milestone 8, round-1 fix 2): the one model load can
+// be cancelled; pieces already fetched are kept by the engine, so the
+// next run resumes the load instead of starting over.
+let loadAbort = null;
+if (cancelBtn) {
+  cancelBtn.addEventListener('click', () => { if (loadAbort) loadAbort.abort(); });
+}
 
 function setStatus(msg) { status.textContent = msg; }
 function setSpec(rows) {
@@ -27,7 +35,7 @@ function refresh() {
   setSpec([
     ['files on the tray', String(entries.length)],
     ['readable images', String(ok.length)],
-    ['model', fmtBytes(MODEL_BYTES) + ', downloads once'],
+    ['model', fmtBytes(MODEL_BYTES) + ', loads once'],
   ]);
   runBtn.disabled = running || ok.length < 1;
   listEl.innerHTML = '';
@@ -48,7 +56,7 @@ function refresh() {
     li.append(left, right);
     listEl.appendChild(li);
   });
-  if (!entries.length) setStatus('Pick images to begin. The model (44.3 MB) downloads once, when you press start.');
+  if (!entries.length) setStatus('Pick images to begin. The removal program (44.3 MB) loads once, when you press start.');
 }
 
 wireTrayMulti(tray, input, async (files) => {
@@ -56,7 +64,9 @@ wireTrayMulti(tray, input, async (files) => {
   for (const f of files) {
     const entry = { file: f, bitmap: null, error: null };
     try {
-      entry.bitmap = await createImageBitmap(f);
+      // HEIC photos decode through the shipped libheif reader
+      // (milestone 18), the same route as the single-photo tool.
+      entry.bitmap = (await bitmapFromPhotoFile(f)).bitmap;
     } catch (err) {
       entry.error = err && err.message ? err.message : String(err);
     }
@@ -91,16 +101,19 @@ runBtn.addEventListener('click', async () => {
   zipLink.classList.add('hidden');
   const zipEntries = [];
   let done = 0, noSubject = 0, failed = 0;
+  loadAbort = new AbortController();
+  if (cancelBtn) cancelBtn.classList.remove('hidden');
   try {
     await loadBgSession((p) => {
-      if (p.phase === 'piece') setStatus('Downloading the model: ' + p.gotMB.toFixed(1) + ' of ' + p.totalMB.toFixed(1) + ' MB (piece ' + p.piece + ' of ' + p.pieces + ', each one checked)…');
-      else if (p.phase === 'list') setStatus('Fetching the model list…');
+      if (p.phase === 'piece') setStatus('Loading the removal program: ' + p.gotMB.toFixed(1) + ' of ' + p.totalMB.toFixed(1) + ' MB (piece ' + p.piece + ' of ' + p.pieces + ', each one checked)…');
+      else if (p.phase === 'list') setStatus('Loading the tool program (44 MB, one time only). It runs in your browser to protect your privacy: your photos never leave your device…');
       else if (p.phase === 'checked') setStatus('Model downloaded and checked. Starting it…');
       else if (p.phase === 'starting') setStatus('Starting the model…');
-    });
+    }, loadAbort.signal);
+    if (cancelBtn) cancelBtn.classList.add('hidden');
     for (const e of entries) {
       if (e.error) { addResultRow(e.file.name, 'skipped: not a readable image', null); failed++; continue; }
-      setStatus('Cutting out ' + e.file.name + ' (' + (done + noSubject + failed + 1) + ' of ' + entries.length + ')…');
+      setStatus('Removing the background from ' + e.file.name + ' (' + (done + noSubject + failed + 1) + ' of ' + entries.length + ')…');
       try {
         const r = await cutoutBitmap(e.bitmap);
         if (r.noSubject) {
@@ -136,8 +149,14 @@ runBtn.addEventListener('click', async () => {
     stamp.classList.add('land');
     setStatus('Done. ' + done + ' of ' + entries.length + ' photos cut out' + (noSubject ? ', ' + noSubject + ' with no clear subject' : '') + (failed ? ', ' + failed + ' skipped' : '') + '.');
   } catch (err) {
-    setStatus('Something went wrong: ' + (err && err.message ? err.message : err));
+    if (err && err.cancelled) {
+      setStatus('Loading stopped. ' + err.kept + ' of ' + err.total + ' pieces are already here and are kept; press start again and the load carries on from there. Nothing was run.');
+    } else {
+      setStatus('Something went wrong: ' + (err && err.message ? err.message : err));
+    }
   } finally {
+    if (cancelBtn) cancelBtn.classList.add('hidden');
+    loadAbort = null;
     running = false;
     refresh();
   }

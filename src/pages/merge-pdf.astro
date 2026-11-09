@@ -1,10 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
 
 const faq = [
   {
     q: 'How many files can I merge?',
-    a: 'As many as your device can hold in memory at once. On our bench, 25 one-page files merged in 71 milliseconds and the result was about 30% smaller than the biggest PDF site produced from the same 25 files. There is no counter here and no per-day allowance.',
+    a: 'As many as your device can hold in memory at once. In our tests, 25 one-page files merged in 71 milliseconds and the result was about 30% smaller than the biggest PDF site produced from the same 25 files. There is no counter here and no per-day allowance.',
   },
   {
     q: 'How do I control the page order?',
@@ -42,7 +43,7 @@ const howToJson = JSON.stringify({
 <Base title="Merge PDF: put PDFs into one file, free, in your browser · Benchzy" description="Combine as many PDFs as you like into one file, in your order, with the work done inside your browser. No upload, no account, no file-count cap.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · PDF bench</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">PDF tools</p>
       <h1 class="font-display text-4xl font-black mt-2">Merge PDF</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         The monthly pack: invoices, the signed page, the appendix, all in one file. Drop your PDFs
@@ -51,15 +52,21 @@ const howToJson = JSON.stringify({
         <a class="underline underline-offset-4 hover:text-accent-deep" href="/batch-merge-pdf/">Batch merge PDF page</a>,
         and two files dealt together a page at a time is
         <a class="underline underline-offset-4 hover:text-accent-deep" href="/interleave-pdf/">Interleave PDF</a>.
+        Pages in the wrong order inside one file already? That is not a merge; use
+        <a class="underline underline-offset-4 hover:text-accent-deep" href="/organize-pdf/">Organise PDF</a>,
+        which reorders the pages of a single file.
       </p>
     </section>
+
+    <StepsStrip who="For combining scans, statements, or chapters into one file, in your order." steps={[{ n: '01', t: 'Pick your PDFs' }, { n: '02', t: 'Put them in order' }, { n: '03', t: 'Download the merged PDF' }]} />
 
     <section class="ticket mt-6 p-5 sm:p-7" id="mg-tool">
       <div id="mg-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick PDFs">
         <p class="font-display text-xl font-bold">Drop PDFs on the tray, or click to pick them</p>
-        <p class="font-mono text-xs text-ink-soft mt-2">PDF · as many as you like · they stay on this device</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">PDF · as many as your device can hold · they stay on this device</p>
         <input id="mg-file" type="file" accept="application/pdf,.pdf" multiple class="hidden" />
       </div>
+      <p class="file-loaded hidden" data-loaded-for="mg-file" role="status"></p>
 
       <ul id="mg-list" class="mt-6"></ul>
 
@@ -81,7 +88,7 @@ const howToJson = JSON.stringify({
         </div>
       </div>
 
-      <div id="mg-result" class="hidden mt-8">
+      <div id="mg-result" class="receipt hidden mt-8">
         <div class="tear pt-5 flex items-center gap-4 flex-wrap">
           <h2 class="font-display text-2xl font-bold">Result</h2>
           <span class="stamp" id="mg-stamp">Done on your device</span>
@@ -97,7 +104,7 @@ const howToJson = JSON.stringify({
         <p class="mt-3 leading-relaxed text-ink-soft">
           The page opens each PDF, copies its pages into a new file in list order, and saves. Pages
           are copied, not rebuilt, so nothing is recompressed and nothing is lost. It is the fastest
-          job on this bench: the whole 25-file test pack took 71 milliseconds of engine time.
+          job here: the whole 25-file test pack took 71 milliseconds of engine time.
         </p>
       </div>
       <div>
@@ -108,6 +115,7 @@ const howToJson = JSON.stringify({
           this page cannot read as a PDF is marked on the list and left out of the merge, in plain
           words, before you run the job. Check the merged order before you send the pack on.
         </p>
+        <p class="mt-3 leading-relaxed text-ink-soft">A password-protected PDF cannot be opened by this tool. Take its password off first with the <a class="underline underline-offset-4" href="/unlock-pdf/">unlock tool</a>, then bring the file back.</p>
       </div>
     </section>
 

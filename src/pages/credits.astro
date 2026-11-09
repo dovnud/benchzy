@@ -4,11 +4,12 @@ import Base from '../layouts/Base.astro';
 const credits = [
   ['Background removal model', 'ISNet (general-use weights), as distributed in the @imgly/background-removal-data package, version pinned at build time. Delivered as 11 pieces with a SHA-256 list; the browser checks every piece, and the whole file, before the model runs', 'Apache License 2.0 for the weights; the package data itself states MIT. The model file is used directly through our own runtime code; the @imgly wrapper library is not shipped.'],
   ['Background removal runtime', 'onnxruntime-web 1.31.1', 'MIT License'],
-  ['PDF engine', '@cantoo/pdf-lib 2.11.1', 'MIT License'],
+  ['PDF engine', '@cantoo/pdf-lib 2.11.1 (the fork\'s own addition to the library includes its standard security handler: AES-256 encryption and password decryption, which the Protect and Unlock tools run)', 'MIT License'],
   ['PDF page renderer (Read a scan)', 'PDF.js 6.5.438 (pdf.min.mjs and its worker, self-hosted)', 'Apache License 2.0'],
-  ['Scan reading engine (OCR)', 'Tesseract.js 7 with the Tesseract LSTM core (WebAssembly, self-hosted) and English trained data', 'Apache License 2.0'],
+  ['Scan reading engine (OCR)', 'Tesseract.js 7 with the Tesseract LSTM core (WebAssembly, self-hosted) and English, Spanish and Portuguese trained data', 'Apache License 2.0'],
   ['Image codecs', '@jsquash/jpeg 1.6.0 (mozjpeg), @jsquash/webp 1.5.0, @jsquash/png 3.1.1, @jsquash/resize 2.1.1', 'Apache License 2.0 / BSD family, per package'],
-  ['ZIP packing (batch benches)', 'JSZip 3.10.1', 'MIT License'],
+  ['HEIC photo reader', 'libheif 1.23.5 with the libde265 decoder, as the libheif-js 1.23.5 WebAssembly build. It runs the HEIC to JPG tool and reads HEIC photos on the other image tools. The section below carries its full notice.', 'GNU Lesser General Public License 3.0 (LGPL-3.0)'],
+  ['ZIP packing (batch tools)', 'JSZip 3.10.1', 'MIT License'],
   ['Site frame', 'Astro 5', 'MIT License'],
   ['Styling', 'Tailwind CSS 4', 'MIT License'],
 ];
@@ -36,6 +37,38 @@ const credits = [
           </dl>
         </article>
       ))}
+    </section>
+
+    <section class="ticket mt-10 p-6">
+      <h2 class="font-display text-2xl font-bold">The HEIC reader and the LGPL</h2>
+      <p class="mt-3 leading-relaxed text-ink-soft">
+        The HEIC photo reader is <strong>libheif</strong> (copyright struktur AG, Dirk Farin
+        and contributors) with the <strong>libde265</strong> decoder inside it, shipped here
+        as the libheif-js 1.23.5 WebAssembly build. Both libraries are free software under
+        the <strong>GNU Lesser General Public License, version 3</strong>. The licence text
+        is on this site at
+        <a class="underline underline-offset-4" href="/heif/LICENSE">/heif/LICENSE</a>,
+        exactly as it ships with the library, and the GNU General Public License version 3
+        it incorporates is at
+        <a class="underline underline-offset-4" href="/heif/GPL-3.0.txt">/heif/GPL-3.0.txt</a>.
+      </p>
+      <p class="mt-3 leading-relaxed text-ink-soft">
+        The library is used <strong>unmodified</strong>, and it is served as its own files
+        (<span class="font-mono text-sm">/heif/libheif.js</span> and
+        <span class="font-mono text-sm">/heif/libheif.wasm</span>), loaded only when a HEIC
+        photo actually arrives, never combined into this site's own code. Because it stays
+        a separate file at its own address, you can replace it with your own build of the
+        same library and the pages will use yours: that separateness is the point of the
+        licence, and we keep it deliberately.
+      </p>
+      <p class="mt-3 leading-relaxed text-ink-soft">
+        The source code for the exact build that runs here: the packaging at
+        <a class="underline underline-offset-4" href="https://github.com/catdad-experiments/libheif-js" rel="noopener">github.com/catdad-experiments/libheif-js</a> (version 1.23.5),
+        and the libraries themselves at
+        <a class="underline underline-offset-4" href="https://github.com/strukturag/libheif" rel="noopener">github.com/strukturag/libheif</a> and
+        <a class="underline underline-offset-4" href="https://github.com/strukturag/libde265" rel="noopener">github.com/strukturag/libde265</a>.
+        Nothing on this site limits your rights in the library itself.
+      </p>
     </section>
 
     <section class="ticket mt-10 p-6">

@@ -1,0 +1,240 @@
+---
+import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
+
+const faq = [
+  {
+    q: 'What is the difference between resizing and compressing?',
+    a: 'Resizing changes the dimensions, the pixel width and height. Compressing changes the file size in KB and usually keeps the dimensions. If a form asks for a photo under 200 KB, you want the compress image page; if it asks for a photo of 600 by 600 pixels, you want this one. Some doors ask for both, one after the other.',
+  },
+  {
+    q: 'Can I make a small photo bigger?',
+    a: 'You can, and the page will do it and say so on the result. But bigger is not sharper: the new pixels are worked out from the old ones, no detail is added, and no tool here pretends otherwise. A bigger, sharper original always beats an enlarged small one.',
+  },
+  {
+    q: 'Where do the preset sizes come from?',
+    a: 'The document sizes are physical standards turned into pixels at 300 DPI, the sharpness printed photos use: a passport photo is 35 by 45 mm (413 by 531 px), a US passport photo is 2 by 2 inches (600 by 600 px). The screen sizes are the frame sizes the platforms themselves publish: 1080 by 1080 for a square post, 1280 by 720 for a video thumbnail, 1920 by 1080 for full HD.',
+  },
+  {
+    q: 'What happens to a see-through (transparent) picture?',
+    a: 'PNG and WebP can hold transparency; JPG cannot. If your picture has see-through parts and you pick JPG, those parts are painted over a colour you choose (white unless you change it), and the page says so before you run.',
+  },
+  {
+    q: 'Where does my photo go?',
+    a: 'Nowhere. It is decoded, resized and offered back to you inside this page. Nothing is uploaded.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+// HowTo: the steps are this page's own workflow, transcribed from its
+// intro, ticket labels and "How it works" text.
+const howToJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: "How to resize an image to exact pixels",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Pick a photo", text: "Drop a photo on the tray, or click to pick one (JPG, PNG or WebP). It stays on this device, and its size now is read and shown before anything runs." },
+    { '@type': 'HowToStep', position: 2, name: "Set the new size", text: "Type a width, a height, or both (the lock keeps the photo's shape; both numbers mean it fits inside that frame), or a percentage, or pick a preset: passport and ID sizes, story and post frames, a 1600 px long side for listings." },
+    { '@type': 'HowToStep', position: 3, name: "Resize the photo", text: "Press 'Resize the photo'. Pick the output format, or keep the photo's own; the result line prints the dimensions and bytes, before and after." },
+    { '@type': 'HowToStep', position: 4, name: "Download the resized photo", text: "Download the result at exactly the dimensions the result line states." },
+  ],
+});
+const presets = [
+  { label: 'Passport photo · 413 x 531', w: '413', h: '531', note: '35 x 45 mm at 300 DPI' },
+  { label: 'US passport · 600 x 600', w: '600', h: '600', note: '2 x 2 in at 300 DPI' },
+  { label: 'Square post · 1080 x 1080', w: '1080', h: '1080', note: 'Instagram and feeds' },
+  { label: 'Portrait post · 1080 x 1350', w: '1080', h: '1350', note: 'the 4:5 frame' },
+  { label: 'Story · 1080 x 1920', w: '1080', h: '1920', note: 'the 9:16 frame' },
+  { label: 'Video thumbnail · 1280 x 720', w: '1280', h: '720', note: 'YouTube thumbnail size' },
+  { label: 'Full HD · 1920 x 1080', w: '1920', h: '1080', note: 'the 1080p frame' },
+  { label: 'eBay / Marketplace · long side 1600', w: '1600', h: '1600', note: 'the 1600 px long side listing sites ask for, shape kept' },
+];
+---
+
+<Base title="Resize image: change a photo's pixel size, free, in your browser · Benchzy" description="Resize a photo to exact pixels, by percent, or to a preset size (passport 413 x 531, square post 1080 x 1080, thumbnail 1280 x 720), inside your browser. Before and after dimensions and bytes printed. No upload, no account.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Image tools</p>
+      <h1 class="font-display text-4xl font-black mt-2">Resize image to exact pixels</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        A door asks for a photo of so many pixels wide, and nothing else will do. This page
+        changes the dimensions themselves: type a width, a height, or both, take a percentage,
+        or start from a preset (passport and post sizes are in the tray). If the door instead
+        asks for a file under a size in KB, that is the
+        <a class="underline underline-offset-4 hover:text-accent-deep" href="/compress-image/">compress image page</a>;
+        a whole folder at one size is the
+        <a class="underline underline-offset-4 hover:text-accent-deep" href="/batch-resize-images/">batch resize page</a>.
+      </p>
+    </section>
+
+    <StepsStrip who="For a photo that must come out at exact pixel dimensions: an ID or passport picture, a post or story frame, a listing photo with a size rule." steps={[{ n: '01', t: 'Pick a photo' }, { n: '02', t: 'Set the new size' }, { n: '03', t: 'Download the resized photo' }]} />
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="ri-tool">
+      <div id="ri-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick an image">
+        <p class="font-display text-xl font-bold">Drop a photo on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">JPG, PNG or WebP · it stays on this device</p>
+        <p class="font-mono text-xs text-ink-soft mt-1">JPG, PNG, WebP and iPhone HEIC photos work here.</p>
+        <p class="font-mono text-xs text-ink-soft mt-1">Passport sizes, before you pick: 413 x 531 px = 35 x 45 mm at 300 DPI · US passport 600 x 600 px = 2 x 2 in at 300 DPI</p>
+        <input id="ri-file" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif,.jpg,.jpeg,.png,.webp,.heic,.heif" class="hidden" />
+      </div>
+      <p class="file-loaded hidden" data-loaded-for="ri-file" role="status"></p>
+      <p class="text-ink-soft text-sm leading-relaxed mt-3 max-w-2xl">
+        Both passport sizes are presets below. With the shape lock on, your photo fits inside
+        the frame, it is not stretched to it: a 4:3 photo fitted inside the 413 x 531 frame
+        comes out at 413 x 310 px. The result line always prints the exact output pixels, so
+        you can check the size before the file goes anywhere.
+      </p>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">The new size, one of three ways</h2>
+          <div id="ri-modes" class="flex gap-2 mt-3 flex-wrap">
+            <button type="button" class="chip" data-mode="pixels" aria-pressed="true">By pixels</button>
+            <button type="button" class="chip" data-mode="percent" aria-pressed="false">By percent</button>
+          </div>
+
+          <div id="ri-pixels-panel" class="mt-4">
+            <div class="flex items-end gap-3 flex-wrap">
+              <span>
+                <label class="font-mono text-xs uppercase tracking-widest text-ink-soft block" for="ri-width">Width (px)</label>
+                <input id="ri-width" type="number" min="1" max="20000" step="1" placeholder="e.g. 1080" class="mt-1 border border-ink bg-ticket px-3 py-2 font-mono w-32" />
+              </span>
+              <span class="font-mono text-ink-soft pb-2">x</span>
+              <span>
+                <label class="font-mono text-xs uppercase tracking-widest text-ink-soft block" for="ri-height">Height (px)</label>
+                <input id="ri-height" type="number" min="1" max="20000" step="1" placeholder="e.g. 1080" class="mt-1 border border-ink bg-ticket px-3 py-2 font-mono w-32" />
+              </span>
+              <label class="flex items-center gap-2 pb-2 font-mono text-sm cursor-pointer">
+                <input id="ri-lock" type="checkbox" checked class="w-5 h-5 accent-[#d9551e]" />
+                Keep the photo's shape (aspect lock)
+              </label>
+            </div>
+            <p class="text-ink-soft text-sm leading-relaxed mt-2 max-w-md">
+              One number on its own is enough: the other side follows the photo's shape. Both
+              numbers with the lock on mean the photo fits inside that frame, shape kept; turn
+              the lock off to force the exact frame, which stretches the photo to fit it.
+            </p>
+            <h3 class="font-mono text-xs uppercase tracking-widest text-ink-soft mt-5">Presets, the sizes doors actually ask for</h3>
+            <div id="ri-presets" class="flex gap-2 mt-3 flex-wrap">
+              {presets.map((p) => (
+                <button type="button" class="chip" data-w={p.w} data-h={p.h} title={p.note}>{p.label}</button>
+              ))}
+            </div>
+            <p class="text-ink-soft text-sm leading-relaxed mt-2 max-w-md">
+              A preset fills the two boxes above; the lock still decides fit or force. Document
+              sizes are the physical sizes at 300 DPI, the sharpness printed photos use; the
+              last preset is the listing size: eBay and Marketplace ask for a long side of
+              1600 px, so it fits the photo's long side to 1600 px with its shape kept.
+            </p>
+          </div>
+
+          <div id="ri-percent-panel" class="mt-4 hidden">
+            <div class="flex items-end gap-3 flex-wrap">
+              <span>
+                <label class="font-mono text-xs uppercase tracking-widest text-ink-soft block" for="ri-percent">Percent of the original (%)</label>
+                <input id="ri-percent" type="number" min="1" max="1000" step="1" value="50" class="mt-1 border border-ink bg-ticket px-3 py-2 font-mono w-32" />
+              </span>
+              <span class="flex gap-2 pb-1">
+                <button type="button" class="chip ri-pct-chip" data-pct="25">25%</button>
+                <button type="button" class="chip ri-pct-chip" data-pct="50">50%</button>
+                <button type="button" class="chip ri-pct-chip" data-pct="75">75%</button>
+              </span>
+            </div>
+            <p class="text-ink-soft text-sm leading-relaxed mt-2 max-w-md">
+              Over 100% makes the photo bigger. Bigger is not sharper: no detail is added, and
+              the result line says so when it happens.
+            </p>
+          </div>
+
+          <p id="ri-out" class="font-mono text-sm mt-5 leading-relaxed" aria-live="polite">Pick a photo and its size lands here.</p>
+          <img id="ri-preview" alt="The resized result" class="hidden w-full border border-line bg-paper-deep object-contain max-h-72 mt-4" />
+        </div>
+
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">Output format</h2>
+          <div id="ri-formats" class="flex gap-2 mt-3 flex-wrap">
+            <button type="button" class="chip" data-format="same" aria-pressed="true">Same as the photo</button>
+            <button type="button" class="chip" data-format="jpeg" aria-pressed="false">JPG</button>
+            <button type="button" class="chip" data-format="png" aria-pressed="false">PNG</button>
+            <button type="button" class="chip" data-format="webp" aria-pressed="false">WebP</button>
+          </div>
+          <div id="ri-quality-row" class="mt-4">
+            <label class="font-mono text-xs uppercase tracking-widest text-ink-soft block" for="ri-quality">Quality (JPG and WebP)</label>
+            <input id="ri-quality" type="number" min="1" max="100" step="1" value="90" class="mt-1 border border-ink bg-ticket px-3 py-2 font-mono w-24" />
+          </div>
+          <div id="ri-bg-row" class="mt-4 hidden">
+            <h3 class="font-mono text-xs uppercase tracking-widest text-ink-soft">See-through parts become</h3>
+            <div class="flex items-center gap-2 mt-2 flex-wrap">
+              <span id="ri-bgs" class="flex gap-2">
+                <button type="button" class="chip" data-bg="#ffffff" aria-pressed="true">White</button>
+                <button type="button" class="chip" data-bg="#000000" aria-pressed="false">Black</button>
+              </span>
+              <input id="ri-bg" type="color" value="#ffffff" class="w-12 h-10 border border-ink bg-ticket cursor-pointer" aria-label="Pick the background colour" />
+            </div>
+            <p class="text-ink-soft text-sm leading-relaxed mt-2">JPG cannot hold see-through pixels, so any transparent part of your photo is painted over this colour.</p>
+          </div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft mt-5">File spec</h2>
+          <dl id="ri-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <button id="ri-run" class="btn-primary w-full mt-5" type="button" disabled>Resize the photo</button>
+          <p id="ri-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a photo to begin.</p>
+        </div>
+      </div>
+
+      <div id="ri-result" class="receipt hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Result</h2>
+          <span class="stamp" id="ri-stamp">Done on your device</span>
+        </div>
+        <p id="ri-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
+        <a id="ri-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the resized photo</a>
+      </div>
+    </section>
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The photo is decoded and redrawn at the new dimensions by the same open-source
+          jSquash codecs the exact-KB tool uses, then written in the format you picked (or the
+          photo's own). Nothing leaves the page. The first run loads the image program (about
+          2 MB, one time only). The download is how we protect your privacy: the program comes
+          to your device and does the work there, so your photo never leaves it.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          Making a photo bigger never makes it sharper: enlarging works the new pixels out
+          from the old ones, adds no detail, and the result line says so in plain words when
+          you ask for it. Forcing an exact frame with the lock off stretches the photo, faces
+          included; the lock is on when the page opens for that reason. Hidden camera and
+          location data (EXIF) does not survive re-encoding; if you need it kept, keep the
+          original. And a photo resized small cannot be resized back: work from the original
+          each time.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script type="application/ld+json" set:html={howToJson}></script>
+  <script>
+    import '../scripts/resize-image.js';
+  </script>
+</Base>

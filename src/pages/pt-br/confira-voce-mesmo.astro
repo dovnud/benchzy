@@ -1,0 +1,141 @@
+---
+import Base from '../../layouts/Base.astro';
+import LangLinks from '../../components/LangLinks.astro';
+
+// Portuguese (BR) translation drafted in-house 2026-11-08 (milestone
+// 8). PENDING HUMAN REVIEW before promotion (see TRANSLATIONS.md).
+// The witness itself runs the shared script; its strings follow the
+// page language.
+const alternates = [
+  { hreflang: 'en', href: '/check-it-yourself/' },
+  { hreflang: 'es', href: '/es/compruebalo-tu-mismo/' },
+  { hreflang: 'pt-BR', href: '/pt-br/confira-voce-mesmo/' },
+  { hreflang: 'x-default', href: '/check-it-yourself/' },
+];
+const langLinks = [
+  { label: 'English', href: '/check-it-yourself/' },
+  { label: 'Español', href: '/es/compruebalo-tu-mismo/' },
+  { label: 'Português (Brasil)', href: '/pt-br/confira-voce-mesmo/', current: true },
+];
+
+const families = [
+  ['Ferramentas de PDF', 'O programa @cantoo/pdf-lib e, para digitalizações, PDF.js mais Tesseract.js, tudo carregado deste site.', 'Nada. O PDF é lido dentro da página e o resultado é construído aí.'],
+  ['Ferramentas de imagem', 'Os programas de codecs jSquash (WebAssembly), carregados deste site.', 'Nada. A foto é decodificada, trabalhada e recodificada na página.'],
+  ['Remoção de fundo', 'O programa de remoção, 44,3 MB, que chega em 11 partes que o seu navegador confere contra uma lista de impressões digitais publicada antes de executá-lo.', 'Nada. A foto fica na página; só o programa viaja, e viaja até você, não de você.'],
+  ['Qualquer página deste site', 'A própria página e os seus arquivos de programa, como qualquer site. Mais uma coisa carrega: o contador de visitas, um programa pequeno do Google (Google Analytics), que dispara uma vez quando a página abre.', 'Do seu arquivo, nada. O contador dispara quando a página abre, antes de qualquer ferramenta rodar, e um trabalho não envia nada para ele. O que ele carrega é a visita em si: qual página abriu, de onde no mundo vem a conexão, aproximadamente, e que tipo de aparelho e navegador é. Nas listas acima, as linhas dele são as endereçadas ao Google e marcadas como «contador de visitas», para você distingui-las das linhas deste site. Também existem os registros rotineiros de pedidos, como em qualquer site. O detalhe completo está na página de privacidade.'],
+];
+const steps = [
+  'Abra qualquer página de ferramenta deste site.',
+  'Abra as ferramentas de desenvolvedor do seu navegador e escolha o painel Rede. No Chrome, fica no menu «Mais ferramentas, Ferramentas para desenvolvedores»; no Firefox e no Safari, fica no menu de desenvolvedor ou Inspetor Web.',
+  'Aperte o botão de limpar da lista de rede e depois rode um trabalho com um arquivo real.',
+  'Observe a lista enquanto o trabalho roda e no momento do download. As linhas são esta página pedindo ao seu próprio site arquivos de programa, mais a linha do contador de visitas de quando a página abriu (endereçada ao Google, e ela carrega a visita, nunca um arquivo). Nada na lista carrega o seu arquivo, porque nenhum pedido é feito com ele.',
+];
+---
+
+<Base lang="pt-BR" title="Confira você mesmo: veja o que um trabalho envia · Benchzy" description="Não acredite só na nossa palavra. Rode um trabalho enquanto esta página lista ao vivo cada pedido que faz, ou use o painel de rede do seu próprio navegador com estes passos." alternates={alternates}>
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Não confie, observe</p>
+      <h1 class="font-display text-4xl font-black mt-2">Confira você mesmo</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Cada ferramenta aqui diz que o seu arquivo nunca é enviado. Essa frase só vale alguma
+        coisa se você puder vê-la ser verdade. Esta página roda um trabalho real enquanto lista,
+        ao vivo, cada pedido que faz. E como uma página corrigindo a própria prova vale pouco,
+        os passos manuais abaixo mostram a mesma conferência com as ferramentas do seu próprio
+        navegador, em qualquer página deste site.
+      </p>
+      <LangLinks label="Esta página em:" links={langLinks} />
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="witness">
+      <h2 class="font-display text-2xl font-bold">A testemunha ao vivo</h2>
+      <p class="mt-2 text-ink-soft leading-relaxed max-w-2xl">
+        Desde que esta página abriu, ela mantém duas listas: o que carregou ao chegar e cada
+        pedido que fez desde então. Rode o trabalho abaixo e observe a segunda lista enquanto ele
+        trabalha.
+      </p>
+      <p id="w-verdict" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">A testemunha está se armando…</p>
+
+      <div id="w-tray" class="tray p-6 text-center cursor-pointer mt-5" role="button" tabindex="0" aria-label="Escolha um arquivo para o trabalho com testemunha">
+        <p class="font-display text-xl font-bold">Solte qualquer arquivo aqui para o trabalho com testemunha</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">o trabalho lê o arquivo, calcula a sua impressão digital e o descreve, só nesta página</p>
+        <input id="w-file" type="file" class="hidden" />
+      </div>
+      <p class="file-loaded hidden" data-loaded-for="w-file" role="status"></p>
+      <dl id="w-spec" class="mt-4">
+        <div class="spec-row"><dt>arquivo</dt><dd>nenhum escolhido ainda</dd></div>
+      </dl>
+      <p id="w-job-status" class="font-mono text-sm mt-3 leading-relaxed" aria-live="polite">Nenhum trabalho ainda.</p>
+
+      <div class="grid gap-6 md:grid-cols-2 mt-6">
+        <div>
+          <h3 class="font-mono text-xs uppercase tracking-widest text-ink-soft">Carregado quando esta página abriu</h3>
+          <p id="w-before-count" class="font-mono text-xs text-ink-soft mt-1"></p>
+          <ul id="w-before" class="font-mono text-xs leading-relaxed mt-2 max-h-56 overflow-auto"></ul>
+        </div>
+        <div>
+          <h3 class="font-mono text-xs uppercase tracking-widest text-ink-soft">Pedidos desde então, ao vivo</h3>
+          <ul id="w-live" class="font-mono text-xs leading-relaxed mt-2 max-h-56 overflow-auto"></ul>
+        </div>
+      </div>
+      <p class="font-mono text-xs text-ink-soft mt-4 leading-relaxed">
+        O que isto prova, exatamente: o trabalho acima rodou com os pedidos mostrados, e nenhum
+        deles carregava o seu arquivo. O que não prova sozinho: que as outras páginas se comportam
+        do mesmo jeito. É para isso que serve o seu próprio painel de rede, abaixo.
+      </p>
+    </section>
+
+    <section class="mt-12">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">A mesma conferência, com as suas próprias ferramentas</h2>
+      <ol class="mt-4 grid gap-4">
+        {steps.map((s, i) => (
+          <li class="ticket-soft p-4 font-mono text-sm leading-relaxed">
+            <span class="text-accent-deep font-bold">{String(i + 1).padStart(2, '0')} ·</span> {s}
+          </li>
+        ))}
+      </ol>
+
+      <h3 class="font-display text-xl font-bold mt-8">Como seria uma linha ruim</h3>
+      <p class="mt-2 text-ink-soft leading-relaxed max-w-2xl">
+        Em uma execução saudável, cada linha da lista pede a este site um arquivo de programa
+        e não carrega nada seu, além da linha do contador de visitas de quando a página abriu,
+        que carrega a visita em si e nada do seu arquivo. Uma linha que deveria fazer você parar é assim:
+      </p>
+      <p class="ticket-soft p-4 font-mono text-sm leading-relaxed mt-3">
+        POST https://uploads.some-other-site.example/receive · para outro site · COM DADOS
+        ANEXADOS: o corpo do pedido leva bytes para fora em vez de pedir um arquivo.
+      </p>
+      <p class="mt-3 text-ink-soft leading-relaxed max-w-2xl">
+        Dois sinais: o endereço não é este site, e o pedido envia dados em vez de pedir um
+        arquivo. Se uma linha assim aparecer algum dia enquanto um trabalho do Benchzy roda,
+        a promessa desta página está quebrada, e o painel de rede é como você descobriria.
+      </p>
+
+      <h3 class="font-display text-xl font-bold mt-8">A conferência em modo avião</h3>
+      <ol class="mt-4 grid gap-4">
+        <li class="ticket-soft p-4 font-mono text-sm leading-relaxed"><span class="text-accent-deep font-bold">01 ·</span> Abra a página da ferramenta uma vez, com conexão, e deixe ela carregar por completo. O programa da ferramenta vem deste site nessa primeira visita.</li>
+        <li class="ticket-soft p-4 font-mono text-sm leading-relaxed"><span class="text-accent-deep font-bold">02 ·</span> Ative o modo avião, ou desligue o Wi-Fi e os dados móveis.</li>
+        <li class="ticket-soft p-4 font-mono text-sm leading-relaxed"><span class="text-accent-deep font-bold">03 ·</span> Rode o trabalho do começo ao fim e baixe o resultado. Funciona sem conexão, porque o trabalho acontece na página, no seu aparelho.</li>
+        <li class="ticket-soft p-4 font-mono text-sm leading-relaxed"><span class="text-accent-deep font-bold">04 ·</span> Um limite, dito sem rodeios: uma página de ferramenta que você nunca abriu ainda precisa de uma primeira visita com conexão. Sem conexão e sem uma visita anterior, não há página nem programa para rodar.</li>
+      </ol>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">O que sai do seu aparelho, família por família</h2>
+      <div class="mt-4 grid gap-4">
+        {families.map(([fam, loads, leaves]) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-display text-xl font-bold">{fam}</h3>
+            <dl class="mt-2">
+              <div class="spec-row"><dt>o que carrega</dt><dd class="max-w-xl">{loads}</dd></div>
+              <div class="spec-row"><dt>do seu arquivo, o que sai</dt><dd class="max-w-xl">{leaves}</dd></div>
+            </dl>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script>
+    import '../../scripts/witness.js';
+  </script>
+</Base>

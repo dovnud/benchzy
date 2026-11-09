@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import LogoMark from '../components/LogoMark.astro';
 
 const families = [
   {
@@ -8,7 +9,7 @@ const families = [
     tools: [
       { name: 'Remove background', href: '/remove-background/', live: true, note: 'Full-size cutouts in your browser. First run downloads the program (44.3 MB, printed before it loads).' },
       { name: 'Batch remove background', href: '/batch-remove-background/', live: true, note: 'A whole folder of photos cut out in one run, one model download for the batch, one ZIP of full-size PNGs out.' },
-      { name: 'Free background remover, full resolution', href: '/remove-background-full-resolution/', live: true, note: 'The same bench with the full-size promise in plain words, and the dated facts about the famous alternative.' },
+      { name: 'Free background remover, full resolution', href: '/remove-background-full-resolution/', live: true, note: 'The same tool with the full-size promise in plain words, and the dated facts about the famous alternative.' },
       { name: 'Quitar fondo de imagen gratis', href: '/es/quitar-fondo-de-imagen-gratis/', live: true, note: 'La herramienta en español, con su página a resolución completa. Spanish strings drafted in-house, marked pending human review in the project notes.' },
       { name: 'Remover fundo de imagem grátis', href: '/pt-br/remover-fundo-de-imagem-gratis/', live: true, note: 'A ferramenta em português, com a página de alternativa grátis ao remove.bg. Portuguese strings drafted in-house, marked pending human review in the project notes.' },
     ],
@@ -19,14 +20,27 @@ const families = [
     tools: [
       { name: 'Compress PDF to a size', href: '/compress-pdf/', live: true, note: 'Pick a target and the page works to land under it, showing the exact final size.' },
       { name: 'Compress PDF to 200 KB', href: '/compress-pdf-to-200kb/', live: true, note: 'The tight-portal preset, target already set.' },
+      { name: 'Compress PDF to 50 KB', href: '/compress-pdf-to-50kb/', live: true, note: 'The visa-portal preset, target already set. The result states the smallest size reached when a file cannot get there.' },
+      { name: 'Compress PDF to 100 KB', href: '/compress-pdf-to-100kb/', live: true, note: 'The form-portal preset, target already set.' },
+      { name: 'Compress PDF to 500 KB', href: '/compress-pdf-to-500kb/', live: true, note: 'The email-and-boards preset, target already set.' },
+      { name: 'Compress PDF to 1 MB', href: '/compress-pdf-to-1mb/', live: true, note: 'The attachment preset, target already set.' },
       { name: 'Compress PDF, strong', href: '/compress-pdf-strong/', live: true, note: 'No target: the deep end of the shrink ladder, smallest honest result, the photo trade printed on the result.' },
-      { name: 'Merge PDF', href: '/merge-pdf/', live: true, note: 'Many files, your order, pages copied not rebuilt. 25 files merged in 71 milliseconds on the bench.' },
+      { name: 'Merge PDF', href: '/merge-pdf/', live: true, note: 'Many files, your order, pages copied not rebuilt. 25 files merged in 71 milliseconds in our tests.' },
       { name: 'Interleave PDF', href: '/interleave-pdf/', live: true, note: 'Deal two PDFs together a page at a time, A1 B1 A2 B2: the duplex scan repair, with a back-to-front option for the second file.' },
       { name: 'Split PDF', href: '/split-pdf/', live: true, note: 'A page range as one file, every page as its own PDF, or parts under a size you set.' },
+      { name: 'Remove and organise pages', href: '/organize-pdf/', live: true, note: 'See every page, take pages out, drag the rest into order, copy a page. Pages move inside the file and are never rebuilt, so nothing is re-encoded.' },
       { name: 'Sign PDF', href: '/sign-pdf/', live: true, note: 'Your own signature on your own document, drawn into the page. Plainly scoped: no requests to others, no certificates.' },
       { name: 'Flatten PDF', href: '/flatten-pdf/', live: true, note: 'Bake a filled form\'s answers into the pages. Other annotations are counted and reported, never silently dropped.' },
+      { name: 'Protect PDF', href: '/protect-pdf/', live: true, note: 'A real password on your own PDF, AES-256, in your browser. No recovery exists, and the page says so first.' },
+      { name: 'Unlock PDF', href: '/unlock-pdf/', live: true, note: 'Take a password off your own PDF. The open kind must be typed; the permission kind comes off without one, explained on the page.' },
+      { name: 'Rotate PDF', href: '/rotate-pdf/', live: true, note: 'Turn every page, or one range, by a quarter or half turn. A setting the file carries; nothing is redrawn.' },
+      { name: 'Add page numbers', href: '/pdf-page-numbers/', live: true, note: 'Numbers drawn onto the pages themselves: bottom centre, outside corner or top, "Page X of Y" or plain, from your start number.' },
+      { name: 'Watermark PDF', href: '/watermark-pdf/', live: true, note: 'DRAFT, CONFIDENTIAL or your own words across the pages, at your size and strength. A label, not a lock, and the page says so.' },
+      { name: 'Extract images from PDF', href: '/extract-images-pdf/', live: true, note: 'The stored pictures out as files: JPEGs byte for byte, the rest rebuilt as PNGs, with a report naming what cannot be pulled.' },
+      { name: 'View and strip PDF metadata', href: '/pdf-metadata/', live: true, note: 'The details a PDF stores about itself (title, author, dates, maker), shown exactly as stored. Change the title or author, or wipe the whole label card.' },
       { name: 'Read a scan (OCR)', href: '/ocr-pdf/', live: true, note: 'Checkable text plus a searchable PDF, read at 300 DPI.' },
-      { name: 'Convert to and from PDF', href: null, live: false, note: 'JPG to PDF, PDF to JPG and the rest are measured and in the build plan; the doors open as each one passes its checks.' },
+      { name: 'JPG to PDF', href: '/jpg-to-pdf/', live: true, note: 'Pictures into one PDF, one per page, in your order. JPEG and PNG pictures go in exactly as stored.' },
+      { name: 'PDF to JPG', href: '/pdf-to-jpg/', live: true, note: 'Every page as a JPG or PNG picture, screen or print size, in one ZIP in page order. The words become part of the pictures.' },
     ],
   },
   {
@@ -34,9 +48,9 @@ const families = [
     hub: '/workflows/',
     tools: [
       { name: 'Batch compress PDF', href: '/batch-compress-pdf/', live: true, note: 'A folder of PDFs worked to one target size in a single run, per-file results, one ZIP out. The job the suites sell as a paid extra.' },
-      { name: 'Batch merge PDF', href: '/batch-merge-pdf/', live: true, note: 'Pick a whole folder, sort by name, merge it into one file. The batch-first merge bench.' },
+      { name: 'Batch merge PDF', href: '/batch-merge-pdf/', live: true, note: 'Pick a whole folder, sort by name, merge it into one file, batch first.' },
       { name: 'Batch split PDF', href: '/batch-split-pdf/', live: true, note: 'One page range cut from every file in the folder, in a single run.' },
-      { name: 'Workflows', href: '/workflows/', live: true, note: 'Chain the benches (merge, then shrink, then stamp), save the chain in your browser, and run it on the next folder.' },
+      { name: 'Workflows', href: '/workflows/', live: true, note: 'Chain the tools together (merge, then shrink, then stamp), save the chain in your browser, and run it on the next folder.' },
       { name: 'Preset chains', href: '/presets/', live: true, note: 'Ready-made chains for the weekly jobs: invoice pack, portal pack, paid pack, seller photos.' },
     ],
   },
@@ -47,8 +61,17 @@ const families = [
       { name: 'Compress image to exact KB', href: '/compress-image/', live: true, note: 'A photo at the exact size a form or shop asks for, the tool the big sites do not offer.' },
       { name: 'Compress image to 50 KB', href: '/compress-image-to-50kb/', live: true, note: 'The form and seller preset, target already set.' },
       { name: 'Batch compress images', href: '/batch-compress-images/', live: true, note: 'A folder of photos worked to one exact KB target in a single run, one ZIP out.' },
-      { name: 'Batch convert images', href: '/batch-convert-images/', live: true, note: 'A folder converted to JPG, PNG or WebP at one quality, with an optional maximum width. Our WebP beat the biggest converter\'s on the bench photo.' },
-      { name: 'Resize one image', href: null, live: false, note: 'A single-photo resize door is in the build plan; resizing inside a batch works today on the batch convert bench (maximum width).' },
+      { name: 'Batch convert images', href: '/batch-convert-images/', live: true, note: 'A folder converted to JPG, PNG or WebP at one quality, with an optional maximum width. Our WebP beat the biggest converter\'s on the same test photo.' },
+      { name: 'Read the words in a photo (OCR)', href: '/ocr-image/', live: true, note: 'Words out of a photo or screenshot as checkable text, in English, Spanish and Portuguese.' },
+      { name: 'Resize image', href: '/resize-image/', live: true, note: 'One photo to exact pixels, by percent, or from presets (passport, post and story frames, a 1600 px long side). Bigger is labelled not sharper.' },
+      { name: 'Batch resize images', href: '/batch-resize-images/', live: true, note: 'A folder to one pixel size in a single run, every photo keeping its own format. Tested with 50 files in one run.' },
+      { name: 'HEIC to JPG', href: '/heic-to-jpg/', live: true, note: 'One iPhone HEIC photo as a JPG, PNG or WebP, full size, upright. The brightness-range change is stated before the run.' },
+      { name: 'PNG to JPG', href: '/png-to-jpg/', live: true, note: 'One PNG as a JPG. Transparent parts are painted over a colour you pick, stated before the run.' },
+      { name: 'JPG to PNG', href: '/jpg-to-png/', live: true, note: 'One JPG as an exact PNG. The picture does not improve; the file grows; the page says both.' },
+      { name: 'WebP to JPG', href: '/webp-to-jpg/', live: true, note: 'One WebP as a JPG that everything opens. Transparent parts are painted over a colour you pick.' },
+      { name: 'JPG to WebP', href: '/jpg-to-webp/', live: true, note: 'One JPG as a WebP for websites, usually the lightest of the three.' },
+      { name: 'PNG to WebP', href: '/png-to-webp/', live: true, note: 'One PNG as a WebP for websites, transparency kept, far smaller.' },
+      { name: 'WebP to PNG', href: '/webp-to-png/', live: true, note: 'One WebP as an exact PNG, transparency kept, for editing and archiving.' },
     ],
   },
   {
@@ -64,7 +87,8 @@ const families = [
 <Base title="All tools · Benchzy" description="Every Benchzy tool on one page: background removal, PDF jobs, image jobs and the size checker. Free, no accounts, everything runs in your browser.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Hub · the whole workshop</p>
+      <LogoMark size={56} />
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep mt-4">Hub · the whole workshop</p>
       <h1 class="font-display text-4xl font-black mt-2">All tools</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         Every tool runs inside your browser, on your device. Files are not uploaded, there are
@@ -78,16 +102,19 @@ const families = [
         <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">
           {fam.name} <a class="font-mono text-xs uppercase tracking-widest text-accent-deep underline-offset-4 hover:underline align-middle" href={fam.hub}>family page</a>
         </h2>
-        <div class="mt-4 grid gap-4">
-          {fam.tools.map((t) => (
-            <article class="ticket-soft p-5 flex flex-wrap items-baseline gap-3">
-              <h3 class="font-display text-xl font-bold">{t.name}</h3>
-              {t.live
-                ? <span class="stamp">On the bench</span>
-                : <span class="font-mono text-xs uppercase tracking-widest text-ink-soft border border-line px-2 py-1">In the plan</span>}
-              <p class="w-full text-ink-soft leading-relaxed">{t.note}</p>
-              {t.live && <a class="btn-primary no-underline mt-1" href={t.href}>Open the tool</a>}
-            </article>
+        <div class="ledger mt-4">
+          {fam.tools.map((t) => t.live ? (
+            <a class="job-row" href={t.href}>
+              <h3 class="job-name job-name-lg">{t.name}</h3>
+              <span class="job-meta"><span class="status-live">Ready</span><span class="open">Open →</span></span>
+              <span class="job-note">{t.note}</span>
+            </a>
+          ) : (
+            <div class="job-row" aria-disabled="true">
+              <h3 class="job-name job-name-lg">{t.name}</h3>
+              <span class="job-meta"><span class="status-plan">Coming later</span></span>
+              <span class="job-note">{t.note}</span>
+            </div>
           ))}
         </div>
       </section>

@@ -1,0 +1,7 @@
+# Short language URLs land on the live tool pages (milestone 18).
+# These replace the old meta-refresh stub pages, which Cloudflare
+# Pages would otherwise serve in preference to these rules.
+/es/quitar-fondo/ /es/quitar-fondo-de-imagen-gratis/ 301
+/es/quitar-fondo /es/quitar-fondo-de-imagen-gratis/ 301
+/pt/remover-fundo/ /pt-br/remover-fundo-de-imagem-gratis/ 301
+/pt/remover-fundo /pt-br/remover-fundo-de-imagem-gratis/ 301

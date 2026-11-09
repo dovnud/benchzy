@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import BgTicket from '../../components/BgTicket.astro';
+import StepsStrip from '../../components/StepsStrip.astro';
 import LangLinks from '../../components/LangLinks.astro';
 
 // Portuguese (BR) strings drafted in-house 2026-11-08. PENDING HUMAN
@@ -20,7 +21,7 @@ const langLinks = [
 const faq = [
   {
     q: 'É grátis mesmo, ou é uma amostra?',
-    a: 'É grátis. Não há nível pago escondendo o resultado em tamanho real, nem créditos, nem conta. O programa roda no seu aparelho, então um recorte não custa nada para este site; é por isso que não há o que racionar.',
+    a: 'É grátis. Não há plano pago escondendo o resultado em tamanho real, nem créditos, nem conta. O programa roda no seu aparelho, então um recorte não custa nada para este site; é por isso que não há o que racionar.',
   },
   {
     q: 'O que acontece com o remove.bg em 1º de dezembro de 2026?',
@@ -36,7 +37,7 @@ const faq = [
   },
   {
     q: 'Por que a primeira vez demora mais?',
-    a: 'Na primeira vez, o seu navegador baixa o programa de recorte, 44,3 MB, em 11 partes que ele verifica uma a uma. Isso está escrito aqui, não escondido. Depois o programa fica salvo no seu aparelho e as visitas seguintes começam na hora.',
+    a: 'Na primeira vez, o seu navegador baixa o programa de recorte, 44,3 MB, em 11 partes que ele verifica uma a uma. Isso está escrito aqui, não escondido. Depois o programa fica salvo no seu aparelho e as visitas seguintes começam na hora. Os 44,3 MB contam nos seus dados móveis em um celular, então a primeira vez é melhor no Wi-Fi; em uma conexão lenta, o carregamento pode levar um minuto ou mais. O carregamento pode ser cancelado: as partes que já chegaram ficam guardadas.',
   },
 ];
 const faqJson = JSON.stringify({
@@ -53,7 +54,7 @@ const howToJson = JSON.stringify({
   name: "Como usar a alternativa grátis ao remove.bg",
   inLanguage: 'pt-BR',
   step: [
-    { '@type': 'HowToStep', position: 1, name: "Escolha uma foto", text: "Solte uma foto na bandeja, ou clique para escolher uma. O trabalho é feito no seu navegador, então a sua foto nunca é enviada para um servidor." },
+    { '@type': 'HowToStep', position: 1, name: "Escolha uma foto", text: "Solte uma foto aqui, ou clique para escolher uma. O trabalho é feito no seu navegador, então a sua foto nunca é enviada para um servidor." },
     { '@type': 'HowToStep', position: 2, name: "Remova o fundo", text: "Aperte «Remover o fundo». Na primeira vez, o programa de recorte é baixado (44,3 MB, em 11 partes verificadas pelo navegador); esse tamanho está escrito na página, antes de qualquer download." },
     { '@type': 'HowToStep', position: 3, name: "Receba o recorte em tamanho real", text: "O recorte sai em tamanho real, grátis, sem créditos e sem conta." },
     { '@type': 'HowToStep', position: 4, name: "Baixe o recorte (PNG)", text: "Arraste sobre a imagem para comparar o antes e o depois, e baixe o recorte." },
@@ -64,10 +65,10 @@ const howToJson = JSON.stringify({
 <Base lang="pt-BR" title="Alternativa grátis ao remove.bg · Benchzy" description="Uma alternativa gratuita ao remove.bg: recorte em tamanho real, sem créditos, sem conta, com o trabalho feito no seu navegador. O remove.bg fecha em 1º de dezembro de 2026." alternates={alternates}>
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Ordem de serviço · alternativa ao remove.bg</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Alternativa ao remove.bg</p>
       <h1 class="font-display text-4xl font-black mt-2">Alternativa grátis ao remove.bg</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
-        O remove.bg fecha o seu site em 1º de dezembro de 2026. Esta página é a alternativa direta:
+        O próprio site do remove.bg fecha em 1º de dezembro de 2026. Esta página é a alternativa direta:
         escolha uma foto e receba o recorte em tamanho real, grátis, sem créditos e sem conta. O
         trabalho é feito no seu navegador, então a sua foto nunca é enviada para um servidor. Na
         primeira vez, o programa de recorte é baixado (44,3 MB, em 11 partes verificadas pelo
@@ -75,6 +76,8 @@ const howToJson = JSON.stringify({
       </p>
       <LangLinks label="Esta página em:" links={langLinks} />
     </section>
+
+    <StepsStrip who="Para quem usava o remove.bg e precisa do mesmo trabalho, grátis e em tamanho real, depois do fechamento dele." steps={[{ n: '01', t: 'Escolha uma foto' }, { n: '02', t: 'Remova o fundo' }, { n: '03', t: 'Baixe o recorte em tamanho real' }]} />
 
     <BgTicket locale="pt-BR" />
 
@@ -84,8 +87,7 @@ const howToJson = JSON.stringify({
         <p class="mt-3 leading-relaxed text-ink-soft">
           Nos nossos testes ao vivo em 7 de novembro de 2026, o remove.bg grátis devolveu 577 por
           433 pixels de uma foto de 1200 por 900, cerca de um quarto dos pixels; o tamanho real lá
-          custa um crédito por foto, e os resultados grátis são apenas para uso privado e não
-          comercial, segundo os termos do serviço lidos em novembro de 2026. Aqui, o tamanho real é
+          custa um crédito por foto, e os resultados grátis são apenas para uso pessoal, não comercial, segundo os termos do serviço lidos em novembro de 2026. Aqui, o tamanho real é
           o único tamanho, o resultado pode ser usado na sua loja ou no seu negócio, e não existe
           conta para criar nem crédito para acabar. Os fatos datados estão reunidos, em inglês, na
           página <a class="underline underline-offset-4" href="/remove-bg-december-1/">o que acontece em 1º de dezembro</a>.

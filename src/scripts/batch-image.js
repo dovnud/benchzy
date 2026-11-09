@@ -1,11 +1,12 @@
-// Batch image bench: one queue, two jobs (shrink every photo to one exact
-// KB target; convert a folder to one format), results packed into a
-// single ZIP. Engine: the measured jSquash set via lib/image-core, the
-// compress-image island's own codecs and combined search (bench/imgnums:
-// 25 images converted in 22.1 s total on the bench). AVIF is not offered:
-// the bench measured 49.7 s a photo, and the page says so.
+// Batch image bench: one queue, three jobs (shrink every photo to one
+// exact KB target; convert a folder to one format; resize a folder to
+// one pixel size), results packed into a single ZIP. Engine: the
+// measured jSquash set via lib/image-core, the compress-image island's
+// own codecs and combined search (bench/imgnums: 25 images converted
+// in 22.1 s total on the bench). AVIF is not offered: the bench
+// measured 49.7 s a photo, and the page says so.
 import { fmtBytes, recordJob, wireTrayMulti } from './workbench.js';
-import { initImageCodecs, decodeImageFile, compressImageToTarget, encodeImage } from './lib/image-core.js';
+import { initImageCodecs, decodeImageFile, compressImageToTarget, encodeImage, resizeImageData } from './lib/image-core.js';
 import { makeZip } from './lib/zip.js';
 
 const $ = (id) => document.getElementById(id);
@@ -17,6 +18,7 @@ const rowsEl = $('bi-rows'), zipLink = $('bi-zip');
 let entries = []; // { file, error }
 let running = false;
 let targetKB = 200, format = 'webp', quality = 80;
+let rsWidth = null, rsHeight = null; // batch resize: the one size (milestone 11)
 
 function setStatus(msg) { status.textContent = msg; }
 function setSpec(rows) {
@@ -40,7 +42,7 @@ if (MODE === 'compress') {
   });
   const match = document.querySelector(`#bi-targets .chip[data-kb="${targetKB}"]`);
   if (match) match.setAttribute('aria-pressed', 'true');
-} else {
+} else if (MODE === 'convert') {
   document.querySelectorAll('#bi-formats .chip').forEach((chip) => {
     chip.addEventListener('click', () => {
       document.querySelectorAll('#bi-formats .chip').forEach((c) => c.setAttribute('aria-pressed', 'false'));
@@ -50,6 +52,32 @@ if (MODE === 'compress') {
   });
   const match = document.querySelector(`#bi-formats .chip[data-format="${format}"]`);
   if (match) match.setAttribute('aria-pressed', 'true');
+  const q = $('bi-quality');
+  if (q) q.addEventListener('change', () => {
+    const v = parseInt(q.value, 10);
+    if (v >= 1 && v <= 100) quality = v;
+  });
+} else if (MODE === 'resize') {
+  // One size for the whole folder: a width, a height, or both (both =
+  // each photo fits inside that frame, keeping its own shape).
+  const readSize = () => {
+    const w = parseInt(($('bi-width') || {}).value, 10);
+    const h = parseInt(($('bi-height') || {}).value, 10);
+    rsWidth = w >= 1 && w <= 20000 ? w : null;
+    rsHeight = h >= 1 && h <= 20000 ? h : null;
+  };
+  const wEl = $('bi-width'), hEl = $('bi-height');
+  if (wEl) wEl.addEventListener('input', readSize);
+  if (hEl) hEl.addEventListener('input', readSize);
+  // Preset chips (milestone 18): the same sizes the single-photo
+  // resize page offers; a chip fills the two boxes and reads them.
+  document.querySelectorAll('#bi-presets [data-w]').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      if (wEl) { wEl.value = chip.dataset.w || ''; wEl.dispatchEvent(new Event('input')); }
+      if (hEl) { hEl.value = chip.dataset.h || ''; hEl.dispatchEvent(new Event('input')); }
+      readSize();
+    });
+  });
   const q = $('bi-quality');
   if (q) q.addEventListener('change', () => {
     const v = parseInt(q.value, 10);
@@ -142,7 +170,7 @@ runBtn.addEventListener('click', async () => {
             addResultRow(e.file.name, fmtBytes(e.file.size) + ' to ' + fmtBytes(best.bytes) + ', quality ' + best.q + ', ' + best.w + 'x' + best.h + (best.bytes <= target ? '' : ' (closest reached, above target)'),
               downloadLink(url, name, 'Download'));
           }
-        } else {
+        } else if (MODE === 'convert') {
           const maxW = parseInt(($('bi-maxwidth') || {}).value, 10);
           const r = await encodeImage(img, format, quality, isNaN(maxW) ? null : maxW);
           const name = baseName(e.file.name) + '.' + r.ext;
@@ -150,6 +178,25 @@ runBtn.addEventListener('click', async () => {
           const url = URL.createObjectURL(blob);
           zipEntries.push({ name, data: new Uint8Array(r.buf) });
           addResultRow(e.file.name, fmtBytes(e.file.size) + ' to ' + fmtBytes(r.bytes) + ' ' + format.toUpperCase() + ', ' + r.width + 'x' + r.height,
+            downloadLink(url, name, 'Download'));
+        } else {
+          // Resize: every photo to the one size, each keeping its own
+          // format and (inside the frame) its own shape.
+          const fmt = e.file.type === 'image/png' ? 'png' : e.file.type === 'image/webp' ? 'webp' : 'jpeg';
+          let tw, th;
+          if (rsWidth && rsHeight) {
+            const s = Math.min(rsWidth / img.width, rsHeight / img.height);
+            tw = Math.max(1, Math.round(img.width * s)); th = Math.max(1, Math.round(img.height * s));
+          } else if (rsWidth) { tw = rsWidth; th = Math.max(1, Math.round(img.height * (rsWidth / img.width))); }
+          else if (rsHeight) { th = rsHeight; tw = Math.max(1, Math.round(img.width * (rsHeight / img.height))); }
+          else { tw = img.width; th = img.height; }
+          const im = (tw === img.width && th === img.height) ? img : await resizeImageData(img, tw, th);
+          const r = await encodeImage(im, fmt, quality, null);
+          const name = baseName(e.file.name) + '.' + r.ext;
+          const blob = new Blob([r.buf], { type: r.mime });
+          const url = URL.createObjectURL(blob);
+          zipEntries.push({ name, data: new Uint8Array(r.buf) });
+          addResultRow(e.file.name, img.width + 'x' + img.height + ' to ' + tw + 'x' + th + ' · ' + fmtBytes(e.file.size) + ' to ' + fmtBytes(r.bytes) + ' ' + fmt.toUpperCase(),
             downloadLink(url, name, 'Download'));
         }
         done++;
@@ -159,12 +206,15 @@ runBtn.addEventListener('click', async () => {
       }
     }
     recordJob({
-      tool: MODE === 'compress' ? 'Batch compress images' : 'Batch convert images',
+      tool: MODE === 'compress' ? 'Batch compress images' : MODE === 'convert' ? 'Batch convert images' : 'Batch resize images',
       name: entries.length + ' files',
-      detail: done + ' done, ' + failed + ' failed' + (MODE === 'compress' ? ', target ' + targetKB + ' KB' : ', to ' + format.toUpperCase()),
+      detail: done + ' done, ' + failed + ' failed' + (MODE === 'compress' ? ', target ' + targetKB + ' KB'
+        : MODE === 'convert' ? ', to ' + format.toUpperCase()
+        : ', to ' + (rsWidth || 'auto') + 'x' + (rsHeight || 'auto')),
     });
     if (zipEntries.length >= 1) {
-      const { blob, name } = await makeZip(zipEntries, MODE === 'compress' ? 'benchzy-batch-images.zip' : 'benchzy-batch-converted.zip');
+      const { blob, name } = await makeZip(zipEntries, MODE === 'compress' ? 'benchzy-batch-images.zip'
+        : MODE === 'convert' ? 'benchzy-batch-converted.zip' : 'benchzy-batch-resized.zip');
       zipLink.href = URL.createObjectURL(blob);
       zipLink.download = name;
       zipLink.textContent = 'Download all as one ZIP (' + fmtBytes(blob.size) + ')';

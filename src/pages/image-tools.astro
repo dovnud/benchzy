@@ -1,24 +1,35 @@
 ---
 import Base from '../layouts/Base.astro';
+import LogoMark from '../components/LogoMark.astro';
 
 const live = [
-  { name: 'Compress image to exact KB', href: '/compress-image/', note: 'The tool the big sites do not offer: a photo at the exact size a form, portal or shop asks for. The page searches quality and size together until it lands within a whisker of your target, and prints every try. On the bench, a normal photo landed within 0.6% of 200, 100, 50 and 20 KB.' },
+  { name: 'Compress image to exact KB', href: '/compress-image/', note: 'The tool the big sites do not offer: a photo at the exact size a form, portal or shop asks for. The page searches quality and size together until it lands within a whisker of your target, and prints every try. In our tests, a normal photo landed within 0.6% of 200, 100, 50 and 20 KB.' },
   { name: 'Compress image to 50 KB', href: '/compress-image-to-50kb/', note: 'The form and seller preset, with the 50 KB target already set.' },
-  { name: 'Batch compress images', href: '/batch-compress-images/', note: 'The whole folder at one exact KB target, in one run: the same combined search per photo, a result line per file, one ZIP out. The metered converters count this job against you; this bench does not count anything.' },
-  { name: 'Batch convert images', href: '/batch-convert-images/', note: 'A folder converted to JPG, PNG or WebP at one quality, with an optional maximum width. On the bench, our WebP of the test photo came out at 251,730 bytes against the biggest converter\'s 435,388 on the same file.' },
+  { name: 'Batch compress images', href: '/batch-compress-images/', note: 'The whole folder at one exact KB target, in one run: the same combined search per photo, a result line per file, one ZIP out. The metered converters count this job against you; this tool does not count anything.' },
+  { name: 'Batch convert images', href: '/batch-convert-images/', note: 'A folder converted to JPG, PNG or WebP at one quality, with an optional maximum width. In our tests, our WebP of the test photo came out at 251,730 bytes against the biggest converter\'s 435,388 on the same file.' },
+  { name: 'Resize image', href: '/resize-image/', note: 'One photo to exact pixels: a width, a height, both, a percent, or a preset (passport 413 x 531, square post 1080 x 1080, video thumbnail 1280 x 720, a 1600 px long side for listings). The shape lock is on unless you force the frame, and making a photo bigger is labelled as what it is: bigger, not sharper.' },
+  { name: 'Batch resize images', href: '/batch-resize-images/', note: 'A folder resized to one pixel size in a single run: a width, a height, or a frame both ways, every photo keeping its own format and its own shape inside the frame. Tested with 50 files in one run.' },
+  { name: 'HEIC to JPG', href: '/heic-to-jpg/', note: 'One iPhone HEIC or HEIF photo as a JPG, PNG or WebP, at full size, turned upright if it was stored turned. The brightness-range change is stated before the run; a Live Photo\'s still converts, and the result line says when a file also holds a video.' },
+  { name: 'PNG to JPG', href: '/png-to-jpg/', note: 'One PNG as a JPG, for the forms and shops that want JPG and the PNGs that are too heavy to send. See-through parts are painted over a colour you pick, white unless changed, stated at the tray before the run.' },
+  { name: 'JPG to PNG', href: '/jpg-to-png/', note: 'One JPG as a PNG: an exact copy of the picture as it is, for doors that require PNG and editing that should stop losing a little at every save. The picture does not improve; the file grows, and the page says both plainly.' },
+  { name: 'WebP to JPG', href: '/webp-to-jpg/', note: 'One WebP as a JPG, for the older editors, print queues and portals that refuse WebP. JPG opens everywhere; transparent parts are painted over a colour you pick.' },
+  { name: 'JPG to WebP', href: '/jpg-to-webp/', note: 'One JPG as a WebP, for websites: usually the lightest of the three at a like quality. Measured with this engine: the test photo at quality 80 came out at 251,730 bytes as WebP.' },
+  { name: 'PNG to WebP', href: '/png-to-webp/', note: 'One PNG as a WebP, for websites: far smaller, and the transparency survives, which is the thing JPG cannot do. A lossy write at your quality; the PNG stays the master.' },
+  { name: 'WebP to PNG', href: '/webp-to-png/', note: 'One WebP as a PNG: an exact, everywhere-readable copy of the picture, transparency kept, for editing, printing and archiving. The file grows; the picture does not change.' },
   { name: 'Batch remove background', href: '/batch-remove-background/', note: 'A folder of photos cut out at full size in one run. The model downloads once for the batch and is saved by your browser for the next one. Background removal\'s own workshop is next door.' },
+  { name: 'Read the words in a photo (OCR)', href: '/ocr-image/', note: 'The words out of a photo or screenshot, as text you can check, fix, copy and download. English, Spanish and Portuguese. On our clean test picture it read 99% of the characters right; check money amounts, because the reader can drop a decimal point, and the page tells you so.' },
   { name: 'Size checker', href: '/size-checker/', note: 'Before you shrink anything: exact bytes, real format, dimensions, and how the file lines up against the doors portals set (fits, or too big, and by how much).' },
 ];
 const planned = [
-  'Resize one image to an exact width (resizing a batch by maximum width works today on the batch convert bench)',
-  'Strip hidden data (EXIF) with a before and after report (verified on the bench: injected place and camera data fully removed)',
+  'Strip hidden data (EXIF) with a before and after report (verified in our tests: injected place and camera data fully removed)',
 ];
 ---
 
 <Base title="Image tools, free, in your browser · Benchzy" description="Shrink a photo to an exact KB, check its size and format, free, in your browser. No uploads, no accounts, no counters. Background removal has its own workshop next door.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Hub · image jobs</p>
+      <LogoMark size={56} />
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep mt-4">Hub · image jobs</p>
       <h1 class="font-display text-4xl font-black mt-2">Image tools</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         Photo jobs for forms, portals and shops, done inside your browser: the photo is never
@@ -33,26 +44,25 @@ const planned = [
       </p>
     </section>
 
-    <section class="mt-6 grid gap-4">
+    <section class="ledger mt-6">
       {live.map((t) => (
-        <article class="ticket-soft p-5 flex flex-wrap items-baseline gap-3">
-          <h2 class="font-display text-xl font-bold">{t.name}</h2>
-          <span class="stamp">On the bench</span>
-          <p class="w-full text-ink-soft leading-relaxed">{t.note}</p>
-          <a class="btn-primary no-underline mt-1" href={t.href}>Open the tool</a>
-        </article>
+        <a class="job-row" href={t.href}>
+          <h2 class="job-name job-name-lg">{t.name}</h2>
+          <span class="job-meta"><span class="status-live">Ready</span><span class="open">Open →</span></span>
+          <span class="job-note">{t.note}</span>
+        </a>
       ))}
     </section>
 
     <section class="mt-10 mb-4">
       <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">In the plan for this family</h2>
-      <ul class="mt-4 grid gap-3">
+      <ul class="ledger mt-4">
         {planned.map((p) => (
-          <li class="ticket-soft p-4 font-mono text-sm leading-relaxed">{p} <span class="text-ink-soft">(measured; opens when it passes its checks)</span></li>
+          <li class="ledger-row font-mono text-sm leading-relaxed">{p} <span class="text-ink-soft">(measured; opens when it passes its checks)</span></li>
         ))}
       </ul>
       <p class="mt-4 leading-relaxed text-ink-soft max-w-2xl">
-        One honest note from the bench: AVIF gives the smallest files we measured, but took
+        One honest note: AVIF gives the smallest files we measured, but took
         about 50 seconds a photo to make. If it ships here, it will be labelled the slow option
         in the same size type as everything else, per the
         <a class="underline underline-offset-4" href="/what-free-means/">standing rules</a>.

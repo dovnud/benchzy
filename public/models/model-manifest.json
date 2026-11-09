@@ -1,0 +1,63 @@
+{
+  "model": "imgly-isnet-small-quantized (ISNet general-use weights via @imgly/background-removal-data)",
+  "totalBytes": 44342436,
+  "sha256": "7001d60734fdc112dd9c062635fb59cd401fb82a9d4213134bce4dbd655c803a",
+  "chunkSize": 4031131,
+  "chunks": [
+    {
+      "file": "chunks/chunk-01-7c293f5271330b3b.bin",
+      "bytes": 4031131,
+      "sha256": "7c293f5271330b3b74ee1d2647f7481ca0604228200e59dce84160820d4c39d9"
+    },
+    {
+      "file": "chunks/chunk-02-9b7fadedc38b867a.bin",
+      "bytes": 4031131,
+      "sha256": "9b7fadedc38b867ad967877b06e54fd9dd2677c606930f3dbf0bec4113b26103"
+    },
+    {
+      "file": "chunks/chunk-03-b6a95e5f0412c6fe.bin",
+      "bytes": 4031131,
+      "sha256": "b6a95e5f0412c6fe4bde51e62f47329b48a980fb1ef0faedcb583e9ab29729d9"
+    },
+    {
+      "file": "chunks/chunk-04-71feb394a0ad7114.bin",
+      "bytes": 4031131,
+      "sha256": "71feb394a0ad7114db55b04c3d419797acd7a3855a470874ac6723e2098aa478"
+    },
+    {
+      "file": "chunks/chunk-05-b8eb2e23708d1aa7.bin",
+      "bytes": 4031131,
+      "sha256": "b8eb2e23708d1aa7c809261ab14250c2233e414f61c87adce51d402f27560949"
+    },
+    {
+      "file": "chunks/chunk-06-31f7cb6b95db959b.bin",
+      "bytes": 4031131,
+      "sha256": "31f7cb6b95db959bc11ad232762b9c06b7465be63ecff3fbe05187006654e6a4"
+    },
+    {
+      "file": "chunks/chunk-07-4e73924c01ec670f.bin",
+      "bytes": 4031131,
+      "sha256": "4e73924c01ec670f3d30ce45f1641fa721132a4b457375a6fbbc548b2ab10954"
+    },
+    {
+      "file": "chunks/chunk-08-14e4e77efc3a84fe.bin",
+      "bytes": 4031131,
+      "sha256": "14e4e77efc3a84fe6d5c59a6a59fe8454fb621d6a196c9c17734991fd5221ff2"
+    },
+    {
+      "file": "chunks/chunk-09-b5f3262fe7fcfcd1.bin",
+      "bytes": 4031131,
+      "sha256": "b5f3262fe7fcfcd1febfb7aa24e4e5cf135c54cbc4071d5b08b683d9759c6662"
+    },
+    {
+      "file": "chunks/chunk-10-0beaa720d54e38f5.bin",
+      "bytes": 4031131,
+      "sha256": "0beaa720d54e38f58d06a9b7c955ba974a2280b2e724d142a9161c9fc64c33fc"
+    },
+    {
+      "file": "chunks/chunk-11-474f89c7e199b514.bin",
+      "bytes": 4031126,
+      "sha256": "474f89c7e199b514c72274df6798b6f9eb64b405245e53c4a675d581100542ad"
+    }
+  ]
+}

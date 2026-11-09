@@ -1,14 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
 
 const faq = [
   {
     q: 'How is this different from the Merge PDF page?',
-    a: 'Same engine, batch-first bench. This page is set up for the folder job: pick a whole folder of PDFs at once, sort the tray by file name in one click, and check every file\'s page count before you merge. The Merge PDF page is the same merge with hand ordering as the main act.',
+    a: 'Same engine, batch first. This page is set up for the folder job: pick a whole folder of PDFs at once, sort the tray by file name in one click, and check every file\'s page count before you merge. The Merge PDF page is the same merge with hand ordering as the main act.',
   },
   {
     q: 'How many files can I merge?',
-    a: 'As many as your device can hold in memory at once. On our bench, 25 one-page files merged in 71 milliseconds and the result was about 30% smaller than the biggest PDF site produced from the same 25 files. There is no counter here and no per-day allowance.',
+    a: 'As many as your device can hold in memory at once; past the tested size, the memory of your device is the limit. The batch merge was tested with 50 files in one run. In our earlier tests, 25 one-page files merged in 71 milliseconds and the result was about 30% smaller than the biggest PDF site produced from the same 25 files. There is no counter here and no per-day allowance.',
   },
   {
     q: 'Does merging change what is on the pages?',
@@ -40,7 +41,7 @@ const howToJson = JSON.stringify({
 <Base title="Batch merge PDF: merge a folder of PDFs at once, free · Benchzy" description="Merge a whole folder of PDFs into one file in your order, inside your browser. Folder pick, name sort, page counts up front. No upload, no account, no file-count cap.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
-      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Job ticket · PDF bench · batch</p>
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">PDF tools · batch</p>
       <h1 class="font-display text-4xl font-black mt-2">Batch merge PDF</h1>
       <p class="mt-3 text-lg leading-relaxed max-w-2xl">
         The folder is the job: a month of invoices, a scanner's worth of pages, a whole class of
@@ -50,17 +51,21 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
+    <StepsStrip who="For a folder of separate PDFs, scans, receipts, statements, that belong in one file, in name order." steps={[{ n: '01', t: 'Pick the folder or the files' }, { n: '02', t: 'Put the files in order' }, { n: '03', t: 'Download the merged PDF' }]} />
+
     <section class="ticket mt-6 p-5 sm:p-7" id="bp-tool" data-mode="merge">
       <div id="bp-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick PDFs">
         <p class="font-display text-xl font-bold">Drop PDFs on the tray, or click to pick them</p>
-        <p class="font-mono text-xs text-ink-soft mt-2">PDF · as many as you like · they stay on this device</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">PDF · tested with 50 files in one run · they stay on this device</p>
         <input id="bp-file" type="file" accept="application/pdf,.pdf" multiple class="hidden" />
       </div>
+      <p class="file-loaded hidden" data-loaded-for="bp-file" role="status"></p>
       <div class="flex gap-2 mt-4 flex-wrap">
         <button id="bp-folder-btn" class="chip" type="button">Pick a whole folder</button>
         <input id="bp-folder-file" type="file" webkitdirectory class="hidden" />
         <button id="bp-sort" class="chip" type="button">Sort the tray by file name</button>
       </div>
+      <p class="file-loaded hidden" data-loaded-for="bp-folder-file" role="status"></p>
 
       <ul id="bp-list" class="mt-6"></ul>
 
@@ -83,7 +88,7 @@ const howToJson = JSON.stringify({
         </div>
       </div>
 
-      <div id="bp-result" class="hidden mt-8">
+      <div id="bp-result" class="receipt hidden mt-8">
         <div class="tear pt-5 flex items-center gap-4 flex-wrap">
           <h2 class="font-display text-2xl font-bold">Result</h2>
           <span class="stamp" id="bp-stamp">Done on your device</span>
@@ -99,18 +104,20 @@ const howToJson = JSON.stringify({
         <p class="mt-3 leading-relaxed text-ink-soft">
           The page opens each PDF, copies its pages into a new file in list order, and saves.
           Pages are copied, not rebuilt, so nothing is recompressed and nothing is lost. It is
-          the fastest job on this bench: the whole 25-file test pack took 71 milliseconds of
+          the fastest job here: the whole 25-file test pack took 71 milliseconds of
           engine time.
         </p>
       </div>
       <div>
         <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
         <p class="mt-3 leading-relaxed text-ink-soft">
-          The limit is your device's memory, not a rule of ours: a tray of very large files on a
+          The limit is your device's memory, not a rule of ours: the batch merge was tested with
+          50 files in one run. A tray of very large files on a
           small phone can run out of room, and if that happens your originals are unchanged. A
           file this page cannot read as a PDF is marked on the list and left out of the merge,
           in plain words, before you run the job.
         </p>
+        <p class="mt-3 leading-relaxed text-ink-soft">A password-protected PDF cannot be opened by this tool. Take its password off first with the <a class="underline underline-offset-4" href="/unlock-pdf/">unlock tool</a>, then bring the file back.</p>
       </div>
     </section>
 
