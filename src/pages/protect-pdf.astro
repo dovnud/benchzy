@@ -55,8 +55,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For a finished PDF you are about to send somewhere it should not be readable by everyone who touches it." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Type a password twice' }, { n: '03', t: 'Protect and download' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="pt-tool">
       <div id="pt-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
         <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
@@ -112,6 +110,8 @@ const howToJson = JSON.stringify({
         <a id="pt-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the protected PDF</a>
       </div>
     </section>
+
+    <StepsStrip who="For a finished PDF you are about to send somewhere it should not be readable by everyone who touches it." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Type a password twice' }, { n: '03', t: 'Protect and download' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

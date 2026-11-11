@@ -50,8 +50,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For a form that wants one PDF instead of five photos, a scan saved as pictures, or a set of product shots that has to travel as a single document." steps={[{ n: '01', t: 'Pick the pictures' }, { n: '02', t: 'Put them in order and pick the page fit' }, { n: '03', t: 'Build and download the PDF' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="jp-tool">
       <div id="jp-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick pictures">
         <p class="font-display text-xl font-bold">Drop pictures on the tray, or click to pick them</p>
@@ -103,6 +101,8 @@ const howToJson = JSON.stringify({
         <a id="jp-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the PDF</a>
       </div>
     </section>
+
+    <StepsStrip who="For a form that wants one PDF instead of five photos, a scan saved as pictures, or a set of product shots that has to travel as a single document." steps={[{ n: '01', t: 'Pick the pictures' }, { n: '02', t: 'Put them in order and pick the page fit' }, { n: '03', t: 'Build and download the PDF' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

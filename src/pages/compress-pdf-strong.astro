@@ -50,8 +50,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For a file that must go as small as it honestly can, when there is no target, only a stubborn limit or a slow connection." steps={[{ n: '01', t: 'Pick the file' }, { n: '02', t: 'Run the strong compression' }, { n: '03', t: 'Download the PDF' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="cp-tool" data-mode="strong">
       <div id="cp-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
         <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
@@ -94,6 +92,8 @@ const howToJson = JSON.stringify({
         <a id="cp-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the PDF</a>
       </div>
     </section>
+
+    <StepsStrip who="For a file that must go as small as it honestly can, when there is no target, only a stubborn limit or a slow connection." steps={[{ n: '01', t: 'Pick the file' }, { n: '02', t: 'Run the strong compression' }, { n: '03', t: 'Download the PDF' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

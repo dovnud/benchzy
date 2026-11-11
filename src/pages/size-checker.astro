@@ -51,8 +51,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For checking a file against a portal's limit before you upload it, and learning what the file really is." steps={[{ n: '01', t: 'Pick a file' }, { n: '02', t: 'Read its spec' }, { n: '03', t: 'Check it against the doors' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="sc-tool">
       <div id="sc-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a file">
         <p class="font-display text-xl font-bold">Drop any file on the tray, or click to pick one</p>
@@ -77,6 +75,8 @@ const howToJson = JSON.stringify({
         </div>
       </div>
     </section>
+
+    <StepsStrip who="For checking a file against a portal's limit before you upload it, and learning what the file really is." steps={[{ n: '01', t: 'Pick a file' }, { n: '02', t: 'Read its spec' }, { n: '03', t: 'Check it against the doors' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

@@ -56,8 +56,6 @@ const targets = [200, 100, 50];
       </p>
     </section>
 
-    <StepsStrip who="For a photo that must fit an exact KB limit on a form, a listing, or a marketplace upload." steps={[{ n: '01', t: 'Pick a photo' }, { n: '02', t: 'Pick the target' }, { n: '03', t: 'Download the photo (JPG)' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="ci-tool">
       <div id="ci-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick an image">
         <p class="font-display text-xl font-bold">Drop a photo on the tray, or click to pick one</p>
@@ -98,6 +96,8 @@ const targets = [200, 100, 50];
         <a id="ci-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the photo (JPG)</a>
       </div>
     </section>
+
+    <StepsStrip who="For a photo that must fit an exact KB limit on a form, a listing, or a marketplace upload." steps={[{ n: '01', t: 'Pick a photo' }, { n: '02', t: 'Pick the target' }, { n: '03', t: 'Download the photo (JPG)' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

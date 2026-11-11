@@ -58,8 +58,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For one iPhone photo that has to arrive as a JPG: a form that refuses HEIC, a shop upload, a photo for an older computer, a picture to send someone whose phone is not an iPhone." steps={[{ n: '01', t: 'Pick a HEIC photo' }, { n: '02', t: 'Pick JPG, PNG or WebP and the quality' }, { n: '03', t: 'Download the converted photo' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="hc-tool">
       <div id="hc-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a HEIC photo">
         <p class="font-display text-xl font-bold">Drop a HEIC photo on the tray, or click to pick one</p>
@@ -126,6 +124,8 @@ const howToJson = JSON.stringify({
         <a id="hc-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the JPG</a>
       </div>
     </section>
+
+    <StepsStrip who="For one iPhone photo that has to arrive as a JPG: a form that refuses HEIC, a shop upload, a photo for an older computer, a picture to send someone whose phone is not an iPhone." steps={[{ n: '01', t: 'Pick a HEIC photo' }, { n: '02', t: 'Pick JPG, PNG or WebP and the quality' }, { n: '03', t: 'Download the converted photo' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

@@ -59,8 +59,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For words trapped in a picture: a photo of a letter or a notice, a screenshot of a message or an error, a snap of a form." steps={[{ n: '01', t: 'Pick a photo or screenshot' }, { n: '02', t: 'Read the words' }, { n: '03', t: 'Check, copy, download' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="oi-tool">
       <div id="oi-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick an image">
         <p class="font-display text-xl font-bold">Drop a photo or screenshot on the tray, or click to pick one</p>
@@ -116,6 +114,8 @@ const howToJson = JSON.stringify({
         </div>
       </div>
     </section>
+
+    <StepsStrip who="For words trapped in a picture: a photo of a letter or a notice, a screenshot of a message or an error, a snap of a form." steps={[{ n: '01', t: 'Pick a photo or screenshot' }, { n: '02', t: 'Read the words' }, { n: '03', t: 'Check, copy, download' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

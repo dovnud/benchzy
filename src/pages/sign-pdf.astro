@@ -50,20 +50,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For signing your own document: a permission form, an agreement, a school slip. Self-signing only." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Make your signature' }, { n: '03', t: 'Place it and download' }]} />
-
-    <section class="ticket-soft mt-6 p-5">
-      <h2 class="font-display text-xl font-bold">What this is, and what it is not</h2>
-      <p class="mt-2 leading-relaxed text-ink-soft max-w-3xl">
-        This is <strong>self-signing</strong>: your own signature on your own document. It is
-        <strong>not</strong> a legal e-signature service. It sends no signing requests to other
-        people, keeps no audit trail, and issues no certificate of completion. Where a contract
-        or an authority requires a certified e-signature, use one of those services; the suites
-        charge for exactly that server work. The line is printed here, before you pick a file,
-        so the tool is never mistaken for more than it is.
-      </p>
-    </section>
-
     <section class="ticket mt-6 p-5 sm:p-7" id="sg-tool">
       <div id="sg-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
         <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
@@ -152,6 +138,20 @@ const howToJson = JSON.stringify({
         <p id="sg-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
         <a id="sg-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the signed PDF</a>
       </div>
+    </section>
+
+    <StepsStrip who="For signing your own document: a permission form, an agreement, a school slip. Self-signing only." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Make your signature' }, { n: '03', t: 'Place it and download' }]} />
+
+    <section class="ticket-soft mt-6 p-5">
+      <h2 class="font-display text-xl font-bold">What this is, and what it is not</h2>
+      <p class="mt-2 leading-relaxed text-ink-soft max-w-3xl">
+        This is <strong>self-signing</strong>: your own signature on your own document. It is
+        <strong>not</strong> a legal e-signature service. It sends no signing requests to other
+        people, keeps no audit trail, and issues no certificate of completion. Where a contract
+        or an authority requires a certified e-signature, use one of those services; the suites
+        charge for exactly that server work. The line is printed here, before you pick a file,
+        so the tool is never mistaken for more than it is.
+      </p>
     </section>
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">

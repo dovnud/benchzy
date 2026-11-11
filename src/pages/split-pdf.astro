@@ -57,8 +57,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For pulling one chapter, one signed page, or every page out of a PDF as its own file." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Choose the cut' }, { n: '03', t: 'Cut and download' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="sp-tool">
       <div id="sp-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
         <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
@@ -113,6 +111,8 @@ const howToJson = JSON.stringify({
         <div id="sp-links" class="mt-4 grid gap-2"></div>
       </div>
     </section>
+
+    <StepsStrip who="For pulling one chapter, one signed page, or every page out of a PDF as its own file." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Choose the cut' }, { n: '03', t: 'Cut and download' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

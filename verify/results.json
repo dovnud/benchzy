@@ -1315,7 +1315,7 @@
       "failedRequests": []
     },
     "compressImage": {
-      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 8.6 seconds.",
+      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 7.2 seconds.",
       "blobSize": 199856,
       "targetBytes": 204800,
       "within5pct": true,
@@ -1335,7 +1335,7 @@
       "failedRequests": []
     },
     "ocr": {
-      "note": "Read 1 page, 177 characters, in 1.9 seconds. Check the text in the box before you use it, especially numbers: this reader has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and both downloads use your corrected text: the searchable PDF places your edits back over the page, at the positions of the words they replaced. Keep the --- Page N --- lines in the box; they are how your edits find their page.",
+      "note": "Read 1 page, 177 characters, in 1.6 seconds. Check the text in the box before you use it, especially numbers: this reader has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and both downloads use your corrected text: the searchable PDF places your edits back over the page, at the positions of the words they replaced. Keep the --- Page N --- lines in the box; they are how your edits find their page.",
       "checks": {
         "hasInvoice": true,
         "hasNumber": true,
@@ -1381,7 +1381,7 @@
       "failedRequests": []
     },
     "presetImage50": {
-      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 6.8 seconds.",
+      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 6.7 seconds.",
       "blobSize": 50112,
       "within5pct": true,
       "consoleErrors": [],
@@ -1400,7 +1400,7 @@
     },
     "removeBackground": {
       "ran": true,
-      "times": "Program start: 4.4 s. Cutout: 16.0 s. Full size result: 1200 x 900, 915 KB.",
+      "times": "Program start: 3.1 s. Cutout: 10.9 s. Full size result: 1200 x 900, 915 KB.",
       "status": "Done.",
       "dlName": "test-bg-hard-no-background.png",
       "noSubjectShown": false,
@@ -1415,14 +1415,24 @@
       "failedRequests": []
     },
     "removeBackgroundEs": {
-      "ran": false,
-      "lastStatus": "Iniciando el programa de recorte…",
+      "ran": true,
+      "times": "Inicio del programa: 2,5 s. Recorte: 10,9 s. Resultado a tamaño completo: 1200 x 900, 915 KB.",
+      "status": "Listo.",
+      "dlName": "test-bg-hard-sin-fondo.png",
+      "noSubjectShown": false,
+      "modelCache": {
+        "chunksCached": 11,
+        "manifestCached": 1
+      },
+      "fullSizeInTimes": true,
+      "doneStatusOk": true,
+      "dlSuffixOk": true,
       "consoleErrors": [],
       "failedRequests": []
     },
     "removeBackgroundPtBr": {
       "ran": true,
-      "times": "Início do programa: 3,4 s. Recorte: 18,0 s. Resultado em tamanho real: 1200 x 900, 915 KB.",
+      "times": "Início do programa: 2,3 s. Recorte: 11,1 s. Resultado em tamanho real: 1200 x 900, 915 KB.",
       "status": "Pronto.",
       "dlName": "test-bg-hard-sem-fundo.png",
       "noSubjectShown": false,
@@ -1511,7 +1521,7 @@
     },
     "m6BatchBg": {
       "rows": [
-        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 11.1 sDownload",
+        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 11.3 sDownload",
         "test-photo-realistic-large.jpgno clear subject found; nothing downloaded for this one"
       ],
       "entries": [
@@ -1530,7 +1540,7 @@
       "log": "Step: Merge all PDFs into one…Merge: 4 PDFs became one file of 4 pages.Step: Compress PDF to 500 KB…Compress PDF: merged.pdf 11.11 MB to 406.4 KB.",
       "output": {
         "name": "merged-smaller.pdf",
-        "size": 416151
+        "size": 416149
       },
       "outputUnder500k": true,
       "persistsAfterReload": true,
@@ -1621,7 +1631,7 @@
       "resumedToResult": true,
       "zipEntriesAfterResume": 1,
       "rowsAfterResume": [
-        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 11.4 sDownload",
+        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 10.8 sDownload",
         "test-photo-realistic-large.jpgno clear subject found; nothing downloaded for this one"
       ],
       "expectedAborts": "the cancelled chunk requests appear in failedRequests as ERR_ABORTED, by design",
@@ -2279,7 +2289,7 @@
       "failedRequests": []
     },
     "m14PdfToJpgStress": {
-      "stressMs": 1250,
+      "stressMs": 1165,
       "entries": 50,
       "consoleErrors": [],
       "failedRequests": []
@@ -2617,7 +2627,7 @@
     },
     "m18HeicBatch": {
       "listText": "1. bg-twin.heic1200 x 900 · 322.1 KBRemove",
-      "rowsText": "bg-twin.heiccut out at full size 1200x900, 1.24 MB, in 11.2 sDownload",
+      "rowsText": "bg-twin.heiccut out at full size 1200x900, 1.24 MB, in 12.2 sDownload",
       "ok": true,
       "consoleErrors": [],
       "failedRequests": []
@@ -2767,6 +2777,28 @@
       "bgSendOk": true,
       "consoleErrors": [],
       "failedRequests": []
+    },
+    "m22Order": {
+      "routes": 49,
+      "orderFails": []
+    },
+    "m22RenderedTops": {
+      "/compress-pdf/": {
+        "trayTop": 406.640625,
+        "stepsTop": 982.921875
+      },
+      "/es/quitar-fondo-de-imagen-gratis/": {
+        "trayTop": 662.140625,
+        "stepsTop": 1122.484375
+      },
+      "/jpg-to-png/": {
+        "trayTop": 406.640625,
+        "stepsTop": 836.234375
+      }
+    },
+    "m22NotFound": {
+      "nfOk": true,
+      "sitemapLocs": 68
     }
   }
 }

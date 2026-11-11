@@ -3082,3 +3082,119 @@ unchanged: 68 pages, 50 tool pages, 22 working tools.
   18+19; this tree is milestones 18+19+20+21 local. The Spanish fix
   (20+21) is ready for the parent's deploy decision.
 - MILESTONES 20+21 DEPLOYED (2026-11-09): the five-country Spanish fix (50 replacements in m20 + 17 micro-swaps in m21; all five simulated reviewers returned SAFE verdicts in round 2). Wrangler Direct Upload from inside dist, deployment ef9c44e9.benchzy.pages.dev. Live checks: all 68 sitemap URLs 200; the ES flagship carries the fixes ("un servicio de hosting", "pelitos más finos", new nav label) and none of the killed calques; the ES promise page carries "se financiará con anuncios" and "de pago" forms. IndexNow retried for all 68: 403 on both endpoints again (0 accepted).
+
+## Milestone 22 — external-audit fix round: build notes off public pages, real 404, tool first (built 2026-11-10, LOCAL ONLY, not deployed, not pushed)
+
+Three surgical fixes ordered by the owner from an external audit.
+Counts unchanged: 68 content pages, 50 tool pages, 22 working tools
+(the build now emits 69 HTML files; the extra one is the 404 utility
+page, counted nowhere public).
+
+### Fix 1 — internal build notes removed from public pages
+Removed, in full:
+- src/pages/tools.astro, the Spanish remover entry's note:
+  "…con su página a resolución completa. Spanish strings drafted
+  in-house, marked pending human review in the project notes." —
+  the note now ends at "…resolución completa."
+- src/pages/tools.astro, the Portuguese entry's note: the same
+  build-note sentence ("Portuguese strings drafted in-house,
+  marked pending human review in the project notes.") removed;
+  the note now ends at "…alternativa grátis ao remove.bg."
+- src/pages/background-removal.astro, the "same tool, in Spanish
+  and Portuguese" section: "The strings were drafted in-house and
+  are marked in the project notes as pending review by a native
+  reader before any public launch." removed; the paragraph now ends
+  at "…searching in."
+Sweep for the same class across every public page (rendered strings
+in src/pages, src/components, src/layouts, src/locales): those were
+the only three passages. Remaining grep hits for the phrases are
+code comments only (12 files: page frontmatter, BgTicket.astro,
+locales/bg.js, remove-bg.js, witness.js) — internal, not rendered,
+untouched per the fix's own scope. Proof: the strings return 0 in
+non-comment source lines and 0 in all built dist HTML.
+
+### Fix 2 — real 404
+Diagnosed cause: the site had NO 404 page. dist/_redirects holds
+only the four language 301 rules (no catch-all), and the service
+worker passes navigation responses through unchanged — neither was
+the cause. With no dist/404.html present, Cloudflare Pages falls
+back to serving the homepage (dist/index.html) with HTTP 200 for
+every unmatched path, including missing assets. Reproduced locally
+under `wrangler pages dev` on the pre-fix dist: /definitely-not-a-
+page/ -> 200 with the homepage body, /nope.png -> 200; adding a
+probe 404.html to a copy of the same dist flipped both to a true
+404 while routes and the 301 stayed put.
+Fix shipped: src/pages/404.astro (built to dist/404.html), plain
+and on-brand in the ledger style — "That page is not on this bench",
+a back-to-homepage button, and a door list (All the tools, Remove
+background, Compress PDF, Compress image). Base.astro gained an
+optional `noindex` prop (default off; only the 404 page sets it),
+rendering <meta name="robots" content="noindex">. The 404 page is
+kept out of every public count and list, deliberately:
+- src/pages/sitemap.xml.js filters the '/404/' route out of the
+  glob-derived list (sitemap still lists exactly 68 URLs).
+- src/pages/what-free-means.astro excludes './404.astro' from its
+  build-time page count (printed counts unchanged: 68 / 50 / 22).
+- verify/seo-audit.mjs excludes '404.astro' from its page recount
+  in step, with the reason in a comment beside the change.
+Verified against the NEW dist under wrangler pages dev:
+unknown path -> 404 with the branded page; /nope.png -> 404;
+/, /remove-background/, /compress-pdf/ -> 200; /es/quitar-fondo/
+and /pt/remover-fundo -> 301 as before; /favicon.svg and /sw.js
+-> 200. The service worker file is untouched, and its offline
+behaviour for visited pages is unchanged (the suite's
+service-worker gate — caches + offline reopen — passed in this
+run). Live 404 status to be confirmed by the parent after deploy.
+
+### Fix 3 — tool first on every tool page
+The milestone-8 order (steps + who-is-this-for above the tool) is
+reversed on all 49 tool pages: the tool block (file tray + its
+controls) now sits directly under the page title and one-line
+intro; the steps strip and any explainer sections moved below it,
+relative order otherwise preserved. Nothing was deleted: the
+reorder was done mechanically per file with a proof that the
+multiset of non-blank lines is identical before and after.
+- 37 pages with a tool <section> (all batch pages, all compress
+  doors and presets, extract/flatten/HEIC/interleave/JPG-to-PDF/
+  merge/OCR x2/organise/metadata/page-numbers/PDF-to-JPG/protect/
+  resize/rotate/size-checker/split/watermark, and /workflows/).
+- sign-pdf and unlock-pdf also carried an explainer section above
+  the tool ("What this is, and what it is not" / "Two kinds of
+  password"); explainer + steps both moved below the tool.
+- 6 BgTicket pages: /remove-background/, the full-resolution page,
+  ES quitar-fondo + resolución completa, PT remover-fundo +
+  alternativa.
+- 6 convert doors (the ConvertDoor tray): PNG/JPG/WebP pairs.
+Already tool-first, unchanged: /presets/ (the preset cards with
+their save buttons sit at the top; the steps strip was already
+below them) and the check-it-yourself family EN/ES/PT (the live
+witness is directly under the header; it carries no steps strip).
+Homepage untouched, per the order.
+Gate change (deliberate, recorded here as required): no earlier
+gate asserted the old order. verify.mjs gained section 16, which
+asserts the NEW order: (a) a static gate over the built HTML of
+all 49 routes — tool marker before the steps strip, steps strip
+still present; (b) rendered-top evidence on a sample (EN
+/compress-pdf/ tray 407px vs steps 983px; ES flagship tray 662px
+vs steps 1122px; /jpg-to-png/ tray 407px vs steps 836px);
+(c) the 404 build facts above. Screenshots:
+verify/screenshots/m22-compress-pdf-desktop.png and
+m22-compress-pdf-mobile.png — tray directly under the intro on
+both; on mobile the tray is inside the first screen.
+
+### Verify
+- npm run build clean (69 files: 68 content pages + 404.html).
+- verify/seo-audit.mjs: ALL CHECKS PASSED, 0 warnings (dist pages
+  68, sitemap 68 locs, 48 hreflang links, counts 22/50/68 match).
+- Full verify/verify.mjs suite: VERIFY DONE on the second attempt
+  (log verify/m22-verify-run.log): all 68 routes at console errors
+  0 / failed requests 0, 0 GATE FAIL lines, GA gate green on every
+  route, witness gate green, m22 section green (49/49 order,
+  rendered tops, 404 facts). The first attempt
+  (verify/m22-verify-run1-crashed.log) is NOT a pass: it died
+  partway in the milestone-6 batch-remove-background gate on a
+  900 s wait under sandbox CPU load — the known load flake class
+  from milestones 19/21; the batch gate passed in the re-run.
+- Nothing deployed, nothing pushed. Live site remains milestones
+  18+19+20+21; this tree is milestones 18-22 local.
+- MILESTONE 22 DEPLOYED (2026-11-10): the three Fable-audit fixes (build notes off public pages, real 404 via the new branded 404 page, tool-first reorder on 49 tool pages). Wrangler Direct Upload from inside dist, deployment 7b3d4619.benchzy.pages.dev. Live checks: all 68 sitemap URLs 200; /definitely-not-a-page/ and /nope.png return true 404 with the branded page; /tools/ carries none of the removed note strings; compress-pdf serves the tray before the steps; the ES 301 is intact. IndexNow retried for all 68: 403 on both endpoints again (0 accepted).

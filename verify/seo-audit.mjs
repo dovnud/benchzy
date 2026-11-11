@@ -127,7 +127,10 @@ const TOOL_ENGINES = ['remove-bg', 'compress-pdf', 'compress-image', 'merge-pdf'
 // (batch doors, interleave, workflow chains); tool pages, not new tools.
 // Mirrors the counting in src/pages/what-free-means.astro exactly.
 const PAGE_SCRIPTS = ['batch-pdf', 'batch-image', 'batch-remove-bg', 'workflows', 'interleave-pdf', 'convert-image'];
-const srcList = srcFiles(SRC_PAGES);
+// Milestone 22: 404.astro is a utility page (the not-found page),
+// excluded from the page recount exactly as what-free-means.astro
+// excludes it from the counts it prints; the two must stay in step.
+const srcList = srcFiles(SRC_PAGES).filter((f) => f !== '404.astro');
 const enginesUsed = new Set();
 const toolRoutes = [];
 for (const f of srcList) {

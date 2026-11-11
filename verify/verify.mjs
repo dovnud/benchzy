@@ -2799,6 +2799,86 @@ try {
     if (!bgSendOk || bg.errors.length) throw new Error('m19 BG sends-nothing gate failed: ' + JSON.stringify(results.tools.m19BgSendsNothing));
     await bg.page.close();
   }
+  {
+    // 16. Milestone 22: tool first on every tool page + the 404
+    // page's build-side facts.
+    // (a) Static order gate over the built HTML of all 49 reordered
+    // tool pages: the tool block (its section id, the bg-tool section,
+    // or the convert door's tray) must appear BEFORE the steps strip
+    // in document order, and the steps strip must still be present
+    // (nothing was deleted, only reordered). This gate asserts the NEW
+    // order deliberately: before milestone 22 the milestone-8 order
+    // (steps above the tool) was the design; the owner reversed it.
+    // (b) Browser evidence on a sample (EN section tool, ES flagship,
+    // convert door): the tray's rendered top sits above the steps
+    // strip's rendered top. Screenshots for EN compress-pdf on
+    // desktop and mobile are written as m22-* evidence.
+    // (c) 404 build facts: dist/404.html exists, carries the noindex
+    // robots meta and the branded title, and the sitemap still lists
+    // exactly the 68 content routes with no /404/ entry. (The live
+    // 404 STATUS is a hosting behaviour, verified separately under
+    // wrangler pages dev: unknown paths and missing assets returned
+    // 404 with this page; routes and the two 301s unchanged.)
+    const M22_ROUTES = ['/batch-compress-images/', '/batch-compress-pdf/', '/batch-convert-images/',
+      '/batch-merge-pdf/', '/batch-remove-background/', '/batch-resize-images/', '/batch-split-pdf/',
+      '/compress-image-to-50kb/', '/compress-image/', '/compress-pdf-strong/', '/compress-pdf-to-100kb/',
+      '/compress-pdf-to-1mb/', '/compress-pdf-to-200kb/', '/compress-pdf-to-500kb/', '/compress-pdf-to-50kb/',
+      '/compress-pdf/', '/extract-images-pdf/', '/flatten-pdf/', '/heic-to-jpg/', '/interleave-pdf/',
+      '/jpg-to-pdf/', '/merge-pdf/', '/ocr-image/', '/ocr-pdf/', '/organize-pdf/', '/pdf-metadata/',
+      '/pdf-page-numbers/', '/pdf-to-jpg/', '/protect-pdf/', '/resize-image/', '/rotate-pdf/',
+      '/sign-pdf/', '/size-checker/', '/split-pdf/', '/unlock-pdf/', '/watermark-pdf/', '/workflows/',
+      '/remove-background/', '/remove-background-full-resolution/',
+      '/es/quitar-fondo-de-imagen-gratis/', '/es/quitar-fondo-resolucion-completa/',
+      '/pt-br/remover-fundo-de-imagem-gratis/', '/pt-br/alternativa-gratis-ao-remove-bg/',
+      '/jpg-to-png/', '/jpg-to-webp/', '/png-to-jpg/', '/png-to-webp/', '/webp-to-jpg/', '/webp-to-png/'];
+    const orderFails = [];
+    for (const r of M22_ROUTES) {
+      const h = fs.readFileSync(path.join(DIST, r.slice(1) + 'index.html'), 'utf8');
+      const stepsAt = h.indexOf('steps-strip');
+      let toolAt = h.indexOf('id="bg-tool"');
+      if (toolAt < 0) toolAt = h.indexOf('id="cv-tray"');
+      if (toolAt < 0) { const m = h.match(/id="[a-z]+-(tool|panel)"/); toolAt = m ? m.index : -1; }
+      if (stepsAt < 0 || toolAt < 0 || toolAt > stepsAt) orderFails.push(`${r} :: tool@${toolAt} steps@${stepsAt}`);
+    }
+    results.tools.m22Order = { routes: M22_ROUTES.length, orderFails };
+    console.log('TOOL m22 tool-first order:', M22_ROUTES.length, 'routes | fails:', orderFails.length);
+    if (orderFails.length) throw new Error('m22 order gate failed: ' + orderFails.join(' | '));
+
+    const sample = [['/compress-pdf/', '#cp-tray'], ['/es/quitar-fondo-de-imagen-gratis/', '#bg-tray'], ['/jpg-to-png/', '#cv-tray']];
+    const tops = {};
+    for (const [route, traySel] of sample) {
+      const s = await openPage(BASE + route);
+      const t = await s.page.evaluate((sel) => {
+        const tray = document.querySelector(sel);
+        const strip = document.querySelector('.steps-strip');
+        return { trayTop: tray ? tray.getBoundingClientRect().top + window.scrollY : null,
+                 stepsTop: strip ? strip.getBoundingClientRect().top + window.scrollY : null };
+      }, traySel);
+      tops[route] = t;
+      if (!(t.trayTop !== null && t.stepsTop !== null && t.trayTop < t.stepsTop)) {
+        throw new Error('m22 rendered-order gate failed on ' + route + ': ' + JSON.stringify(t));
+      }
+      if (route === '/compress-pdf/') {
+        await s.page.setViewport({ width: 1280, height: 900 });
+        await new Promise((r) => setTimeout(r, 400));
+        await s.page.screenshot({ path: path.join(SHOTS, 'm22-compress-pdf-desktop.png') });
+        await s.page.setViewport({ width: 390, height: 844 });
+        await new Promise((r) => setTimeout(r, 400));
+        await s.page.screenshot({ path: path.join(SHOTS, 'm22-compress-pdf-mobile.png') });
+      }
+      await s.page.close();
+    }
+    results.tools.m22RenderedTops = tops;
+    console.log('TOOL m22 rendered tops:', JSON.stringify(tops));
+
+    const nf = fs.existsSync(path.join(DIST, '404.html')) ? fs.readFileSync(path.join(DIST, '404.html'), 'utf8') : '';
+    const sm22 = fs.readFileSync(path.join(DIST, 'sitemap.xml'), 'utf8');
+    const nfOk = nf.includes('name="robots" content="noindex"') && nf.includes('Page not found')
+      && (sm22.match(/<loc>/g) || []).length === 68 && !sm22.includes('404');
+    results.tools.m22NotFound = { nfOk, sitemapLocs: (sm22.match(/<loc>/g) || []).length };
+    console.log('TOOL m22 404 build facts:', JSON.stringify(results.tools.m22NotFound));
+    if (!nfOk) throw new Error('m22 404 gate failed: ' + JSON.stringify(results.tools.m22NotFound));
+  }
 } finally {
   if (browser) await browser.close();
   server.close();

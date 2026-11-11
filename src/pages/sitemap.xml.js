@@ -15,7 +15,9 @@ function fileToRoute(file) {
   return '/' + p + '/';
 }
 
-const routes = Object.keys(pageFiles).map(fileToRoute).sort();
+// Milestone 22: the 404 page is a utility page, never a sitemap
+// entry; it is filtered out here by its would-be route.
+const routes = Object.keys(pageFiles).map(fileToRoute).filter((r) => r !== '/404/').sort();
 
 // Language clusters: route -> { hreflang: route }. x-default is the
 // English page of each cluster, as the pages' own alternates declare.

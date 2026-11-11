@@ -11,8 +11,11 @@ interface Props {
   description: string;
   lang?: string;
   alternates?: Alternate[];
+  // Milestone 22: utility pages that must stay out of search (the 404
+  // page) pass noindex; every content page leaves it unset.
+  noindex?: boolean;
 }
-const { title, description, lang = 'en', alternates = [] } = Astro.props;
+const { title, description, lang = 'en', alternates = [], noindex = false } = Astro.props;
 
 // Language seam (milestone 18, round-2 Missing 8): an English page
 // that has NO Spanish or Portuguese version of itself (no es / pt-BR
@@ -127,6 +130,7 @@ const c = CHROME[lang] || CHROME.en;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Benchzy" />

@@ -58,8 +58,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For combining scans, statements, or chapters into one file, in your order." steps={[{ n: '01', t: 'Pick your PDFs' }, { n: '02', t: 'Put them in order' }, { n: '03', t: 'Download the merged PDF' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="mg-tool">
       <div id="mg-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick PDFs">
         <p class="font-display text-xl font-bold">Drop PDFs on the tray, or click to pick them</p>
@@ -97,6 +95,8 @@ const howToJson = JSON.stringify({
         <a id="mg-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the merged PDF</a>
       </div>
     </section>
+
+    <StepsStrip who="For combining scans, statements, or chapters into one file, in your order." steps={[{ n: '01', t: 'Pick your PDFs' }, { n: '02', t: 'Put them in order' }, { n: '03', t: 'Download the merged PDF' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

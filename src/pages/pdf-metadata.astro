@@ -56,8 +56,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For checking what a file says about itself before you send it on, fixing a wrong title on a report, or wiping the label card from a file you are about to publish." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Read its stored details' }, { n: '03', t: 'Change or wipe, then download' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="md-tool">
       <div id="md-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
         <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
@@ -109,6 +107,8 @@ const howToJson = JSON.stringify({
         <a id="md-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the PDF</a>
       </div>
     </section>
+
+    <StepsStrip who="For checking what a file says about itself before you send it on, fixing a wrong title on a report, or wiping the label card from a file you are about to publish." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Read its stored details' }, { n: '03', t: 'Change or wipe, then download' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

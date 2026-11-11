@@ -1,0 +1,42 @@
+---
+// The not-found page (milestone 22). Astro builds this file to
+// dist/404.html; Cloudflare Pages serves it with a true 404 status
+// for any path that matches nothing else. Before this page existed,
+// Pages fell back to the homepage with a 200 for unknown paths.
+// It is a utility page, not a content page: noindex, kept out of the
+// sitemap and out of the promise page's page count.
+import Base from '../layouts/Base.astro';
+
+const doors = [
+  { name: 'All the tools', href: '/tools/', note: 'Every job on the bench, in one list.' },
+  { name: 'Remove background', href: '/remove-background/', note: 'Full-size cutouts in your browser.' },
+  { name: 'Compress PDF to a size', href: '/compress-pdf/', note: 'Pick a target and the page works to land under it.' },
+  { name: 'Compress image to exact KB', href: '/compress-image/', note: 'A photo at the exact size a form or shop asks for.' },
+];
+---
+
+<Base title="Page not found · Benchzy" description="That address does not match any page on Benchzy. The tools are all still here." noindex>
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">404 · not found</p>
+      <h1 class="font-display text-4xl font-black mt-2">That page is not on this bench</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        The address does not match any page here. It may have been typed wrong, or the page
+        moved. Nothing is broken: the tools are all where they were.
+      </p>
+      <p class="mt-4">
+        <a class="btn-primary inline-block no-underline" href="/">Back to the homepage</a>
+      </p>
+    </section>
+
+    <section class="ledger mt-8 mb-4">
+      {doors.map((d) => (
+        <a class="job-row" href={d.href}>
+          <h2 class="job-name job-name-lg">{d.name}</h2>
+          <span class="job-meta"><span class="status-live">Ready</span><span class="open">Open →</span></span>
+          <span class="job-note">{d.note}</span>
+        </a>
+      ))}
+    </section>
+  </div>
+</Base>

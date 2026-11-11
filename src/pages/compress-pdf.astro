@@ -56,8 +56,6 @@ const targets = [200, 500, 2048];
       </p>
     </section>
 
-    <StepsStrip who="For a form portal, an email limit, or an application upload that names a maximum size: the job is a PDF that fits under the line." steps={[{ n: '01', t: 'Pick the file' }, { n: '02', t: 'Pick the limit' }, { n: '03', t: 'Compress and download' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="cp-tool">
       <div id="cp-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
         <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
@@ -107,6 +105,8 @@ const targets = [200, 500, 2048];
         <p class="mt-3 text-sm leading-relaxed text-ink-soft max-w-2xl">Still too big, or too soft to use? Two doors from here: <a class="underline underline-offset-4" href="/compress-pdf-strong/">Compress PDF, strong</a> walks the deep end of the same ladder for the smallest honest result this file can give, and <a class="underline underline-offset-4" href="/split-pdf/">Split PDF</a> can cut the file into parts under a size you set.</p>
       </div>
     </section>
+
+    <StepsStrip who="For a form portal, an email limit, or an application upload that names a maximum size: the job is a PDF that fits under the line." steps={[{ n: '01', t: 'Pick the file' }, { n: '02', t: 'Pick the limit' }, { n: '03', t: 'Compress and download' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

@@ -57,8 +57,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For a folder that must come out at one size: listing photos for a shop, a shoot for a website, thumbnails for a catalogue." steps={[{ n: '01', t: 'Pick your images' }, { n: '02', t: 'Set the one size' }, { n: '03', t: 'Run and download the results' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="bi-tool" data-mode="resize">
       <div id="bi-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick images">
         <p class="font-display text-xl font-bold">Drop images on the tray, or click to pick them</p>
@@ -128,6 +126,8 @@ const howToJson = JSON.stringify({
         <a id="bi-zip" class="btn-primary inline-block no-underline mt-4 hidden" href="#" download>Download all as one ZIP</a>
       </div>
     </section>
+
+    <StepsStrip who="For a folder that must come out at one size: listing photos for a shop, a shoot for a website, thumbnails for a catalogue." steps={[{ n: '01', t: 'Pick your images' }, { n: '02', t: 'Set the one size' }, { n: '03', t: 'Run and download the results' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

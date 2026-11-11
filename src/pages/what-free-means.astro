@@ -22,7 +22,10 @@ const langLinks = [
 // a tool page when it imports one of the tool engines; the tool count
 // is the number of distinct engines, so preset pages and translations
 // count as pages, never as new tools. Nothing below is typed by hand.
-const pageSources = import.meta.glob('./**/*.astro', { query: '?raw', eager: true, import: 'default' });
+const pageSourcesAll = import.meta.glob('./**/*.astro', { query: '?raw', eager: true, import: 'default' });
+// Milestone 22: the 404 page is a utility page, not a page of the
+// site a visitor can land on from a link; it is not counted here.
+const pageSources = Object.fromEntries(Object.entries(pageSourcesAll).filter(([k]) => k !== './404.astro'));
 const TOOL_ENGINES = ['remove-bg', 'compress-pdf', 'compress-image', 'merge-pdf', 'split-pdf', 'ocr-pdf', 'ocr-image', 'size-checker', 'sign-pdf', 'flatten-pdf', 'protect-pdf', 'unlock-pdf', 'resize-image', 'rotate-pdf', 'pdf-page-numbers', 'watermark-pdf', 'extract-images-pdf', 'organize-pdf', 'pdf-metadata', 'jpg-to-pdf', 'pdf-to-jpg', 'heic-to-jpg'];
 // Runner scripts (milestone 6): pages that work files through the
 // engines above (batch doors, interleave, workflow chains) are tool

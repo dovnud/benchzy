@@ -64,8 +64,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For the same few jobs in the same order, every week: build the chain once, then run files through it." steps={[{ n: '01', t: 'Take a starter chain or build your own' }, { n: '02', t: 'Drop files on the tray' }, { n: '03', t: 'Run the chain' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="wf-panel">
       <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">Starter chains</h2>
       <p class="mt-2 text-ink-soft leading-relaxed max-w-2xl">
@@ -175,6 +173,8 @@ const howToJson = JSON.stringify({
         <ul id="wf-log" class="mt-2 font-mono text-sm leading-relaxed grid gap-1"></ul>
       </div>
     </section>
+
+    <StepsStrip who="For the same few jobs in the same order, every week: build the chain once, then run files through it." steps={[{ n: '01', t: 'Take a starter chain or build your own' }, { n: '02', t: 'Drop files on the tray' }, { n: '03', t: 'Run the chain' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

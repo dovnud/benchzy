@@ -54,42 +54,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <section class="ticket-soft mt-6 p-5 sm:p-6" aria-label="The two kinds of PDF password">
-      <h2 class="font-display text-2xl font-bold">Two kinds of password. Read this first.</h2>
-      <div class="mt-3 grid gap-5 md:grid-cols-2">
-        <div>
-          <h3 class="font-bold">1. A password that locks the file shut</h3>
-          <p class="text-ink-soft leading-relaxed mt-1">
-            If a PDF asks for a password before it will open, that password must be
-            known and typed here. There is no other way, on this site or any other.
-            If you have forgotten it, this page cannot help, and neither can anyone
-            else.
-          </p>
-        </div>
-        <div>
-          <h3 class="font-bold">2. A password that only switches things off</h3>
-          <p class="text-ink-soft leading-relaxed mt-1">
-            Some PDFs open fine but will not print, copy or edit. That kind is a set
-            of permission switches, and it can be taken off without typing it,
-            because that is how PDF permissions work in every tool. It is not a
-            trick, and it is not breaking in.
-          </p>
-        </div>
-      </div>
-      <p class="mt-4 leading-relaxed">
-        <strong>Your files only:</strong> only take passwords off your own files, or
-        files you have permission to change. You are responsible for that right.
-      </p>
-      <p class="mt-2 leading-relaxed text-ink-soft">
-        The password is typed into this page and used inside this page. It is never
-        sent anywhere, and it is gone when the page closes. The
-        <a class="underline underline-offset-4" href="/check-it-yourself/">check-it-yourself page</a>
-        lets you watch that happen, like every other job here.
-      </p>
-    </section>
-
-    <StepsStrip who="For your own PDF whose password you know, or whose print, copy and edit switches you want back." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Type the password, if it asks for one' }, { n: '03', t: 'Take it off and download' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="un-tool">
       <div id="un-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
         <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
@@ -132,6 +96,42 @@ const howToJson = JSON.stringify({
         <a id="un-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the unlocked PDF</a>
       </div>
     </section>
+
+    <section class="ticket-soft mt-6 p-5 sm:p-6" aria-label="The two kinds of PDF password">
+      <h2 class="font-display text-2xl font-bold">Two kinds of password. Read this first.</h2>
+      <div class="mt-3 grid gap-5 md:grid-cols-2">
+        <div>
+          <h3 class="font-bold">1. A password that locks the file shut</h3>
+          <p class="text-ink-soft leading-relaxed mt-1">
+            If a PDF asks for a password before it will open, that password must be
+            known and typed here. There is no other way, on this site or any other.
+            If you have forgotten it, this page cannot help, and neither can anyone
+            else.
+          </p>
+        </div>
+        <div>
+          <h3 class="font-bold">2. A password that only switches things off</h3>
+          <p class="text-ink-soft leading-relaxed mt-1">
+            Some PDFs open fine but will not print, copy or edit. That kind is a set
+            of permission switches, and it can be taken off without typing it,
+            because that is how PDF permissions work in every tool. It is not a
+            trick, and it is not breaking in.
+          </p>
+        </div>
+      </div>
+      <p class="mt-4 leading-relaxed">
+        <strong>Your files only:</strong> only take passwords off your own files, or
+        files you have permission to change. You are responsible for that right.
+      </p>
+      <p class="mt-2 leading-relaxed text-ink-soft">
+        The password is typed into this page and used inside this page. It is never
+        sent anywhere, and it is gone when the page closes. The
+        <a class="underline underline-offset-4" href="/check-it-yourself/">check-it-yourself page</a>
+        lets you watch that happen, like every other job here.
+      </p>
+    </section>
+
+    <StepsStrip who="For your own PDF whose password you know, or whose print, copy and edit switches you want back." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Type the password, if it asks for one' }, { n: '03', t: 'Take it off and download' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

@@ -51,8 +51,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For getting your photos back out of a PDF someone sent you, lifting a chart or a logo out of a report, or rescuing the pictures from a file when the originals are gone." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Extract the images' }, { n: '03', t: 'Read the report and download' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="ex-tool">
       <div id="ex-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
         <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
@@ -93,6 +91,8 @@ const howToJson = JSON.stringify({
         <ul id="ex-report" class="mt-2 grid gap-1 text-sm leading-relaxed"></ul>
       </div>
     </section>
+
+    <StepsStrip who="For getting your photos back out of a PDF someone sent you, lifting a chart or a logo out of a report, or rescuing the pictures from a file when the originals are gone." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Extract the images' }, { n: '03', t: 'Read the report and download' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

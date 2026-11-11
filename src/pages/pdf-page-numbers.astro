@@ -50,8 +50,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For a report, a contract pack or a court bundle that people must refer to by page ('see page 14'), which came off the printer with no numbers on it." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Choose the numbers' }, { n: '03', t: 'Number and download' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="pn-tool">
       <div id="pn-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
         <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
@@ -137,6 +135,8 @@ const howToJson = JSON.stringify({
         <a id="pn-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the numbered PDF</a>
       </div>
     </section>
+
+    <StepsStrip who="For a report, a contract pack or a court bundle that people must refer to by page ('see page 14'), which came off the printer with no numbers on it." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Choose the numbers' }, { n: '03', t: 'Number and download' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

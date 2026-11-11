@@ -58,8 +58,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For a scanned document you need as text you can search, copy, and check: a letter, a contract, a statement." steps={[{ n: '01', t: 'Pick a scanned PDF' }, { n: '02', t: 'Read the text' }, { n: '03', t: 'Check and download' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="oc-tool">
       <div id="oc-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
         <p class="font-display text-xl font-bold">Drop a scanned PDF on the tray, or click to pick one</p>
@@ -101,6 +99,8 @@ const howToJson = JSON.stringify({
         </div>
       </div>
     </section>
+
+    <StepsStrip who="For a scanned document you need as text you can search, copy, and check: a letter, a contract, a statement." steps={[{ n: '01', t: 'Pick a scanned PDF' }, { n: '02', t: 'Read the text' }, { n: '03', t: 'Check and download' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

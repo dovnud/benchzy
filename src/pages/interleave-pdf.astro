@@ -51,8 +51,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For a two-sided document scanned on a one-sided scanner: the fronts in one file, the backs in another, dealt back into order." steps={[{ n: '01', t: 'Pick the two files' }, { n: '02', t: 'Set the dealing order' }, { n: '03', t: 'Interleave and download' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="il-tool">
       <div class="grid gap-4 md:grid-cols-2">
         <div id="il-tray-a" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick the first PDF">
@@ -107,6 +105,8 @@ const howToJson = JSON.stringify({
         <a id="il-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the interleaved PDF</a>
       </div>
     </section>
+
+    <StepsStrip who="For a two-sided document scanned on a one-sided scanner: the fronts in one file, the backs in another, dealt back into order." steps={[{ n: '01', t: 'Pick the two files' }, { n: '02', t: 'Set the dealing order' }, { n: '03', t: 'Interleave and download' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

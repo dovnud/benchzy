@@ -52,8 +52,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For forms and listings with a 50 KB photo limit, a common line on application portals." steps={[{ n: '01', t: 'Pick the photo' }, { n: '02', t: 'Run the job' }, { n: '03', t: 'Download the photo (JPG)' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="ci-tool" data-preset-kb="50" data-lock-target="1">
       <div id="ci-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick an image">
         <p class="font-display text-xl font-bold">Drop a photo on the tray, or click to pick one</p>
@@ -92,6 +90,8 @@ const howToJson = JSON.stringify({
         <a id="ci-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the photo (JPG)</a>
       </div>
     </section>
+
+    <StepsStrip who="For forms and listings with a 50 KB photo limit, a common line on application portals." steps={[{ n: '01', t: 'Pick the photo' }, { n: '02', t: 'Run the job' }, { n: '03', t: 'Download the photo (JPG)' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

@@ -54,9 +54,9 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For one JPG that has to arrive as a PNG: a portal or editor that requires PNG, or a picture you are about to edit and re-save." steps={[{ n: '01', t: 'Pick a JPG' }, { n: '02', t: 'Convert to PNG' }, { n: '03', t: 'Download the PNG' }]} />
-
     <ConvertDoor from="jpeg" to="png" note="The wrapper changes, and the picture does not. Every pixel of your JPG is written into the PNG exactly as it decoded: nothing added, nothing sharpened. Expect the file to grow, often a lot; the result line prints both sizes." />
+
+    <StepsStrip who="For one JPG that has to arrive as a PNG: a portal or editor that requires PNG, or a picture you are about to edit and re-save." steps={[{ n: '01', t: 'Pick a JPG' }, { n: '02', t: 'Convert to PNG' }, { n: '03', t: 'Download the PNG' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

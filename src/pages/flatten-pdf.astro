@@ -50,8 +50,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For a filled form whose answers must stay put when the file is printed, emailed, or opened somewhere else." steps={[{ n: '01', t: 'Pick the filled form' }, { n: '02', t: 'Flatten the PDF' }, { n: '03', t: 'Check and download' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="fl-tool">
       <div id="fl-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
         <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
@@ -96,6 +94,8 @@ const howToJson = JSON.stringify({
         <a id="fl-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the flattened PDF</a>
       </div>
     </section>
+
+    <StepsStrip who="For a filled form whose answers must stay put when the file is printed, emailed, or opened somewhere else." steps={[{ n: '01', t: 'Pick the filled form' }, { n: '02', t: 'Flatten the PDF' }, { n: '03', t: 'Check and download' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>

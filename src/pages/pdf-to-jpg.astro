@@ -51,8 +51,6 @@ const howToJson = JSON.stringify({
       </p>
     </section>
 
-    <StepsStrip who="For a portal or a person who wants a page as a picture, a document that has to be posted where PDFs are not welcome, or pages that need to go into a photo tool." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Pick the picture kind and size' }, { n: '03', t: 'Turn the pages into pictures and download' }]} />
-
     <section class="ticket mt-6 p-5 sm:p-7" id="pj-tool">
       <div id="pj-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
         <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
@@ -110,6 +108,8 @@ const howToJson = JSON.stringify({
         <a id="pj-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the pictures</a>
       </div>
     </section>
+
+    <StepsStrip who="For a portal or a person who wants a page as a picture, a document that has to be posted where PDFs are not welcome, or pages that need to go into a photo tool." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Pick the picture kind and size' }, { n: '03', t: 'Turn the pages into pictures and download' }]} />
 
     <section class="mt-12 grid gap-8 md:grid-cols-2">
       <div>
