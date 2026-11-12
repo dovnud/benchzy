@@ -3552,3 +3552,74 @@ No deploy, no push, no indexing hand-in: those run from the
 main chat when this wave ships. ES/PT versions of the eight
 pages follow after language QA, as with earlier waves.
 - MILESTONE 24 DEPLOYED (2026-11-11): DataForSEO wave 1, all eight pages (grades 7.5-9, none held). Wrangler Direct Upload from inside dist, deployment a968bf71.benchzy.pages.dev. Live checks: all 76 sitemap URLs 200; each new page carries the AdSense loader exactly once and the GA4 tag; tool-first order holds on all eight; nonsense path still a true 404. IndexNow retried for all 76: 403 on both endpoints again (0 accepted). The 8 new URLs were handed into the Google indexing queue the same night (~/workspace/indexing-queue/benchzy-wave1-2026-11-11.txt plus a note to the main chat). Printed counts now 76 pages / 58 tool pages / 24 tools.
+
+## Milestone 25 — crop-image: typed position survives the size (2026-11-12)
+
+### The defect (found by the live viewer pass after milestone 24)
+On /crop-image/, a visitor who typed the crop POSITION first
+(X=100, Y=50) and the SIZE second (Width=400, Height=300) found
+the X and Y fields silently back at 0. Size first, position
+second worked, and the crop itself was always exact. The
+milestone-24 gate had actually met this same behaviour while it
+was being written and worked around it by setting size first in
+the gate; milestone 25 fixes the tool instead, because field
+order is the visitor's choice, not a rule.
+
+### Mechanism, in plain words
+The moment a picture loads, the crop box is the whole picture.
+Every time any field changes, the tool re-reads all four fields
+and immediately forces the box inside the picture — and a box
+that is still as wide as the picture cannot sit anywhere but
+X=0, so the typed 100 was clamped to 0 on the spot, and the
+clamped 0 was then written back over the field. By the time the
+visitor typed a smaller size, the position they wanted was
+already gone; there was nothing left to restore. Reproduced in
+the harness before the fix (verify/m25-repro.mjs): with the
+400x300 two-colour fixture, X=100 read back 0 the instant it was
+entered, and the position-first run cropped 200x150 from 0,0.
+
+### The fix (src/scripts/crop-image.js only)
+The tool now remembers the last position the visitor typed,
+separately from the box on screen. A typed position is:
+- never overwritten in its field by the temporarily clamped
+  on-screen position;
+- re-applied every time the size changes, judged against the
+  newest size, and only ever moved by the smallest clamp the
+  new size truly forces (typed X=350 with a final width of 100
+  on a 400-wide picture lands at 300, not 0 and not 350);
+- forgotten the moment the visitor takes over with the mouse
+  (any stage press) or picks a shape preset, and reset when a
+  new picture loads.
+Nothing else moved: the clamp itself, drag box, draw, aspect
+lock, presets, output writer and receipt wording are unchanged,
+and the receipt still prints the true starting point used.
+
+### Regression gate (verify section 18, after the m24 crop gate)
+Types in the FAILING order: X=100, Y=50 while the box still
+spans the whole 400x300 fixture, asserts the fields still read
+100,50, then W=200, H=150, asserts all four fields read
+100,50,200,150, runs, and asserts the download is exactly
+200x150 from the right place (red pixel from source (110,60),
+blue from (290,190), receipt "starting at 100, 50"). A second
+run proves the smallest clamp: X=350, Y=250 typed, then W=100,
+lands at "starting at 300, 150" with a 100x150 download whose
+pixels come from the blue half (a reset to 0 would be red).
+Gate output: fields 100,50,400,300 -> 100,50,200,150; clamp run
+100x150 starting at 300, 150.
+
+### Verify runs (honest record)
+- Run 1 died in the section-1 page loop on a browser disconnect
+  (the known sandbox flake; the run's pages up to the drop were
+  clean). Kept as verify/m25-verify-run1-crashed.log. Not a pass.
+- Run 2: VERIFY DONE (all sections, exit 0), 0 GATE FAIL lines,
+  76 routes at 0 console errors / 0 failed requests; the m24
+  crop gate (size-first order) passes unchanged beside the new
+  m25 gate. Kept as verify/m25-verify-run.log.
+- npm run build clean (77 files: 76 content + 404.html);
+  verify/seo-audit.mjs ALL CHECKS PASSED, 0 warnings. Printed
+  counts unchanged: 76 pages / 58 tool pages / 24 tools.
+
+### Not done here (by brief)
+No deploy, no push: those run from the main chat. No copy
+changes, no other pages touched.
+- MILESTONE 25 DEPLOYED (2026-11-12): the crop field-order fix (typed position survives size changes; smallest clamp only). Wrangler Direct Upload from inside dist. Live checks: all 76 sitemap URLs 200; nonsense path still a true 404. A live viewer retest follows (crop typed in the old failing order, plus PDF-to-text with a standards-built fixture after the first live test's hand-made fixture proved malformed under pdftotext as well).

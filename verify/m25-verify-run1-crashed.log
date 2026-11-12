@@ -1,0 +1,109 @@
+PAGE / errors: 0 failed: 0 []
+PAGE /remove-background/ errors: 0 failed: 0 []
+I18N /remove-background/ {"htmlLang":"en","islandLocale":"en","alternates":["en=/remove-background/","es=/es/quitar-fondo-de-imagen-gratis/","pt-BR=/pt-br/remover-fundo-de-imagem-gratis/","x-default=/remove-background/"],"statusText":"Pick a photo to begin."}
+PAGE /compress-pdf/ errors: 0 failed: 0 []
+PAGE /compress-image/ errors: 0 failed: 0 []
+PAGE /credits/ errors: 0 failed: 0 []
+PAGE /ocr-pdf/ errors: 0 failed: 0 []
+PAGE /ocr-image/ errors: 0 failed: 0 []
+PAGE /merge-pdf/ errors: 0 failed: 0 []
+PAGE /split-pdf/ errors: 0 failed: 0 []
+PAGE /compress-pdf-to-200kb/ errors: 0 failed: 0 []
+PAGE /compress-image-to-50kb/ errors: 0 failed: 0 []
+PAGE /size-checker/ errors: 0 failed: 0 []
+PAGE /remove-background-full-resolution/ errors: 0 failed: 0 []
+I18N /remove-background-full-resolution/ {"htmlLang":"en","islandLocale":"en","alternates":["en=/remove-background-full-resolution/","es=/es/quitar-fondo-resolucion-completa/","pt-BR=/pt-br/alternativa-gratis-ao-remove-bg/","x-default=/remove-background-full-resolution/"],"statusText":"Pick a photo to begin."}
+PAGE /remove-background/quality/ errors: 0 failed: 0 []
+PAGE /background-removal/ errors: 0 failed: 0 []
+PAGE /vs-remove-bg/ errors: 0 failed: 0 []
+PAGE /remove-bg-alternatives/ errors: 0 failed: 0 []
+PAGE /remove-bg-december-1/ errors: 0 failed: 0 []
+PAGE /remove-bg-api/ errors: 0 failed: 0 []
+PAGE /check-it-yourself/ errors: 0 failed: 0 []
+TRUST-I18N /check-it-yourself/ {"htmlLang":"en","alternates":["en=/check-it-yourself/","es=/es/compruebalo-tu-mismo/","pt-BR=/pt-br/confira-voce-mesmo/","x-default=/check-it-yourself/"]}
+PAGE /what-free-means/ errors: 0 failed: 0 []
+TRUST-I18N /what-free-means/ {"htmlLang":"en","alternates":["en=/what-free-means/","es=/es/que-significa-gratis-aqui/","pt-BR=/pt-br/o-que-significa-gratis/","x-default=/what-free-means/"]}
+PAGE /tools/ errors: 0 failed: 0 []
+PAGE /pdf-tools/ errors: 0 failed: 0 []
+PAGE /image-tools/ errors: 0 failed: 0 []
+PAGE /es/quitar-fondo-de-imagen-gratis/ errors: 0 failed: 0 []
+I18N /es/quitar-fondo-de-imagen-gratis/ {"htmlLang":"es","islandLocale":"es","alternates":["en=/remove-background/","es=/es/quitar-fondo-de-imagen-gratis/","pt-BR=/pt-br/remover-fundo-de-imagem-gratis/","x-default=/remove-background/"],"statusText":"Elige una foto para empezar."}
+PAGE /es/quitar-fondo-resolucion-completa/ errors: 0 failed: 0 []
+I18N /es/quitar-fondo-resolucion-completa/ {"htmlLang":"es","islandLocale":"es","alternates":["en=/remove-background-full-resolution/","es=/es/quitar-fondo-resolucion-completa/","pt-BR=/pt-br/alternativa-gratis-ao-remove-bg/","x-default=/remove-background-full-resolution/"],"statusText":"Elige una foto para empezar."}
+PAGE /pt-br/remover-fundo-de-imagem-gratis/ errors: 0 failed: 0 []
+I18N /pt-br/remover-fundo-de-imagem-gratis/ {"htmlLang":"pt-BR","islandLocale":"pt-BR","alternates":["en=/remove-background/","es=/es/quitar-fondo-de-imagen-gratis/","pt-BR=/pt-br/remover-fundo-de-imagem-gratis/","x-default=/remove-background/"],"statusText":"Escolha uma foto para começar."}
+PAGE /pt-br/alternativa-gratis-ao-remove-bg/ errors: 0 failed: 0 []
+I18N /pt-br/alternativa-gratis-ao-remove-bg/ {"htmlLang":"pt-BR","islandLocale":"pt-BR","alternates":["en=/remove-background-full-resolution/","es=/es/quitar-fondo-resolucion-completa/","pt-BR=/pt-br/alternativa-gratis-ao-remove-bg/","x-default=/remove-background-full-resolution/"],"statusText":"Escolha uma foto para começar."}
+PAGE /batch-compress-pdf/ errors: 0 failed: 0 []
+PAGE /batch-merge-pdf/ errors: 0 failed: 0 []
+PAGE /batch-split-pdf/ errors: 0 failed: 0 []
+PAGE /batch-compress-images/ errors: 0 failed: 0 []
+PAGE /batch-convert-images/ errors: 0 failed: 0 []
+PAGE /batch-remove-background/ errors: 0 failed: 0 []
+PAGE /workflows/ errors: 0 failed: 0 []
+PAGE /presets/ errors: 0 failed: 0 []
+PAGE /sign-pdf/ errors: 0 failed: 0 []
+PAGE /flatten-pdf/ errors: 0 failed: 0 []
+PAGE /interleave-pdf/ errors: 0 failed: 0 []
+PAGE /protect-pdf/ errors: 0 failed: 0 []
+PAGE /unlock-pdf/ errors: 0 failed: 0 []
+PAGE /rotate-pdf/ errors: 0 failed: 0 []
+PAGE /pdf-page-numbers/ errors: 0 failed: 0 []
+PAGE /watermark-pdf/ errors: 0 failed: 0 []
+PAGE /extract-images-pdf/ errors: 0 failed: 0 []
+PAGE /organize-pdf/ errors: 0 failed: 0 []
+PAGE /pdf-metadata/ errors: 0 failed: 0 []
+PAGE /jpg-to-pdf/ errors: 0 failed: 0 []
+PAGE /pdf-to-jpg/ errors: 0 failed: 0 []
+PAGE /compress-pdf-to-50kb/ errors: 0 failed: 0 []
+PAGE /compress-pdf-to-100kb/ errors: 0 failed: 0 []
+PAGE /compress-pdf-to-500kb/ errors: 0 failed: 0 []
+PAGE /compress-pdf-to-1mb/ errors: 0 failed: 0 []
+PAGE /compress-pdf-strong/ errors: 0 failed: 0 []
+PAGE /privacy/ errors: 0 failed: 0 []
+PAGE /resize-image/ errors: 0 failed: 0 []
+PAGE /batch-resize-images/ errors: 0 failed: 0 []
+PAGE /png-to-jpg/ errors: 0 failed: 0 []
+PAGE /jpg-to-png/ errors: 0 failed: 0 []
+PAGE /webp-to-jpg/ errors: 0 failed: 0 []
+PAGE /jpg-to-webp/ errors: 0 failed: 0 []
+PAGE /png-to-webp/ errors: 0 failed: 0 []
+PAGE /webp-to-png/ errors: 0 failed: 0 []
+PAGE /heic-to-jpg/ errors: 0 failed: 0 []
+PAGE /png-to-pdf/ errors: 0 failed: 0 []
+PAGE /image-to-pdf/ errors: 0 failed: 0 []
+PAGE /pdf-to-png/ errors: 0 failed: 0 []
+PAGE /pdf-to-text/ errors: 0 failed: 0 []
+PAGE /heic-to-png/ errors: 0 failed: 0 []
+PAGE /compress-jpg/ errors: 0 failed: 0 []
+PAGE /compress-png/ errors: 0 failed: 0 []
+PAGE /crop-image/ errors: 0 failed: 0 []
+PAGE /es/que-significa-gratis-aqui/ errors: 0 failed: 0 []
+TRUST-I18N /es/que-significa-gratis-aqui/ {"htmlLang":"es","alternates":["en=/what-free-means/","es=/es/que-significa-gratis-aqui/","pt-BR=/pt-br/o-que-significa-gratis/","x-default=/what-free-means/"]}
+PAGE /es/compruebalo-tu-mismo/ errors: 0 failed: 0 []
+TRUST-I18N /es/compruebalo-tu-mismo/ {"htmlLang":"es","alternates":["en=/check-it-yourself/","es=/es/compruebalo-tu-mismo/","pt-BR=/pt-br/confira-voce-mesmo/","x-default=/check-it-yourself/"]}
+PAGE /pt-br/o-que-significa-gratis/ errors: 0 failed: 0 []
+TRUST-I18N /pt-br/o-que-significa-gratis/ {"htmlLang":"pt-BR","alternates":["en=/what-free-means/","es=/es/que-significa-gratis-aqui/","pt-BR=/pt-br/o-que-significa-gratis/","x-default=/what-free-means/"]}
+PAGE /pt-br/confira-voce-mesmo/ errors: 0 failed: 0 []
+TRUST-I18N /pt-br/confira-voce-mesmo/ {"htmlLang":"pt-BR","alternates":["en=/check-it-yourself/","es=/es/compruebalo-tu-mismo/","pt-BR=/pt-br/confira-voce-mesmo/","x-default=/check-it-yourself/"]}
+GA GATE: tag + one collect with G-PSWNWPP7PY on every route in the loop
+ADS GATE: exactly one loader request with ca-pub-1450356163101033 on every route in the loop
+TOOL witness: Job done in this page's memory. Network requests during the job: 0 (the visit counter's own among them: 0; the ad loader's own among them: 0). Your file was rea | live rows 0 | counter rows labelled: 2 | ads rows labelled: 1
+TOOL service-worker: caches ["benchzy-v1"] entries 164 | offline reopen ok: true
+file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/api/Realm.js:65
+        this.taskManager.terminateAll(new Error('waitForFunction failed: frame got detached.'));
+                                      ^
+
+Error: waitForFunction failed: frame got detached.
+    at IsolatedWorld.dispose (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/api/Realm.js:65:39)
+    at [Symbol.dispose] (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/api/Realm.js:68:14)
+    at [Symbol.dispose] (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/IsolatedWorld.js:161:29)
+    at [Symbol.dispose] (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/Frame.js:354:51)
+    at #removeFramesRecursively (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/FrameManager.js:589:29)
+    at #onClientDisconnect (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/FrameManager.js:145:46)
+    at file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/cdp/FrameManager.js:120:42
+    at onceHandler (file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/common/EventEmitter.js:91:13)
+    at file:///home/hatch/workspace/file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/third_party/mitt/mitt.js:36:7
+    at Array.map (<anonymous>)
+
+Node.js v24.22.1

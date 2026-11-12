@@ -3235,6 +3235,63 @@ try {
       await page.setViewport({ width: 1280, height: 900 });
       await page.close();
     }
+    { // crop-image, milestone 25 regression: position typed FIRST
+      // must survive the size typed after it. The milestone-24 gate
+      // originally met this defect and worked around it by setting
+      // size first; that order is a visitor's choice, not a rule,
+      // so this gate types X and Y while the box still spans the
+      // whole picture (where the old clamp silently ate them),
+      // then the size, and asserts the fields AND the download.
+      // Second half: a typed position that cannot fit even at the
+      // final size is clamped by the smallest amount, never reset
+      // to 0.
+      const { page, errors, failed } = await openPage(BASE + '/crop-image/');
+      const input = await page.$('#cr-file');
+      await input.uploadFile(path.join(M24, 'cropme.png'));
+      await page.waitForFunction(() => !document.getElementById('cr-run').disabled, { timeout: 60000 });
+      const setField = async (id, v) => page.$eval(id, (el, val) => { el.value = String(val); el.dispatchEvent(new Event('change')); }, v);
+      const readFields = () => page.evaluate(() => ['cr-x', 'cr-y', 'cr-w', 'cr-h'].map((i) => document.getElementById(i).value).join(','));
+      await setField('#cr-x', 100);
+      await setField('#cr-y', 50);
+      const afterPos = await readFields();
+      await setField('#cr-w', 200);
+      await setField('#cr-h', 150);
+      const afterSize = await readFields();
+      await page.click('#cr-run');
+      await shown(page, 'cr-result', 120000);
+      const note = await page.$eval('#cr-achieved', (el) => el.textContent);
+      const outPath = await saveBlob(page, '#cr-download', 'm25-crop-posfirst.png');
+      const meta = await sharp(outPath).metadata();
+      const { data, info } = await sharp(outPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+      const pxAt = (x, y) => { const i = (y * info.width + x) * 4; return [data[i], data[i + 1], data[i + 2]]; };
+      const leftPx = pxAt(10, 10);    // source (110, 60): the red half
+      const rightPx = pxAt(190, 140); // source (290, 190): the blue half
+      const okRun = meta.format === 'png' && meta.width === 200 && meta.height === 150
+        && nearPx(leftPx, [200, 40, 30], 12) && nearPx(rightPx, [40, 80, 200], 12)
+        && note.includes('200 x 150') && note.includes('starting at 100, 50');
+      // Smallest clamp: X=350 and Y=250 typed, then W=100 (H stays
+      // 150): the box must land at 300,150 (400-100, 300-150), not
+      // at 0 and not at the impossible typed point.
+      await setField('#cr-x', 350);
+      await setField('#cr-y', 250);
+      await setField('#cr-w', 100);
+      const afterClamp = await readFields();
+      await page.click('#cr-run');
+      await page.waitForFunction(() => document.getElementById('cr-achieved').textContent.includes('starting at 300, 150'), { timeout: 120000 });
+      const note2 = await page.$eval('#cr-achieved', (el) => el.textContent);
+      const outPath2 = await saveBlob(page, '#cr-download', 'm25-crop-clamp.png');
+      const meta2 = await sharp(outPath2).metadata();
+      const raw2 = await sharp(outPath2).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+      const i2 = (10 * raw2.info.width + 10) * 4;
+      const clampPx = [raw2.data[i2], raw2.data[i2 + 1], raw2.data[i2 + 2]]; // source (310, 160): blue; a reset to 0 would be red
+      const okClamp = meta2.width === 100 && meta2.height === 150 && nearPx(clampPx, [40, 80, 200], 12)
+        && afterClamp.startsWith('350,250,100');
+      const ok = afterPos.startsWith('100,50') && afterSize === '100,50,200,150' && okRun && okClamp;
+      results.tools.m25CropPosFirst = { afterPos, afterSize, note, meta: { format: meta.format, width: meta.width, height: meta.height }, leftPx, rightPx, afterClamp, note2, clampPx, ok, consoleErrors: errors, failedRequests: failed };
+      console.log('TOOL m25 crop pos-first:', note, '| fields:', afterPos, '->', afterSize, '| clamp:', note2);
+      if (!ok || errors.length) throw new Error('m25 crop pos-first gate failed: ' + JSON.stringify(results.tools.m25CropPosFirst));
+      await page.close();
+    }
   }
 } finally {
   if (browser) await browser.close();

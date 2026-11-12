@@ -1720,10 +1720,10 @@
   "tools": {
     "witness": {
       "status": "Job done in this page's memory. Network requests during the job: 0 (the visit counter's own among them: 0; the ad loader's own among them: 0). Your file was read, fingerprinted and described without a single request carrying it anywhere.",
-      "verdict": "Requests since the witness started watching (just after this page loaded): 0. Of those, 0 were the visit counter firing as the page opened and 0 were the ad loader arriving as it opened; the rest are this page asking its own site for page and program files. Requests with anything attached to them: 0. Requests while the witnessed job was running: 0.",
+      "verdict": "Requests since the witness started watching (just after this page loaded): 1. Of those, 1 was the visit counter firing as the page opened and 0 were the ad loader arriving as it opened; the rest are this page asking its own site for page and program files. Requests with anything attached to them: 0. Requests while the witnessed job was running: 0.",
       "spec": "filetest-10page.pdfsize7 KB (7203 bytes)real formatPDF documentfingerprint (SHA-256)f6765f5da45987d67a6aeb21227b65ed…pages10",
-      "liveRows": 0,
-      "beforeCount": "12 files loaded. 9 of them are this page asking its own site for its own parts; 2 are the visit counter firing as the page opened, and 1 is the ad loader (Google AdSense) arriving the same way.",
+      "liveRows": 1,
+      "beforeCount": "11 files loaded. 9 of them are this page asking its own site for its own parts; 1 is the visit counter firing as the page opened, and 1 is the ad loader (Google AdSense) arriving the same way.",
       "duringTotal": 0,
       "duringCounter": 0,
       "duringAds": 0,
@@ -1757,7 +1757,7 @@
       "failedRequests": []
     },
     "compressImage": {
-      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 16.9 seconds.",
+      "note": "Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 7.1 seconds.",
       "blobSize": 199856,
       "targetBytes": 204800,
       "within5pct": true,
@@ -1777,7 +1777,7 @@
       "failedRequests": []
     },
     "ocr": {
-      "note": "Read 1 page, 177 characters, in 3.9 seconds. Check the text in the box before you use it, especially numbers: this reader has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and both downloads use your corrected text: the searchable PDF places your edits back over the page, at the positions of the words they replaced. Keep the --- Page N --- lines in the box; they are how your edits find their page.",
+      "note": "Read 1 page, 177 characters, in 1.7 seconds. Check the text in the box before you use it, especially numbers: this reader has been caught dropping the decimal point in money amounts (124.50 read as 12450) on a clean test page. Fix anything in the box and both downloads use your corrected text: the searchable PDF places your edits back over the page, at the positions of the words they replaced. Keep the --- Page N --- lines in the box; they are how your edits find their page.",
       "checks": {
         "hasInvoice": true,
         "hasNumber": true,
@@ -1823,7 +1823,7 @@
       "failedRequests": []
     },
     "presetImage50": {
-      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 14.8 seconds.",
+      "note": "Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 6.8 seconds.",
       "blobSize": 50112,
       "within5pct": true,
       "consoleErrors": [],
@@ -1842,7 +1842,7 @@
     },
     "removeBackground": {
       "ran": true,
-      "times": "Program start: 6.7 s. Cutout: 27.0 s. Full size result: 1200 x 900, 915 KB.",
+      "times": "Program start: 2.9 s. Cutout: 11.2 s. Full size result: 1200 x 900, 915 KB.",
       "status": "Done.",
       "dlName": "test-bg-hard-no-background.png",
       "noSubjectShown": false,
@@ -1858,7 +1858,7 @@
     },
     "removeBackgroundEs": {
       "ran": true,
-      "times": "Inicio del programa: 4,8 s. Recorte: 26,8 s. Resultado a tamaño completo: 1200 x 900, 915 KB.",
+      "times": "Inicio del programa: 2,3 s. Recorte: 11,1 s. Resultado a tamaño completo: 1200 x 900, 915 KB.",
       "status": "Listo.",
       "dlName": "test-bg-hard-sin-fondo.png",
       "noSubjectShown": false,
@@ -1874,7 +1874,7 @@
     },
     "removeBackgroundPtBr": {
       "ran": true,
-      "times": "Início do programa: 5,2 s. Recorte: 25,8 s. Resultado em tamanho real: 1200 x 900, 915 KB.",
+      "times": "Início do programa: 2,3 s. Recorte: 10,7 s. Resultado em tamanho real: 1200 x 900, 915 KB.",
       "status": "Pronto.",
       "dlName": "test-bg-hard-sem-fundo.png",
       "noSubjectShown": false,
@@ -1963,7 +1963,7 @@
     },
     "m6BatchBg": {
       "rows": [
-        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 32.2 sDownload",
+        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 11.2 sDownload",
         "test-photo-realistic-large.jpgno clear subject found; nothing downloaded for this one"
       ],
       "entries": [
@@ -2068,12 +2068,12 @@
       "failedRequests": []
     },
     "m8CancelBatch": {
-      "midStatus": "Loading stopped. 2 of 11 pieces are already here and are kept; press start again and the load carries on from there. Nothing was run.",
+      "midStatus": "Loading stopped. 3 of 11 pieces are already here and are kept; press start again and the load carries on from there. Nothing was run.",
       "usableAfterCancel": true,
       "resumedToResult": true,
       "zipEntriesAfterResume": 1,
       "rowsAfterResume": [
-        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 25.4 sDownload",
+        "test-bg-hard.pngcut out at full size 1200x900, 915 KB, in 11.1 sDownload",
         "test-photo-realistic-large.jpgno clear subject found; nothing downloaded for this one"
       ],
       "expectedAborts": "the cancelled chunk requests appear in failedRequests as ERR_ABORTED, by design",
@@ -2731,7 +2731,7 @@
       "failedRequests": []
     },
     "m14PdfToJpgStress": {
-      "stressMs": 2603,
+      "stressMs": 1148,
       "entries": 50,
       "consoleErrors": [],
       "failedRequests": []
@@ -3020,7 +3020,7 @@
         "opaqueFrac": 0.217
       },
       "sellerOk": true,
-      "logTail": "Step: Remove the background…Remove background: test-bg-hard.png (33.1 KB) cut out at full size 1200x900, in 22.9 s → test-bg-hard-no-background.png (915 KB).Step: Compress image to 50 KB…Compress image: test-bg-hard-no-background.png has see-through parts, so it stays a PNG: 915 KB to 49.6 KB at 185x139.",
+      "logTail": "Step: Remove the background…Remove background: test-bg-hard.png (33.1 KB) cut out at full size 1200x900, in 10.2 s → test-bg-hard-no-background.png (915 KB).Step: Compress image to 50 KB…Compress image: test-bg-hard-no-background.png has see-through parts, so it stays a PNG: 915 KB to 49.6 KB at 185x139.",
       "consoleErrors": [],
       "failedRequests": []
     },
@@ -3069,7 +3069,7 @@
     },
     "m18HeicBatch": {
       "listText": "1. bg-twin.heic1200 x 900 · 322.1 KBRemove",
-      "rowsText": "bg-twin.heiccut out at full size 1200x900, 1.24 MB, in 25.7 sDownload",
+      "rowsText": "bg-twin.heiccut out at full size 1200x900, 1.24 MB, in 10.7 sDownload",
       "ok": true,
       "consoleErrors": [],
       "failedRequests": []
@@ -3342,7 +3342,7 @@
       "failedRequests": []
     },
     "m24CompressJpg": {
-      "note": "Landed at 98 KB (-2.0% vs the 100 KB target), quality 16, 4000x3000, after 6 tries in 16.4 seconds.",
+      "note": "Landed at 98 KB (-2.0% vs the 100 KB target), quality 16, 4000x3000, after 6 tries in 6.9 seconds.",
       "refused": true,
       "size": 100381,
       "ok": true,
@@ -3350,7 +3350,7 @@
       "failedRequests": []
     },
     "m24CompressPng": {
-      "note": "Landed at 48.7 KB (-2.7% vs the 50 KB target), quality 32, 800x600, after 6 tries in 1.7 seconds.",
+      "note": "Landed at 48.7 KB (-2.7% vs the 50 KB target), quality 32, 800x600, after 6 tries in 0.9 seconds.",
       "refused": true,
       "size": 49826,
       "ok": true,
@@ -3370,6 +3370,36 @@
         30
       ],
       "rightPx": [
+        40,
+        80,
+        200
+      ],
+      "ok": true,
+      "consoleErrors": [],
+      "failedRequests": []
+    },
+    "m25CropPosFirst": {
+      "afterPos": "100,50,400,300",
+      "afterSize": "100,50,200,150",
+      "note": "Cropped to exactly 200 x 150 pixels (from 400 x 300), starting at 100, 50 from the top-left corner. PNG, 1.2 KB.",
+      "meta": {
+        "format": "png",
+        "width": 200,
+        "height": 150
+      },
+      "leftPx": [
+        200,
+        40,
+        30
+      ],
+      "rightPx": [
+        40,
+        80,
+        200
+      ],
+      "afterClamp": "350,250,100,150",
+      "note2": "Cropped to exactly 100 x 150 pixels (from 400 x 300), starting at 300, 150 from the top-left corner. PNG, 843 B.",
+      "clampPx": [
         40,
         80,
         200

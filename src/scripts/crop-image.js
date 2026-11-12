@@ -21,6 +21,17 @@ const NAMES = { jpeg: 'JPG', png: 'PNG', webp: 'WebP' };
 const EXT = { jpeg: 'jpg', png: 'png', webp: 'webp' };
 let file = null, srcCanvas = null, imgW = 0, imgH = 0, running = false;
 let crop = { x: 0, y: 0, w: 0, h: 0 };
+// The last position the visitor TYPED, kept apart from the box on
+// screen (milestone 25). The clamp below keeps the box inside the
+// picture at the size in force right now, so while the box still
+// spans the whole picture a typed position clamps to 0 on screen —
+// but the typed numbers are the visitor's, and losing them because
+// the size was not typed yet was the defect this fixes. The typed
+// position is re-applied at every later size change, clamped only
+// by the smallest amount the new size truly forces. Dragging the
+// box or picking a shape preset hands control back to the box and
+// forgets the typed position.
+let typedX = null, typedY = null;
 let aspect = null; // width / height, or null for free
 let outFormat = 'png', alpha = false;
 
@@ -50,8 +61,10 @@ function paintBox() {
   box.style.top = (crop.y / imgH * 100) + '%';
   box.style.width = (crop.w / imgW * 100) + '%';
   box.style.height = (crop.h / imgH * 100) + '%';
-  if (document.activeElement !== inX) inX.value = crop.x;
-  if (document.activeElement !== inY) inY.value = crop.y;
+  // A remembered typed position is shown as typed, never overwritten
+  // with the temporarily clamped on-screen one.
+  if (document.activeElement !== inX) inX.value = typedX !== null ? typedX : crop.x;
+  if (document.activeElement !== inY) inY.value = typedY !== null ? typedY : crop.y;
   if (document.activeElement !== inW) inW.value = crop.w;
   if (document.activeElement !== inH) inH.value = crop.h;
 }
@@ -86,6 +99,7 @@ wireTray(tray, input, async (f) => {
     const kind = kindOfFile(f);
     outFormat = NAMES[kind] ? kind : 'png';
     crop = { x: 0, y: 0, w: imgW, h: imgH };
+    typedX = null; typedY = null;
     if (aspect === -1) aspect = imgW / imgH; // the "original shape" preset follows the picture
     fitAspectToBox();
     clampCrop();
@@ -116,6 +130,7 @@ function stagePoint(ev) {
 }
 stage.addEventListener('pointerdown', (ev) => {
   if (!file || running) return;
+  typedX = null; typedY = null; // the mouse takes over from the typed numbers
   const p = stagePoint(ev);
   const onHandle = ev.target === handle;
   const inside = p.x >= crop.x && p.x <= crop.x + crop.w && p.y >= crop.y && p.y <= crop.y + crop.h;
@@ -158,14 +173,20 @@ stage.addEventListener('pointercancel', () => { drag = null; });
 function fromInputs(changed) {
   const nx = parseInt(inX.value, 10), ny = parseInt(inY.value, 10);
   const nw = parseInt(inW.value, 10), nh = parseInt(inH.value, 10);
-  if (Number.isFinite(nx)) crop.x = nx;
-  if (Number.isFinite(ny)) crop.y = ny;
+  // Size first, then position, whatever order the visitor typed
+  // them in: the position is judged against the newest size, and a
+  // remembered typed position is re-applied here so a size change
+  // can set it free instead of having destroyed it earlier.
   if (Number.isFinite(nw)) crop.w = nw;
   if (Number.isFinite(nh)) crop.h = nh;
   if (aspect) {
     if (changed === 'w') crop.h = Math.round(crop.w / aspect);
     else if (changed === 'h') crop.w = Math.round(crop.h * aspect);
   }
+  if (Number.isFinite(nx)) { crop.x = nx; typedX = nx; }
+  else if (typedX !== null) crop.x = typedX;
+  if (Number.isFinite(ny)) { crop.y = ny; typedY = ny; }
+  else if (typedY !== null) crop.y = typedY;
   clampCrop();
   paintBox();
 }
@@ -177,6 +198,7 @@ document.querySelectorAll('#cr-aspects .chip').forEach((chip) => {
   chip.addEventListener('click', () => {
     document.querySelectorAll('#cr-aspects .chip').forEach((c) => c.setAttribute('aria-pressed', 'false'));
     chip.setAttribute('aria-pressed', 'true');
+    typedX = null; typedY = null; // a preset reshapes the box on screen; it takes over
     const v = chip.dataset.aspect;
     if (v === 'free') aspect = null;
     else if (v === 'original') aspect = imgW && imgH ? imgW / imgH : -1;
