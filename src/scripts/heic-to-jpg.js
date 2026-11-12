@@ -18,7 +18,14 @@ const $ = (id) => document.getElementById(id);
 const NAMES = { jpeg: 'JPG', png: 'PNG', webp: 'WebP' };
 const tray = $('hc-tray'), input = $('hc-file'), spec = $('hc-spec');
 const runBtn = $('hc-run'), status = $('hc-status'), result = $('hc-result');
-let file = null, buf = null, running = false, quality = 90, bg = '#ffffff', outFormat = 'jpeg';
+// Milestone 24: the /heic-to-png/ door runs this same island with
+// PNG as its starting format, named on #hc-tool as
+// data-default-format. No attribute = JPG, the milestone-15
+// behaviour, unchanged.
+const toolEl = $('hc-tool');
+let file = null, buf = null, running = false, quality = 90, bg = '#ffffff';
+let outFormat = (toolEl && toolEl.dataset.defaultFormat) || 'jpeg';
+if (!NAMES[outFormat]) outFormat = 'jpeg';
 
 function setStatus(msg) { status.textContent = msg; }
 function setSpec(rows) {
@@ -41,17 +48,20 @@ function fileFormat(f, bytes) {
   return null;
 }
 
+function applyFormat(fmt, announce) {
+  outFormat = fmt;
+  document.querySelectorAll('#hc-formats .chip').forEach((c) => c.setAttribute('aria-pressed', c.dataset.format === fmt ? 'true' : 'false'));
+  const bgRow = $('hc-bg-row');
+  if (bgRow) bgRow.classList.toggle('hidden', outFormat !== 'jpeg');
+  const qRow = $('hc-quality-row');
+  if (qRow) qRow.classList.toggle('hidden', outFormat === 'png');
+  runBtn.textContent = 'Convert to ' + NAMES[outFormat];
+  if (announce && file) setStatus('Ready. The photo comes out as a ' + NAMES[outFormat] + '.');
+}
 document.querySelectorAll('#hc-formats .chip').forEach((chip) => {
-  chip.addEventListener('click', () => {
-    document.querySelectorAll('#hc-formats .chip').forEach((c) => c.setAttribute('aria-pressed', 'false'));
-    chip.setAttribute('aria-pressed', 'true');
-    outFormat = chip.dataset.format;
-    $('hc-bg-row').classList.toggle('hidden', outFormat !== 'jpeg');
-    $('hc-quality-row').classList.toggle('hidden', outFormat === 'png');
-    runBtn.textContent = 'Convert to ' + NAMES[outFormat];
-    if (file) setStatus('Ready. The photo comes out as a ' + NAMES[outFormat] + '.');
-  });
+  chip.addEventListener('click', () => applyFormat(chip.dataset.format, true));
 });
+applyFormat(outFormat, false);
 const qEl = $('hc-quality');
 qEl.addEventListener('change', () => {
   const v = parseInt(qEl.value, 10);

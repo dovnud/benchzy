@@ -14,6 +14,7 @@
     "/check-it-yourself/",
     "/compress-image-to-50kb/",
     "/compress-image/",
+    "/compress-jpg/",
     "/compress-pdf-strong/",
     "/compress-pdf-to-100kb/",
     "/compress-pdf-to-1mb/",
@@ -21,7 +22,9 @@
     "/compress-pdf-to-500kb/",
     "/compress-pdf-to-50kb/",
     "/compress-pdf/",
+    "/compress-png/",
     "/credits/",
+    "/crop-image/",
     "/es/compruebalo-tu-mismo/",
     "/es/que-significa-gratis-aqui/",
     "/es/quitar-fondo-de-imagen-gratis/",
@@ -29,6 +32,8 @@
     "/extract-images-pdf/",
     "/flatten-pdf/",
     "/heic-to-jpg/",
+    "/heic-to-png/",
+    "/image-to-pdf/",
     "/image-tools/",
     "/interleave-pdf/",
     "/jpg-to-pdf/",
@@ -41,8 +46,11 @@
     "/pdf-metadata/",
     "/pdf-page-numbers/",
     "/pdf-to-jpg/",
+    "/pdf-to-png/",
+    "/pdf-to-text/",
     "/pdf-tools/",
     "/png-to-jpg/",
+    "/png-to-pdf/",
     "/png-to-webp/",
     "/presets/",
     "/privacy/",
@@ -75,7 +83,7 @@
     "/es/quitar-fondo/",
     "/pt/remover-fundo/"
   ],
-  "sitemapCount": 68,
+  "sitemapCount": 76,
   "sitemapHreflangLinks": 48,
   "ldTypes": {
     "/": [
@@ -120,6 +128,10 @@
       "FAQPage",
       "HowTo"
     ],
+    "/compress-jpg/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/compress-pdf-strong/": [
       "FAQPage",
       "HowTo"
@@ -148,7 +160,15 @@
       "FAQPage",
       "HowTo"
     ],
+    "/compress-png/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/credits/": [],
+    "/crop-image/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/es/compruebalo-tu-mismo/": [],
     "/es/que-significa-gratis-aqui/": [],
     "/es/quitar-fondo-de-imagen-gratis/": [
@@ -168,6 +188,14 @@
       "HowTo"
     ],
     "/heic-to-jpg/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/heic-to-png/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/image-to-pdf/": [
       "FAQPage",
       "HowTo"
     ],
@@ -216,8 +244,20 @@
       "FAQPage",
       "HowTo"
     ],
+    "/pdf-to-png/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/pdf-to-text/": [
+      "FAQPage",
+      "HowTo"
+    ],
     "/pdf-tools/": [],
     "/png-to-jpg/": [
+      "FAQPage",
+      "HowTo"
+    ],
+    "/png-to-pdf/": [
       "FAQPage",
       "HowTo"
     ],
@@ -298,9 +338,9 @@
     ]
   },
   "recount": {
-    "pages": 68,
-    "toolPages": 50,
-    "tools": 22
+    "pages": 76,
+    "toolPages": 58,
+    "tools": 24
   },
   "orphans": [],
   "depth": {
@@ -362,7 +402,15 @@
     "/es/quitar-fondo-de-imagen-gratis/": 2,
     "/pt-br/remover-fundo-de-imagem-gratis/": 2,
     "/pdf-tools/": 2,
+    "/png-to-pdf/": 2,
+    "/image-to-pdf/": 2,
+    "/pdf-to-png/": 2,
+    "/pdf-to-text/": 2,
     "/image-tools/": 2,
+    "/compress-jpg/": 2,
+    "/compress-png/": 2,
+    "/crop-image/": 2,
+    "/heic-to-png/": 2,
     "/remove-background/quality/": 2,
     "/es/compruebalo-tu-mismo/": 2,
     "/pt-br/confira-voce-mesmo/": 2,

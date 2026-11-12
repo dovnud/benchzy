@@ -23,9 +23,23 @@ let file = null, targetKB = 200, inited = false, running = false;
 // Preset pages (e.g. /compress-image-to-50kb/) set data-preset-kb and
 // data-lock-target on #ci-tool: the target is fixed by the page, and the
 // visitor's saved general preset does not override it.
+// Milestone 24: the /compress-jpg/ and /compress-png/ doors set
+// data-lock-format ("jpeg" or "png") on #ci-tool: the door takes
+// only that kind of picture in, and says so at the tray when a
+// different kind arrives. The engine and its output (a JPEG at the
+// target) are unchanged; the lock is the door's framing, enforced.
 const toolEl = $('ci-tool');
 const presetKB = toolEl && toolEl.dataset.presetKb ? parseInt(toolEl.dataset.presetKb, 10) : null;
 const lockTarget = !!toolEl && toolEl.dataset.lockTarget === '1';
+const lockFormat = toolEl && toolEl.dataset.lockFormat ? toolEl.dataset.lockFormat : null;
+const LOCK_WORDS = { jpeg: ['JPG', 'a JPG photo'], png: ['PNG', 'a PNG picture'] };
+function kindOfFile(f) {
+  if (f.type === 'image/jpeg' || /\.jpe?g$/i.test(f.name)) return 'jpeg';
+  if (f.type === 'image/png' || /\.png$/i.test(f.name)) return 'png';
+  if (f.type === 'image/webp' || /\.webp$/i.test(f.name)) return 'webp';
+  if (f.type === 'image/heic' || f.type === 'image/heif' || /\.hei[cf]$/i.test(f.name)) return 'heic';
+  return null;
+}
 if (presetKB) targetKB = presetKB;
 if (!lockTarget) {
   const saved = getPreset('compress-image');
@@ -73,6 +87,18 @@ async function decodeImage(f, buf) {
 }
 
 wireTray(tray, input, async (f) => {
+  if (lockFormat && kindOfFile(f) !== lockFormat) {
+    file = null;
+    result.classList.add('hidden');
+    runBtn.disabled = true;
+    setSpec([
+      ['file', f.name],
+      ['format', f.type || 'unknown'],
+      ['this door takes', LOCK_WORDS[lockFormat][1] + ' in'],
+    ]);
+    setStatus('This door starts from ' + LOCK_WORDS[lockFormat][1] + '. The general compress page takes this file as it is: /compress-image/');
+    return;
+  }
   file = f;
   result.classList.add('hidden');
   runBtn.disabled = false;

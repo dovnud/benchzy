@@ -1,0 +1,146 @@
+---
+import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
+
+const faq = [
+  {
+    q: 'What is the difference between this and the OCR tool?',
+    a: 'This page pulls out the words the PDF already stores as text: most PDFs made by a program (invoices, reports, exports, ebooks) carry their words inside the file, and those words come out exactly, character for character. The read a scan (OCR) tool is for the other kind: a scanned page is a photograph of words, the file stores no words, and OCR reads the picture. If this page finds no text in your file, it says so and points you there.',
+  },
+  {
+    q: 'Will the layout survive?',
+    a: 'No, and the page says so before the run: you get the words in the order the file stores them, line by line, page by page. Columns come out one after another, tables come out as lines of words, and a heading is the same plain text as everything else. For reading, copying, searching and feeding the words to another program, that is exactly what is wanted. For keeping the look of the page, a PDF is already the right file.',
+  },
+  {
+    q: 'My PDF gave no text. Is it broken?',
+    a: 'Almost certainly not: it is a scan, or its pages were saved as pictures, so the file holds photographs of pages and no stored words at all. That is a fact about the file, not a failure of the run. The read a scan (OCR) tool reads that kind of file.',
+  },
+  {
+    q: 'Where does my document go?',
+    a: 'Nowhere. It is read into this page and its stored words are pulled out in your browser. Watch the network panel while it works if you want to check.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const howToJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: "How to pull the text out of a PDF",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Pick the PDF", text: "Drop a PDF on the tray, or click to pick one. It stays on this device. The page reads its page count before anything runs." },
+    { '@type': 'HowToStep', position: 2, name: "Pull the text out", text: "Press 'Pull the text out'. The words the file stores are read page by page, in the order the file stores them, in your browser. The layout is not kept." },
+    { '@type': 'HowToStep', position: 3, name: "Check, copy or download", text: "Read the text in the box, fix anything, copy the whole thing, or download it as a .txt file. If the file stored no words, the page says so and points at the OCR tool." },
+  ],
+});
+---
+
+<Base title="PDF to text: pull the words out of a PDF, free · Benchzy" description="Extract the text a PDF already stores, in reading order, inside your browser: view it, copy it, download it as a .txt. A scanned PDF has no text layer, and the page says so and points to OCR. Nothing is uploaded.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">PDF tools · extract</p>
+      <h1 class="font-display text-4xl font-black mt-2">PDF to text</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Pull the words a PDF already carries out as plain text: read them here, copy them,
+        or take them away as a .txt file. Everything runs in your browser; the document is
+        never uploaded. Two plain facts before you run, because they decide whether this is
+        your tool: the text comes out in reading order as stored, and the layout is not
+        kept; and a scanned PDF has no text layer at all, so if your file is a scan, the
+        <a class="underline underline-offset-4 hover:text-accent-deep" href="/ocr-pdf/">read a scan (OCR) tool</a>
+        is the one that reads it.
+      </p>
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="tx-tool">
+      <div id="tx-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a PDF">
+        <p class="font-display text-xl font-bold">Drop a PDF on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">PDF · it stays on this device</p>
+        <input id="tx-file" type="file" accept="application/pdf,.pdf" class="hidden" />
+      </div>
+      <p class="file-loaded hidden" data-loaded-for="tx-file" role="status"></p>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">What comes out</h2>
+          <p class="text-ink-soft text-sm leading-relaxed mt-3 max-w-md">
+            The stored words, in the order the file stores them: line by line, page by
+            page, one page after another separated by a blank line. Not the layout: columns
+            and tables come out as lines of words. If the file stores no words at all, the
+            result says so instead of handing you an empty file.
+          </p>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="tx-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <button id="tx-run" class="btn-primary w-full mt-5" type="button" disabled>Pull the text out</button>
+          <p id="tx-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a PDF to begin.</p>
+        </div>
+      </div>
+
+      <div id="tx-result" class="receipt hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Result</h2>
+          <span class="stamp" id="tx-stamp">Done on your device</span>
+        </div>
+        <p id="tx-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
+        <label class="font-mono text-xs uppercase tracking-widest text-ink-soft block mt-4" for="tx-text">The text, as stored</label>
+        <textarea id="tx-text" readonly rows="14" class="mt-2 w-full border border-ink bg-ticket px-3 py-2 font-mono text-sm leading-relaxed"></textarea>
+        <div class="mt-3 flex gap-3 flex-wrap">
+          <a id="tx-download" class="btn-primary inline-block no-underline" href="#" download>Download the .txt</a>
+          <button id="tx-copy" class="chip" type="button">Copy the whole text</button>
+        </div>
+      </div>
+    </section>
+
+    <StepsStrip who="For the words inside an invoice, a report, a contract or an exported document: copying a clause, searching a long file, feeding text to another program, reading without the PDF reader." steps={[{ n: '01', t: 'Pick the PDF' }, { n: '02', t: 'Pull the text out' }, { n: '03', t: 'Copy it or download the .txt' }]} />
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          A PDF made by a program stores its words as text, with each line's place on the
+          page. This page reads the file with the same reading program the page-drawing
+          tools run (PDF.js, named on the <a class="underline underline-offset-4" href="/credits/">credits page</a>),
+          takes the stored words page by page, and lines them up in the order the file
+          stores them. Nothing is guessed and nothing is read from the look of the page:
+          what comes out is what the file holds, character for character. The download is
+          how we protect your privacy: the program travels to your browser; your file never
+          travels anywhere.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The layout is not kept: there are no columns, tables or fonts in plain text, and
+          a file that stored its words column by column gives them back column by column.
+          Words a file stores as pictures (a scanned page, a photographed document) are
+          not in the text layer at all: this page will find none and will say so, and the
+          <a class="underline underline-offset-4" href="/ocr-pdf/">read a scan (OCR) tool</a> is
+          the right door for that file. A password-protected PDF cannot be opened here:
+          take its password off first with the <a class="underline underline-offset-4" href="/unlock-pdf/">unlock tool</a>.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script type="application/ld+json" set:html={howToJson}></script>
+  <script>
+    import '../scripts/pdf-to-text.js';
+  </script>
+</Base>

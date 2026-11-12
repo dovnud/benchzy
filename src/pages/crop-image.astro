@@ -1,0 +1,174 @@
+---
+import Base from '../layouts/Base.astro';
+import StepsStrip from '../components/StepsStrip.astro';
+
+const faq = [
+  {
+    q: 'Is the crop exact?',
+    a: 'Yes: the numbers are the truth. The box on the picture is a guide you drag; the four number fields are the exact rectangle that is cut, in pixels from the top-left corner, and the result line prints the exact dimensions that came out. Type the numbers when the crop has to be precise.',
+  },
+  {
+    q: 'What do the shapes (1:1, 4:3, and the rest) do?',
+    a: 'They hold the rectangle\'s shape while its size changes: drag the corner or type a width, and the height follows the shape. Free lets the box take any shape. Original lock holds the picture\'s own shape, so the crop is a smaller version of the same proportions.',
+  },
+  {
+    q: 'What format comes out?',
+    a: 'The input\'s format, where the browser\'s writer has one: a JPG goes back as a JPG, a PNG as a PNG, a WebP as a WebP. A HEIC photo and other kinds the canvas cannot write come out as a PNG, and the file spec says so before you run. A JPG cannot hold see-through pixels, so if the cropped picture has any, they are painted over white, and the result line says when that happened.',
+  },
+  {
+    q: 'Can I crop an animated picture?',
+    a: 'The still frame is what is cut: an animated GIF or WebP comes out as a still picture of its first frame, in PNG. The animation does not survive a crop here, and the page would rather say that than surprise you.',
+  },
+  {
+    q: 'Where does my picture go?',
+    a: 'Nowhere. It is decoded, cut and offered back to you inside this page. Nothing is uploaded.',
+  },
+];
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+});
+const howToJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: "How to crop a picture",
+  step: [
+    { '@type': 'HowToStep', position: 1, name: "Pick the picture", text: "Drop a picture on the tray, or click to pick one (JPG, PNG, WebP, HEIC and the other kinds the browser reads). It stays on this device." },
+    { '@type': 'HowToStep', position: 2, name: "Set the crop", text: "Drag the box to move it, drag its corner to size it, drag anywhere else to draw a new box, or type exact pixels. Pick a shape (1:1, 4:3, 3:2, 16:9, the picture's own shape, or free) to hold the proportions while the size changes." },
+    { '@type': 'HowToStep', position: 3, name: "Crop and download", text: "Press 'Crop the picture'. The rectangle is cut at full resolution in your browser, and the result line prints the exact pixel dimensions that came out." },
+  ],
+});
+---
+
+<Base title="Crop image: cut a picture to exact pixels, free · Benchzy" description="Crop a picture in your browser: drag the box, hold a shape (1:1, 4:3, 3:2, 16:9), or type exact pixels. Output in the input's format where the canvas allows, PNG otherwise, stated plainly. Nothing is uploaded.">
+  <div class="mx-auto max-w-5xl px-4">
+    <section class="mt-8">
+      <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Image tools · edit</p>
+      <h1 class="font-display text-4xl font-black mt-2">Crop image</h1>
+      <p class="mt-3 text-lg leading-relaxed max-w-2xl">
+        Cut the part of the picture you actually need: drag the box over it, or type the
+        exact pixels. Shapes hold the proportions while you size it: 1:1 for a square post,
+        16:9 for a video frame, the picture's own shape for a clean trim. Everything runs
+        in your browser; the picture is never uploaded. Changing a picture's dimensions
+        without cutting is the <a class="underline underline-offset-4 hover:text-accent-deep" href="/resize-image/">resize image page</a>.
+      </p>
+    </section>
+
+    <section class="ticket mt-6 p-5 sm:p-7" id="cr-tool">
+      <div id="cr-tray" class="tray p-6 text-center cursor-pointer" role="button" tabindex="0" aria-label="Pick a picture">
+        <p class="font-display text-xl font-bold">Drop a picture on the tray, or click to pick one</p>
+        <p class="font-mono text-xs text-ink-soft mt-2">JPG · PNG · WebP · HEIC · it stays on this device</p>
+        <input id="cr-file" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif,image/gif,.jpg,.jpeg,.png,.webp,.heic,.heif,.gif" class="hidden" />
+      </div>
+      <p class="file-loaded hidden" data-loaded-for="cr-file" role="status"></p>
+
+      <div id="cr-stage" class="relative mt-6 hidden select-none overflow-hidden" style="touch-action:none">
+        <canvas id="cr-canvas" class="block w-full border border-line bg-paper-deep"></canvas>
+        <div id="cr-box" class="absolute border-2 border-accent" style="box-shadow:0 0 0 9999px rgba(27,38,52,0.35)">
+          <div id="cr-handle" class="absolute bg-accent" style="width:20px;height:20px;right:-11px;bottom:-11px;cursor:nwse-resize"></div>
+        </div>
+      </div>
+
+      <div class="grid gap-6 mt-6 md:grid-cols-[1fr_320px]">
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">Shape</h2>
+          <div id="cr-aspects" class="flex gap-2 mt-3 flex-wrap">
+            <button type="button" class="chip" data-aspect="free" aria-pressed="true">Free</button>
+            <button type="button" class="chip" data-aspect="1:1" aria-pressed="false">1:1</button>
+            <button type="button" class="chip" data-aspect="4:3" aria-pressed="false">4:3</button>
+            <button type="button" class="chip" data-aspect="3:2" aria-pressed="false">3:2</button>
+            <button type="button" class="chip" data-aspect="16:9" aria-pressed="false">16:9</button>
+            <button type="button" class="chip" data-aspect="original" aria-pressed="false">Original shape</button>
+          </div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft mt-6">Exact pixels</h2>
+          <div class="grid grid-cols-2 gap-3 mt-3 max-w-md">
+            <label class="font-mono text-xs uppercase tracking-widest text-ink-soft">From left (X)
+              <input id="cr-x" type="number" min="0" step="1" value="0" class="mt-1 block w-full border border-ink bg-ticket px-3 py-2 font-mono" />
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest text-ink-soft">From top (Y)
+              <input id="cr-y" type="number" min="0" step="1" value="0" class="mt-1 block w-full border border-ink bg-ticket px-3 py-2 font-mono" />
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest text-ink-soft">Width
+              <input id="cr-w" type="number" min="1" step="1" value="0" class="mt-1 block w-full border border-ink bg-ticket px-3 py-2 font-mono" />
+            </label>
+            <label class="font-mono text-xs uppercase tracking-widest text-ink-soft">Height
+              <input id="cr-h" type="number" min="1" step="1" value="0" class="mt-1 block w-full border border-ink bg-ticket px-3 py-2 font-mono" />
+            </label>
+          </div>
+          <p class="text-ink-soft text-sm leading-relaxed mt-3 max-w-md">
+            The box starts as the whole picture. Drag it to move, drag its orange corner
+            to size it, or drag on the picture to draw a new box.
+          </p>
+        </div>
+        <div>
+          <h2 class="font-mono text-xs uppercase tracking-widest text-ink-soft">File spec</h2>
+          <dl id="cr-spec" class="mt-2">
+            <div class="spec-row"><dt>file</dt><dd>none picked yet</dd></div>
+          </dl>
+          <p class="action-note">
+            The output is written in the input's format where the browser's writer has
+            one (JPG, PNG, WebP); other kinds, HEIC included, come out as PNG. The file
+            spec names the output format before you run.
+          </p>
+          <button id="cr-run" class="btn-primary w-full mt-5" type="button" disabled>Crop the picture</button>
+          <p id="cr-status" class="font-mono text-sm mt-4 leading-relaxed" aria-live="polite">Pick a picture to begin.</p>
+        </div>
+      </div>
+
+      <div id="cr-result" class="receipt hidden mt-8">
+        <div class="tear pt-5 flex items-center gap-4 flex-wrap">
+          <h2 class="font-display text-2xl font-bold">Result</h2>
+          <span class="stamp" id="cr-stamp">Done on your device</span>
+        </div>
+        <p id="cr-achieved" class="mt-3 leading-relaxed max-w-2xl"></p>
+        <a id="cr-download" class="btn-primary inline-block no-underline mt-3" href="#" download>Download the cropped picture</a>
+      </div>
+    </section>
+
+    <StepsStrip who="For the part of the picture that matters: a face for a profile, a product for a listing, a square for a post, the exact frame a form or a print asks for." steps={[{ n: '01', t: 'Pick the picture' }, { n: '02', t: 'Drag the box, hold a shape, or type exact pixels' }, { n: '03', t: 'Crop and download' }]} />
+
+    <section class="mt-12 grid gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">How it works</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          The picture is decoded once by the same image program the convert doors run,
+          iPhone HEIC included, and held at full size in the page. The box you drag is a
+          guide drawn over a smaller view; the cut itself is made from the full-size
+          picture at the exact pixel rectangle the numbers name, and written by the
+          browser's own writer. The result line prints the dimensions that actually came
+          out, measured on the finished file. The download is how we protect your privacy:
+          the program travels to your browser; your picture never travels anywhere.
+        </p>
+      </div>
+      <div>
+        <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Honest limits</h2>
+        <p class="mt-3 leading-relaxed text-ink-soft">
+          A crop keeps only what is inside the box: what is outside is gone from the copy
+          (your original file is untouched, of course). The output is a fresh write of the
+          cut rectangle, not a byte-copy of part of the original file, so a cropped JPG is
+          a new JPG written at a high quality setting, not the original's exact encoding.
+          Animated pictures come out as a still of the first frame. And a crop cannot add
+          detail: cutting a small piece out of a small picture gives a small picture.
+        </p>
+      </div>
+    </section>
+
+    <section class="mt-10 mb-4">
+      <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Questions</h2>
+      <div class="mt-4 grid gap-4">
+        {faq.map((f) => (
+          <article class="ticket-soft p-5">
+            <h3 class="font-bold">{f.q}</h3>
+            <p class="text-ink-soft leading-relaxed mt-1">{f.a}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+  <script type="application/ld+json" set:html={faqJson}></script>
+  <script type="application/ld+json" set:html={howToJson}></script>
+  <script>
+    import '../scripts/crop-image.js';
+  </script>
+</Base>

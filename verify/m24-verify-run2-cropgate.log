@@ -1,0 +1,210 @@
+PAGE / errors: 0 failed: 0 []
+PAGE /remove-background/ errors: 0 failed: 0 []
+I18N /remove-background/ {"htmlLang":"en","islandLocale":"en","alternates":["en=/remove-background/","es=/es/quitar-fondo-de-imagen-gratis/","pt-BR=/pt-br/remover-fundo-de-imagem-gratis/","x-default=/remove-background/"],"statusText":"Pick a photo to begin."}
+PAGE /compress-pdf/ errors: 0 failed: 0 []
+PAGE /compress-image/ errors: 0 failed: 0 []
+PAGE /credits/ errors: 0 failed: 0 []
+PAGE /ocr-pdf/ errors: 0 failed: 0 []
+PAGE /ocr-image/ errors: 0 failed: 0 []
+PAGE /merge-pdf/ errors: 0 failed: 0 []
+PAGE /split-pdf/ errors: 0 failed: 0 []
+PAGE /compress-pdf-to-200kb/ errors: 0 failed: 0 []
+PAGE /compress-image-to-50kb/ errors: 0 failed: 0 []
+PAGE /size-checker/ errors: 0 failed: 0 []
+PAGE /remove-background-full-resolution/ errors: 0 failed: 0 []
+I18N /remove-background-full-resolution/ {"htmlLang":"en","islandLocale":"en","alternates":["en=/remove-background-full-resolution/","es=/es/quitar-fondo-resolucion-completa/","pt-BR=/pt-br/alternativa-gratis-ao-remove-bg/","x-default=/remove-background-full-resolution/"],"statusText":"Pick a photo to begin."}
+PAGE /remove-background/quality/ errors: 0 failed: 0 []
+PAGE /background-removal/ errors: 0 failed: 0 []
+PAGE /vs-remove-bg/ errors: 0 failed: 0 []
+PAGE /remove-bg-alternatives/ errors: 0 failed: 0 []
+PAGE /remove-bg-december-1/ errors: 0 failed: 0 []
+PAGE /remove-bg-api/ errors: 0 failed: 0 []
+PAGE /check-it-yourself/ errors: 0 failed: 0 []
+TRUST-I18N /check-it-yourself/ {"htmlLang":"en","alternates":["en=/check-it-yourself/","es=/es/compruebalo-tu-mismo/","pt-BR=/pt-br/confira-voce-mesmo/","x-default=/check-it-yourself/"]}
+PAGE /what-free-means/ errors: 0 failed: 0 []
+TRUST-I18N /what-free-means/ {"htmlLang":"en","alternates":["en=/what-free-means/","es=/es/que-significa-gratis-aqui/","pt-BR=/pt-br/o-que-significa-gratis/","x-default=/what-free-means/"]}
+PAGE /tools/ errors: 0 failed: 0 []
+PAGE /pdf-tools/ errors: 0 failed: 0 []
+PAGE /image-tools/ errors: 0 failed: 0 []
+PAGE /es/quitar-fondo-de-imagen-gratis/ errors: 0 failed: 0 []
+I18N /es/quitar-fondo-de-imagen-gratis/ {"htmlLang":"es","islandLocale":"es","alternates":["en=/remove-background/","es=/es/quitar-fondo-de-imagen-gratis/","pt-BR=/pt-br/remover-fundo-de-imagem-gratis/","x-default=/remove-background/"],"statusText":"Elige una foto para empezar."}
+PAGE /es/quitar-fondo-resolucion-completa/ errors: 0 failed: 0 []
+I18N /es/quitar-fondo-resolucion-completa/ {"htmlLang":"es","islandLocale":"es","alternates":["en=/remove-background-full-resolution/","es=/es/quitar-fondo-resolucion-completa/","pt-BR=/pt-br/alternativa-gratis-ao-remove-bg/","x-default=/remove-background-full-resolution/"],"statusText":"Elige una foto para empezar."}
+PAGE /pt-br/remover-fundo-de-imagem-gratis/ errors: 0 failed: 0 []
+I18N /pt-br/remover-fundo-de-imagem-gratis/ {"htmlLang":"pt-BR","islandLocale":"pt-BR","alternates":["en=/remove-background/","es=/es/quitar-fondo-de-imagen-gratis/","pt-BR=/pt-br/remover-fundo-de-imagem-gratis/","x-default=/remove-background/"],"statusText":"Escolha uma foto para começar."}
+PAGE /pt-br/alternativa-gratis-ao-remove-bg/ errors: 0 failed: 0 []
+I18N /pt-br/alternativa-gratis-ao-remove-bg/ {"htmlLang":"pt-BR","islandLocale":"pt-BR","alternates":["en=/remove-background-full-resolution/","es=/es/quitar-fondo-resolucion-completa/","pt-BR=/pt-br/alternativa-gratis-ao-remove-bg/","x-default=/remove-background-full-resolution/"],"statusText":"Escolha uma foto para começar."}
+PAGE /batch-compress-pdf/ errors: 0 failed: 0 []
+PAGE /batch-merge-pdf/ errors: 0 failed: 0 []
+PAGE /batch-split-pdf/ errors: 0 failed: 0 []
+PAGE /batch-compress-images/ errors: 0 failed: 0 []
+PAGE /batch-convert-images/ errors: 0 failed: 0 []
+PAGE /batch-remove-background/ errors: 0 failed: 0 []
+PAGE /workflows/ errors: 0 failed: 0 []
+PAGE /presets/ errors: 0 failed: 0 []
+PAGE /sign-pdf/ errors: 0 failed: 0 []
+PAGE /flatten-pdf/ errors: 0 failed: 0 []
+PAGE /interleave-pdf/ errors: 0 failed: 0 []
+PAGE /protect-pdf/ errors: 0 failed: 0 []
+PAGE /unlock-pdf/ errors: 0 failed: 0 []
+PAGE /rotate-pdf/ errors: 0 failed: 0 []
+PAGE /pdf-page-numbers/ errors: 0 failed: 0 []
+PAGE /watermark-pdf/ errors: 0 failed: 0 []
+PAGE /extract-images-pdf/ errors: 0 failed: 0 []
+PAGE /organize-pdf/ errors: 0 failed: 0 []
+PAGE /pdf-metadata/ errors: 0 failed: 0 []
+PAGE /jpg-to-pdf/ errors: 0 failed: 0 []
+PAGE /pdf-to-jpg/ errors: 0 failed: 0 []
+PAGE /compress-pdf-to-50kb/ errors: 0 failed: 0 []
+PAGE /compress-pdf-to-100kb/ errors: 0 failed: 0 []
+PAGE /compress-pdf-to-500kb/ errors: 0 failed: 0 []
+PAGE /compress-pdf-to-1mb/ errors: 0 failed: 0 []
+PAGE /compress-pdf-strong/ errors: 0 failed: 0 []
+PAGE /privacy/ errors: 0 failed: 0 []
+PAGE /resize-image/ errors: 0 failed: 0 []
+PAGE /batch-resize-images/ errors: 0 failed: 0 []
+PAGE /png-to-jpg/ errors: 0 failed: 0 []
+PAGE /jpg-to-png/ errors: 0 failed: 0 []
+PAGE /webp-to-jpg/ errors: 0 failed: 0 []
+PAGE /jpg-to-webp/ errors: 0 failed: 0 []
+PAGE /png-to-webp/ errors: 0 failed: 0 []
+PAGE /webp-to-png/ errors: 0 failed: 0 []
+PAGE /heic-to-jpg/ errors: 0 failed: 0 []
+PAGE /png-to-pdf/ errors: 0 failed: 0 []
+PAGE /image-to-pdf/ errors: 0 failed: 0 []
+PAGE /pdf-to-png/ errors: 0 failed: 0 []
+PAGE /pdf-to-text/ errors: 0 failed: 0 []
+PAGE /heic-to-png/ errors: 0 failed: 0 []
+PAGE /compress-jpg/ errors: 0 failed: 0 []
+PAGE /compress-png/ errors: 0 failed: 0 []
+PAGE /crop-image/ errors: 0 failed: 0 []
+PAGE /es/que-significa-gratis-aqui/ errors: 0 failed: 0 []
+TRUST-I18N /es/que-significa-gratis-aqui/ {"htmlLang":"es","alternates":["en=/what-free-means/","es=/es/que-significa-gratis-aqui/","pt-BR=/pt-br/o-que-significa-gratis/","x-default=/what-free-means/"]}
+PAGE /es/compruebalo-tu-mismo/ errors: 0 failed: 0 []
+TRUST-I18N /es/compruebalo-tu-mismo/ {"htmlLang":"es","alternates":["en=/check-it-yourself/","es=/es/compruebalo-tu-mismo/","pt-BR=/pt-br/confira-voce-mesmo/","x-default=/check-it-yourself/"]}
+PAGE /pt-br/o-que-significa-gratis/ errors: 0 failed: 0 []
+TRUST-I18N /pt-br/o-que-significa-gratis/ {"htmlLang":"pt-BR","alternates":["en=/what-free-means/","es=/es/que-significa-gratis-aqui/","pt-BR=/pt-br/o-que-significa-gratis/","x-default=/what-free-means/"]}
+PAGE /pt-br/confira-voce-mesmo/ errors: 0 failed: 0 []
+TRUST-I18N /pt-br/confira-voce-mesmo/ {"htmlLang":"pt-BR","alternates":["en=/check-it-yourself/","es=/es/compruebalo-tu-mismo/","pt-BR=/pt-br/confira-voce-mesmo/","x-default=/check-it-yourself/"]}
+GA GATE: tag + one collect with G-PSWNWPP7PY on every route in the loop
+ADS GATE: exactly one loader request with ca-pub-1450356163101033 on every route in the loop
+TOOL witness: Job done in this page's memory. Network requests during the job: 0 (the visit counter's own among them: 0; the ad loader's own among them: 0). Your file was rea | live rows 0 | counter rows labelled: 2 | ads rows labelled: 1
+TOOL service-worker: caches ["benchzy-v1"] entries 164 | offline reopen ok: true
+TOOL compress-image: Landed at 195.2 KB (-2.4% vs the 200 KB target), quality 40, 4000x3000, after 6 tries in 16.0 seconds. | blob 199856
+TOOL compress-pdf (text): Already under your target at 7 KB. Here is your file back, unchanged.
+TOOL compress-pdf (photo): Landed at 405.6 KB, under your 500 KB target (was 11.11 MB). Photos at 50% size, quality 50. | bytes 415377
+TOOL ocr: {"hasInvoice":true,"hasNumber":true,"hasWidget":true,"hasTotalDue":true,"decimalKept":false,"decimalDropped":true} | pdf: /home/hatch/workspace/benchzy-build/verify/downloads/test-scanned-ocr-searchable.pdf
+TOOL merge: 25 files merged into one PDF of 25 pages, 6.5 KB (the files going in were 14.2 KB together). Check the page order before you rely on it: page order is the list order, and this page does not inspect what is on the pages. | rows 25 | bytes 6674
+TOOL split: range bytes 6001 | each-page links 10
+TOOL m8 split-zip: rows 12 | zip entries 12
+TOOL preset-pdf-200k: Landed at 88 KB, under your 200 KB target (was 11.11 MB). Photos at 35% size, quality 38. | bytes 90117
+TOOL preset-image-50k: Landed at 48.9 KB (-2.1% vs the 50 KB target), quality 4, 4000x3000, after 6 tries in 16.6 seconds. | blob 50112
+TOOL size-checker (image): filetest-large-photo.jpgexact size1,458,174 bytessize1.39 MB · 1458.2 KB (counting 1 KB = 1,000 bytes)what it isJPEG imagedimensions4000 x 3000 pixels
+TOOL size-checker (pdf): filetest-10page.pdfexact size7,203 bytessize7 KB · 7.2 KB (counting 1 KB = 1,000 bytes)what it isPDF documentpages10page size612 x 792 pt (216 x 279 mm)
+TOOL removeBackground: Program start: 7.2 s. Cutout: 26.0 s. Full size result: 1200 x 900, 915 KB. | status: Done. | dl: test-bg-hard-no-background.png noSubject: false
+TOOL removeBackgroundEs: Inicio del programa: 5,0 s. Recorte: 27,3 s. Resultado a tamaño completo: 1200 x 900, 915 KB. | status: Listo. | dl: test-bg-hard-sin-fondo.png noSubject: false
+TOOL removeBackgroundPtBr: Início do programa: 4,9 s. Recorte: 26,7 s. Resultado em tamanho real: 1200 x 900, 915 KB. | status: Pronto. | dl: test-bg-hard-sem-fundo.png noSubject: false
+TOOL m6 batch-compress: [{"name":"photo-1page-smaller-2.pdf","size":415377},{"name":"photo-1page-smaller.pdf","size":415377},{"name":"test-10page.pdf","size":7203}] | rows: 3
+TOOL m6 batch-merge: merged-benchzy.pdf25 files, 25 pages, 6.5 KBDownload (6.5 KB) | bytes 6674
+TOOL m6 batch-split: [{"name":"test-10page-pages-1-2.pdf","pages":2},{"name":"test-3page-second-pages-1-2.pdf","pages":2}]
+TOOL m6 batch-images: [{"name":"test-large-photo-benchzy.jpg","size":199856}] | rows: test-large-photo.jpg1.39 MB to 195.2 KB, quality 40, 4000x3000Download
+TOOL m6 batch-convert: test-large-photo.webp 251730 RIFF/WEBP
+TOOL m6 batch-bg: [{"name":"test-bg-hard-no-background.png","size":936993}]
+TOOL m6 workflows: {"name":"merged-smaller.pdf","size":416150} | persisted: true
+TOOL m6 sign: Signed: your signature is drawn onto page 10 as part of the page itself (not a sticker that can be peeled off in an editor), 16 KB. This is your signature placed on your document; it carries no certificate and no audit trail, as the note above the tray says. | pages 10 | images on last page 1
+TOOL m6 strong: Strong result: 2 KB, down from 11.11 MB (photos at 12% size, quality 16). | bytes 2066 | text: We could not make this PDF smaller. It has no photos inside to recompress, and re-saving alone does not shrink a text PDF (in our tests a re-save moved a text PDF from 7,203 bytes to 7,231). Here is your original back, unchanged. 7203
+TOOL m6 interleave: Interleaved into one PDF of 13 pages, 7.7 KB: page 1 of the first file, then alternating. The first file had more pages; its remaining pages follow at the end in their own order. Check the order on a few pages before you rely on it: this page deals the pages like cards, it does not read them. | order ok: true
+TOOL m6 split-size: [{"name":"photo-3page-part-1.pdf","size":11654172},{"name":"photo-3page-part-2.pdf","size":11654176},{"name":"photo-3page-part-3.pdf","size":11654182}]
+TOOL m6 flatten: Flattened: 3 form fields baked into the pages; the finished file has 0 editable fields left, 4.1 KB. The values now print and display as ordinary page content. | fields left 0 | value in text: true
+TOOL m8 cancel-single: Loading stopped. 2 of 11 pieces are already here and are kept; press start again and the load carries on from there. Nothing was run. | usable: true | resumed to a result
+TOOL m8 cancel-batch: Loading stopped. 3 of 11 pieces are already here and are kept; press start again and the load carries on from there. Nothing was run. | usable: true | resumed, zip entries: 1
+M8 batch fixtures: 100 images, 50 PDFs
+TOOL m8 batch-compress-100: rows 100 | zip entries 100 | printed claim: true
+TOOL m8 batch-convert-100: rows 100 | zip entries 100 | printed claim: true
+TOOL m8 batch-merge-50: merged pages 50 | printed claim: true
+TOOL m8 batch-compress-pdf-50: rows 50 | zip entries 50 | printed claim: true
+TOOL m9 weak-crypto: src mentions 0 | dist enablements outside the fork error text: 0
+TOOL m9 protect: PDF.js {"noPassword":"PasswordException","wrongPassword":"PasswordException","correctPassword":10} | fork: no-pw refused true | wrong refused true | pages 10
+TOOL m9 round trip: pages 10 | text identical to original: true
+TOOL m9 unlock open-kind: wrong password refused in the open | pages 3 | text equals base: true
+TOOL m9 unlock owner-only: classified as permission switches | pages 3 | text equals base: true
+TOOL m10 photo OCR (big): accuracy 0.9921 | copy byte-exact: true | download byte-exact: true
+TOOL m10 photo OCR (rough small): tip shown: true | accuracy 0.9901 (as-picked bench: 0.9428)
+TOOL m10 languages: ES accuracy 1 | PT accuracy 1
+TOOL m11 resize: {"d1":{"w":1000,"h":750,"bytes":186977,"type":"image/jpeg"},"d2":{"w":800,"h":600,"bytes":137213,"type":"image/jpeg"},"d3":{"w":1000,"h":750,"bytes":186977,"type":"image/jpeg"},"d4":{"w":1000,"h":1000,"bytes":225641,"type":"image/jpeg"}}
+TOOL m11 png-to-jpg flatten: {"corner":[51,103,153,255],"center":[223,49,48,255],"w":120,"h":90,"type":"image/jpeg"} | flat: true | center: true
+TOOL m11 door /jpg-to-png/ sig 137,80,78,71 | ok: true | errors: 0
+TOOL m11 door /webp-to-jpg/ sig 255,216,255,224 | ok: true | errors: 0
+TOOL m11 door /jpg-to-webp/ sig 82,73,70,70 | ok: true | errors: 0
+TOOL m11 door /png-to-webp/ sig 82,73,70,70 | ok: true | errors: 0
+TOOL m11 door /webp-to-png/ sig 137,80,78,71 | ok: true | errors: 0
+TOOL m11 batch-resize-50: rows 50 | zip entries 50 | printed claim: true | first row: photo-001.jpg900x675 to 320x240 · 21.1 KB to 8 KB JPEGDownload
+TOOL m12 rotate: angles 90 | render swap {"orig":{"w":612,"h":792},"out":{"w":792,"h":612}} | swapped: true
+TOOL m12 rotate range: angles 0,90,90,0,0,0,0,0,0,0 | range only: true
+TOOL m12 page numbers: every page stamped: true | page 1 text: "Page 1 of 5"
+TOOL m12 page numbers range: 2–3 only, from 5: true | page 2: "Page 5 of 6" | page 4 clean: true
+TOOL m12 watermark: words on all pages: true | strength render-diff moved pixels: 3238 of 307200 | range only: true
+TOOL m12 extract: entries page-1-image-1.jpg,page-2-image-2.png,page-3-image-3.png | jpg identical: true | alpha equal: true | opaque equal: true | vector page line: true | achieved: Pulled 3 pictures out of 3 stored, as one ZIP. Every stored picture came out. Stored JPEGs are the file's own bytes, unt
+TOOL m12 extract weird: entries page-1-image-1.png,page-1-image-2.png,page-1-image-3.png,page-1-image-4.png | skips named: true | gray pixels right: true
+TOOL m13 organise tiles: 4 | thumbnails rendered non-blank: true
+TOOL m13 organise: markers PAGE-THREE,PAGE-ONE,PAGE-ONE,PAGE-FOUR | images true,true,true,true | title kept: true | render: {"w":640,"h":480,"nonWhiteSamples":19544,"pages":4}
+TOOL m13 organise refuse-empty: {"tiles":1,"delDisabled":true,"noteShown":true,"noteText":"At least one page has to stay in the document, so the last page cannot be removed. A document with no pages is not a document."} | one-page output marker: PAGE-FOUR
+TOOL m13 metadata view shows the fixture exactly: true | titleQuarterly Report (Final)authorJo ExamplesubjectBoard paperskeywordsalpha beta gammacreatorBench Creator 1.0producerBench Producer 2.0creationdateD:20250115103000Z — read as: 15 January 2025, 10:3
+TOOL m13 metadata strip: info keys after: (none) | getters empty: true | pdfinfo clean: true | view blank: true
+TOOL m13 metadata set: {"title":"Gate Title 13","author":"Gate Author 13","subjectKept":"Board papers","setOk":true,"consoleErrors":[],"failedRequests":[]}
+TOOL m14 jpg-to-pdf: 3 pictures became one PDF of 3 pages, 3.3 KB, each page sized to its picture. JPEG and PNG pictures went in exactly as stored, with no recompression. 1 WebP picture was rebuilt as PNG inside the PDF (a PDF cannot hold WebP; PNG keeps every pixel, so the picture is unchanged). | sizes [[400,400],[300,200],[200,300]] | red JPEG byte-identical: true
+TOOL m14 jpg-to-pdf A4: page 595.28 x 841.89 | ok: true
+TOOL m14 pdf-to-jpg print: 5 pages became 5 JPG pictures at print size (200 DPI) (page 1: 1700 x 2200 pixels), packed into one ZIP, 253.4 KB in all. The words on the pages are part of the pictures now: they cannot be selected or searched as text. | entries 5 | dims ok: true | content ok: true
+TOOL m14 pdf-to-jpg screen PNG: entries 5 | dims ok: true | content ok: true
+TOOL m14 pdf-to-jpg single: download name pages1-page-1.png | meta png 816 x 1056 | ok: true
+TOOL m14 pdf-to-jpg stress: 50-page document rendered in 2270 ms | zip entries 50
+TOOL m14 preset-50k: Landed at 25.1 KB, under your 50 KB target (was 11.11 MB). Photos at 25% size, quality 38. | bytes 25696 | landed: true | honest fallback: false
+TOOL m15 heic-to-jpg photo: HEIC, 348.9 KB → JPG, 213.4 KB (quality 90). The photo is 1200 x 900 px. | meta 1200x900 image/jpeg | centre 164,34,126 vs 164,34,128 | wasm served: true
+TOOL m15 heic upright (EXIF 6): HEIC, 2.4 KB → JPG, 3.4 KB (quality 90). The photo is 400 x 300 px. It was stored turned, with a note saying how it stands; this copy is upright. | corners {"TL":[221,40,31],"TR":[29,200,60],"BL":[30,60,220],"BR":[240,219,40]}
+TOOL m15 heic 10-bit: HEIC, 582 B → JPG, 794 B (quality 90). The photo is 256 x 64 px. The original holds more brightness range than a JPG can show (it is a 10-bit photo); this copy is in the standard range.
+TOOL m15 HEIC on resize door: 600x450
+TOOL m15 HEIC on batch convert door: entries [{"name":"photo.webp","size":56944}]
+TOOL m15 HEIC on compress door: spec has dims: true
+TOOL m15 HEIC on OCR door: accuracy 1.0000 | text: "The quick brown fox 12345"
+TOOL m16 picker rules ok: true
+TOOL m16 OCR chain image accuracy: 0.9921 | note shown: true
+TOOL m16 OCR chain pdf: {"hasInvoice":true,"hasNumber":true,"chars":177,"pdfOk":true,"consoleErrors":[],"failedRequests":[]}
+TOOL m16 seller cutout alone: {"type":"image/png","size":936993,"w":1200,"h":900,"corners":[0,0,0,0],"transFrac":0.578,"opaqueFrac":0.236}
+TOOL m16 seller chain final: {"type":"image/png","size":50841,"w":185,"h":139,"corners":[0,0,0,0],"transFrac":0.574,"opaqueFrac":0.217}
+M17 CHECK: ALL PASSED
+TOOL m17 proof page: {"fromTool":true,"imgs":18,"consoleErrors":[],"failedRequests":[]}
+TOOL m18 HEIC remover: {"specShowsHeic":true,"cutHeic":{"type":"image/png","size":1297218,"w":1200,"h":900,"corners":[0,0,0,0],"transFrac":0.547,"opaqueFrac":0.236},"cutJpg":{"type":"image/png","size":1343215,"w":1200,"h":900,"corners":[0,0,0,0],"transFrac":0.565,"opaqueFrac":0.232},"sameClass":true}
+TOOL m18 HEIC batch: {"listText":"1. bg-twin.heic1200 x 900 · 322.1 KBRemove","rowsText":"bg-twin.heiccut out at full size 1200x900, 1.24 MB, in 27.7 sDownload","ok":true,"consoleErrors":[],"failedRequests":[]}
+TOOL m18 HEIC chain: {"type":"image/png","size":1297218,"w":1200,"h":900,"corners":[0,0,0,0],"transFrac":0.547,"opaqueFrac":0.236}
+TOOL m18 OCR corrected PDF: {"from":"12450","to":"124.50","carriesFix":true,"flawGone":true,"statusText":"Done. The searchable PDF carries your corrected text: your edits in the box were placed back over the page, at the positions of the words they replaced."}
+TOOL m18 landing compress-pdf-to-100kb : 90117 bytes | printed claim: landed at 88 KB | on page: true | pointers: true
+TOOL m18 landing compress-pdf-to-50kb : 25696 bytes | printed claim: landed at 25.1 KB | on page: true | pointers: true
+TOOL m18 fast lanes: {"lanes":[{"href":"/compress-image/","text":"Shrink a photo for a form →"},{"href":"/heic-to-jpg/","text":"My iPhone photo will not upload →"},{"href":"/compress-pdf-to-50kb/","text":"Get files under a visa or portal limit →"},{"href":"/remove-background/","text":"Cut out a product photo →"}],"lanesOk":true,"allLand":true}
+TOOL m18 redirects: true
+TOOL m18 metadata dates: true | titleQuarterly Report (Final)authorJo ExamplesubjectBoard paperskeywordsalpha beta gammacreatorBench Creator 1.0producerBench Producer 2.0creationdateD:20250115103000Z — read as: 15 January 2025, 10:30:00moddateD:20250620081500Z — read as: 
+TOOL m18 protect floor: {"statusText":"That password is 10 characters. The minimum here is 12: length is what protects you, because a longer password takes far longer to guess. Add a few more words you will remember.","floorOk":true}
+TOOL m19 GA homepage: {"js":1,"collects":1,"gaHomeOk":true}
+TOOL m19 privacy wording: true
+TOOL m19 BG run sends: {"total":1,"withBody":0,"crossOrigin":0,"bgSendOk":true}
+TOOL m22 tool-first order: 57 routes | fails: 0
+TOOL m22 rendered tops: {"/compress-pdf/":{"trayTop":406.640625,"stepsTop":982.921875},"/es/quitar-fondo-de-imagen-gratis/":{"trayTop":662.140625,"stepsTop":1122.484375},"/jpg-to-png/":{"trayTop":406.640625,"stepsTop":836.234375}}
+TOOL m22 404 build facts: {"nfOk":true,"sitemapLocs":76}
+TOOL m23 ads.txt byte-exact: true | built HTML pages: 77 | loader-count fails: 0
+TOOL m24 png-to-pdf: 2 pictures became one PDF of 2 pages, 2.8 KB, each page sized to its picture. JPEG and PNG pictures went in exactly as stored, with no recompression. | sizes [[200,300],[400,300]]
+TOOL m24 image-to-pdf: 3 pictures became one PDF of 3 pages, 1.76 MB, each page sized to its picture. JPEG and PNG pictures went in exactly as stored, with no recompression. 1 HEIC picture was rebuilt as PNG inside the PDF (a PDF cannot hold HEIC; PNG keeps every pixel, so the picture is unchanged). | sizes [[300,200],[200,300],[1200,900]] | heic list dims [1200,900]
+TOOL m24 pdf-to-png single: {"format":"png","width":816,"height":1056}
+TOOL m24 pdf-to-png zip: ["pages5-page-1.png","pages5-page-2.png","pages5-page-3.png","pages5-page-4.png","pages5-page-5.png"] | dims ok: true
+TOOL m24 heic-to-png: HEIC, 348.9 KB → PNG, 1.62 MB (lossless: every pixel of the decoded picture, written exactly). The photo is 1200 x 900 px. | centre 164,34,128 vs 164,34,128
+TOOL m24 pdf-to-text: 2 pages gave 19 words, 108 characters of text, in the order the file stores them. The layout is not kept: columns and tables come out as lines of words, one page after another, separated by a blank line. | ordered: true | download ok: true
+TOOL m24 pdf-to-text scan-only: This file stores no words to pull out: its pages are pictures (a scan, or pages saved as images), so there is no text la | download hidden: true
+TOOL m24 compress-jpg: Landed at 98 KB (-2.0% vs the 100 KB target), quality 16, 4000x3000, after 6 tries in 17.5 seconds. | refused PNG: true | bytes: 100381
+TOOL m24 compress-png: Landed at 48.7 KB (-2.7% vs the 50 KB target), quality 32, 800x600, after 6 tries in 1.6 seconds. | refused JPG: true | bytes: 49826
+TOOL m24 crop-image: Cropped to exactly 200 x 150 pixels (from 400 x 300), starting at 0, 0 from the top-left corner. PNG, 1.2 KB. | left 200,40,30 | right 200,40,30
+file:///home/hatch/workspace/benchzy-build/verify/verify.mjs:3225
+      if (!ok || errors.length) throw new Error('m24 crop gate failed: ' + JSON.stringify(results.tools.m24Crop));
+                                      ^
+
+Error: m24 crop gate failed: {"note":"Cropped to exactly 200 x 150 pixels (from 400 x 300), starting at 0, 0 from the top-left corner. PNG, 1.2 KB.","meta":{"format":"png","width":200,"height":150},"leftPx":[200,40,30],"rightPx":[200,40,30],"ok":false,"consoleErrors":[],"failedRequests":[]}
+    at file:///home/hatch/workspace/benchzy-build/verify/verify.mjs:3225:39
+
+Node.js v24.22.1

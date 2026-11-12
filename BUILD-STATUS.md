@@ -3337,3 +3337,218 @@ verify/verify.mjs, all changes in the milestone-19 pattern
 - Nothing deployed, nothing pushed. Live site remains milestones
   18+19+20+21+22; this tree is milestones 18-23 local.
 - MILESTONE 23 DEPLOYED (2026-11-11): AdSense site-side prep. ads.txt live with the exact single line (google.com, pub-1450356163101033, DIRECT, f08c47fec0942fa0); the loader is on every page exactly once; GA4 tag untouched; /privacy/ names Google AdSense and the witness family labels the ad loader like the counter. Wrangler Direct Upload from inside dist, deployment 68882ee3.benchzy.pages.dev. Live checks: /ads.txt 200 with the byte-exact line; loader count 1 on /, /remove-background/, /privacy/; GA ID present on all sampled pages; all 68 sitemap URLs 200; nonsense path still a true 404. Console-side: benchzy.com already added in AdSense; verify + review request runs from the main chat now that this is live.
+
+## Milestone 24 — DataForSEO wave 1: eight new tool pages (2026-11-12, LOCAL ONLY, not deployed, not pushed)
+
+Demand is DataForSEO US monthly search volume, pulled 2026-11-11,
+saved at ~/workspace/file-toolkit/DFS-TOOLS-2026-11-11.json. The
+numbers are cited here only; they never appear on the public pages.
+EN only this wave; ES/PT follow after language QA, as with earlier
+waves. Counting follows the site's build-computed definitions
+exactly: preset doors and translations are pages, never tools; a
+tool is a distinct engine.
+
+### The eight pages
+1. /png-to-pdf/ (90,500/mo) — PNG pictures to one PDF, one per
+   page, in list order, each PNG placed exactly as stored. The
+   jpg-to-pdf engine generalized behind a per-page config
+   (data-kinds, data-kinds-label, data-preset-key,
+   data-download-name, data-tool-name on #jp-tool; defaults are the
+   milestone-14 behaviour exactly, and the m14 gate still passes
+   on the same fixtures).
+2. /pdf-to-png/ (74,000/mo) — every page to an exact PNG via the
+   pdf-to-jpg render engine (same #pj-tool config pattern; the
+   PNG door carries its own preset key and tool name). The honest
+   note is printed with MEASURED numbers, probed on the shipped
+   page before the copy was finalised (verify/m24-probe.mjs):
+   the five-page test document at screen size came out at
+   153 KB as PNG against 80.3 KB as JPG.
+3. /image-to-pdf/ (74,000/mo) — the generic door: JPG, PNG, WebP
+   and HEIC in one mixed set into one PDF. JPG/PNG go in exactly
+   as stored; WebP/HEIC are rebuilt as PNG inside the file,
+   losslessly, and the result line counts them. The engine gained
+   a HEIC kind: pick-time dimensions come from the shipped HEIC
+   decode path (lib/heif-core.js); run-time the picture is
+   rebuilt through the shipped image encoder.
+4. /heic-to-png/ (49,500/mo) — the shipped HEIC ticket with PNG
+   as the page's chosen format (#hc-tool data-default-format;
+   default 'jpeg' keeps milestone-15 behaviour; the format
+   application was refactored into applyFormat(fmt, announce),
+   parse-then-apply unchanged). Measured number printed: the
+   test photo (1200x900, 348.9 KB HEIC) came out at 1.62 MB PNG.
+5. /compress-jpg/ (22,200/mo) — the compress-image engine with
+   the JPG framing locked (#ci-tool data-lock-format="jpeg" with
+   a kind check at the tray: a non-JPG is refused at pick time
+   with a pointer to /compress-image/, never silently accepted).
+6. /pdf-to-text/ (~19,800/mo combined: "convert pdf to text"
+   9,900 + "pdf to text" 9,900) — NEW ENGINE
+   (src/scripts/pdf-to-text.js): the words a PDF already stores,
+   pulled with the shipped PDF.js, lines rebuilt from stored line
+   breaks and baseline changes, pages joined with a blank line;
+   view in a text box, Copy button, download .txt. Plain-words
+   honesty on the page: reading order as stored, layout not
+   kept, and a scanned PDF has no text layer — the no-text
+   result says so and points at /ocr-pdf/, with no empty
+   download offered.
+7. /compress-png/ (9,900/mo) — the compress-image engine with
+   PNG framing locked (data-lock-format="png"). The page states
+   plainly, in the intro AND at the tray before the run, that
+   the result is a JPG at the target, because a PNG that stays
+   a PNG can only shrink a little; the stay-PNG levers (resize,
+   deliberate conversion) are linked.
+8. /crop-image/ (8,100/mo, "crop image online") — NEW ENGINE
+   (src/scripts/crop-image.js): decode via the shipped image
+   path (HEIC included); drag the box to move, drag its corner
+   to size, drag elsewhere to draw; numeric X/Y/W/H fields;
+   aspect chips free / 1:1 / 4:3 / 3:2 / 16:9 / original-shape
+   lock; output in the input's format where the canvas writer
+   allows (JPG/PNG/WebP), PNG otherwise, stated in the spec
+   before the run; JPEG output flattens see-through pixels onto
+   white and the result line says when.
+
+Counting outcome (build-computed, printed on /what-free-means/
+and asserted by the SEO audit): 76 pages in all, 58 tool pages,
+24 working tools (was 68 / 50 / 22). Only pdf-to-text and
+crop-image are new tools; the other six are doors on shipped
+engines. TOOL_ENGINES gained 'pdf-to-text' and 'crop-image' in
+BOTH counting lists (what-free-means.astro and
+verify/seo-audit.mjs, kept identical).
+
+Never orphaned: every new page is linked from /tools/, from its
+family hub (/pdf-tools/ or /image-tools/), and from its sibling
+pages (jpg-to-pdf, pdf-to-jpg, heic-to-jpg, compress-image,
+ocr-pdf, resize-image all gained cross-links). The SEO audit's
+depth map puts all eight at depth 2. public/llms.txt gained one
+line per page. GA4 + AdSense tags ride the shared layout,
+unchanged (the per-route GA/ADS gates cover all eight new
+routes: console errors 0, failed requests 0).
+
+### Gate changes, made deliberately and in step
+- Section 1 page loop: the eight new routes added (GA GATE /
+  ADS GATE / witness accounting now cover them).
+- Section 16 (m22): M22_ROUTES 49 → 57 (the eight are tool-first
+  by construction); the sitemap assertion 68 → 76 locs with the
+  comment updated in place.
+- Section 17 comment: 68 → 76 content pages (loader asserted on
+  all 77 built HTML files).
+- NEW section 18 gates (fixtures verify/fixtures/m24 via
+  verify/m24-make-fixtures.mjs; text lines shared via
+  verify/m24-texts.mjs): png-to-pdf page count and page/picture
+  sizes; image-to-pdf mixed set incl. a HEIC member (3 pages,
+  sizes [[300,200],[200,300],[1200,900]], the HEIC page matching
+  the size the page's own list printed); pdf-to-png single PNG
+  at exactly 816x1056 and a 5-page ZIP with all five PNGs at
+  816x1056 in page order; heic-to-png PNG 1200x900 with centre
+  colour 164,34,128 matching the m15 manifest exactly;
+  pdf-to-text fixture lines in order in the view and in the
+  .txt download, plus the picture-only PDF getting the no-text
+  answer with the download hidden; compress-jpg lands 98 KB at
+  a 100 KB target (JPEG magic, PNG refused at the tray);
+  compress-png lands 48.7 KB at a 50 KB target (JPEG magic, JPG
+  refused at the tray); crop-image output exactly 200x150 from
+  (100,50) with pixels from the correct halves of the
+  two-colour fixture. Screenshots: m24-crop-image and
+  m24-pdf-to-text, desktop + mobile, in verify/screenshots/.
+
+### Verify runs (honest record)
+- Run 1 died in the section-1 page loop at /pdf-metadata/ on
+  the known sandbox browser flake ("Navigating frame was
+  detached") after 53 clean pages; kept as
+  verify/m24-verify-run1-crashed.log. Not a pass.
+- Run 2 passed everything except the new crop gate: the gate
+  set X/Y before W/H and the tool's own clamp (the crop box
+  always stays inside the picture — a full-width box cannot
+  move right) correctly held position at 0,0. The GATE's field
+  order was fixed (size first, then position — the same order
+  a visitor uses) with the reason recorded in the gate
+  comment; the tool was not changed. Kept as
+  verify/m24-verify-run2-cropgate.log.
+- Run 3: VERIFY DONE (all sections, exit 0). Kept as
+  verify/m24-verify-run3-pass-before-shadow-fix.log.
+- Check two (below) then found a real visual defect on
+  /crop-image/: the crop box's 9999px dimming shadow was not
+  clipped and greyed the WHOLE page. Fixed with overflow-hidden
+  on the stage (the dim now lives inside the stage only),
+  rebuilt, and run 4: VERIFY DONE again on the final tree
+  (verify/m24-verify-run.log), with the regenerated crop
+  screenshots confirming the fix visually.
+- npm run build clean (77 files: 76 content + 404.html);
+  verify/seo-audit.mjs ALL CHECKS PASSED, 0 warnings.
+
+### Check it twice (second full pass, per page)
+Check one is the full suite above. Check two was done by the
+builder as a viewer on the built pages, after the suite:
+- /crop-image/ and /pdf-to-text/: rendered screenshots read
+  end to end (desktop + mobile). pdf-to-text shows the
+  extracted fixture text exactly, result wording honest.
+  crop-image showed the page-wide dimming defect, fixed and
+  re-verified as recorded above; final screenshots show the
+  stage lit correctly, spec, fields, receipt all as written.
+- /png-to-pdf/, /image-to-pdf/, /pdf-to-png/, /heic-to-png/,
+  /compress-jpg/, /compress-png/: full built text read end to
+  end as a viewer (intro, tray wording, spec, steps, how it
+  works, honest limits, every FAQ). Numbers checked against
+  the probe: 153 KB vs 80.3 KB (pdf-to-png), 1.62 MB vs
+  348.9 KB (heic-to-png). No placeholder text anywhere
+  (grep for the probe tokens: zero), no banned paywall words
+  on any of the eight (grep: zero).
+- Every new tool was exercised in the harness the way a
+  visitor uses it (section 18), including the two refusal
+  paths at the compress doors' trays.
+
+### Grades (grade before publish; four tests + clicking test first)
+All eight pass the four pass/fail tests (searchable on
+DataForSEO volume above; relevant and distinct — see the
+penalty note; high quality — every printed number measured;
+linked in — hubs + siblings, depth 2) and the clicking test
+(each page's tool runs and downloads). Grades /10 across
+relevancy, design fit, keywords, terms, long-tail, searchable
+topics, no slop, rich content:
+- /png-to-pdf/ 8.5 — biggest demand in the wave, exact-match
+  intent, rich FAQ; family resemblance to /jpg-to-pdf/ is real
+  even though intent and copy are distinct.
+- /pdf-to-png/ 8.5 — strong demand, measured size numbers make
+  the content rich and honest; sibling of /pdf-to-jpg/ with a
+  genuinely different format job.
+- /image-to-pdf/ 8 — strong demand; carries the wave's
+  distinctness burden and meets it via the mixed-set job, but
+  its term overlaps its two sibling doors' terms.
+- /heic-to-png/ 8.5 — clear exact-copy intent, measured
+  numbers, proven decode path; shares its ticket with
+  /heic-to-jpg/ by design.
+- /compress-jpg/ 8 — proven door pattern, long-tail KB
+  presets; engine shared with /compress-image/ deliberately.
+- /pdf-to-text/ 9 — new tool, the strongest honesty story in
+  the wave (stored text vs OCR), rich and clearly distinct.
+- /compress-png/ 7.5 — lowest of the wave: part of the term's
+  intent is "stay PNG", which this door deliberately does not
+  fake; it answers with the truthful route stated before the
+  run plus the stay-PNG levers. Still above the bar.
+- /crop-image/ 8.5 — new tool, exact-pixels long-tail, shape
+  presets; drag interaction gated through fields + output
+  pixels.
+ALL EIGHT GRADE ABOVE 7: the deploy set is all eight pages;
+none held.
+
+### Penalty check (the wave)
+Nothing in this wave risks a Google or Bing penalty: no thin
+pages (every page carries a working tool, steps, an honest
+limits section and a real FAQ), no keyword stuffing (titles
+and copy name the job once, in plain words), and no
+duplicate-intent pages: /image-to-pdf/ exists for the
+mixed-format set (its copy, FAQ and gate all turn on the
+mixed set, HEIC included), while /jpg-to-pdf/ and
+/png-to-pdf/ are single-kind doors whose copy states exactly
+that and points mixed sets to /image-to-pdf/; the three
+cross-link each other so a visitor lands on the door that
+matches their files. The same pattern holds for the other
+sibling pairs (pdf-to-png vs pdf-to-jpg: exact vs light copy;
+heic-to-png vs heic-to-jpg: exact vs light copy; the two
+compress doors vs compress-image: locked framing vs the
+general tool, with the trade stated before the run).
+
+### Not done here (by brief)
+No deploy, no push, no indexing hand-in: those run from the
+main chat when this wave ships. ES/PT versions of the eight
+pages follow after language QA, as with earlier waves.
+- MILESTONE 24 DEPLOYED (2026-11-11): DataForSEO wave 1, all eight pages (grades 7.5-9, none held). Wrangler Direct Upload from inside dist, deployment a968bf71.benchzy.pages.dev. Live checks: all 76 sitemap URLs 200; each new page carries the AdSense loader exactly once and the GA4 tag; tool-first order holds on all eight; nonsense path still a true 404. IndexNow retried for all 76: 403 on both endpoints again (0 accepted). The 8 new URLs were handed into the Google indexing queue the same night (~/workspace/indexing-queue/benchzy-wave1-2026-11-11.txt plus a note to the main chat). Printed counts now 76 pages / 58 tool pages / 24 tools.

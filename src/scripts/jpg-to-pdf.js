@@ -1,20 +1,37 @@
-// JPG to PDF: several pictures in, one PDF out, one picture per
-// page, in the order on the list. Engine: @cantoo/pdf-lib embeds.
-// JPEG and PNG files go into the PDF exactly as they are stored (no
-// recompression, so nothing loses quality); a WebP picture is first
-// rebuilt as a PNG through the shipped image stack, because a PDF
-// cannot hold WebP — PNG is lossless, so the picture itself is
-// unchanged pixel for pixel. Decoded dimensions come from the
-// browser's own image reader before the run, so the list shows real
-// sizes, and the finished file is re-opened and its pages counted
-// before the download is offered.
+// Pictures to PDF: several pictures in, one PDF out, one picture
+// per page, in the order on the list. Engine: @cantoo/pdf-lib
+// embeds. JPEG and PNG files go into the PDF exactly as they are
+// stored (no recompression, so nothing loses quality); a WebP or
+// HEIC picture is first rebuilt as a PNG through the shipped image
+// stack, because a PDF cannot hold either — PNG is lossless, so
+// the picture itself is unchanged pixel for pixel. Decoded
+// dimensions come from the browser's own image reader before the
+// run, so the list shows real sizes, and the finished file is
+// re-opened and its pages counted before the download is offered.
+//
+// Milestone 24: this one island also runs the /png-to-pdf/ door
+// (PNG pictures only) and the /image-to-pdf/ door (JPG, PNG, WebP
+// and HEIC mixed). The door pages set their shape on #jp-tool,
+// the same data-attribute pattern the compress preset doors use:
+// data-kinds (the picture kinds the door takes), data-kinds-label
+// (how those kinds are named in the page's own sentences),
+// data-preset-key, data-download-name and data-tool-name. With no
+// attributes set, everything below is exactly the milestone-14
+// JPG to PDF behaviour.
 import { PDFDocument } from '@cantoo/pdf-lib';
 import { fmtBytes, recordJob, savePreset, getPreset, wireTrayMulti } from './workbench.js';
 import { initImageCodecs, decodeImageFile, encodeImage } from './lib/image-core.js';
+import { decodeHeicToImageData } from './lib/heif-core.js';
 
 const $ = (id) => document.getElementById(id);
 const tray = $('jp-tray'), input = $('jp-file'), listEl = $('jp-list');
 const spec = $('jp-spec'), runBtn = $('jp-run'), status = $('jp-status'), result = $('jp-result');
+const toolEl = $('jp-tool');
+const KINDS = ((toolEl && toolEl.dataset.kinds) || 'jpeg,png,webp').split(',').map((s) => s.trim()).filter(Boolean);
+const KINDS_LABEL = (toolEl && toolEl.dataset.kindsLabel) || 'JPG, PNG or WebP';
+const PRESET_KEY = (toolEl && toolEl.dataset.presetKey) || 'jpg-to-pdf';
+const DOWNLOAD_NAME = (toolEl && toolEl.dataset.downloadName) || 'pictures-benchzy.pdf';
+const TOOL_NAME = (toolEl && toolEl.dataset.toolName) || 'JPG to PDF';
 let entries = []; // { file, kind, bytes, width, height, error }
 let codecsReady = false, running = false;
 
@@ -24,20 +41,22 @@ function setSpec(rows) {
 }
 const picked = (name) => (document.querySelector('input[name="' + name + '"]:checked') || {}).value;
 
-const saved = getPreset('jpg-to-pdf');
+const saved = getPreset(PRESET_KEY);
 if (saved && saved.fit) {
   const r = document.querySelector('input[name="jp-fit"][value="' + saved.fit + '"]');
   if (r) r.checked = true;
 }
 for (const el of document.querySelectorAll('input[name="jp-fit"]')) {
-  el.addEventListener('change', () => savePreset('jpg-to-pdf', { fit: picked('jp-fit') || 'own' }));
+  el.addEventListener('change', () => savePreset(PRESET_KEY, { fit: picked('jp-fit') || 'own' }));
 }
 
 function kindOf(f) {
-  if (f.type === 'image/jpeg' || /\.jpe?g$/i.test(f.name)) return 'jpeg';
-  if (f.type === 'image/png' || /\.png$/i.test(f.name)) return 'png';
-  if (f.type === 'image/webp' || /\.webp$/i.test(f.name)) return 'webp';
-  return null;
+  let kind = null;
+  if (f.type === 'image/jpeg' || /\.jpe?g$/i.test(f.name)) kind = 'jpeg';
+  else if (f.type === 'image/png' || /\.png$/i.test(f.name)) kind = 'png';
+  else if (f.type === 'image/webp' || /\.webp$/i.test(f.name)) kind = 'webp';
+  else if (f.type === 'image/heic' || f.type === 'image/heif' || /\.hei[cf]$/i.test(f.name)) kind = 'heic';
+  return kind && KINDS.includes(kind) ? kind : null;
 }
 
 function totals() {
@@ -85,7 +104,7 @@ function refresh() {
     listEl.appendChild(li);
   });
   if (entries.length === 0) setStatus('Pick one or more pictures to begin.');
-  else if (t.ok === 0) setStatus('None of those files is a JPG, PNG or WebP picture. Add one of those to begin.');
+  else if (t.ok === 0) setStatus('None of those files is a ' + KINDS_LABEL + ' picture. Add one of those to begin.');
   else setStatus('Ready. The PDF follows the order on this list, top to bottom: the first picture becomes page 1.');
 }
 
@@ -95,14 +114,23 @@ wireTrayMulti(tray, input, async (files) => {
     const kind = kindOf(f);
     const entry = { file: f, kind, bytes: null, width: 0, height: 0, error: null };
     if (!kind) {
-      entry.error = 'not a JPG, PNG or WebP picture';
+      entry.error = 'not a ' + KINDS_LABEL + ' picture';
     } else {
       try {
         entry.bytes = new Uint8Array(await f.arrayBuffer());
-        const bmp = await createImageBitmap(f);
-        entry.width = bmp.width;
-        entry.height = bmp.height;
-        if (bmp.close) bmp.close();
+        if (kind === 'heic') {
+          // The browser's own reader cannot open HEIC; the shipped
+          // HEIC reader (lib/heif-core.js) reports the real size,
+          // orientation already applied, exactly as at run time.
+          const decoded = await decodeHeicToImageData(entry.bytes.buffer.slice(entry.bytes.byteOffset, entry.bytes.byteOffset + entry.bytes.byteLength));
+          entry.width = decoded.imageData.width;
+          entry.height = decoded.imageData.height;
+        } else {
+          const bmp = await createImageBitmap(f);
+          entry.width = bmp.width;
+          entry.height = bmp.height;
+          if (bmp.close) bmp.close();
+        }
       } catch (err) {
         entry.error = 'could not be read as a picture';
       }
@@ -127,15 +155,20 @@ runBtn.addEventListener('click', async () => {
   result.classList.add('hidden');
   const fit = picked('jp-fit') || 'own';
   try {
-    const webpCount = ok.filter((e) => e.kind === 'webp').length;
-    if (webpCount && !codecsReady) {
-      setStatus('Loading the image program (about 2 MB, one time only) to rebuild the WebP picture(s) as PNG. It runs in your browser to protect your privacy: your pictures never leave your device…');
+    const rebuildKinds = [...new Set(ok.filter((e) => e.kind === 'webp' || e.kind === 'heic').map((e) => e.kind))];
+    if (rebuildKinds.length && !codecsReady) {
+      if (rebuildKinds.includes('heic')) {
+        setStatus('Loading the HEIC reader and the image program (one time only) to rebuild those pictures as PNG inside the PDF. They run in your browser to protect your privacy: your pictures never leave your device…');
+      } else {
+        setStatus('Loading the image program (about 2 MB, one time only) to rebuild the WebP picture(s) as PNG. It runs in your browser to protect your privacy: your pictures never leave your device…');
+      }
       await initImageCodecs();
       codecsReady = true;
     }
     setStatus('Building the PDF on this device…');
     const doc = await PDFDocument.create();
     let rebuilt = 0;
+    const rebuiltKindsSeen = [];
     for (const e of ok) {
       let img;
       if (e.kind === 'jpeg') img = await doc.embedJpg(e.bytes);
@@ -145,6 +178,7 @@ runBtn.addEventListener('click', async () => {
         const png = await encodeImage(decoded, 'png');
         img = await doc.embedPng(png.buf);
         rebuilt++;
+        if (!rebuiltKindsSeen.includes(e.kind)) rebuiltKindsSeen.push(e.kind);
       }
       if (fit === 'own') {
         const page = doc.addPage([img.width, img.height]);
@@ -167,18 +201,21 @@ runBtn.addEventListener('click', async () => {
     const url = URL.createObjectURL(blob);
     const dl = $('jp-download');
     dl.href = url;
-    dl.download = 'pictures-benchzy.pdf';
+    dl.download = DOWNLOAD_NAME;
+    const directCount = ok.length - rebuilt;
+    const rebuiltNames = rebuiltKindsSeen.map((k) => (k === 'webp' ? 'WebP' : 'HEIC')).join(' and ');
     $('jp-achieved').textContent =
       ok.length + ' picture' + (ok.length === 1 ? '' : 's') + ' became one PDF of ' + made + ' pages, ' + fmtBytes(bytes.length) +
-      ', ' + FITS[fit].label + '. JPEG and PNG pictures went in exactly as stored, with no recompression.' +
-      (rebuilt ? ' ' + rebuilt + ' WebP picture' + (rebuilt === 1 ? ' was' : 's were') + ' rebuilt as PNG inside the PDF (a PDF cannot hold WebP; PNG keeps every pixel, so the picture is unchanged).' : '');
+      ', ' + FITS[fit].label + '.' +
+      (directCount ? ' JPEG and PNG pictures went in exactly as stored, with no recompression.' : '') +
+      (rebuilt ? ' ' + rebuilt + ' ' + rebuiltNames + ' picture' + (rebuilt === 1 ? ' was' : 's were') + ' rebuilt as PNG inside the PDF (a PDF cannot hold ' + rebuiltNames + '; PNG keeps every pixel, so the picture is unchanged).' : '');
     result.classList.remove('hidden');
     const stamp = $('jp-stamp');
     stamp.classList.remove('land');
     void stamp.offsetWidth;
     stamp.classList.add('land');
     setStatus('Done.');
-    recordJob({ tool: 'JPG to PDF', name: ok.length + ' pictures', detail: made + ' pages, ' + fmtBytes(bytes.length) });
+    recordJob({ tool: TOOL_NAME, name: ok.length + ' pictures', detail: made + ' pages, ' + fmtBytes(bytes.length) });
   } catch (err) {
     setStatus('Something went wrong with these pictures: ' + (err && err.message ? err.message : err));
   } finally {

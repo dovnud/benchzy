@@ -40,6 +40,7 @@ import { fileURLToPath } from 'node:url';
 import puppeteer from '../../file-toolkit/bench/webtest/node_modules/puppeteer-core/lib/puppeteer/puppeteer-core.js';
 import JSZip from 'jszip';
 import { BIG_TEXT, ES_TEXT, PT_TEXT, charAccuracy } from './m10-texts.mjs';
+import { TEXT2_LINES } from './m24-texts.mjs';
 import { PDFDocument, PDFName, PDFRawStream } from '@cantoo/pdf-lib';
 import { extractPdfImages } from '../src/scripts/lib/pdf-images-core.js';
 import { execFileSync } from 'node:child_process';
@@ -192,6 +193,7 @@ try {
     '/compress-pdf-strong/', '/privacy/',
     '/resize-image/', '/batch-resize-images/',
     '/png-to-jpg/', '/jpg-to-png/', '/webp-to-jpg/', '/jpg-to-webp/', '/png-to-webp/', '/webp-to-png/', '/heic-to-jpg/',
+    '/png-to-pdf/', '/image-to-pdf/', '/pdf-to-png/', '/pdf-to-text/', '/heic-to-png/', '/compress-jpg/', '/compress-png/', '/crop-image/',
     '/es/que-significa-gratis-aqui/', '/es/compruebalo-tu-mismo/',
     '/pt-br/o-que-significa-gratis/', '/pt-br/confira-voce-mesmo/']) {
     const { page, errors, failed, ga, ads } = await openPage(BASE + route);
@@ -2870,8 +2872,9 @@ try {
   {
     // 16. Milestone 22: tool first on every tool page + the 404
     // page's build-side facts.
-    // (a) Static order gate over the built HTML of all 49 reordered
-    // tool pages: the tool block (its section id, the bg-tool section,
+    // (a) Static order gate over the built HTML of all 57 tool-first
+    // tool pages (49 reordered at milestone 22 + 8 built tool-first
+    // at milestone 24): the tool block (its section id, the bg-tool section,
     // or the convert door's tray) must appear BEFORE the steps strip
     // in document order, and the steps strip must still be present
     // (nothing was deleted, only reordered). This gate asserts the NEW
@@ -2883,11 +2886,19 @@ try {
     // desktop and mobile are written as m22-* evidence.
     // (c) 404 build facts: dist/404.html exists, carries the noindex
     // robots meta and the branded title, and the sitemap still lists
-    // exactly the 68 content routes with no /404/ entry. (The live
+    // exactly the content routes with no /404/ entry (68 at
+    // milestone 22; 76 at milestone 24, which added eight content
+    // pages and no utility pages; the count moves only with real
+    // content pages, in step, recorded in BUILD-STATUS). (The live
     // 404 STATUS is a hosting behaviour, verified separately under
     // wrangler pages dev: unknown paths and missing assets returned
     // 404 with this page; routes and the two 301s unchanged.)
-    const M22_ROUTES = ['/batch-compress-images/', '/batch-compress-pdf/', '/batch-convert-images/',
+    // Milestone 24 extends the list in step: the eight wave-1 pages
+    // are tool-first by construction (same layout order), so they
+    // join the asserted set; the assertion itself is unchanged.
+    const M22_ROUTES = ['/png-to-pdf/', '/image-to-pdf/', '/pdf-to-png/', '/pdf-to-text/', '/heic-to-png/',
+      '/compress-jpg/', '/compress-png/', '/crop-image/',
+      '/batch-compress-images/', '/batch-compress-pdf/', '/batch-convert-images/',
       '/batch-merge-pdf/', '/batch-remove-background/', '/batch-resize-images/', '/batch-split-pdf/',
       '/compress-image-to-50kb/', '/compress-image/', '/compress-pdf-strong/', '/compress-pdf-to-100kb/',
       '/compress-pdf-to-1mb/', '/compress-pdf-to-200kb/', '/compress-pdf-to-500kb/', '/compress-pdf-to-50kb/',
@@ -2942,7 +2953,7 @@ try {
     const nf = fs.existsSync(path.join(DIST, '404.html')) ? fs.readFileSync(path.join(DIST, '404.html'), 'utf8') : '';
     const sm22 = fs.readFileSync(path.join(DIST, 'sitemap.xml'), 'utf8');
     const nfOk = nf.includes('name="robots" content="noindex"') && nf.includes('Page not found')
-      && (sm22.match(/<loc>/g) || []).length === 68 && !sm22.includes('404');
+      && (sm22.match(/<loc>/g) || []).length === 76 && !sm22.includes('404');
     results.tools.m22NotFound = { nfOk, sitemapLocs: (sm22.match(/<loc>/g) || []).length };
     console.log('TOOL m22 404 build facts:', JSON.stringify(results.tools.m22NotFound));
     if (!nfOk) throw new Error('m22 404 gate failed: ' + JSON.stringify(results.tools.m22NotFound));
@@ -2952,7 +2963,7 @@ try {
     // per-route loader-request gate lives in the page loop above).
     // (a) dist/ads.txt is byte-exact: the one publisher line, with
     // at most its single trailing newline, and nothing else.
-    // (b) Every built HTML page (all 68 content pages + the 404
+    // (b) Every built HTML page (all 76 content pages + the 404
     // utility page, which shares the layout) carries the loader tag
     // exactly once: the full loader URL with this publisher's
     // client ID occurs exactly one time in each file.
@@ -2978,6 +2989,252 @@ try {
     results.tools.m23Ads = { adsTxtOk, htmlPages: htmlFiles.length, loaderFails };
     console.log('TOOL m23 ads.txt byte-exact:', adsTxtOk, '| built HTML pages:', htmlFiles.length, '| loader-count fails:', loaderFails.length);
     if (!adsTxtOk || loaderFails.length) throw new Error('m23 ads gate failed: ' + JSON.stringify(results.tools.m23Ads));
+  }
+  {
+    // 18. Milestone 24: the DataForSEO wave-1 doors and tools.
+    // Fixtures: verify/fixtures/m24 (m24-make-fixtures.mjs) plus the
+    // m14/m15 sets. Each gate runs the shipped page the way a
+    // visitor would and proves the output file itself:
+    // - /png-to-pdf/: two PNGs in, a 2-page PDF whose page sizes
+    //   and stored picture sizes are the PNGs' own pixel sizes.
+    // - /image-to-pdf/: a JPG + a PNG + a HEIC in one set; 3 pages;
+    //   the HEIC page's size is the size the page's own list
+    //   printed for it (the decode path's number, not a guess).
+    // - /pdf-to-png/: a 1-page PDF returns the PNG itself at the
+    //   exact rendered size; a 5-page PDF returns a ZIP of 5 PNGs
+    //   at that size, named in page order.
+    // - /heic-to-png/: the m15 photo through the new door, PNG
+    //   out, 1200x900, centre colour matching the manifest.
+    // - /pdf-to-text/: the fixture's stored lines come out in
+    //   order, the .txt download carries them, and a picture-only
+    //   PDF gets the no-text-layer answer naming the OCR tool.
+    // - /compress-jpg/ and /compress-png/: the shared exact-KB
+    //   search through each door's framing; outputs are JPEGs at
+    //   the picked target, and each door refuses the other door's
+    //   input kind at the tray.
+    // - /crop-image/: exact pixel output (200x150 out of the
+    //   400x300 two-colour fixture) with pixels from the right
+    //   side of the source.
+    const M24 = path.join(HERE, 'fixtures', 'm24');
+    const M14F = path.join(HERE, 'fixtures', 'm14');
+    const M15F = path.join(HERE, 'fixtures', 'm15');
+    const M15M24 = JSON.parse(fs.readFileSync(path.join(M15F, 'fixtures.json'), 'utf8'));
+
+    { // png-to-pdf
+      const { page, errors, failed } = await openPage(BASE + '/png-to-pdf/');
+      const input = await page.$('#jp-file');
+      await input.uploadFile(path.join(M14F, 'img-green.png'), path.join(M15F, 'pattern.png'));
+      await page.waitForFunction(() => document.querySelectorAll('#jp-list > li').length === 2 && !document.getElementById('jp-run').disabled, { timeout: 60000 });
+      await page.click('#jp-run');
+      await shown(page, 'jp-result', 120000);
+      const note = await page.$eval('#jp-achieved', (el) => el.textContent);
+      const outPath = await saveBlob(page, '#jp-download', 'm24-png-to-pdf.pdf');
+      const doc = await PDFDocument.load(fs.readFileSync(outPath));
+      const sizes = doc.getPages().map((p) => { const s = p.getSize(); return [Math.round(s.width), Math.round(s.height)]; });
+      const patMeta = await sharp(path.join(M15F, 'pattern.png')).metadata();
+      const sizesOk = JSON.stringify(sizes) === JSON.stringify([[200, 300], [patMeta.width, patMeta.height]]);
+      results.tools.m24PngToPdf = { note, sizes, sizesOk, consoleErrors: errors, failedRequests: failed };
+      console.log('TOOL m24 png-to-pdf:', note, '| sizes', JSON.stringify(sizes));
+      if (!sizesOk || doc.getPageCount() !== 2 || errors.length) throw new Error('m24 png-to-pdf gate failed: ' + JSON.stringify(results.tools.m24PngToPdf));
+      await page.close();
+    }
+    { // image-to-pdf with a HEIC member
+      const { page, errors, failed } = await openPage(BASE + '/image-to-pdf/');
+      const input = await page.$('#jp-file');
+      await input.uploadFile(path.join(M14F, 'img-red.jpg'), path.join(M14F, 'img-green.png'), path.join(M15F, 'photo.heic'));
+      await page.waitForFunction(() => document.querySelectorAll('#jp-list > li').length === 3 && !document.getElementById('jp-run').disabled, { timeout: 120000 });
+      const listText = await page.$$eval('#jp-list > li', (els) => els.map((e) => e.textContent));
+      const heicDims = (() => { const m = /(\d+) x (\d+) px/.exec(listText[2] || ''); return m ? [Number(m[1]), Number(m[2])] : null; })();
+      await page.click('#jp-run');
+      await shown(page, 'jp-result', 180000);
+      const note = await page.$eval('#jp-achieved', (el) => el.textContent);
+      const outPath = await saveBlob(page, '#jp-download', 'm24-image-to-pdf.pdf');
+      const doc = await PDFDocument.load(fs.readFileSync(outPath));
+      const sizes = doc.getPages().map((p) => { const s = p.getSize(); return [Math.round(s.width), Math.round(s.height)]; });
+      const sizesOk = JSON.stringify(sizes.slice(0, 2)) === JSON.stringify([[300, 200], [200, 300]])
+        && !!heicDims && sizes[2][0] === heicDims[0] && sizes[2][1] === heicDims[1]
+        && note.includes('rebuilt as PNG');
+      results.tools.m24ImageToPdf = { note, sizes, heicDims, sizesOk, consoleErrors: errors, failedRequests: failed };
+      console.log('TOOL m24 image-to-pdf:', note, '| sizes', JSON.stringify(sizes), '| heic list dims', JSON.stringify(heicDims));
+      if (!sizesOk || doc.getPageCount() !== 3 || errors.length) throw new Error('m24 image-to-pdf gate failed: ' + JSON.stringify(results.tools.m24ImageToPdf));
+      await page.close();
+    }
+    { // pdf-to-png: single page direct, five pages as a ZIP
+      const { page, errors, failed } = await openPage(BASE + '/pdf-to-png/');
+      const input = await page.$('#pj-file');
+      await input.uploadFile(path.join(M14F, 'pages1.pdf'));
+      await page.waitForFunction(() => !document.getElementById('pj-run').disabled, { timeout: 30000 });
+      await page.click('#pj-run');
+      await shown(page, 'pj-result', 120000);
+      const onePath = await saveBlob(page, '#pj-download', 'm24-page1.png');
+      const oneMeta = await sharp(onePath).metadata();
+      const oneOk = oneMeta.format === 'png' && oneMeta.width === 816 && oneMeta.height === 1056;
+      results.tools.m24PdfToPngSingle = { oneMeta: { format: oneMeta.format, width: oneMeta.width, height: oneMeta.height }, oneOk, consoleErrors: errors, failedRequests: failed };
+      console.log('TOOL m24 pdf-to-png single:', JSON.stringify(results.tools.m24PdfToPngSingle.oneMeta));
+      if (!oneOk || errors.length) throw new Error('m24 pdf-to-png single gate failed: ' + JSON.stringify(results.tools.m24PdfToPngSingle));
+      await page.close();
+
+      const five = await openPage(BASE + '/pdf-to-png/');
+      const input5 = await five.page.$('#pj-file');
+      await input5.uploadFile(path.join(M14F, 'pages5.pdf'));
+      await five.page.waitForFunction(() => !document.getElementById('pj-run').disabled, { timeout: 30000 });
+      await five.page.click('#pj-run');
+      await shown(five.page, 'pj-result', 120000);
+      const zipPath = await saveBlob(five.page, '#pj-download', 'm24-pages5-png.zip');
+      const zip = await JSZip.loadAsync(fs.readFileSync(zipPath));
+      const names = Object.keys(zip.files).filter((n) => !zip.files[n].dir).sort();
+      let dimsOk = names.length === 5;
+      for (const n of names) {
+        const buf = Buffer.from(await zip.file(n).async('uint8array'));
+        const m = await sharp(buf).metadata();
+        if (m.format !== 'png' || m.width !== 816 || m.height !== 1056) dimsOk = false;
+      }
+      results.tools.m24PdfToPngZip = { names, dimsOk, consoleErrors: five.errors, failedRequests: five.failed };
+      console.log('TOOL m24 pdf-to-png zip:', JSON.stringify(names), '| dims ok:', dimsOk);
+      if (!dimsOk || five.errors.length) throw new Error('m24 pdf-to-png zip gate failed: ' + JSON.stringify(results.tools.m24PdfToPngZip));
+      await five.page.close();
+    }
+    { // heic-to-png through the new door
+      const { page, errors, failed } = await openPage(BASE + '/heic-to-png/');
+      const input = await page.$('#hc-file');
+      await input.uploadFile(path.join(M15F, 'photo.heic'));
+      await page.waitForFunction(() => !document.getElementById('hc-run').disabled, { timeout: 30000 });
+      const runLabel = await page.$eval('#hc-run', (el) => el.textContent);
+      await page.click('#hc-run');
+      await shown(page, 'hc-result', 180000);
+      const note = await page.$eval('#hc-achieved', (el) => el.textContent);
+      const outPath = await saveBlob(page, '#hc-download', 'm24-photo.png');
+      const meta = await sharp(outPath).metadata();
+      const { data, info } = await sharp(outPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+      let sr = 0, sg = 0, sb = 0, n = 0;
+      const x0 = Math.floor(info.width / 2) - 100, y0 = Math.floor(info.height / 2) - 100;
+      for (let y = y0; y < y0 + 200; y += 2) for (let x = x0; x < x0 + 200; x += 2) { const i = (y * info.width + x) * 4; sr += data[i]; sg += data[i + 1]; sb += data[i + 2]; n++; }
+      const centreMean = [Math.round(sr / n), Math.round(sg / n), Math.round(sb / n)];
+      const ok = runLabel === 'Convert to PNG' && meta.format === 'png' && meta.width === 1200 && meta.height === 900
+        && nearPx(centreMean, M15M24.photo.heicCentreMean, 10) && note.includes('1200 x 900');
+      results.tools.m24HeicToPng = { note, runLabel, meta: { format: meta.format, width: meta.width, height: meta.height }, centreMean, ok, consoleErrors: errors, failedRequests: failed };
+      console.log('TOOL m24 heic-to-png:', note, '| centre', centreMean.join(','), 'vs', M15M24.photo.heicCentreMean.join(','));
+      if (!ok || errors.length) throw new Error('m24 heic-to-png gate failed: ' + JSON.stringify(results.tools.m24HeicToPng));
+      await page.close();
+    }
+    { // pdf-to-text: stored lines out, in order; scan gets the honest answer
+      const { page, errors, failed } = await openPage(BASE + '/pdf-to-text/');
+      const input = await page.$('#tx-file');
+      await input.uploadFile(path.join(M24, 'text2.pdf'));
+      await page.waitForFunction(() => !document.getElementById('tx-run').disabled, { timeout: 30000 });
+      await page.click('#tx-run');
+      await shown(page, 'tx-result', 120000);
+      const text = await page.$eval('#tx-text', (el) => el.value);
+      let pos = -1, ordered = true;
+      for (const line of TEXT2_LINES) { const i = text.indexOf(line); if (i < 0 || i < pos) ordered = false; if (i > pos) pos = i; }
+      const note = await page.$eval('#tx-achieved', (el) => el.textContent);
+      const txtPath = await saveBlob(page, '#tx-download', 'm24-text2.txt');
+      const txt = fs.readFileSync(txtPath, 'utf8');
+      const dlOk = TEXT2_LINES.every((l) => txt.includes(l));
+      results.tools.m24PdfToText = { text, ordered, note, dlOk, consoleErrors: errors, failedRequests: failed };
+      console.log('TOOL m24 pdf-to-text:', note, '| ordered:', ordered, '| download ok:', dlOk);
+      if (!ordered || !dlOk || errors.length) throw new Error('m24 pdf-to-text gate failed: ' + JSON.stringify(results.tools.m24PdfToText));
+      await page.setViewport({ width: 1280, height: 900 });
+      await page.screenshot({ path: path.join(SHOTS, 'm24-pdf-to-text-desktop.png'), fullPage: true });
+      await page.setViewport({ width: 390, height: 844 });
+      await new Promise((r) => setTimeout(r, 300));
+      await page.screenshot({ path: path.join(SHOTS, 'm24-pdf-to-text-mobile.png'), fullPage: true });
+      await page.setViewport({ width: 1280, height: 900 });
+      await page.close();
+
+      const scan = await openPage(BASE + '/pdf-to-text/');
+      const sInput = await scan.page.$('#tx-file');
+      await sInput.uploadFile(path.join(M24, 'scanonly.pdf'));
+      await scan.page.waitForFunction(() => !document.getElementById('tx-run').disabled, { timeout: 30000 });
+      await scan.page.click('#tx-run');
+      await shown(scan.page, 'tx-result', 120000);
+      const sNote = await scan.page.$eval('#tx-achieved', (el) => el.textContent);
+      const sDlHidden = await scan.page.$eval('#tx-download', (el) => el.classList.contains('hidden'));
+      const sOk = sNote.includes('stores no words') && sDlHidden;
+      results.tools.m24PdfToTextScan = { sNote, sDlHidden, sOk, consoleErrors: scan.errors, failedRequests: scan.failed };
+      console.log('TOOL m24 pdf-to-text scan-only:', sNote.slice(0, 120), '| download hidden:', sDlHidden);
+      if (!sOk || scan.errors.length) throw new Error('m24 pdf-to-text scan gate failed: ' + JSON.stringify(results.tools.m24PdfToTextScan));
+      await scan.page.close();
+    }
+    { // compress-jpg: JPG in at a picked target; a PNG is refused at the tray
+      const { page, errors, failed } = await openPage(BASE + '/compress-jpg/');
+      const input = await page.$('#ci-file');
+      await input.uploadFile(path.join(M14F, 'img-green.png'));
+      await page.waitForFunction(() => document.getElementById('ci-status').textContent.includes('This door starts from'), { timeout: 30000 });
+      const refused = await page.$eval('#ci-run', (el) => el.disabled);
+      await input.uploadFile(path.join(CORPUS, 'test-large-photo.jpg'));
+      await page.waitForFunction(() => !document.getElementById('ci-run').disabled, { timeout: 30000 });
+      await page.$eval('#ci-custom', (el) => { el.value = '100'; el.dispatchEvent(new Event('change')); });
+      await page.click('#ci-run');
+      await shown(page, 'ci-result', 300000);
+      const note = await page.$eval('#ci-achieved', (el) => el.textContent);
+      const outPath = await saveBlob(page, '#ci-download', 'm24-compress-jpg.jpg');
+      const head = fs.readFileSync(outPath);
+      const size = head.length;
+      const ok = refused && head[0] === 0xff && head[1] === 0xd8 && size <= 100 * 1024 * 1.01 && size >= 40 * 1024;
+      results.tools.m24CompressJpg = { note, refused, size, ok, consoleErrors: errors, failedRequests: failed };
+      console.log('TOOL m24 compress-jpg:', note, '| refused PNG:', refused, '| bytes:', size);
+      if (!ok || errors.length) throw new Error('m24 compress-jpg gate failed: ' + JSON.stringify(results.tools.m24CompressJpg));
+      await page.close();
+    }
+    { // compress-png: PNG in, JPEG out at the target; a JPG is refused at the tray
+      const { page, errors, failed } = await openPage(BASE + '/compress-png/');
+      const input = await page.$('#ci-file');
+      await input.uploadFile(path.join(M14F, 'img-red.jpg'));
+      await page.waitForFunction(() => document.getElementById('ci-status').textContent.includes('This door starts from'), { timeout: 30000 });
+      const refused = await page.$eval('#ci-run', (el) => el.disabled);
+      await input.uploadFile(path.join(M24, 'noise.png'));
+      await page.waitForFunction(() => !document.getElementById('ci-run').disabled, { timeout: 30000 });
+      await page.$eval('#ci-custom', (el) => { el.value = '50'; el.dispatchEvent(new Event('change')); });
+      await page.click('#ci-run');
+      await shown(page, 'ci-result', 300000);
+      const note = await page.$eval('#ci-achieved', (el) => el.textContent);
+      const outPath = await saveBlob(page, '#ci-download', 'm24-compress-png.jpg');
+      const head = fs.readFileSync(outPath);
+      const size = head.length;
+      const ok = refused && head[0] === 0xff && head[1] === 0xd8 && size <= 50 * 1024 * 1.02 && size >= 20 * 1024;
+      results.tools.m24CompressPng = { note, refused, size, ok, consoleErrors: errors, failedRequests: failed };
+      console.log('TOOL m24 compress-png:', note, '| refused JPG:', refused, '| bytes:', size);
+      if (!ok || errors.length) throw new Error('m24 compress-png gate failed: ' + JSON.stringify(results.tools.m24CompressPng));
+      await page.close();
+    }
+    { // crop-image: exact pixels from the right place
+      const { page, errors, failed } = await openPage(BASE + '/crop-image/');
+      const input = await page.$('#cr-file');
+      await input.uploadFile(path.join(M24, 'cropme.png'));
+      await page.waitForFunction(() => !document.getElementById('cr-run').disabled, { timeout: 60000 });
+      const setField = async (id, v) => page.$eval(id, (el, val) => { el.value = String(val); el.dispatchEvent(new Event('change')); }, v);
+      // Size first, then position: the tool's clamp keeps the box
+      // inside the picture at all times (a full-width box cannot
+      // move right), which is the same rule a visitor meets when
+      // typing the fields in this order.
+      await setField('#cr-w', 200);
+      await setField('#cr-h', 150);
+      await setField('#cr-x', 100);
+      await setField('#cr-y', 50);
+      await page.click('#cr-run');
+      await shown(page, 'cr-result', 120000);
+      const note = await page.$eval('#cr-achieved', (el) => el.textContent);
+      const outPath = await saveBlob(page, '#cr-download', 'm24-crop.png');
+      const meta = await sharp(outPath).metadata();
+      const { data, info } = await sharp(outPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+      const pxAt = (x, y) => { const i = (y * info.width + x) * 4; return [data[i], data[i + 1], data[i + 2]]; };
+      const leftPx = pxAt(10, 10);   // source (110, 60): the red half
+      const rightPx = pxAt(190, 140); // source (290, 190): the blue half
+      const ok = meta.format === 'png' && meta.width === 200 && meta.height === 150
+        && nearPx(leftPx, [200, 40, 30], 12) && nearPx(rightPx, [40, 80, 200], 12)
+        && note.includes('200 x 150');
+      results.tools.m24Crop = { note, meta: { format: meta.format, width: meta.width, height: meta.height }, leftPx, rightPx, ok, consoleErrors: errors, failedRequests: failed };
+      console.log('TOOL m24 crop-image:', note, '| left', leftPx.join(','), '| right', rightPx.join(','));
+      if (!ok || errors.length) throw new Error('m24 crop gate failed: ' + JSON.stringify(results.tools.m24Crop));
+      await page.setViewport({ width: 1280, height: 900 });
+      await page.screenshot({ path: path.join(SHOTS, 'm24-crop-image-desktop.png'), fullPage: true });
+      await page.setViewport({ width: 390, height: 844 });
+      await new Promise((r) => setTimeout(r, 300));
+      await page.screenshot({ path: path.join(SHOTS, 'm24-crop-image-mobile.png'), fullPage: true });
+      await page.setViewport({ width: 1280, height: 900 });
+      await page.close();
+    }
   }
 } finally {
   if (browser) await browser.close();

@@ -14,6 +14,14 @@ import { makeZip } from './lib/zip.js';
 const $ = (id) => document.getElementById(id);
 const tray = $('pj-tray'), input = $('pj-file'), spec = $('pj-spec');
 const runBtn = $('pj-run'), status = $('pj-status'), result = $('pj-result');
+// Milestone 24: the /pdf-to-png/ door runs this same island with
+// the format locked to PNG in its own markup; it sets its own
+// preset key and tool name on #pj-tool so the two doors never
+// overwrite each other's saved settings. No attributes = the
+// milestone-14 PDF to JPG behaviour, unchanged.
+const toolEl = $('pj-tool');
+const PRESET_KEY = (toolEl && toolEl.dataset.presetKey) || 'pdf-to-jpg';
+const TOOL_NAME = (toolEl && toolEl.dataset.toolName) || 'PDF to JPG';
 let file = null, fileBytes = null, pages = 0, running = false;
 
 function setStatus(msg) { status.textContent = msg; }
@@ -22,13 +30,13 @@ function setSpec(rows) {
 }
 const picked = (name) => (document.querySelector('input[name="' + name + '"]:checked') || {}).value;
 
-const saved = getPreset('pdf-to-jpg');
+const saved = getPreset(PRESET_KEY);
 if (saved) {
   if (saved.format) { const r = document.querySelector('input[name="pj-format"][value="' + saved.format + '"]'); if (r) r.checked = true; }
   if (saved.dpi) { const r = document.querySelector('input[name="pj-dpi"][value="' + saved.dpi + '"]'); if (r) r.checked = true; }
 }
 function remember() {
-  savePreset('pdf-to-jpg', { format: picked('pj-format') || 'jpg', dpi: Number(picked('pj-dpi')) || 96 });
+  savePreset(PRESET_KEY, { format: picked('pj-format') || 'jpg', dpi: Number(picked('pj-dpi')) || 96 });
 }
 for (const el of document.querySelectorAll('input[name="pj-format"], input[name="pj-dpi"]')) el.addEventListener('change', remember);
 
@@ -140,7 +148,7 @@ runBtn.addEventListener('click', async () => {
     void stamp.offsetWidth;
     stamp.classList.add('land');
     setStatus('Done.');
-    recordJob({ tool: 'PDF to JPG', name: file.name, detail: total + ' pages at ' + dpi + ' DPI as ' + format.toUpperCase() });
+    recordJob({ tool: TOOL_NAME, name: file.name, detail: total + ' pages at ' + dpi + ' DPI as ' + format.toUpperCase() });
   } catch (err) {
     setStatus('Something went wrong with this file: ' + (err && err.message ? err.message : err));
   } finally {
