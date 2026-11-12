@@ -3198,3 +3198,142 @@ both; on mobile the tray is inside the first screen.
 - Nothing deployed, nothing pushed. Live site remains milestones
   18+19+20+21; this tree is milestones 18-22 local.
 - MILESTONE 22 DEPLOYED (2026-11-10): the three Fable-audit fixes (build notes off public pages, real 404 via the new branded 404 page, tool-first reorder on 49 tool pages). Wrangler Direct Upload from inside dist, deployment 7b3d4619.benchzy.pages.dev. Live checks: all 68 sitemap URLs 200; /definitely-not-a-page/ and /nope.png return true 404 with the branded page; /tools/ carries none of the removed note strings; compress-pdf serves the tray before the steps; the ES 301 is intact. IndexNow retried for all 68: 403 on both endpoints again (0 accepted).
+
+## Milestone 23 — AdSense site-side prep: ads.txt, the loader, and the naming the site promised (built 2026-11-11, LOCAL ONLY, not deployed, not pushed)
+
+Owner-ordered site-side preparation for Google AdSense. No ad
+units were placed and no account-side work was done; this is the
+code and copy side only. Counts unchanged: 68 content pages, 50
+tool pages, 22 working tools (dist still emits 69 HTML files; the
+extra one is the milestone-22 404 utility page, and dist/ads.txt
+is a text file, not a page).
+
+### What shipped
+- public/ads.txt (new): exactly one line and nothing else —
+  "google.com, pub-1450356163101033, DIRECT, f08c47fec0942fa0"
+  plus its single trailing newline. Builds to dist/ads.txt
+  (59 bytes, verified with od).
+- src/layouts/Base.astro: the standard AdSense loader for this
+  publisher, in the head beside the GA4 tag, rendered verbatim
+  (is:inline) exactly once per page on every route and locale:
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1450356163101033" crossorigin="anonymous"></script>
+  The GA4 tag (G-PSWNWPP7PY) is untouched. The service worker
+  needed no change: it only ever handles same-origin GETs, so the
+  cross-origin loader passes through it untouched.
+
+### Copy changes (truth-in-copy: the naming the site promised)
+The site promised the ad network would be named before ad code
+ran. This milestone is that moment; the network is Google
+AdSense. Every passage that described the counter as the only
+outside call at page load, or the naming as a future event, was
+corrected to the new truth: at page load the page calls Google
+for the visit counter AND the Google AdSense loader; during a
+tool run nothing new is called and files never leave the browser.
+- src/pages/privacy.astro: meta description now says "ads served
+  by Google AdSense" (was "no ad scripts"); the server-keeps
+  section no longer says "no advertising script runs on these
+  pages" — it now says two outside scripts run when a page opens
+  and both are named on the page (the counter, and the ad
+  network's loader); the "Ads, stated plainly" section now names
+  Google AdSense, states its loader is on every page and loads
+  when a page opens, and says what it can see (the visit itself:
+  which page opened, roughly where the connection comes from,
+  device and browser kind; Google keeps what it collects under
+  its own rules). The "an ad can never see your file" paragraph
+  is unchanged — it is still true. The GA counting section is
+  unchanged in substance. The frontmatter comment was updated to
+  record the naming, in the same discipline as milestone 19.
+- Witness family, pages (EN check-it-yourself.astro, ES
+  compruebalo-tu-mismo.astro, PT confira-voce-mesmo.astro), same
+  three spots in each: the "any page on this site" family row now
+  says two more things load, both from Google (counter + ad
+  loader), and that their lines are labelled "visit counter" and
+  "ad loader"; step 4 of the manual network-panel check now names
+  both lines; the "healthy run" paragraph now excepts both lines.
+- Witness family, script (src/scripts/witness.js): the ad loader
+  gets exactly the counter's treatment (the milestone-19
+  pattern): requests to pagead2.googlesyndication.com are listed,
+  labelled "ad loader" (ES "cargador de anuncios", PT
+  "carregador de anúncios") and counted in their own bucket; the
+  before-count, verdict and job-done strings in all three locales
+  now report the loader bucket alongside the counter's. Without
+  this the witness's own printed arithmetic ("the rest are this
+  page asking its own site…") would have stopped being true the
+  moment the loader landed. The new ES/PT witness strings are
+  in-house drafts of the same standing as the rest of the ES/PT
+  witness copy (TRANSLATIONS.md).
+- Promise pages (what-free-means.astro, ES
+  que-significa-gratis-aqui.astro, PT o-que-significa-gratis.astro):
+  the "why it can be free" passage no longer says "no ads run
+  yet / when ads come"; it now says the site is paid for by ads
+  on the pages, served by Google AdSense, whose loader is on the
+  pages now and which is named on the privacy page, and keeps the
+  file sentence: an ad can see the page, never the file.
+- Homepage FAQ (src/pages/index.astro): the "Is it really free?"
+  answer carried the same future-tense sentence; it now reads
+  "The site is paid for by ads on the pages, served by Google
+  AdSense, named on the privacy page."
+- public/llms.txt: the summary line carried the same "will be
+  paid for / no ads run yet / when ads come" wording; corrected
+  the same way.
+Sweep proof: after the edits, the killed claims ("No ads are
+served on Benchzy yet", "no advertising script runs", "will be
+named on this page before", "no ads run yet", "will be paid for
+by ads", ES "todavía no se muestra ningún anuncio", PT "nenhum
+anúncio roda ainda") return 0 in src/pages, src/scripts and
+public/llms.txt.
+
+### Gate changes (deliberate, recorded here as required)
+verify/verify.mjs, all changes in the milestone-19 pattern
+(intercept, record, stand-in) extended to the new host:
+- Harness interception: pagead2.googlesyndication.com requests
+  are recorded per page and answered with an empty stand-in. The
+  stand-in carries Access-Control-Allow-Origin: * because the
+  loader tag ships with crossorigin="anonymous" and the real file
+  is served CORS-open; without the header Chrome rejects the
+  stand-in itself (the first m23 run failed on exactly that: the
+  witness gate's own assertions passed but every page carried the
+  CORS console error; log kept as verify/m23-verify-run1-cors.log,
+  NOT a pass).
+- New per-route gate: exactly one loader request carrying
+  client=ca-pub-1450356163101033 on every route in the loop
+  (ADS GATE line in the log; routes that miss throw after the
+  loop, like the GA gate). The GA per-route assertions are
+  unchanged and still green.
+- Witness gate, m23 form: the job-done string now reports two
+  buckets, so the parsed assertion is requests-during-job minus
+  counter's own minus ad loader's own == 0, with-body still == 0,
+  and the labelled-rows evidence gains "ad loader" rows >= 1.
+- Section 15 (m19): the privacy wording gate also asserts the
+  page names Google AdSense and carries none of the killed
+  sentences; the background-removal run gate's tolerated
+  load-time hosts gain the loader's one host beside the
+  counter's, with the reason recorded in the section header (the
+  loader fires at load, before the run window opens; the run
+  assertion itself — no body anywhere, no other cross-origin
+  host — is unchanged).
+- New section 17 (static): dist/ads.txt byte-exact, and the full
+  loader URL occurs exactly once in every built HTML page
+  (69 files: 68 content + 404).
+
+### Verify
+- npm run build clean (69 pages; ads.txt at dist root).
+- verify/seo-audit.mjs: ALL CHECKS PASSED, 0 warnings (dist pages
+  68, sitemap 68 locs, counts 22/50/68 match — ads.txt is not a
+  page and enters no count).
+- Full verify/verify.mjs suite: VERIFY DONE on the second attempt
+  (log verify/m23-verify-run.log): all 68 routes at console errors
+  0 / failed requests 0; GA GATE green on every route; ADS GATE
+  green on every route; witness (m23 form): 0 requests during the
+  job, counter rows labelled 2, ad-loader rows labelled 1; m19 GA
+  homepage green; m19 privacy wording true (with the new AdSense
+  assertions); m19 BG run sends: 0 with body, 0 cross-origin;
+  m22 order 49/49 and 404 facts green; m23 section 17: ads.txt
+  byte-exact, 69 built HTML pages, loader-count fails 0. The run
+  included one long sandbox stall in the m12 watermark stretch
+  (~17 min at near-zero CPU under memory pressure, the known load
+  class from milestones 19/21/22); it broke loose and the suite
+  completed clean.
+- Nothing deployed, nothing pushed. Live site remains milestones
+  18+19+20+21+22; this tree is milestones 18-23 local.
+- MILESTONE 23 DEPLOYED (2026-11-11): AdSense site-side prep. ads.txt live with the exact single line (google.com, pub-1450356163101033, DIRECT, f08c47fec0942fa0); the loader is on every page exactly once; GA4 tag untouched; /privacy/ names Google AdSense and the witness family labels the ad loader like the counter. Wrangler Direct Upload from inside dist, deployment 68882ee3.benchzy.pages.dev. Live checks: /ads.txt 200 with the byte-exact line; loader count 1 on /, /remove-background/, /privacy/; GA ID present on all sampled pages; all 68 sitemap URLs 200; nonsense path still a true 404. Console-side: benchzy.com already added in AdSense; verify + review request runs from the main chat now that this is live.

@@ -21,6 +21,18 @@
 // before milestone 19 the gates asserted no cross-origin requests at
 // all; they now assert the only cross-origin requests are the counter's,
 // to its two hosts, with the right ID, and that no job sends anything.
+//
+// Milestone 23 (AdSense): the same pattern extends to the ad network's
+// loader host, pagead2.googlesyndication.com. The interception records
+// every loader request and answers with an empty stand-in (the site's
+// own code only places the loader tag on the page; everything the real
+// library would do after that is Google's, exactly like the counter).
+// The gates now assert, on every route: exactly one loader request
+// carrying this publisher's client ID, the GA assertions unchanged,
+// and — in the tool-run gates — that a run still triggers no new
+// outside requests after page load (the loader fires at load, like
+// the counter). Section 17 adds the static side: dist/ads.txt
+// byte-exact and exactly one loader tag in every built HTML page.
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -74,6 +86,10 @@ const results = { pages: {}, tools: {} };
 // snippet pushes 'js' and 'config' calls; the library's job is to
 // turn the config into one page_view collect carrying the ID.
 const GA_ID = 'G-PSWNWPP7PY';
+// Milestone 23: the AdSense publisher client ID the loader tag carries,
+// and the byte-exact ads.txt line the build must ship.
+const ADS_CLIENT = 'ca-pub-1450356163101033';
+const ADS_TXT_LINE = 'google.com, pub-1450356163101033, DIRECT, f08c47fec0942fa0';
 const GA_STUB = `(function () {
   var dl = window.dataLayer = window.dataLayer || [];
   var fired = {};
@@ -107,7 +123,10 @@ try {
     const errors = [], failed = [];
     // Milestone 19: per-page record of the counter's requests, filled
     // by the interception below and returned as `ga`.
+    // Milestone 23: `ads` records the AdSense loader requests the same
+    // way (see the header note).
     const ga = { js: [], collects: [] };
+    const ads = [];
     page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
     page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
     page.on('requestfailed', (r) => failed.push(r.url() + ' :: ' + (r.failure() || {}).errorText));
@@ -124,16 +143,29 @@ try {
         ga.collects.push(u);
         if (req.resourceType() === 'image') req.respond({ status: 200, contentType: 'image/gif', body: GA_GIF }).catch(() => {});
         else req.respond({ status: 204, body: '' }).catch(() => {});
+      } else if (host === 'pagead2.googlesyndication.com') {
+        // Milestone 23: record the loader request; answer with an
+        // empty stand-in. The real library's own behaviour after it
+        // loads is Google's side of the line, not this site's code.
+        // The stand-in carries Access-Control-Allow-Origin because
+        // the loader tag ships with crossorigin="anonymous": without
+        // the header Chrome rejects the stand-in itself as a CORS
+        // failure (the real file is served CORS-open, as a
+        // cross-origin loader must be). First m23 run failed exactly
+        // there; the header is part of the stand-in's fidelity.
+        ads.push(u);
+        req.respond({ status: 200, contentType: 'text/javascript; charset=utf-8', headers: { 'Access-Control-Allow-Origin': '*' }, body: '' }).catch(() => {});
       } else {
         req.continue().catch(() => {});
       }
     });
     await page.goto(url, { waitUntil: 'networkidle0', timeout: 60000 });
-    return { page, errors, failed, ga };
+    return { page, errors, failed, ga, ads };
   }
 
   // 1. Every page loads clean.
   const gaMissing = [];
+  const adsMissing = [];
   const BG_CLUSTER = ['/remove-background/', '/remove-background-full-resolution/',
     '/es/quitar-fondo-de-imagen-gratis/', '/es/quitar-fondo-resolucion-completa/',
     '/pt-br/remover-fundo-de-imagem-gratis/', '/pt-br/alternativa-gratis-ao-remove-bg/'];
@@ -162,8 +194,8 @@ try {
     '/png-to-jpg/', '/jpg-to-png/', '/webp-to-jpg/', '/jpg-to-webp/', '/png-to-webp/', '/webp-to-png/', '/heic-to-jpg/',
     '/es/que-significa-gratis-aqui/', '/es/compruebalo-tu-mismo/',
     '/pt-br/o-que-significa-gratis/', '/pt-br/confira-voce-mesmo/']) {
-    const { page, errors, failed, ga } = await openPage(BASE + route);
-    results.pages[route] = { consoleErrors: errors, failedRequests: failed, ga };
+    const { page, errors, failed, ga, ads } = await openPage(BASE + route);
+    results.pages[route] = { consoleErrors: errors, failedRequests: failed, ga, ads };
     // Milestone 19 gate, every route: the Google tag fired exactly
     // once (the library request, carrying the measurement ID) and the
     // page_view collect fired exactly once, to the analytics host,
@@ -173,6 +205,11 @@ try {
     const gaOk = ga.js.length === 1 && ga.js[0].includes('id=' + GA_ID) && ga.collects.length === 1 && collectTid === GA_ID;
     results.pages[route].gaOk = gaOk;
     if (!gaOk) { gaMissing.push(route + ' :: ' + JSON.stringify(ga)); console.log('GA GATE FAIL on', route, JSON.stringify(ga)); }
+    // Milestone 23 gate, every route: the AdSense loader fired exactly
+    // once, to its one host, carrying this publisher's client ID.
+    const adsOk = ads.length === 1 && ads[0].includes('client=' + ADS_CLIENT);
+    results.pages[route].adsOk = adsOk;
+    if (!adsOk) { adsMissing.push(route + ' :: ' + JSON.stringify(ads)); console.log('ADS GATE FAIL on', route, JSON.stringify(ads)); }
     // Milestone 8 gates on every page: the footer links the privacy
     // page, and the killed aggregate sentence appears nowhere.
     const m8 = await page.evaluate(() => ({
@@ -262,6 +299,10 @@ try {
   if (gaMissing.length) throw new Error('GA tag gate failed on ' + gaMissing.length + ' route(s): ' + gaMissing.join(' | '));
   console.log('GA GATE: tag + one collect with', GA_ID, 'on every route in the loop');
 
+  // Milestone 23: the per-route loader assertion from the loop above.
+  if (adsMissing.length) throw new Error('AdSense loader gate failed on ' + adsMissing.length + ' route(s): ' + adsMissing.join(' | '));
+  console.log('ADS GATE: exactly one loader request with', ADS_CLIENT, 'on every route in the loop');
+
   // 1b. Check-it-yourself witness: run the witnessed job on a corpus PDF and
   // confirm the page reports zero network requests during the job.
   // Milestone 19 updated form: since the visit counter exists, the
@@ -272,6 +313,12 @@ try {
   // opened" list (the gtag program + the collect), so a visitor can
   // tell them apart. The old form asserted a bare "during the job: 0"
   // from a page with no counter on it.
+  // Milestone 23 updated form: the ad loader gets the same treatment
+  // as the counter (its own labelled bucket in the witness), so the
+  // assertion extends in step: requests during the job minus the
+  // counter's own minus the ad loader's own == 0, and the loader's
+  // line is present and labelled "ad loader". Nothing else about the
+  // gate changes.
   {
     const { page, errors, failed } = await openPage(BASE + '/check-it-yourself/');
     const input = await page.$('#w-file');
@@ -286,23 +333,28 @@ try {
     const liveRowTexts = await page.$$eval('#w-live > li', (els) => els.map((e) => e.textContent));
     // The counter's two lines (its program, then its collect) are
     // listed and labelled; which of the two lists each lands in
-    // depends on load timing, so they are counted across both.
+    // depends on load timing, so they are counted across both. The
+    // ad loader's line (milestone 23) is counted the same way.
     const counterRowsLabelled = [...beforeRows, ...liveRowTexts].filter((t) => t.includes('visit counter'));
-    const mDuring = /Network requests during the job: (\d+) \(the visit counter's own among them: (\d+)\)/.exec(status);
+    const adsRowsLabelled = [...beforeRows, ...liveRowTexts].filter((t) => t.includes('ad loader'));
+    const mDuring = /Network requests during the job: (\d+) \(the visit counter's own among them: (\d+); the ad loader's own among them: (\d+)\)/.exec(status);
     const mAttached = /Requests with anything attached to them: (\d+)/.exec(verdict);
     const duringTotal = mDuring ? parseInt(mDuring[1], 10) : -1;
     const duringCounter = mDuring ? parseInt(mDuring[2], 10) : -1;
+    const duringAds = mDuring ? parseInt(mDuring[3], 10) : -1;
     const withBody = mAttached ? parseInt(mAttached[1], 10) : -1;
-    const witnessOk = !!mDuring && duringTotal - duringCounter === 0 && withBody === 0
-      && counterRowsLabelled.length >= 2 && beforeCount.includes('visit counter');
+    const witnessOk = !!mDuring && duringTotal - duringCounter - duringAds === 0 && withBody === 0
+      && counterRowsLabelled.length >= 2 && adsRowsLabelled.length >= 1
+      && beforeCount.includes('visit counter') && beforeCount.includes('ad loader');
     results.tools.witness = {
       status, verdict, spec, liveRows, beforeCount,
-      duringTotal, duringCounter, withBody, counterRowsLabelled: counterRowsLabelled.length,
-      zeroNonCounterDuringJob: duringTotal - duringCounter === 0, witnessOk,
+      duringTotal, duringCounter, duringAds, withBody, counterRowsLabelled: counterRowsLabelled.length,
+      adsRowsLabelled: adsRowsLabelled.length,
+      zeroNonCounterDuringJob: duringTotal - duringCounter - duringAds === 0, witnessOk,
       consoleErrors: errors, failedRequests: failed,
     };
-    console.log('TOOL witness:', status.slice(0, 160), '| live rows', liveRows, '| counter rows labelled:', counterRowsLabelled.length);
-    if (!witnessOk || errors.length) throw new Error('witness gate (m19 form) failed: ' + JSON.stringify(results.tools.witness));
+    console.log('TOOL witness:', status.slice(0, 160), '| live rows', liveRows, '| counter rows labelled:', counterRowsLabelled.length, '| ads rows labelled:', adsRowsLabelled.length);
+    if (!witnessOk || errors.length) throw new Error('witness gate (m23 form) failed: ' + JSON.stringify(results.tools.witness));
     await page.close();
   }
 
@@ -2739,6 +2791,14 @@ try {
     // the witness's updated form: while the job runs, no request
     // carries a body, and the only cross-origin requests are the
     // counter's own (which fire at page load, before the run).
+    // Milestone 23 extends this section in step: (b) also asserts
+    // the privacy page names Google AdSense (the naming this
+    // milestone shipped alongside the loader), and (c)'s tolerated
+    // load-time Google hosts gain the ad loader's one host, for the
+    // same reason the counter's hosts are there: it fires at page
+    // load, before the run window opens. The run assertion itself —
+    // no body on any request, no other cross-origin host — is
+    // unchanged.
     const { page, errors, failed, ga } = await openPage(BASE + '/');
     const collectUrl = ga.collects.length === 1 ? new URL(ga.collects[0]) : null;
     const gaHomeOk = ga.js.length === 1 && ga.js[0].startsWith('https://www.googletagmanager.com/gtag/js?id=' + GA_ID)
@@ -2752,7 +2812,9 @@ try {
     const priv = await openPage(BASE + '/privacy/');
     const privText = await priv.page.$eval('body', (el) => el.innerText);
     const privOk = privText.includes('Google Analytics') && privText.includes('opt-out')
-      && !privText.includes('no analytics script') && !privText.includes('no analytics or ad script');
+      && privText.includes('Google AdSense')
+      && !privText.includes('no analytics script') && !privText.includes('no analytics or ad script')
+      && !privText.includes('No ads are served on Benchzy yet') && !privText.includes('no advertising script runs');
     await priv.page.setViewport({ width: 1280, height: 900 });
     await priv.page.screenshot({ path: path.join(SHOTS, 'm19-privacy-desktop.png'), fullPage: true });
     results.tools.m19Privacy = { privOk, consoleErrors: priv.errors, failedRequests: priv.failed };
@@ -2778,6 +2840,12 @@ try {
       return (r && !r.classList.contains('hidden')) || (n && !n.classList.contains('hidden'));
     }, { timeout: 420000 });
     const isCounterHost = (u) => { try { const h = new URL(u).hostname; return h === 'www.googletagmanager.com' || h === 'www.google-analytics.com' || h.endsWith('.google-analytics.com'); } catch { return false; } };
+    // Milestone 23: the ad loader's host joins the tolerated
+    // load-time hosts (see the section header). A run must still
+    // call nothing new; this only keeps a load-time straggler from
+    // the loader from being misread as run traffic, exactly like
+    // the counter's lines.
+    const isAdsHost = (u) => { try { return new URL(u).hostname === 'pagead2.googlesyndication.com'; } catch { return false; } };
     const withBodyReqs = duringRun.filter((r) => r.hasBody);
     // Only http(s) requests can leave the machine. data: and blob:
     // URLs are generated inside the page (the design's grain texture
@@ -2788,7 +2856,7 @@ try {
     // here for exactly that reason, and offending URLs are recorded
     // with the result so a failure explains itself.
     const crossOriginReqs = duringRun.filter((r) => { if (!/^https?:\/\//.test(r.url)) return false; try { return new URL(r.url).origin !== new URL(BASE).origin; } catch { return true; } });
-    const strayCrossOrigin = crossOriginReqs.filter((r) => !isCounterHost(r.url));
+    const strayCrossOrigin = crossOriginReqs.filter((r) => !isCounterHost(r.url) && !isAdsHost(r.url));
     const bgSendOk = withBodyReqs.length === 0 && strayCrossOrigin.length === 0;
     results.tools.m19BgSendsNothing = {
       requestsDuringRun: duringRun.length, withBody: withBodyReqs.length,
@@ -2878,6 +2946,38 @@ try {
     results.tools.m22NotFound = { nfOk, sitemapLocs: (sm22.match(/<loc>/g) || []).length };
     console.log('TOOL m22 404 build facts:', JSON.stringify(results.tools.m22NotFound));
     if (!nfOk) throw new Error('m22 404 gate failed: ' + JSON.stringify(results.tools.m22NotFound));
+  }
+  {
+    // 17. Milestone 23: AdSense build facts (the static side; the
+    // per-route loader-request gate lives in the page loop above).
+    // (a) dist/ads.txt is byte-exact: the one publisher line, with
+    // at most its single trailing newline, and nothing else.
+    // (b) Every built HTML page (all 68 content pages + the 404
+    // utility page, which shares the layout) carries the loader tag
+    // exactly once: the full loader URL with this publisher's
+    // client ID occurs exactly one time in each file.
+    const adsTxtPath = path.join(DIST, 'ads.txt');
+    const adsTxt = fs.existsSync(adsTxtPath) ? fs.readFileSync(adsTxtPath, 'utf8') : '';
+    const adsTxtOk = adsTxt === ADS_TXT_LINE + '\n' || adsTxt === ADS_TXT_LINE;
+    const loaderUrl = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + ADS_CLIENT;
+    const htmlFiles = [];
+    const walk = (dir) => {
+      for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+        const p = path.join(dir, e.name);
+        if (e.isDirectory()) walk(p);
+        else if (e.name.endsWith('.html')) htmlFiles.push(p);
+      }
+    };
+    walk(DIST);
+    const loaderFails = [];
+    for (const f of htmlFiles) {
+      const h = fs.readFileSync(f, 'utf8');
+      const n = h.split(loaderUrl).length - 1;
+      if (n !== 1) loaderFails.push(path.relative(DIST, f) + ' :: ' + n);
+    }
+    results.tools.m23Ads = { adsTxtOk, htmlPages: htmlFiles.length, loaderFails };
+    console.log('TOOL m23 ads.txt byte-exact:', adsTxtOk, '| built HTML pages:', htmlFiles.length, '| loader-count fails:', loaderFails.length);
+    if (!adsTxtOk || loaderFails.length) throw new Error('m23 ads gate failed: ' + JSON.stringify(results.tools.m23Ads));
   }
 } finally {
   if (browser) await browser.close();

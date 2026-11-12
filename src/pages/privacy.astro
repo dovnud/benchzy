@@ -9,11 +9,14 @@ import Base from '../layouts/Base.astro';
 // (the milestone-19 copy replaced this page's earlier "no analytics
 // script runs today" position in the same step that installed the
 // tag, so the page never claimed one thing while the site did
-// another). No advertising script runs. If any of that changes,
-// this page changes first, and it says so below.
+// another). Since milestone 23 the ad network is Google AdSense,
+// named in the ads section below in the same step that put its
+// loader on the pages, as the earlier wording on this page
+// promised: the network is named before its code runs. If any of
+// that changes, this page changes first, and it says so below.
 ---
 
-<Base title="Privacy · Benchzy" description="What Benchzy keeps and what it does not: no accounts, no file uploads, visits counted with Google Analytics, no ad scripts. Your files are processed in your browser and never sent to us.">
+<Base title="Privacy · Benchzy" description="What Benchzy keeps and what it does not: no accounts, no file uploads, visits counted with Google Analytics, ads served by Google AdSense. Your files are processed in your browser and never sent to us.">
   <div class="mx-auto max-w-5xl px-4">
     <section class="mt-8">
       <p class="font-mono text-xs uppercase tracking-widest text-accent-deep">Privacy</p>
@@ -45,8 +48,9 @@ import Base from '../layouts/Base.astro';
         <p>
           There are no accounts on Benchzy, so there is no account data. No tool on this site
           has an upload: pick a file in any tool and it is read by the page in your browser,
-          never transmitted. And no advertising script runs on these pages. One script does
-          count visits; it has its own section next, in the open.
+          never transmitted. Two outside scripts do run when a page opens, and both are named
+          on this page, in the open: one counts visits (its own section is next), and one is
+          the ad network's loader (the ads section below names the network).
         </p>
         <p>
           Passwords, for the two tools that ask for one (protect a PDF, unlock a PDF):
@@ -118,9 +122,14 @@ import Base from '../layouts/Base.astro';
       <h2 class="font-display text-2xl font-bold border-b-2 border-ink pb-2">Ads, stated plainly</h2>
       <div class="mt-4 space-y-3 leading-relaxed text-ink-soft max-w-3xl">
         <p>
-          No ads are served on Benchzy yet. The plan is for the site to be paid for by ads on
-          the pages. When ads start, the advertising network will be named on this page before
-          the first ad runs, and this section will say what that network can see.
+          The site is paid for by ads on the pages, and the ads are served by Google
+          AdSense. It is named here, as this page promised it would be, before its code went
+          on the site: the AdSense loader program is on every page now, and it loads when a
+          page opens, like the visit counter. What it can see is the visit itself, the same
+          ordinary information a page opening carries: that a page was opened, which page it
+          was, roughly where in the world the connection comes from, and what kind of device
+          and browser asked. Google serves the ads and keeps what it collects on its own
+          systems, under its own rules.
         </p>
         <p>
           One thing will not change: an ad can never see your file. That is not a promise about

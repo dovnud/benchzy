@@ -1,6 +1,6 @@
 # Benchzy
 
-> Benchzy is a workshop of free file tools that run inside the visitor's web browser. Files are processed on the visitor's own device and are never uploaded; there is no server that receives them. There are no accounts, no sign-up, no daily counters, no credits and no watermarks. Output is produced at the file's full size. The site will be paid for by ads on the pages; no ads run yet. When ads come, an ad will be able to see which page a visitor is on and will never be able to see their file.
+> Benchzy is a workshop of free file tools that run inside the visitor's web browser. Files are processed on the visitor's own device and are never uploaded; there is no server that receives them. There are no accounts, no sign-up, no daily counters, no credits and no watermarks. Output is produced at the file's full size. The site is paid for by ads on the pages, served by Google AdSense, whose loader is on the pages and which is named on the privacy page. An ad can see which page a visitor is on and can never see their file.
 
 ## Tools
 

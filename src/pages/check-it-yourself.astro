@@ -20,13 +20,13 @@ const families = [
   ['PDF tools', 'The @cantoo/pdf-lib program and, for scans, PDF.js plus Tesseract.js, all loaded from this site.', 'Nothing. The PDF is read into the page and the result is built there.'],
   ['Image tools', 'The jSquash codec programs (WebAssembly), loaded from this site.', 'Nothing. The photo is decoded, worked on and re-encoded in the page.'],
   ['Background removal', 'The removal program, 44.3 MB, arriving as 11 pieces your browser checks against a printed fingerprint list before running it.', 'Nothing. The photo stays in the page; only the program travels, and it travels to you, not from you.'],
-  ['Any page on this site', 'The page itself and its program files, like any website. One more thing loads: the visit counter, a small program from Google (Google Analytics), which fires once when the page opens.', 'Of your file, nothing. The counter fires when a page opens, before any tool runs, and a tool run sends it nothing. What it carries is the visit itself: which page opened, roughly where the connection comes from, and the kind of device and browser. In the lists above, its lines are the ones addressed to Google and labelled "visit counter", so you can tell them apart from this site\'s own lines. Routine request logs also exist, as on any site. The full detail is on the privacy page.'],
+  ['Any page on this site', 'The page itself and its program files, like any website. Two more things load, both from Google, both as the page opens: the visit counter, a small program from Google (Google Analytics), which fires once when the page opens, and the ad loader (Google AdSense), the program that serves this site\'s ads, named on the privacy page.', 'Of your file, nothing. The counter and the ad loader arrive when a page opens, before any tool runs, and a tool run sends them nothing and calls nothing new. What they carry is the visit itself: which page opened, roughly where the connection comes from, and the kind of device and browser. In the lists above, their lines are the ones addressed to Google and labelled "visit counter" and "ad loader", so you can tell them apart from this site\'s own lines. Routine request logs also exist, as on any site. The full detail is on the privacy page.'],
 ];
 const steps = [
   'Open any tool page on this site.',
   'Open your browser\'s developer tools and pick the Network panel. In Chrome it is under the menu "More tools, Developer tools"; in Firefox and Safari it is in the developer or Web Inspector menu.',
   'Press the clear button on the network list, then run a job with a real file.',
-  'Watch the list while the job runs and at the moment you download. The lines are this page asking its own site for program files, plus the visit counter\'s line from when the page opened (addressed to Google, and it carries the visit, never a file). Nothing in the list carries your file, because no request is made with it.',
+  'Watch the list while the job runs and at the moment you download. The lines are this page asking its own site for program files, plus the visit counter\'s and the ad loader\'s lines from when the page opened (addressed to Google, and they carry the visit, never a file). Nothing in the list carries your file, because no request is made with it.',
 ];
 ---
 
@@ -96,9 +96,9 @@ const steps = [
       <h3 class="font-display text-xl font-bold mt-8">What a bad line would look like</h3>
       <p class="mt-2 text-ink-soft leading-relaxed max-w-2xl">
         In a healthy run, every line in the list asks this site for a program file and carries
-        nothing of yours — apart from the visit counter's line from when the page opened,
-        which carries the visit itself and nothing of your file. A line that should stop you
-        looks like this:
+        nothing of yours — apart from the visit counter's and the ad loader's lines from when
+        the page opened, which carry the visit itself and nothing of your file. A line that
+        should stop you looks like this:
       </p>
       <p class="ticket-soft p-4 font-mono text-sm leading-relaxed mt-3">
         POST https://uploads.some-other-site.example/receive · to another site · WITH DATA

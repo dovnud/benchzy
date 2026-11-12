@@ -22,13 +22,13 @@ const families = [
   ['Ferramentas de PDF', 'O programa @cantoo/pdf-lib e, para digitalizações, PDF.js mais Tesseract.js, tudo carregado deste site.', 'Nada. O PDF é lido dentro da página e o resultado é construído aí.'],
   ['Ferramentas de imagem', 'Os programas de codecs jSquash (WebAssembly), carregados deste site.', 'Nada. A foto é decodificada, trabalhada e recodificada na página.'],
   ['Remoção de fundo', 'O programa de remoção, 44,3 MB, que chega em 11 partes que o seu navegador confere contra uma lista de impressões digitais publicada antes de executá-lo.', 'Nada. A foto fica na página; só o programa viaja, e viaja até você, não de você.'],
-  ['Qualquer página deste site', 'A própria página e os seus arquivos de programa, como qualquer site. Mais uma coisa carrega: o contador de visitas, um programa pequeno do Google (Google Analytics), que dispara uma vez quando a página abre.', 'Do seu arquivo, nada. O contador dispara quando a página abre, antes de qualquer ferramenta rodar, e um trabalho não envia nada para ele. O que ele carrega é a visita em si: qual página abriu, de onde no mundo vem a conexão, aproximadamente, e que tipo de aparelho e navegador é. Nas listas acima, as linhas dele são as endereçadas ao Google e marcadas como «contador de visitas», para você distingui-las das linhas deste site. Também existem os registros rotineiros de pedidos, como em qualquer site. O detalhe completo está na página de privacidade.'],
+  ['Qualquer página deste site', 'A própria página e os seus arquivos de programa, como qualquer site. Mais duas coisas carregam, as duas do Google, as duas quando a página abre: o contador de visitas, um programa pequeno do Google (Google Analytics), que dispara uma vez quando a página abre, e o carregador de anúncios (Google AdSense), o programa que serve os anúncios deste site, nomeado na página de privacidade.', 'Do seu arquivo, nada. O contador e o carregador de anúncios chegam quando a página abre, antes de qualquer ferramenta rodar, e um trabalho não envia nada para eles nem pede nada novo. O que eles carregam é a visita em si: qual página abriu, de onde no mundo vem a conexão, aproximadamente, e que tipo de aparelho e navegador é. Nas listas acima, as linhas deles são as endereçadas ao Google e marcadas como «contador de visitas» e «carregador de anúncios», para você distingui-las das linhas deste site. Também existem os registros rotineiros de pedidos, como em qualquer site. O detalhe completo está na página de privacidade.'],
 ];
 const steps = [
   'Abra qualquer página de ferramenta deste site.',
   'Abra as ferramentas de desenvolvedor do seu navegador e escolha o painel Rede. No Chrome, fica no menu «Mais ferramentas, Ferramentas para desenvolvedores»; no Firefox e no Safari, fica no menu de desenvolvedor ou Inspetor Web.',
   'Aperte o botão de limpar da lista de rede e depois rode um trabalho com um arquivo real.',
-  'Observe a lista enquanto o trabalho roda e no momento do download. As linhas são esta página pedindo ao seu próprio site arquivos de programa, mais a linha do contador de visitas de quando a página abriu (endereçada ao Google, e ela carrega a visita, nunca um arquivo). Nada na lista carrega o seu arquivo, porque nenhum pedido é feito com ele.',
+  'Observe a lista enquanto o trabalho roda e no momento do download. As linhas são esta página pedindo ao seu próprio site arquivos de programa, mais as linhas do contador de visitas e do carregador de anúncios de quando a página abriu (endereçadas ao Google, e elas carregam a visita, nunca um arquivo). Nada na lista carrega o seu arquivo, porque nenhum pedido é feito com ele.',
 ];
 ---
 
@@ -98,8 +98,9 @@ const steps = [
       <h3 class="font-display text-xl font-bold mt-8">Como seria uma linha ruim</h3>
       <p class="mt-2 text-ink-soft leading-relaxed max-w-2xl">
         Em uma execução saudável, cada linha da lista pede a este site um arquivo de programa
-        e não carrega nada seu, além da linha do contador de visitas de quando a página abriu,
-        que carrega a visita em si e nada do seu arquivo. Uma linha que deveria fazer você parar é assim:
+        e não carrega nada seu, além das linhas do contador de visitas e do carregador de
+        anúncios de quando a página abriu, que carregam a visita em si e nada do seu arquivo.
+        Uma linha que deveria fazer você parar é assim:
       </p>
       <p class="ticket-soft p-4 font-mono text-sm leading-relaxed mt-3">
         POST https://uploads.some-other-site.example/receive · para outro site · COM DADOS

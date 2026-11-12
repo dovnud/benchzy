@@ -22,13 +22,13 @@ const families = [
   ['Herramientas PDF', 'El programa @cantoo/pdf-lib y, para escaneos, PDF.js más Tesseract.js, todo cargado desde este sitio.', 'Nada. El PDF se lee dentro de la página y el resultado se construye ahí.'],
   ['Herramientas de imagen', 'Los programas de códecs jSquash (WebAssembly), cargados desde este sitio.', 'Nada. La foto se decodifica, se trabaja y se vuelve a codificar en la página.'],
   ['Quitar el fondo', 'El programa de recorte, 44,3 MB, que llega en 11 piezas que tu navegador compara con una lista de huellas digitales publicada antes de ejecutarlo.', 'Nada. La foto se queda en la página; solo viaja el programa, y viaja hacia ti, no desde ti.'],
-  ['Cualquier página de este sitio', 'La página misma y sus archivos de programa, como cualquier sitio web. Se carga una cosa más: el contador de visitas, un programa pequeño de Google (Google Analytics), que se activa una vez cuando la página se abre.', 'De tu archivo, nada. El contador se activa cuando la página se abre, antes de que se ejecute cualquier herramienta, y ningún trabajo le envía nada. Lo que lleva es la visita misma: qué página se abrió, desde qué zona del mundo viene la conexión, de forma aproximada, y qué tipo de dispositivo y navegador es. En las listas de arriba, sus líneas son las dirigidas a Google y marcadas como «contador de visitas», para que puedas distinguirlas de las líneas de este sitio. También existen los registros rutinarios de peticiones, como en cualquier sitio. El detalle completo está en la página de privacidad.'],
+  ['Cualquier página de este sitio', 'La página misma y sus archivos de programa, como cualquier sitio web. Se cargan dos cosas más, las dos de Google, las dos cuando la página se abre: el contador de visitas, un programa pequeño de Google (Google Analytics), que se activa una vez cuando la página se abre, y el cargador de anuncios (Google AdSense), el programa que sirve los anuncios de este sitio, nombrado en la página de privacidad.', 'De tu archivo, nada. El contador y el cargador de anuncios llegan cuando la página se abre, antes de que se ejecute cualquier herramienta, y ningún trabajo les envía nada ni pide nada nuevo. Lo que llevan es la visita misma: qué página se abrió, desde qué zona del mundo viene la conexión, de forma aproximada, y qué tipo de dispositivo y navegador es. En las listas de arriba, sus líneas son las dirigidas a Google y marcadas como «contador de visitas» y «cargador de anuncios», para que puedas distinguirlas de las líneas de este sitio. También existen los registros rutinarios de peticiones, como en cualquier sitio. El detalle completo está en la página de privacidad.'],
 ];
 const steps = [
   'Abre cualquier página de herramienta de este sitio.',
   'Abre las herramientas de desarrollo de tu navegador y elige el panel de red. En Chrome está en el menú «Más herramientas, Herramientas para desarrolladores»; en Firefox y Safari está en el menú de desarrollador o Inspector web.',
   'Presiona el botón de vaciar la lista (el icono de prohibido) y después haz un trabajo con un archivo real.',
-  'Mira la lista mientras el trabajo se ejecuta y en el momento de la descarga. Las líneas muestran a esta página pidiendo a su propio sitio archivos de programa, más la línea del contador de visitas de cuando la página se abrió (dirigida a Google, y lleva la visita, nunca un archivo). Nada de la lista lleva tu archivo, porque ninguna petición se hace con él.',
+  'Mira la lista mientras el trabajo se ejecuta y en el momento de la descarga. Las líneas muestran a esta página pidiendo a su propio sitio archivos de programa, más las líneas del contador de visitas y del cargador de anuncios de cuando la página se abrió (dirigidas a Google, y llevan la visita, nunca un archivo). Nada de la lista lleva tu archivo, porque ninguna petición se hace con él.',
 ];
 ---
 
@@ -98,8 +98,9 @@ const steps = [
       <h3 class="font-display text-xl font-bold mt-8">Cómo se vería una línea mala</h3>
       <p class="mt-2 text-ink-soft leading-relaxed max-w-2xl">
         En una prueba normal, cada línea de la lista le pide a este sitio un archivo de programa
-        y no lleva nada tuyo, aparte de la línea del contador de visitas de cuando la página se
-        abrió, que lleva la visita misma y nada de tu archivo. Una línea que debería detenerte se ve así:
+        y no lleva nada tuyo, aparte de las líneas del contador de visitas y del cargador de
+        anuncios de cuando la página se abrió, que llevan la visita misma y nada de tu archivo.
+        Una línea que debería detenerte se ve así:
       </p>
       <p class="ticket-soft p-4 font-mono text-sm leading-relaxed mt-3">
         POST https://uploads.some-other-site.example/receive · a otro sitio · CON DATOS

@@ -168,6 +168,15 @@ const c = CHROME[lang] || CHROME.en;
       gtag('js', new Date());
       gtag('config', 'G-PSWNWPP7PY');
     </script>
+    {/* Google AdSense loader (milestone 23). The standard loader for
+        this site's one ad network, named on the privacy page in the
+        same step that put this line here, as the site promised: the
+        network is named before its code runs. It loads once when a
+        page opens; it is not part of any tool, it is never told
+        anything about a visitor's files, and a tool run calls
+        nothing new. The check-it-yourself pages list its line beside
+        the counter's, labelled "ad loader". */}
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1450356163101033" crossorigin="anonymous" is:inline></script>
   </head>
   <body class="min-h-screen flex flex-col">
     <header class="masthead">
